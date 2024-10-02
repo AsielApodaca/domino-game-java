@@ -11,11 +11,16 @@
             <artifactId>DominoDominio</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DominoNegocios</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
-        <exec.mainClass>com.mycompany.dominopresentacion.DominoPresentacion</exec.mainClass>
+        <exec.mainClass>com.mycompany.dominopresentacion.IndexDomino</exec.mainClass>
     </properties>
 </project>

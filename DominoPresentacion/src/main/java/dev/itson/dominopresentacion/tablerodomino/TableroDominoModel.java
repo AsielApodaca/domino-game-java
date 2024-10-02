@@ -10,7 +10,9 @@ import java.util.List;
 
 /**
  *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class TableroDominoModel {
     
@@ -24,7 +26,11 @@ public class TableroDominoModel {
         
     }
     
-    public void serSeleccionarExtremoListener(ActionListener listener) {
+    public void setExtremoListener(ActionListener listener) {
+        
+    }
+    
+    public void notificarListaTableroDominoActualizadoListener(){
         
     }
 }
