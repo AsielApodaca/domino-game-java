@@ -4,10 +4,27 @@
  */
 package dev.itson.dominopresentacion.tablerodomino;
 
+import dev.itson.dominodominio.FichaDomino;
+import java.awt.event.ActionListener;
+import java.util.List;
+
 /**
  *
  * @author olive
  */
 public class TableroDominoModel {
     
+    List<FichaDomino> listaFichasUsuario ;
+    
+    public TableroDominoModel() {
+        
+    }
+    
+    public void validarExtremoCompatible(FichaDomino ficha) {
+        
+    }
+    
+    public void serSeleccionarExtremoListener(ActionListener listener) {
+        
+    }
 }

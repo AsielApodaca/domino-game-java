@@ -4,10 +4,22 @@
  */
 package dev.itson.dominopresentacion.tablerodomino;
 
+import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+
 /**
  *
  * @author olive
  */
-public class TableroDominoView {
+public class TableroDominoView extends JPanel {
     
+    
+    public TableroDominoView() {
+        
+    }
+    
+    public void setSeleccionarFichaListener(ActionListener listener) {
+        
+    }
+       
 }
