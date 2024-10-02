@@ -35,7 +35,7 @@ public class TableroDominoView extends JPanel {
       
         for (int i = 0; i < fichas.length; i++) {
             fichas[i] = new JButton("[" + i + " | " + (i + 1) + "]");
-            fichas[i].setPreferredSize(new Dimension(70, 110)); 
+            fichas[i].setPreferredSize(new Dimension(110, 70)); 
             fichas[i].setFocusable(false); 
             fichas[i].setBackground(Color.LIGHT_GRAY); 
             fichas[i].setFont(new Font("Arial", Font.BOLD, 16));
@@ -47,7 +47,7 @@ public class TableroDominoView extends JPanel {
 
        
         fichaComparativa = new JButton("[3 | 4]");
-        fichaComparativa.setPreferredSize(new Dimension(70, 110));
+        fichaComparativa.setPreferredSize(new Dimension(110, 70));
         fichaComparativa.setFocusable(false);
         fichaComparativa.setBackground(Color.YELLOW); 
         fichaComparativa.setFont(new Font("Arial", Font.BOLD, 16));
