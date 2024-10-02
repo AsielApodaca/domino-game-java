@@ -4,7 +4,7 @@
  */
 package com.mycompany.dominopresentacion;
 
-import dev.itson.dominopresentacion.tablerodomino.TableroDominoPanel;
+import dev.itson.dominopresentacion.tablerodomino.TableroDominoView;
 import javax.swing.JFrame;
 
 /**
@@ -18,7 +18,7 @@ public class IndexDomino extends JFrame{
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        TableroDominoPanel tableroDominoPanel = new TableroDominoPanel(); // Crear instancia del panel
+        TableroDominoView tableroDominoPanel = new TableroDominoView(); // Crear instancia del panel
         add(tableroDominoPanel); // Añadir el panel al JFrame
         setVisible(true);
     }
