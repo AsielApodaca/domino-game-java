@@ -4,8 +4,11 @@
  */
 package dev.itson.dominopresentacion.tablerodomino;
 
+import dev.itson.dominodominio.FichaDomino;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 /**
  *
@@ -22,16 +25,48 @@ public class TableroDominoController {
     public TableroDominoController(TableroDominoModel tableroDominoModel, TableroDominoView tableroDominoView) {
         this.tableroDominoModel = tableroDominoModel ;
         this.tableroDominoView = tableroDominoView ;
-        
-         this.tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
+        this.tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
+        setVisible() ;
+        initializeListeners() ;
     }
     
+    private void initializeListeners() {
+        for (JButton button : tableroDominoView.getBotonesFichasDominoUsuario()) {
+            button.addActionListener(new SeleccionarFichaListener());
+        }
+        
+        tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
+    }
+    
+    private void setVisible() {
+        JFrame ventana = new JFrame("Domino");
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana.setSize(1200, 800);
+        ventana.setResizable(true);
+        ventana.add(tableroDominoView);
+        ventana.setVisible(true);
+    }
     
     class SeleccionarFichaListener implements ActionListener {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
+            JButton sourceButton = (JButton)e.getSource();
+            int index = tableroDominoView.getBotonesFichasDominoUsuario().indexOf(sourceButton);
             
+            if (index != -1) {
+                try {
+                    FichaDomino selectedFicha = tableroDominoModel.getListaFichasUsuario().get(index);
+                    System.out.println("Ficha Seleccionada: [" + selectedFicha.getExtremo1() + 
+                                      " | " + selectedFicha.getExtremo2() + "]");
+                    
+                    tableroDominoModel.validarExtremoCompatible(selectedFicha);
+                    
+                } catch (IndexOutOfBoundsException ex) {
+                    System.out.println("Error");
+                }
+            } else {
+                System.out.println("Error");
+            }
         }
     }
-    
 }

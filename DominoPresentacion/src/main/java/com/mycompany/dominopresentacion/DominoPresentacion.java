@@ -3,6 +3,8 @@
  */
 package com.mycompany.dominopresentacion;
 
+import dev.itson.dominopresentacion.tablerodomino.TableroDominoController;
+import dev.itson.dominopresentacion.tablerodomino.TableroDominoModel;
 import dev.itson.dominopresentacion.tablerodomino.TableroDominoView;
 import javax.swing.JFrame;
 
@@ -16,13 +18,8 @@ import javax.swing.JFrame;
 public class DominoPresentacion {
 
     public static void main(String[] args) {
-        TableroDominoView tableroDominoView = new TableroDominoView();
-
-        JFrame ventana = new JFrame("Domino");
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setSize(1200, 800);
-        ventana.setResizable(true);
-        ventana.add(tableroDominoView);
-        ventana.setVisible(true);
+        TableroDominoModel tableroDominoModel = new TableroDominoModel() ;
+        TableroDominoView tableroDominoView = new TableroDominoView(tableroDominoModel);
+        TableroDominoController tableroDominoController = new TableroDominoController(tableroDominoModel, tableroDominoView) ;
     }
 }
