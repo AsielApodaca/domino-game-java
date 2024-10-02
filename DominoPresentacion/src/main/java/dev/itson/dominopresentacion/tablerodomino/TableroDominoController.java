@@ -19,12 +19,13 @@ public class TableroDominoController {
     public TableroDominoController(TableroDominoModel tableroDominoModel, TableroDominoView tableroDominoView) {
         this.tableroDominoModel = tableroDominoModel ;
         this.tableroDominoView = tableroDominoView ;
+        
+         this.tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
     }
     
     
     class SeleccionarFichaListener implements ActionListener {
 
-        @Override
         public void actionPerformed(ActionEvent e) {
             
         }
