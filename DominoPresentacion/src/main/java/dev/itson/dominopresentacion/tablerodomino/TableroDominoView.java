@@ -14,7 +14,9 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class TableroDominoView extends JPanel {
 

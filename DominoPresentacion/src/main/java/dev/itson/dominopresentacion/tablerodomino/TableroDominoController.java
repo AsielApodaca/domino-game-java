@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class TableroDominoController {
     
