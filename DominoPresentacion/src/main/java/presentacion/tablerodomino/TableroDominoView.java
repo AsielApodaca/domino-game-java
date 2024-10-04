@@ -5,15 +5,17 @@
 package presentacion.tablerodomino;
 
 import dominio.FichaDomino;
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
 
 /**
  *
@@ -24,144 +26,99 @@ import javax.swing.SwingUtilities;
  */
 public class TableroDominoView extends JPanel implements ITableroDominoModeloListener {
 
-    private TableroDominoModel tableroDominoModel ;
-    private List<JButton> botonesFichasDominoUsuario;
-    private List<JButton> fichasComparativa ;
-    private List<FichaDomino> fichasDominoUsuario ;
+    private TableroDominoModel tableroDominoModel;
+    private List<FichaDominoPanel> fichasDominoUsuario;
+    private List<FichaDominoPanel> fichasDominoComparativa;
+    private JPanel fichaUsuarioPanel;
+    private JPanel fichaComparativaPanel;
 
     public TableroDominoView(TableroDominoModel tableroDominoModel) {
         this.tableroDominoModel = tableroDominoModel;
-        this.botonesFichasDominoUsuario = new ArrayList<>(); 
-        this.fichasComparativa = new ArrayList<>();
         this.fichasDominoUsuario = new ArrayList<>();
 
-        setLayout(null);
+        setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1200, 800));
+
+        fichaUsuarioPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        fichaComparativaPanel = new JPanel(new GridBagLayout());
+
+        add(fichaUsuarioPanel, BorderLayout.SOUTH);
+        add(fichaComparativaPanel, BorderLayout.CENTER);
 
         tableroDominoModel.addListener(this);
         tableroDominoModel.repartirFichas();
     }
 
     private void crearFichasVisuales() {
-        removeAll(); 
-        
-        for (int i = 0; i < tableroDominoModel.getListaFichasUsuario().size(); i++) {
-            FichaDomino ficha = tableroDominoModel.getListaFichasUsuario().get(i);
-            JButton btn = createDominoButton(ficha, i);
-            botonesFichasDominoUsuario.add(btn);
-            add(btn);
+        fichaUsuarioPanel.removeAll();
+
+        for (FichaDomino ficha : tableroDominoModel.getListaFichasUsuario()) {
+            FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(ficha);
+            fichasDominoUsuario.add(fichaDominoPanel);
+            fichaUsuarioPanel.add(fichaDominoPanel);
         }
-        
+
         revalidate();
         repaint();
     }
-    
-    private JButton createDominoButton(FichaDomino ficha, int index) {
-        JButton btn = new JButton("[" + ficha.getExtremo1() + " | " + ficha.getExtremo2() + "]");
-        btn.setPreferredSize(new Dimension(110, 70));
-        btn.setFocusable(false);
-        btn.setBackground(Color.LIGHT_GRAY);
-        btn.setFont(new Font("Arial", Font.BOLD, 16));
-        
-        int xPosition = 377 + (index * 75);
-        btn.setBounds(xPosition, 678, 70, 110);
-        
-        return btn;
-    }
 
+    /**
+     *
+     *
+     * @param listener
+     */
     public void setSeleccionarFichaListener(ActionListener listener) {
-        for (JButton ficha : botonesFichasDominoUsuario) {
-            ficha.addActionListener(listener);
+        for (FichaDominoPanel fichaDominoPanel : fichasDominoUsuario) {
+            fichaDominoPanel.agregarListenerAlSeleccionar(listener);
         }
     }
 
     @Override
     public void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario) {
         SwingUtilities.invokeLater(() -> {
-            for (JButton ficha : botonesFichasDominoUsuario) {
-                remove(ficha);
+            fichasDominoUsuario.clear();
+            fichaUsuarioPanel.removeAll();
+
+            for (FichaDomino fichaDomino : listaFichasUsuario) {
+                FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(fichaDomino);
+                fichasDominoUsuario.add(fichaDominoPanel);
+                fichaUsuarioPanel.add(fichaDominoPanel);
             }
-            botonesFichasDominoUsuario.clear();
-            
-            for (int i = 0; i < listaFichasUsuario.size(); i++) {
-                FichaDomino fichaDomino = listaFichasUsuario.get(i);
-                JButton fichaButton = new JButton("[" + fichaDomino.getExtremo1() + 
-                                                 " | " + fichaDomino.getExtremo2() + "]");
-                fichaButton.setPreferredSize(new Dimension(110, 70));
-                fichaButton.setFocusable(false);
-                fichaButton.setBackground(Color.LIGHT_GRAY);
-                fichaButton.setFont(new Font("Arial", Font.BOLD, 16));
-                
-                int xPosition = 377 + (i * 75);
-                fichaButton.setBounds(xPosition, 678, 70, 110);
-                
-                botonesFichasDominoUsuario.add(fichaButton);
-                add(fichaButton);
-            }
-            
+
             revalidate();
             repaint();
         });
     }
 
     @Override
-    public void onChangeListaBotonesFichasUsuario(List<JButton> listaBotonesFichasUsuario) {
+    public void onChangeFichaComparativa(FichaDomino fichaComparativaModel) {
         SwingUtilities.invokeLater(() -> {
-            this.botonesFichasDominoUsuario = listaBotonesFichasUsuario ;
-            
-            crearFichasVisuales() ;
-        });
-    }
+            fichaComparativaPanel.removeAll();
 
-    @Override
-    public void onChangeFichaComparativa(JButton fichaComparativa) {
-        SwingUtilities.invokeLater(() -> {
-            for (JButton ficha : fichasComparativa) {
-                remove(ficha);
-            }
-            fichasComparativa.clear();
-            
-            fichaComparativa.setBounds(550, 350, 70, 110);
-            fichasComparativa.add(fichaComparativa);
-            add(fichaComparativa);
-            
+            fichaComparativaPanel = new FichaDominoPanel(fichaComparativaModel);
+            fichaComparativaPanel.add(fichaComparativaPanel);
+
             revalidate();
             repaint();
         });
     }
 
-    public TableroDominoModel getTableroDominoModel() {
-        return tableroDominoModel;
+    public JPanel getFichaUsuarioPanel() {
+        return fichaUsuarioPanel;
     }
 
-    public void setTableroDominoModel(TableroDominoModel tableroDominoModel) {
-        this.tableroDominoModel = tableroDominoModel;
+    public JPanel getFichaComparativaPanel() {
+        return fichaComparativaPanel;
     }
 
-    public List<JButton> getBotonesFichasDominoUsuario() {
-        return botonesFichasDominoUsuario;
-    }
-
-    public void setBotonesFichasDominoUsuario(List<JButton> botonesFichasDominoUsuario) {
-        this.botonesFichasDominoUsuario = botonesFichasDominoUsuario;
-    }
-
-    public List<JButton> getFichasComparativa() {
-        return fichasComparativa;
-    }
-
-    public void setFichasComparativa(List<JButton> fichasComparativa) {
-        this.fichasComparativa = fichasComparativa;
-    }
-
-    public List<FichaDomino> getFichasDominoUsuario() {
+    public List<FichaDominoPanel> getFichasDominoUsuario() {
         return fichasDominoUsuario;
     }
 
-    public void setFichasDominoUsuario(List<FichaDomino> fichasDominoUsuario) {
-        this.fichasDominoUsuario = fichasDominoUsuario;
+    public List<FichaDominoPanel> getFichasDominoComparativa() {
+        return fichasDominoComparativa;
     }
     
     
-    
+
 }

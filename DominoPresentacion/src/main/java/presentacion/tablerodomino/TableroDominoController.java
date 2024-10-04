@@ -7,8 +7,7 @@ package presentacion.tablerodomino;
 import dominio.FichaDomino;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -23,35 +22,30 @@ public class TableroDominoController {
     private TableroDominoView tableroDominoView ;
     
     public TableroDominoController(TableroDominoModel tableroDominoModel, TableroDominoView tableroDominoView) {
-        this.tableroDominoModel = tableroDominoModel ;
-        this.tableroDominoView = tableroDominoView ;
-        this.tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
-        initializeListeners() ;
+        this.tableroDominoModel = tableroDominoModel;
+        this.tableroDominoView = tableroDominoView;
+        inicializarListener();
     }
     
-    private void initializeListeners() {
-        for (JButton button : tableroDominoView.getBotonesFichasDominoUsuario()) {
-            button.addActionListener(new SeleccionarFichaListener());
-        }
-        
+    private void inicializarListener() {
         tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
     }
     
     
-    class SeleccionarFichaListener implements ActionListener {
+        class SeleccionarFichaListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JButton sourceButton = (JButton)e.getSource();
-            int index = tableroDominoView.getBotonesFichasDominoUsuario().indexOf(sourceButton);
-            
+            JPanel fichaDominoPanel = (JPanel)e.getSource();
+            int index = tableroDominoView.getFichasDominoUsuario().indexOf(fichaDominoPanel);
+
             if (index != -1) {
                 try {
                     FichaDomino selectedFicha = tableroDominoModel.getListaFichasUsuario().get(index);
                     System.out.println("Ficha Seleccionada: [" + selectedFicha.getExtremo1() + 
                                       " | " + selectedFicha.getExtremo2() + "]");
-                    
+
                     tableroDominoModel.validarExtremoCompatible(selectedFicha);
-                    
+
                 } catch (IndexOutOfBoundsException ex) {
                     System.out.println("Error");
                 }
@@ -59,5 +53,12 @@ public class TableroDominoController {
                 System.out.println("Error");
             }
         }
+    }
+     public void startNewGame() {
+        tableroDominoModel.repartirFichas();
+    }
+    
+    public void endTurn() {
+        
     }
 }

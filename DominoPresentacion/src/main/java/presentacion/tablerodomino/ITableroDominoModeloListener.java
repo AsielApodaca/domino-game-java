@@ -15,9 +15,7 @@ import javax.swing.JButton;
 public interface ITableroDominoModeloListener {
     
     void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario) ;
-    
-    void onChangeListaBotonesFichasUsuario(List<JButton> listaBotonesFichasUsuario) ;
-    
-    void onChangeFichaComparativa(JButton fichaComparativa) ;
+        
+    void onChangeFichaComparativa(FichaDomino fichaComparativa) ;
     
 }
