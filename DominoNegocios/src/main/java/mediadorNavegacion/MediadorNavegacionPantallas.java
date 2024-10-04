@@ -3,22 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package asistenteNavegacion;
+package mediadorNavegacion;
 
 import javax.swing.JPanel;
 /**
  *
  * @author Asiel Apodaca Monge
  */
-public class AsistenteNavegacionPantallas {
-    private static AsistenteNavegacionPantallas instance;
+public class MediadorNavegacionPantallas {
+    private static MediadorNavegacionPantallas instance;
     private JPanel contenedor;
     
-    private AsistenteNavegacionPantallas() {}
+    private MediadorNavegacionPantallas() {}
     
-    public static AsistenteNavegacionPantallas getInstance() {
+    public static MediadorNavegacionPantallas getInstance() {
         if (instance == null) {
-            instance = new AsistenteNavegacionPantallas();
+            instance = new MediadorNavegacionPantallas();
         }
         return instance;
     }

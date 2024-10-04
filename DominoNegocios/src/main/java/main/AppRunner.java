@@ -4,7 +4,7 @@
  */
 package main;
 
-import asistenteNavegacion.AsistenteNavegacionPantallas;
+import mediadorNavegacion.MediadorNavegacionPantallas;
 import contenedorView.FormContenedorView;
 import javax.swing.JPanel;
 import logica.tableroDominoLogica.ITableroDominoLogica;
@@ -26,8 +26,8 @@ public class AppRunner {
         formContenedorView.setVisible(true);
         
         // Obtiene el asistente de navegación de pantallas
-        AsistenteNavegacionPantallas asistenteNavegacionPantallas =
-                AsistenteNavegacionPantallas.getInstance();
+        MediadorNavegacionPantallas asistenteNavegacionPantallas =
+                MediadorNavegacionPantallas.getInstance();
         
         // Obtiene el contenedor del FormContenedorView y se asigna al asistente
         JPanel contenedor = formContenedorView.getContenedor();
