@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dev.itson.dominodominio;
+package dominio;
 
-import dev.itson.dominoenums.Posicion;
+import dominoenums.Posicion;
 
 /**
  *

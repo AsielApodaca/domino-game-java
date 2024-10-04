@@ -4,7 +4,7 @@
  */
 package presentacion.tablerodomino;
 
-import dev.itson.dominodominio.FichaDomino;
+import dominio.FichaDomino;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;

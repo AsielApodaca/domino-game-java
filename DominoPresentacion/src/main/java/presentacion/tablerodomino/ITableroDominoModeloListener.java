@@ -4,7 +4,7 @@
  */
 package presentacion.tablerodomino;
 
-import dev.itson.dominodominio.FichaDomino;
+import dominio.FichaDomino;
 import java.util.List;
 import javax.swing.JButton;
 
