@@ -5,6 +5,8 @@
 
 package contenedorView;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -20,18 +22,19 @@ public class FormContenedorView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
+        // Obtener la resolución de pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+
+        // Calcular tamaño de la ventana en función de la resolución (80% del tamaño de la pantalla)
+        int windowWidth = (int) (screenWidth * 0.8);
+        int windowHeight = (int) (screenHeight * 0.8);
+        setSize(windowWidth, windowHeight);
+
         // Crear el panel principal (contenedor)
         contenedor = new JPanel();
-        
-        /**
-         * Esto es temporal para que la barra del titulo de la ventana
-         * no afecte el tamaño el contenido del panel, que no
-         * "empuje el contenido".
-         * 
-         * La idea es después quitar la barra del título para luego
-         * poner la opción de cerrar dentro de la presentación del proyecto.
-         */
-        contenedor.setPreferredSize(new java.awt.Dimension(1200, 800)); // Establece el tamaño preferido
+        contenedor.setPreferredSize(new Dimension(windowWidth, windowHeight)); // Ajustar dinámicamente
 
         // Establecer el contenido del JFrame al panel 'contenedor'
         setContentPane(contenedor);

@@ -9,12 +9,14 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
 
 /**
@@ -36,10 +38,19 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         this.tableroDominoModel = tableroDominoModel;
         this.fichasDominoUsuario = new ArrayList<>();
 
+        // Configurar layout y tamaño dinámico basado en resolución de pantalla
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(1200, 800));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+        setPreferredSize(new Dimension((int) (screenWidth * 0.8), (int) (screenHeight * 0.8)));
 
+        // Crear paneles para las fichas del usuario y comparativas
         fichaUsuarioPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+        // Añadir un margen inferior de 10 píxeles al panel de fichas del usuario
+        fichaUsuarioPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
+
         fichaComparativaPanel = new JPanel(new GridBagLayout());
 
         add(fichaUsuarioPanel, BorderLayout.SOUTH);
@@ -118,7 +129,5 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     public List<FichaDominoPanel> getFichasDominoComparativa() {
         return fichasDominoComparativa;
     }
-    
-    
 
 }
