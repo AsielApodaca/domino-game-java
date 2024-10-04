@@ -33,7 +33,7 @@ public class FichaDominoPanel extends JPanel {
      * @param ficha
      */
     public FichaDominoPanel(FichaDomino ficha) {
-        setPreferredSize(new Dimension(70, 110));
+        setPreferredSize(new Dimension(90, 110));
         setBackground(Color.LIGHT_GRAY);
         setLayout(new GridLayout(2, 1, 2, 2));
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -41,8 +41,8 @@ public class FichaDominoPanel extends JPanel {
         labelExtremo1 = new JLabel(String.valueOf(ficha.getExtremo1()), SwingConstants.CENTER);
         labelExtremo2 = new JLabel(String.valueOf(ficha.getExtremo2()), SwingConstants.CENTER);
 
-        labelExtremo1.setFont(new Font("Arial", Font.BOLD, 24));
-        labelExtremo2.setFont(new Font("Arial", Font.BOLD, 24));
+        labelExtremo1.setFont(new Font("Arial", Font.BOLD, 22));
+        labelExtremo2.setFont(new Font("Arial", Font.BOLD, 22));
 
         add(labelExtremo1);
         add(labelExtremo2);
