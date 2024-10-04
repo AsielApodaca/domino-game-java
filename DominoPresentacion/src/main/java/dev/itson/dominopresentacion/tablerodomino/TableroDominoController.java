@@ -26,7 +26,6 @@ public class TableroDominoController {
         this.tableroDominoModel = tableroDominoModel ;
         this.tableroDominoView = tableroDominoView ;
         this.tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
-        setVisible() ;
         initializeListeners() ;
     }
     
@@ -38,14 +37,6 @@ public class TableroDominoController {
         tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
     }
     
-    private void setVisible() {
-        JFrame ventana = new JFrame("Domino");
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setSize(1200, 800);
-        ventana.setResizable(true);
-        ventana.add(tableroDominoView);
-        ventana.setVisible(true);
-    }
     
     class SeleccionarFichaListener implements ActionListener {
         @Override
