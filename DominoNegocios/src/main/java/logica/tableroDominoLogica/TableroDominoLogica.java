@@ -5,7 +5,7 @@
 
 package logica.tableroDominoLogica;
 
-import asistenteNavegacion.AsistenteNavegacionPantallas;
+import mediadorNavegacion.MediadorNavegacionPantallas;
 import presentacion.tablerodomino.TableroDominoController;
 import presentacion.tablerodomino.TableroDominoModel;
 import presentacion.tablerodomino.TableroDominoView;
@@ -22,7 +22,7 @@ public class TableroDominoLogica implements ITableroDominoLogica{
         TableroDominoModel model = new TableroDominoModel();
         TableroDominoView view = new TableroDominoView(model);
         TableroDominoController controller = new TableroDominoController(model, view);
-        AsistenteNavegacionPantallas.getInstance().navegarA(view);
+        MediadorNavegacionPantallas.getInstance().navegarA(view);
     }
     
 }
