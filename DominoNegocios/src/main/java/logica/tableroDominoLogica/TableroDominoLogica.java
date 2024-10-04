@@ -6,9 +6,9 @@
 package logica.tableroDominoLogica;
 
 import asistenteNavegacion.AsistenteNavegacionPantallas;
-import dev.itson.dominopresentacion.tablerodomino.TableroDominoController;
-import dev.itson.dominopresentacion.tablerodomino.TableroDominoModel;
-import dev.itson.dominopresentacion.tablerodomino.TableroDominoView;
+import presentacion.tablerodomino.TableroDominoController;
+import presentacion.tablerodomino.TableroDominoModel;
+import presentacion.tablerodomino.TableroDominoView;
 
 /**
  *

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dev.itson.dominopresentacion.tablerodomino;
+package presentacion.tablerodomino;
 
 import dev.itson.dominodominio.FichaDomino;
 import java.awt.event.ActionEvent;
