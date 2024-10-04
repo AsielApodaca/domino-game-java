@@ -14,18 +14,33 @@ import javax.swing.JPanel;
  */
 public class FormContenedorView extends JFrame {
     private JPanel contenedor;
-    
+
     public FormContenedorView() {
-        setTitle("Mi Aplicación");
-        setSize(1200, 800);
+        setTitle("DOT;MINO");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        setResizable(false);
+
+        // Crear el panel principal (contenedor)
         contenedor = new JPanel();
-        setContentPane(contenedor);
         
+        /**
+         * Esto es temporal para que la barra del titulo de la ventana
+         * no afecte el tamaño el contenido del panel, que no
+         * "empuje el contenido".
+         * 
+         * La idea es después quitar la barra del título para luego
+         * poner la opción de cerrar dentro de la presentación del proyecto.
+         */
+        contenedor.setPreferredSize(new java.awt.Dimension(1200, 800)); // Establece el tamaño preferido
+
+        // Establecer el contenido del JFrame al panel 'contenedor'
+        setContentPane(contenedor);
+
+        // Ajustar el tamaño del JFrame basado en el contenido
+        pack();
         
     }
-    
+
     public JPanel getContenedor() {
         return contenedor;
     }
