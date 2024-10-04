@@ -24,6 +24,7 @@ public class FichaDominoPanel extends JPanel {
 
     private JLabel labelExtremo1;
     private JLabel labelExtremo2;
+    private boolean isSelected = false;
 
     /**
      * Constructor con los atributos de la fichaDominoPanel. Se dividio en dos
@@ -57,9 +58,20 @@ public class FichaDominoPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 listener.actionPerformed(new java.awt.event.ActionEvent(FichaDominoPanel.this, java.awt.event.ActionEvent.ACTION_PERFORMED, null));
+                toggleSelection();
             }
         });
     }
+    private void toggleSelection() {
+        isSelected = !isSelected;
+        if (isSelected) {
+            setBorder(BorderFactory.createLineBorder(Color.RED, 3)); 
+        } else {
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));  
+        }
+        repaint();
+    }
 }
+
 
 

@@ -12,7 +12,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
@@ -56,6 +55,9 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
             FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(ficha);
             fichasDominoUsuario.add(fichaDominoPanel);
             fichaUsuarioPanel.add(fichaDominoPanel);
+            fichaDominoPanel.agregarListenerAlSeleccionar(e -> {
+                System.out.println("Ficha seleccionada: " + ficha.getExtremo1() + " - " + ficha.getExtremo2());
+            });
         }
 
         revalidate();
@@ -83,6 +85,9 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
                 FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(fichaDomino);
                 fichasDominoUsuario.add(fichaDominoPanel);
                 fichaUsuarioPanel.add(fichaDominoPanel);
+                fichaDominoPanel.agregarListenerAlSeleccionar(e -> {
+                    System.out.println("Ficha seleccionada: " + fichaDomino.getExtremo1() + " - " + fichaDomino.getExtremo2());
+                });
             }
 
             revalidate();
@@ -118,7 +123,5 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     public List<FichaDominoPanel> getFichasDominoComparativa() {
         return fichasDominoComparativa;
     }
-    
-    
 
 }
