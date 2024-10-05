@@ -18,4 +18,8 @@ public interface ITableroDominoModeloListener {
         
     void onChangeFichaComparativa(FichaDomino fichaComparativa) ;
     
+    void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas) ;
+    
+    void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada) ;
+    
 }

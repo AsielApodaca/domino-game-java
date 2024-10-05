@@ -118,7 +118,17 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
             repaint();
         });
     }
-
+    
+    @Override
+    public void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    @Override
+    public void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     public JPanel getFichaUsuarioPanel() {
         return fichaUsuarioPanel;
     }
@@ -134,5 +144,9 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     public List<FichaDominoPanel> getFichasDominoComparativa() {
         return fichasDominoComparativa;
     }
+
+    
+
+    
 
 }

@@ -21,8 +21,11 @@ import javax.swing.JButton;
 public class TableroDominoModel {
 
     private List<FichaDomino> listaFichasUsuario;
-    private FichaDomino fichaComparativa;
+    private List<FichaDomino> fichasComparativas;
     private List<ITableroDominoModeloListener> listeners;
+    private List<FichaDomino> listaFichasValidas;
+    private FichaDomino fichaComparativa;
+    private FichaDomino fichaSeleccionada;
     private Random random = new Random();
 
     public TableroDominoModel() {
@@ -50,22 +53,20 @@ public class TableroDominoModel {
         return listaFichasUsuario;
     }
 
-     public void setListaFichasUsuario(List<FichaDomino> listaFichasUsuario) {
+    public void setListaFichasUsuario(List<FichaDomino> listaFichasUsuario) {
         this.listaFichasUsuario = listaFichasUsuario;
         notifyListaFichasUsuarioChanged();
     }
 
-   
-
     public void repartirFichas() {
-         listaFichasUsuario.clear();
+        listaFichasUsuario.clear();
         for (int i = 0; i < 5; i++) {
             int extremo1 = random.nextInt(6) + 1;
             int extremo2 = random.nextInt(6) + 1;
             listaFichasUsuario.add(new FichaDomino(extremo1, extremo2));
         }
         notifyListaFichasUsuarioChanged();
-        
+
         if (!listaFichasUsuario.isEmpty()) {
             setFichaComparativa(listaFichasUsuario.get(random.nextInt(listaFichasUsuario.size())));
         }
@@ -77,16 +78,24 @@ public class TableroDominoModel {
         }
     }
 
-    private void notifyListaBotonesFichasUsuarioChanged() {
-        for (ITableroDominoModeloListener listener : listeners) {
-            listener.onChangeFichaComparativa(fichaComparativa);
-        }
-    }
-
     private void notifyFichaComparativaChanged() {
         for (ITableroDominoModeloListener listener : listeners) {
             listener.onChangeFichaComparativa(fichaComparativa);
         }
+    }
+    
+    private void notifyFichaSeleccionadaChanged() {
+        for (ITableroDominoModeloListener listener : listeners) {
+            listener.onChangeFichaSeleccionada(fichaSeleccionada);
+        }
+    }
+
+    public List<FichaDomino> getFichasComparativas() {
+        return fichasComparativas;
+    }
+
+    public void setFichasComparativas(List<FichaDomino> fichasComparativas) {
+        this.fichasComparativas = fichasComparativas;
     }
 
     public FichaDomino getFichaComparativa() {
@@ -95,6 +104,23 @@ public class TableroDominoModel {
 
     public void setFichaComparativa(FichaDomino fichaComparativa) {
         this.fichaComparativa = fichaComparativa;
+    }
+
+    public List<FichaDomino> getListaFichasValidas() {
+        return listaFichasValidas;
+    }
+
+    public void setListaFichasValidas(List<FichaDomino> listaFichasValidas) {
+        this.listaFichasValidas = listaFichasValidas;
+    }
+
+    public FichaDomino getFichaSeleccionada() {
+        return fichaSeleccionada;
+    }
+
+    public void setFichaSeleccionada(FichaDomino fichaSeleccionada) {
+        this.fichaSeleccionada = fichaSeleccionada;
+        notifyFichaSeleccionadaChanged();
     }
 
     public List<ITableroDominoModeloListener> getListeners() {
@@ -112,7 +138,5 @@ public class TableroDominoModel {
     public void setRandom(Random random) {
         this.random = random;
     }
-    
-    
 
 }
