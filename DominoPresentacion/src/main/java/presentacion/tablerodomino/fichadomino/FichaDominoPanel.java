@@ -25,6 +25,7 @@ public class FichaDominoPanel extends JPanel {
     private JLabel labelExtremo1;
     private JLabel labelExtremo2;
     private boolean isSelected = false;
+    private static FichaDominoPanel selectedFicha = null;
 
     /**
      * Constructor con los atributos de la fichaDominoPanel. Se dividio en dos
@@ -48,30 +49,53 @@ public class FichaDominoPanel extends JPanel {
         add(labelExtremo1);
         add(labelExtremo2);
     }
-    
+
     /**
      * Se crea un listener para cuando se seleccione esta pieza de dominó
-     * @param listener 
+     *
+     * @param listener
      */
     public void agregarListenerAlSeleccionar(ActionListener listener) {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 listener.actionPerformed(new java.awt.event.ActionEvent(FichaDominoPanel.this, java.awt.event.ActionEvent.ACTION_PERFORMED, null));
-                toggleSelection();
+                selectFicha();
             }
         });
     }
+
+    private void selectFicha() {
+        if (selectedFicha != null && selectedFicha != this) {
+            selectedFicha.deselect();
+        }
+        toggleSelection();
+        selectedFicha = this;
+    }
+
     private void toggleSelection() {
         isSelected = !isSelected;
+        updateBorder();
+    }
+
+    private void deselect() {
+        isSelected = false;
+        updateBorder();
+    }
+
+    private void updateBorder() {
         if (isSelected) {
-            setBorder(BorderFactory.createLineBorder(Color.RED, 3)); 
+            setBorder(BorderFactory.createLineBorder(Color.RED, 3));
         } else {
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));  
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         }
         repaint();
     }
+
+    public static void deselectAll() {
+        if (selectedFicha != null) {
+            selectedFicha.deselect();
+            selectedFicha = null;
+        }
+    }
 }
-
-
-
