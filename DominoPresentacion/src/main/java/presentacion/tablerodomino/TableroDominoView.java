@@ -4,6 +4,7 @@ import dominio.FichaDomino;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -31,10 +32,12 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     private final JPanel fichaUsuarioPanel;
     private final MesaDominoPanel mesaDominoPanel;
     private JPanel fichaComparativaPanel;
+    private Image fondoPantalla;
 
     public TableroDominoView(TableroDominoModel tableroDominoModel) {
         this.tableroDominoModel = tableroDominoModel;
         this.fichasDominoUsuario = new ArrayList<>();
+        
 
         // Configurar layout y tamaño dinámico basado en resolución de pantalla
         setLayout(new BorderLayout());
@@ -66,6 +69,14 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         
     }
 
+//    @Override
+//    public void paint(Graphics g){
+//        super.paintComponent(g);
+//        fondoPantalla = new ImageIcon(getClass().getResource("/multimedia/FondoPartida.jpg")).getImage();       
+//        g.drawImage(fondoPantalla, 0, 0, getWidth(),getHeight(), this);
+//        
+//
+//    }
     private void crearFichasVisuales() {
         fichaUsuarioPanel.removeAll();
 

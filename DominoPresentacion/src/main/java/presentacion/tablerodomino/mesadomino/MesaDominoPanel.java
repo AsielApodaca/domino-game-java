@@ -16,7 +16,6 @@ public class MesaDominoPanel extends JPanel {
 
     public MesaDominoPanel() {
         setLayout(new BorderLayout());
-        setBorder(new BordeRedondo(20));
         setPreferredSize(new Dimension(205, 440));
         setBackground(new Color(12, 4, 58, 230));
         setOpaque(true); 
