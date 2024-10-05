@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package logica.tableroDominoLogica;
 
 import dominio.FichaDomino;
@@ -17,14 +16,17 @@ import presentacion.tablerodomino.TableroDominoView;
 
 /**
  *
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
 public class TableroDominoLogica implements ITableroDominoLogica, ITableroDominoModeloListener {
-    
-    TableroDominoModel model ;
-    TableroDominoView view ;
-    TableroDominoController controller ;
-    
+
+    TableroDominoModel model;
+    TableroDominoView view;
+    TableroDominoController controller;
+
     @Override
     public void crearYMostrarPantalla() {
         this.model = new TableroDominoModel();
@@ -36,7 +38,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
 
     @Override
     public void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario) {
-        return ;
+        return;
     }
 
     @Override

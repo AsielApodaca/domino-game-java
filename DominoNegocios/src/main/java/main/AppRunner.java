@@ -17,7 +17,10 @@ import logica.tableroDominoLogica.TableroDominoLogica;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class AppRunner {
 
@@ -41,7 +44,6 @@ public class AppRunner {
         ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica();
         tableroDominoLogica.crearYMostrarPantalla();
 
-        
         //PRUEBAS LOGICA POZO (FUNCIONA)
 //        Pozo pozo = new Pozo(null); //pozo vacio
 //        PozoLogica pozoLogica = new PozoLogica(pozo);
@@ -88,4 +90,5 @@ public class AppRunner {
 //
 //        }
 //    }
+    }
 }

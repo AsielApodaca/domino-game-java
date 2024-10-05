@@ -6,9 +6,13 @@ package negocio.configuracion;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class Configuracion {
+
     public static float escala = 1.0f;
     public static int volumenGeneral = 10;
     public static boolean pantallaCompleta = false;
