@@ -35,7 +35,7 @@ public class FichaDominoPanel extends JPanel {
      * @param ficha
      */
     public FichaDominoPanel(FichaDomino ficha) {
-        setPreferredSize(new Dimension(90, 110));
+        setPreferredSize(new Dimension(70, 110));
         setBackground(Color.LIGHT_GRAY);
         setLayout(new GridLayout(2, 1, 2, 2));
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
