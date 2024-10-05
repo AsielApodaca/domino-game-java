@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presentacion.tablerodomino;
 
 import dominio.FichaDomino;
@@ -9,14 +5,17 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
+import presentacion.tablerodomino.mesadomino.MesaDominoPanel;
 
 /**
  *
@@ -27,10 +26,10 @@ import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
  */
 public class TableroDominoView extends JPanel implements ITableroDominoModeloListener {
 
-    private TableroDominoModel tableroDominoModel;
-    private List<FichaDominoPanel> fichasDominoUsuario;
-    private List<FichaDominoPanel> fichasDominoComparativa;
-    private JPanel fichaUsuarioPanel;
+    private final TableroDominoModel tableroDominoModel;
+    private final List<FichaDominoPanel> fichasDominoUsuario;
+    private final JPanel fichaUsuarioPanel;
+    private final MesaDominoPanel mesaDominoPanel;
     private JPanel fichaComparativaPanel;
 
     public TableroDominoView(TableroDominoModel tableroDominoModel) {
@@ -44,19 +43,27 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         int screenHeight = screenSize.height;
         setPreferredSize(new Dimension((int) (screenWidth * 0.8), (int) (screenHeight * 0.8)));
 
-        // Crear paneles para las fichas del usuario y comparativas
-        fichaUsuarioPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        // Crear el panel MesaDominoPanel
+        mesaDominoPanel = new MesaDominoPanel();
+        fichaComparativaPanel = new JPanel(new GridBagLayout()); // Crear el panel comparativo
 
-        // Añadir un margen inferior de 10 píxeles al panel de fichas del usuario
+        // Crear paneles para las fichas del usuario
+        fichaUsuarioPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         fichaUsuarioPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
 
-        fichaComparativaPanel = new JPanel(new GridBagLayout());
+        // Agregar el panel MesaDominoPanel al centro
+        add(mesaDominoPanel, BorderLayout.CENTER);
+
+        // Agregar el fichaComparativaPanel al mesaDominoPanel
+        mesaDominoPanel.addFichaComparativaPanel(fichaComparativaPanel);
 
         add(fichaUsuarioPanel, BorderLayout.SOUTH);
-        add(fichaComparativaPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
 
         tableroDominoModel.addListener(this);
         tableroDominoModel.repartirFichas();
+        
     }
 
     private void crearFichasVisuales() {
@@ -71,8 +78,7 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
             });
         }
 
-        revalidate();
-        repaint();
+      
     }
 
     /**
@@ -118,17 +124,17 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
             repaint();
         });
     }
-    
+
     @Override
     public void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     public JPanel getFichaUsuarioPanel() {
         return fichaUsuarioPanel;
     }
@@ -140,13 +146,5 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     public List<FichaDominoPanel> getFichasDominoUsuario() {
         return fichasDominoUsuario;
     }
-
-    public List<FichaDominoPanel> getFichasDominoComparativa() {
-        return fichasDominoComparativa;
-    }
-
-    
-
-    
 
 }
