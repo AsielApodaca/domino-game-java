@@ -8,23 +8,26 @@ import dominoenums.Posicion;
 
 /**
  *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class FichaDomino {
-    
-    private Integer extremo1 ;
-    private Integer extremo2 ;
-    private Posicion posicion ;
-    
+
+    private Integer extremo1;
+    private Integer extremo2;
+    private Posicion posicion;
+
     public FichaDomino(Integer extremo1, Integer extremo2) {
-        this.extremo1 = extremo1 ;
-        this.extremo2 = extremo2 ;
+        this.extremo1 = extremo1;
+        this.extremo2 = extremo2;
     }
-        
+
     public FichaDomino(Integer extremo1, Integer extremo2, Posicion posicion) {
-        this.extremo1 = extremo1 ;
-        this.extremo2 = extremo2 ;
-        this.posicion = posicion ;
+        this.extremo1 = extremo1;
+        this.extremo2 = extremo2;
+        this.posicion = posicion;
     }
 
     public Integer getExtremo1() {
@@ -50,6 +53,5 @@ public class FichaDomino {
     public void setPosicion(Posicion posicion) {
         this.posicion = posicion;
     }
-    
-    
+
 }

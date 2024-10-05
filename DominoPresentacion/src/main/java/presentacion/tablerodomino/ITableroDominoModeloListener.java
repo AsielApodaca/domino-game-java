@@ -10,12 +10,19 @@ import javax.swing.JButton;
 
 /**
  *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public interface ITableroDominoModeloListener {
-    
-    void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario) ;
-        
-    void onChangeFichaComparativa(FichaDomino fichaComparativa) ;
-    
+
+    void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario);
+
+    void onChangeFichaComparativa(FichaDomino fichaComparativa);
+
+    void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas);
+
+    void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada);
+
 }
