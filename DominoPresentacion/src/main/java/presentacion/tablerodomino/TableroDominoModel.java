@@ -4,7 +4,7 @@
  */
 package presentacion.tablerodomino;
 
-import dominio.FichaDomino;
+import dominio.FichaDominoEntity;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +26,18 @@ public class TableroDominoModel {
     // Esta escala se multiplicará por todos los valores visuales del contenido
     private float escala; // Proporción con base al tamaño original
     
-    private List<FichaDomino> listaFichasUsuario;
-    private List<FichaDomino> fichasComparativas;
+    private List<FichaDominoEntity> listaFichasUsuario;
+    private List<FichaDominoEntity> fichasEnMesa;
     private List<ITableroDominoModeloListener> listeners;
-    private List<FichaDomino> listaFichasValidas;
-    private FichaDomino fichaComparativa;
-    private FichaDomino fichaSeleccionada;
+    private List<FichaDominoEntity> listaFichasValidas;
+    private FichaDominoEntity fichaComparativa;
+    private FichaDominoEntity fichaSeleccionada;
     private Random random = new Random();
 
     public TableroDominoModel() {
         listaFichasUsuario = new ArrayList<>();
         listeners = new ArrayList<>();
-        fichasComparativas = new ArrayList<>() ;
+        fichasEnMesa = new ArrayList<>() ;
         listaFichasValidas = new ArrayList<>() ;
         simularFichasComparativas();
     }
@@ -47,7 +47,7 @@ public class TableroDominoModel {
         for (int i = 0; i < 5; i++) {
             int extremo1 = random.nextInt(6) + 1;
             int extremo2 = random.nextInt(6) + 1;
-            fichasComparativas.add(new FichaDomino(extremo1, extremo2));
+            fichasEnMesa.add(new FichaDominoEntity(extremo1, extremo2));
         }
     }
 
@@ -85,7 +85,7 @@ public class TableroDominoModel {
         listeners.remove(listener);
     }
 
-    public void validarExtremoCompatible(FichaDomino ficha) {
+    public void validarExtremoCompatible(FichaDominoEntity ficha) {
 
     }
 
@@ -93,11 +93,11 @@ public class TableroDominoModel {
 
     }
 
-    public List<FichaDomino> getListaFichasUsuario() {
+    public List<FichaDominoEntity> getListaFichasUsuario() {
         return listaFichasUsuario;
     }
 
-    public void setListaFichasUsuario(List<FichaDomino> listaFichasUsuario) {
+    public void setListaFichasUsuario(List<FichaDominoEntity> listaFichasUsuario) {
         this.listaFichasUsuario = listaFichasUsuario;
         notifyListaFichasUsuarioChanged();
     }
@@ -107,7 +107,7 @@ public class TableroDominoModel {
         for (int i = 0; i < 5; i++) {
             int extremo1 = random.nextInt(6) + 1;
             int extremo2 = random.nextInt(6) + 1;
-            listaFichasUsuario.add(new FichaDomino(extremo1, extremo2));
+            listaFichasUsuario.add(new FichaDominoEntity(extremo1, extremo2));
         }
         notifyListaFichasUsuarioChanged();
 
@@ -136,45 +136,45 @@ public class TableroDominoModel {
     
     private void notifyFichasComparativasChanged() {
         for (ITableroDominoModeloListener listener : listeners) {
-            listener.onChangeFichasComparativas(fichasComparativas);
+            listener.onChangeFichasComparativas(fichasEnMesa);
         } 
     }
 
-    public List<FichaDomino> getFichasComparativas() {
-        return fichasComparativas;
+    public List<FichaDominoEntity> getFichasComparativas() {
+        return fichasEnMesa;
     }
     
-    public void colocarFichaComparativa(FichaDomino fichaComparativa) {
-        this.fichasComparativas.add(fichaComparativa) ;
+    public void colocarFichaComparativa(FichaDominoEntity fichaComparativa) {
+        this.fichasEnMesa.add(fichaComparativa) ;
         notifyFichasComparativasChanged() ;
     }
 
-    public void setFichasComparativas(List<FichaDomino> fichasComparativas) {
-        this.fichasComparativas = fichasComparativas;
+    public void setFichasComparativas(List<FichaDominoEntity> fichasComparativas) {
+        this.fichasEnMesa = fichasComparativas;
         notifyFichasComparativasChanged() ;
     }
 
-    public FichaDomino getFichaComparativa() {
+    public FichaDominoEntity getFichaComparativa() {
         return fichaComparativa;
     }
 
-    public void setFichaComparativa(FichaDomino fichaComparativa) {
+    public void setFichaComparativa(FichaDominoEntity fichaComparativa) {
         this.fichaComparativa = fichaComparativa;
     }
 
-    public List<FichaDomino> getListaFichasValidas() {
+    public List<FichaDominoEntity> getListaFichasValidas() {
         return listaFichasValidas;
     }
 
-    public void setListaFichasValidas(List<FichaDomino> listaFichasValidas) {
+    public void setListaFichasValidas(List<FichaDominoEntity> listaFichasValidas) {
         this.listaFichasValidas = listaFichasValidas;
     }
 
-    public FichaDomino getFichaSeleccionada() {
+    public FichaDominoEntity getFichaSeleccionada() {
         return fichaSeleccionada;
     }
 
-    public void setFichaSeleccionada(FichaDomino fichaSeleccionada) {
+    public void setFichaSeleccionada(FichaDominoEntity fichaSeleccionada) {
         this.fichaSeleccionada = fichaSeleccionada;
         notifyFichaSeleccionadaChanged();
     }
