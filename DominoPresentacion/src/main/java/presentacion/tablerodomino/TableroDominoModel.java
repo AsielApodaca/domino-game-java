@@ -32,6 +32,7 @@ public class TableroDominoModel {
         listaFichasUsuario = new ArrayList<>();
         listeners = new ArrayList<>();
         fichasComparativas = new ArrayList<>() ;
+        listaFichasValidas = new ArrayList<>() ;
         simularFichasComparativas();
     }
     
@@ -109,6 +110,11 @@ public class TableroDominoModel {
 
     public List<FichaDomino> getFichasComparativas() {
         return fichasComparativas;
+    }
+    
+    public void colocarFichaComparativa(FichaDomino fichaComparativa) {
+        this.fichasComparativas.add(fichaComparativa) ;
+        notifyFichasComparativasChanged() ;
     }
 
     public void setFichasComparativas(List<FichaDomino> fichasComparativas) {

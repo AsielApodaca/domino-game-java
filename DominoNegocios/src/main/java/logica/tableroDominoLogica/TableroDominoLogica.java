@@ -61,6 +61,8 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
             if (coincideConIzquierda || coincideConDerecha) {
                 model.getListaFichasValidas().add(ficha);
             }
+            
+            System.out.println(model.getListaFichasValidas().toString());
         });
     }
 
@@ -69,7 +71,6 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         FichaDomino fichaIzquierda = model.getFichasComparativas().getFirst();
         FichaDomino fichaDerecha = model.getFichasComparativas().getLast();
         
-        System.out.println("SE SELECCIONO UNA FICHA");
         boolean sePuedeColocarIzquierda = false;
         boolean sePuedeColocarDerecha = false;
 
