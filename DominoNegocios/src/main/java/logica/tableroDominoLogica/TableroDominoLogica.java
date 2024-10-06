@@ -61,6 +61,8 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
             if (coincideConIzquierda || coincideConDerecha) {
                 model.getListaFichasValidas().add(ficha);
             }
+            
+            System.out.println(model.getListaFichasValidas().toString());
         });
     }
 
