@@ -32,7 +32,7 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     private final TableroDominoModel tableroDominoModel;
     private final List<FichaDominoPanel> fichasDominoUsuario;
     private final JPanel fichaUsuarioPanel;
-    private final MesaDominoPanel mesaDominoPanel;
+    private final JPanel mesaDominoPanel;
     private JPanel fichaComparativaPanel;
     private BufferedImage fondoPantalla;
 
@@ -56,7 +56,7 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
 
         // Crear el panel MesaDominoPanel
         mesaDominoPanel = new MesaDominoPanel();
-        mesaDominoPanel.setOpaque(false);  // Hacer el panel transparente
+        mesaDominoPanel.setOpaque(true);  // Hacer el panel transparente
 
         fichaComparativaPanel = new JPanel(new GridBagLayout()); // Crear el panel comparativo
         fichaComparativaPanel.setOpaque(false);  // Hacer el panel transparente
@@ -65,12 +65,10 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         fichaUsuarioPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         fichaUsuarioPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
         fichaUsuarioPanel.setOpaque(false);  // Hacer el panel transparente
+        
 
         // Agregar el panel MesaDominoPanel al centro
         add(mesaDominoPanel, BorderLayout.CENTER);
-
-        // Agregar el fichaComparativaPanel al mesaDominoPanel
-        mesaDominoPanel.addFichaComparativaPanel(fichaComparativaPanel);
 
         add(fichaUsuarioPanel, BorderLayout.SOUTH);
 
@@ -85,19 +83,6 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         super.paintComponent(g);
         if (fondoPantalla != null) {
             g.drawImage(fondoPantalla, 0, 0, getWidth(), getHeight(), this);
-        }
-    }
-
-    private void crearFichasVisuales() {
-        fichaUsuarioPanel.removeAll();
-
-        for (FichaDomino ficha : tableroDominoModel.getListaFichasUsuario()) {
-            FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(ficha);
-            fichasDominoUsuario.add(fichaDominoPanel);
-            fichaUsuarioPanel.add(fichaDominoPanel);
-            fichaDominoPanel.agregarListenerAlSeleccionar(e -> {
-                System.out.println("Ficha seleccionada: " + ficha.getExtremo1() + " - " + ficha.getExtremo2());
-            });
         }
     }
 
@@ -143,12 +128,12 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
 
     @Override
     public void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas) {
-        
+
     }
 
     @Override
     public void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada) {
-        
+
     }
 
     public JPanel getFichaUsuarioPanel() {

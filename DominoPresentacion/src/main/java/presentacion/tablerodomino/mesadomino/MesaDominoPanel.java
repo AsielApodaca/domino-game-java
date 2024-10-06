@@ -17,11 +17,26 @@ public class MesaDominoPanel extends JPanel {
     public MesaDominoPanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(205, 440));
-        setBackground(new Color(12, 4, 58, 230));
+        
         setOpaque(true); 
     }
 
     public void addFichaComparativaPanel(JPanel fichaComparativaPanel) {
         add(fichaComparativaPanel, BorderLayout.CENTER); 
     }
+    
+        /**
+     * Se encarga de dibujar el contenido visual del panel.
+     *
+     * @param g Objeto Graphics utilizado para realizar las operaciones de
+     * dibujo
+     */
+    @Override
+    protected void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g);
+        
+        setBackground(new Color(12, 4, 58, 230));
+        
+    }
+
 }
