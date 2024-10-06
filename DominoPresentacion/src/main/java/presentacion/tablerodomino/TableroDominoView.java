@@ -9,8 +9,11 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -32,12 +35,11 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     private final JPanel fichaUsuarioPanel;
     private final MesaDominoPanel mesaDominoPanel;
     private JPanel fichaComparativaPanel;
-    private Image fondoPantalla;
+    private BufferedImage fondoPantalla;
 
     public TableroDominoView(TableroDominoModel tableroDominoModel) {
         this.tableroDominoModel = tableroDominoModel;
         this.fichasDominoUsuario = new ArrayList<>();
-        
 
         // Configurar layout y tamaño dinámico basado en resolución de pantalla
         setLayout(new BorderLayout());
@@ -46,13 +48,24 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         int screenHeight = screenSize.height;
         setPreferredSize(new Dimension((int) (screenWidth * 0.8), (int) (screenHeight * 0.8)));
 
+        // Cargar la imagen de fondo
+        try {
+            fondoPantalla = ImageIO.read(getClass().getResource("/multimedia/FondoPartida.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Crear el panel MesaDominoPanel
         mesaDominoPanel = new MesaDominoPanel();
+        mesaDominoPanel.setOpaque(false);  // Hacer el panel transparente
+
         fichaComparativaPanel = new JPanel(new GridBagLayout()); // Crear el panel comparativo
+        fichaComparativaPanel.setOpaque(false);  // Hacer el panel transparente
 
         // Crear paneles para las fichas del usuario
         fichaUsuarioPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
         fichaUsuarioPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
+        fichaUsuarioPanel.setOpaque(false);  // Hacer el panel transparente
 
         // Agregar el panel MesaDominoPanel al centro
         add(mesaDominoPanel, BorderLayout.CENTER);
@@ -61,22 +74,21 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         mesaDominoPanel.addFichaComparativaPanel(fichaComparativaPanel);
 
         add(fichaUsuarioPanel, BorderLayout.SOUTH);
-        revalidate();
-        repaint();
 
         tableroDominoModel.addListener(this);
         tableroDominoModel.repartirFichas();
-        
+
+        setOpaque(false);  // Hacer este panel transparente para que se vea el fondo
     }
 
-//    @Override
-//    public void paint(Graphics g){
-//        super.paintComponent(g);
-//        fondoPantalla = new ImageIcon(getClass().getResource("/multimedia/FondoPartida.jpg")).getImage();       
-//        g.drawImage(fondoPantalla, 0, 0, getWidth(),getHeight(), this);
-//        
-//
-//    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (fondoPantalla != null) {
+            g.drawImage(fondoPantalla, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+
     private void crearFichasVisuales() {
         fichaUsuarioPanel.removeAll();
 
@@ -88,8 +100,6 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
                 System.out.println("Ficha seleccionada: " + ficha.getExtremo1() + " - " + ficha.getExtremo2());
             });
         }
-
-      
     }
 
     /**
