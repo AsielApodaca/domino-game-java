@@ -16,7 +16,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
 import presentacion.tablerodomino.mesadomino.MesaDominoPanel;
@@ -115,45 +114,41 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
 
     @Override
     public void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario) {
-        SwingUtilities.invokeLater(() -> {
-            fichasDominoUsuario.clear();
-            fichaUsuarioPanel.removeAll();
+        fichasDominoUsuario.clear();
+        fichaUsuarioPanel.removeAll();
 
-            for (FichaDomino fichaDomino : listaFichasUsuario) {
-                FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(fichaDomino);
-                fichasDominoUsuario.add(fichaDominoPanel);
-                fichaUsuarioPanel.add(fichaDominoPanel);
-                fichaDominoPanel.agregarListenerAlSeleccionar(e -> {
-                    System.out.println("Ficha seleccionada: " + fichaDomino.getExtremo1() + " - " + fichaDomino.getExtremo2());
-                });
-            }
+        for (FichaDomino fichaDomino : listaFichasUsuario) {
+            FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(fichaDomino);
+            fichasDominoUsuario.add(fichaDominoPanel);
+            fichaUsuarioPanel.add(fichaDominoPanel);
+            fichaDominoPanel.agregarListenerAlSeleccionar(e -> {
+                System.out.println("Ficha seleccionada: " + fichaDomino.getExtremo1() + " - " + fichaDomino.getExtremo2());
+            });
+        }
 
-            revalidate();
-            repaint();
-        });
+        revalidate();
+        repaint();
     }
 
     @Override
     public void onChangeFichaComparativa(FichaDomino fichaComparativaModel) {
-        SwingUtilities.invokeLater(() -> {
-            fichaComparativaPanel.removeAll();
+        fichaComparativaPanel.removeAll();
 
-            fichaComparativaPanel = new FichaDominoPanel(fichaComparativaModel);
-            fichaComparativaPanel.add(fichaComparativaPanel);
+        fichaComparativaPanel = new FichaDominoPanel(fichaComparativaModel);
+        fichaComparativaPanel.add(fichaComparativaPanel);
 
-            revalidate();
-            repaint();
-        });
+        revalidate();
+        repaint();
     }
 
     @Override
     public void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
     public void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     public JPanel getFichaUsuarioPanel() {

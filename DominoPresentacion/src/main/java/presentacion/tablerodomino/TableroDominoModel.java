@@ -31,6 +31,17 @@ public class TableroDominoModel {
     public TableroDominoModel() {
         listaFichasUsuario = new ArrayList<>();
         listeners = new ArrayList<>();
+        fichasComparativas = new ArrayList<>() ;
+        simularFichasComparativas();
+    }
+    
+    private void simularFichasComparativas() {
+        listaFichasUsuario.clear();
+        for (int i = 0; i < 5; i++) {
+            int extremo1 = random.nextInt(6) + 1;
+            int extremo2 = random.nextInt(6) + 1;
+            fichasComparativas.add(new FichaDomino(extremo1, extremo2));
+        }
     }
 
     public void addListener(ITableroDominoModeloListener listener) {
@@ -89,6 +100,12 @@ public class TableroDominoModel {
             listener.onChangeFichaSeleccionada(fichaSeleccionada);
         }
     }
+    
+    private void notifyFichasComparativasChanged() {
+        for (ITableroDominoModeloListener listener : listeners) {
+            listener.onChangeFichasComparativas(fichasComparativas);
+        } 
+    }
 
     public List<FichaDomino> getFichasComparativas() {
         return fichasComparativas;
@@ -96,6 +113,7 @@ public class TableroDominoModel {
 
     public void setFichasComparativas(List<FichaDomino> fichasComparativas) {
         this.fichasComparativas = fichasComparativas;
+        notifyFichasComparativasChanged() ;
     }
 
     public FichaDomino getFichaComparativa() {

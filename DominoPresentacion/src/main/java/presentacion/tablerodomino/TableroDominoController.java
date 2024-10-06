@@ -30,20 +30,20 @@ public class TableroDominoController {
     private void inicializarListener() {
         tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
     }
-    
-    
-        class SeleccionarFichaListener implements ActionListener {
+
+    class SeleccionarFichaListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            JPanel fichaDominoPanel = (JPanel)e.getSource();
+            JPanel fichaDominoPanel = (JPanel) e.getSource();
             int index = tableroDominoView.getFichasDominoUsuario().indexOf(fichaDominoPanel);
 
             if (index != -1) {
                 try {
                     FichaDomino selectedFicha = tableroDominoModel.getListaFichasUsuario().get(index);
-                    System.out.println("Ficha Seleccionada: [" + selectedFicha.getExtremo1() + 
-                                      " | " + selectedFicha.getExtremo2() + "]");
-
+                    System.out.println("Ficha Seleccionada: [" + selectedFicha.getExtremo1()
+                            + " | " + selectedFicha.getExtremo2() + "]");
+                    tableroDominoModel.setFichaSeleccionada(selectedFicha);
                     tableroDominoModel.validarExtremoCompatible(selectedFicha);
 
                 } catch (IndexOutOfBoundsException ex) {
