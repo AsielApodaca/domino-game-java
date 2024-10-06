@@ -148,12 +148,12 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
 
     @Override
     public void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
     public void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     public JPanel getFichaUsuarioPanel() {
