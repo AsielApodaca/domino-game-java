@@ -4,6 +4,9 @@
  */
 package presentacion.tablerodomino;
 
+import contenedorView.FormContenedorModel;
+import contenedorView.ScaleObserver;
+import contenedorView.ScaleProvider;
 import dominio.FichaDomino;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,19 +19,43 @@ import javax.swing.JPanel;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class TableroDominoController {
+public class TableroDominoController implements ScaleObserver{
     
-    private TableroDominoModel tableroDominoModel ;
-    private TableroDominoView tableroDominoView ;
+    private TableroDominoModel model ;
+    private TableroDominoView view ;
+    private ScaleProvider scaleProvider;
     
-    public TableroDominoController(TableroDominoModel tableroDominoModel, TableroDominoView tableroDominoView) {
-        this.tableroDominoModel = tableroDominoModel;
-        this.tableroDominoView = tableroDominoView;
+    public TableroDominoController(TableroDominoModel model, TableroDominoView view, FormContenedorModel formContenedorModel) {
+        this.model = model;
+        this.view = view;
+        this.scaleProvider = formContenedorModel;
+        formContenedorModel.addScaleObserver(this);
         inicializarListener();
     }
     
     private void inicializarListener() {
-        tableroDominoView.setSeleccionarFichaListener(new SeleccionarFichaListener());
+        view.setSeleccionarFichaListener(new SeleccionarFichaListener());
+    }
+
+    @Override
+    public void onScaleChanged(float newScale) {
+        updateScale(newScale);
+    }
+    
+    private void updateScale(float scale) {
+        // Actualizar escala en modelo
+        model.setEscala(scale);
+        // Por ejemplo:
+//        view.setSize((int)(view.getWidth() * scale), (int)(view.getHeight() * scale));
+//        view.revalidate();
+//        view.repaint();
+        System.out.println(scale);
+    }
+    
+    public void cleanup() {
+        if (scaleProvider instanceof FormContenedorModel) {
+            ((FormContenedorModel) scaleProvider).removeScaleObserver(this);
+        }
     }
 
     class SeleccionarFichaListener implements ActionListener {
@@ -36,15 +63,15 @@ public class TableroDominoController {
         @Override
         public void actionPerformed(ActionEvent e) {
             JPanel fichaDominoPanel = (JPanel) e.getSource();
-            int index = tableroDominoView.getFichasDominoUsuario().indexOf(fichaDominoPanel);
+            int index = view.getFichasDominoUsuario().indexOf(fichaDominoPanel);
 
             if (index != -1) {
                 try {
-                    FichaDomino selectedFicha = tableroDominoModel.getListaFichasUsuario().get(index);
+                    FichaDomino selectedFicha = model.getListaFichasUsuario().get(index);
                     System.out.println("Ficha Seleccionada: [" + selectedFicha.getExtremo1()
                             + " | " + selectedFicha.getExtremo2() + "]");
-                    tableroDominoModel.setFichaSeleccionada(selectedFicha);
-                    tableroDominoModel.validarExtremoCompatible(selectedFicha);
+                    model.setFichaSeleccionada(selectedFicha);
+                    model.validarExtremoCompatible(selectedFicha);
 
                 } catch (IndexOutOfBoundsException ex) {
                     System.out.println("Error");
@@ -54,8 +81,8 @@ public class TableroDominoController {
             }
         }
     }
-     public void startNewGame() {
-        tableroDominoModel.repartirFichas();
+    public void startNewGame() {
+        model.repartirFichas();
     }
     
     public void endTurn() {

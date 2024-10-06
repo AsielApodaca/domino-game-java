@@ -19,7 +19,13 @@ import javax.swing.JButton;
  * @author Gael Rafael Castro Molina
  */
 public class TableroDominoModel {
-
+    
+    private int anchoPanel; // Ancho base del panel
+    private int alturaPanel; // Altura base del panel
+    
+    // Esta escala se multiplicará por todos los valores visuales del contenido
+    private float escala; // Proporción con base al tamaño original
+    
     private List<FichaDomino> listaFichasUsuario;
     private List<FichaDomino> fichasComparativas;
     private List<ITableroDominoModeloListener> listeners;
@@ -45,6 +51,32 @@ public class TableroDominoModel {
         }
     }
 
+    public int getAnchoPanel() {
+        return anchoPanel;
+    }
+
+    public void setAnchoPanel(int anchoPanel) {
+        this.anchoPanel = anchoPanel;
+    }
+
+    public int getAlturaPanel() {
+        return alturaPanel;
+    }
+
+    public void setAlturaPanel(int alturaPanel) {
+        this.alturaPanel = alturaPanel;
+    }
+
+    public float getEscala() {
+        return escala;
+    }
+
+    public void setEscala(float escala) {
+        this.escala = escala;
+    }
+
+    
+    
     public void addListener(ITableroDominoModeloListener listener) {
         listeners.add(listener);
     }

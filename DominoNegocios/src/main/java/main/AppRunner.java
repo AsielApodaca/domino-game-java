@@ -4,8 +4,10 @@
  */
 package main;
 
-import mediadorNavegacion.MediadorNavegacionPantallas;
+import contenedorView.FormContenedorController;
+import contenedorView.FormContenedorModel;
 import contenedorView.FormContenedorView;
+import mediadorNavegacion.MediadorNavegacionPantallas;
 import dominio.FichaDomino;
 import dominio.Pozo;
 import java.util.List;
@@ -29,21 +31,29 @@ public class AppRunner {
      */
     public static void main(String[] args) {
 
-        // Se instancia y muestra el form que contendrá las pantallas
-        FormContenedorView formContenedorView = new FormContenedorView();
-        formContenedorView.setVisible(true);
-
+        // Se instancia MVC que presentará el contenedor de las pantallas del juego
+        FormContenedorModel formContenedorModel = new FormContenedorModel();
+        FormContenedorView formContenedorView = new FormContenedorView(formContenedorModel);
+        FormContenedorController formContenedorController = new FormContenedorController(formContenedorModel, formContenedorView);
+        formContenedorController.showView();
+        
         // Obtiene el asistente de navegación de pantallas
         MediadorNavegacionPantallas asistenteNavegacionPantallas
                 = MediadorNavegacionPantallas.getInstance();
 
-        // Obtiene el contenedor del FormContenedorView y se asigna al asistente
-        JPanel contenedor = formContenedorView.getContenedor();
+        // Obtiene el contenedor del FormContenedor y se establece al asistente
+        JPanel contenedor = formContenedorModel.getContenedorPanel();
         asistenteNavegacionPantallas.setContenedor(contenedor);
 
-        ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica();
+        ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica(formContenedorModel);
         tableroDominoLogica.crearYMostrarPantalla();
 
+        
+        
+        
+        
+        
+        
         //PRUEBAS LOGICA POZO (FUNCIONA)
 //        Pozo pozo = new Pozo(null); //pozo vacio
 //        PozoLogica pozoLogica = new PozoLogica(pozo);

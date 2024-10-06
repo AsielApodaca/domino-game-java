@@ -4,50 +4,56 @@
  */
 package contenedorView;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
  *
- * @author Hisamy Cinco Cota
- * @author Gael Rafael Castro Molina
- * @author Oliver Inzunza Valle
- * @author Asiel Apodaca Monge
+ * @author asielapodaca
  */
-public class FormContenedorView extends JFrame {
+public class FormContenedorView extends JFrame{
+    
+    private JPanel containerPanel; // Panel que contendrá las pantallas del juego
+    
+    private FormContenedorModel model; // Modelo FormContenedorModel
 
-    private JPanel contenedor;
-
-    public FormContenedorView() {
+    public FormContenedorView(FormContenedorModel model) {
+        this.model = model;
+        // Configuración del JFrame
         setTitle("DOT;MINO");
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximizado por defecto
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
-
-        // Obtener la resolución de pantalla
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenWidth = screenSize.width;
-        int screenHeight = screenSize.height;
-
-        // Calcular tamaño de la ventana en función de la resolución (80% del tamaño de la pantalla)
-        int windowWidth = (int) (screenWidth * 0.8);
-        int windowHeight = (int) (screenHeight * 0.8);
-        setSize(windowWidth, windowHeight);
-
-        // Crear el panel principal (contenedor)
-        contenedor = new JPanel();
-        contenedor.setPreferredSize(new Dimension(windowWidth, windowHeight)); // Ajustar dinámicamente
-
-        // Establecer el contenido del JFrame al panel 'contenedor'
-        setContentPane(contenedor);
-
-        // Ajustar el tamaño del JFrame basado en el contenido
-        pack();
-
+        getContentPane().setBackground(model.getFrameBrackgroundColor()); // Color del Frame
+        setLayout(null); // Usar null layout para posicionar manualmente el JPanel
+        
+        // Crear el JPanel contenedor
+        containerPanel = model.getContenedorPanel();
+        containerPanel.setBackground(model.getContenedorBrackgroundColor()); // Color del contenedor
+        containerPanel.setLayout(new BorderLayout()); // Usar BorderLayout en el JPanel
+        add(containerPanel); // Añadir el JPanel al JFrame
     }
+    
+    public void updateContainerSize() {
+        
+        // Ajustar el tamaño y la posición del JPanel
+        containerPanel.setSize(model.getAnchoContenedor(), model.getAlturaContenedor()); // Establecer el tamaño del JPanel
 
-    public JPanel getContenedor() {
-        return contenedor;
+        // Centrando el JPanel en el JFrame
+        int x = model.getLocacionContenedorX();
+        int y = model.getLocacionContenedorY();
+        containerPanel.setLocation(x, y); // Establecer la ubicación del JPanel
+
+        // Llamar a revalidate y repaint para reflejar los cambios
+        containerPanel.revalidate();
+        containerPanel.repaint();
     }
+    
+    public void updateFrameMinimumSize() {
+        int anchoMinimo = model.getAnchoMinimoFrame();
+        int alturaMinima = model.getAlturaMinimaFrameAjustado();
+        setMinimumSize(new Dimension(anchoMinimo, alturaMinima));
+    }
+    
 }

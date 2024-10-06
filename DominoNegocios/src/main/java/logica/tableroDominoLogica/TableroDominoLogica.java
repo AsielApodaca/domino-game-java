@@ -4,6 +4,7 @@
  */
 package logica.tableroDominoLogica;
 
+import contenedorView.FormContenedorModel;
 import dominio.FichaDomino;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,20 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
     TableroDominoModel model;
     TableroDominoView view;
     TableroDominoController controller;
+    
+    FormContenedorModel formContenedorModel;
 
+    public TableroDominoLogica(FormContenedorModel formContenedorModel) {
+        this.formContenedorModel = formContenedorModel;
+    }
+
+    
+    
     @Override
     public void crearYMostrarPantalla() {
         this.model = new TableroDominoModel();
         this.view = new TableroDominoView(model);
-        this.controller = new TableroDominoController(model, view);
+        this.controller = new TableroDominoController(model, view, this.formContenedorModel);
         this.model.addListener(this);
         MediadorNavegacionPantallas.getInstance().navegarA(view);
     }
