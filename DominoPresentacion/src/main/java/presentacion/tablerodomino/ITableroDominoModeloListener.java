@@ -4,7 +4,7 @@
  */
 package presentacion.tablerodomino;
 
-import dominio.FichaDomino;
+import dominio.FichaDominoEntity;
 import java.util.List;
 import javax.swing.JButton;
 
@@ -17,12 +17,12 @@ import javax.swing.JButton;
  */
 public interface ITableroDominoModeloListener {
 
-    void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario);
+    void onChangeListaFichasUsuario(List<FichaDominoEntity> listaFichasUsuario);
 
-    void onChangeFichaComparativa(FichaDomino fichaComparativa);
+    void onChangeFichaComparativa(FichaDominoEntity fichaComparativa);
 
-    void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas);
+    void onChangeFichasComparativas(List<FichaDominoEntity> listaFichasComparativas);
 
-    void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada);
+    void onChangeFichaSeleccionada(FichaDominoEntity fichaSeleccionada);
 
 }

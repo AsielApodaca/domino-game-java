@@ -4,7 +4,7 @@
  */
 package logica.controladorFichas;
 
-import dominio.FichaDomino;
+import dominio.FichaDominoEntity;
 import java.util.ArrayList;
 import java.util.List;
 import logica.Pozo.PozoLogica;
@@ -33,8 +33,8 @@ public class ControladorFichasLogica {
      * @param cantidad
      * @return fichas repartidas
      */
-    public List<FichaDomino> repartirFichas(int cantidad) {
-        List<FichaDomino> fichasRepartidas = new ArrayList<>();
+    public List<FichaDominoEntity> repartirFichas(int cantidad) {
+        List<FichaDominoEntity> fichasRepartidas = new ArrayList<>();
         for (int i = 0; i < cantidad; i++) {
             if (!pozo.getListaPiezas().isEmpty()) {
                 fichasRepartidas.add(pozo.getListaPiezas().remove(0)); // Se saca la primera ficha del pozo
@@ -51,7 +51,7 @@ public class ControladorFichasLogica {
      *
      * @return
      */
-    public FichaDomino sacarFicha() {
+    public FichaDominoEntity sacarFicha() {
         if (pozo.getListaPiezas().isEmpty()) {
             throw new IllegalStateException("No hay fichas en el pozo");
         }

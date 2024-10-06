@@ -5,7 +5,7 @@
 package logica.tableroDominoLogica;
 
 import contenedorView.FormContenedorModel;
-import dominio.FichaDomino;
+import dominio.FichaDominoEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingUtilities;
@@ -46,20 +46,20 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
     }
 
     @Override
-    public void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario) {
+    public void onChangeListaFichasUsuario(List<FichaDominoEntity> listaFichasUsuario) {
         return;
     }
 
     @Override
-    public void onChangeFichaComparativa(FichaDomino fichaComparativa) {
+    public void onChangeFichaComparativa(FichaDominoEntity fichaComparativa) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas) {
+    public void onChangeFichasComparativas(List<FichaDominoEntity> listaFichasComparativas) {
         model.getListaFichasValidas().clear();
-        FichaDomino fichaIzquierda = model.getFichasComparativas().getFirst();
-        FichaDomino fichaDerecha = model.getFichasComparativas().getLast();
+        FichaDominoEntity fichaIzquierda = model.getFichasComparativas().getFirst();
+        FichaDominoEntity fichaDerecha = model.getFichasComparativas().getLast();
         model.getListaFichasUsuario().forEach(ficha -> {
             boolean coincideConIzquierda = ficha.getExtremo1().equals(fichaIzquierda.getExtremo1())
                     || ficha.getExtremo2().equals(fichaIzquierda.getExtremo1());
@@ -76,9 +76,9 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
     }
 
     @Override
-    public void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada) {
-        FichaDomino fichaIzquierda = model.getFichasComparativas().getFirst();
-        FichaDomino fichaDerecha = model.getFichasComparativas().getLast();
+    public void onChangeFichaSeleccionada(FichaDominoEntity fichaSeleccionada) {
+        FichaDominoEntity fichaIzquierda = model.getFichasComparativas().getFirst();
+        FichaDominoEntity fichaDerecha = model.getFichasComparativas().getLast();
         
         boolean sePuedeColocarIzquierda = false;
         boolean sePuedeColocarDerecha = false;

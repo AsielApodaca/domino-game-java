@@ -2,16 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
  */
-package dominoenums;
+package dominodto.fichaDominoEnum;
 
 /**
  *
- * @author Hisamy Cinco Cota
- * @author Gael Rafael Castro Molina
- * @author Oliver Inzunza Valle
- * @author Asiel Apodaca Monge
+ * @author asielapodaca
  */
-public enum Posicion {
-    VERTICAL,
-    HORIZONTAL
+public enum ExtremoCompatibleDTO {
+    EXTREMO1,
+    EXTREMO2
 }

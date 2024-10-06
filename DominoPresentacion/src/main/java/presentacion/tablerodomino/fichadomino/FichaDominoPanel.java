@@ -1,6 +1,6 @@
 package presentacion.tablerodomino.fichadomino;
 
-import dominio.FichaDomino;
+import dominio.FichaDominoEntity;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -37,7 +37,7 @@ public class FichaDominoPanel extends JPanel {
      *
      * @param ficha
      */
-    public FichaDominoPanel(FichaDomino ficha) {
+    public FichaDominoPanel(FichaDominoEntity ficha) {
         setPreferredSize(new Dimension(70, 110));
         setLayout(new GridLayout(2, 1, 2, 2));
 

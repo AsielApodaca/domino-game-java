@@ -14,19 +14,19 @@ import java.util.List;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class Pozo {
+public class PozoEntity {
 
-    private List<FichaDomino> listaPiezas;
+    private List<FichaDominoEntity> listaPiezas;
 
-    public Pozo(List<FichaDomino> listaPiezas) {
+    public PozoEntity(List<FichaDominoEntity> listaPiezas) {
         this.listaPiezas = listaPiezas;
     }
 
-    public List<FichaDomino> getListaPiezas() {
+    public List<FichaDominoEntity> getListaPiezas() {
         return listaPiezas;
     }
 
-    public void setListaPiezas(List<FichaDomino> listaPiezas) {
+    public void setListaPiezas(List<FichaDominoEntity> listaPiezas) {
         this.listaPiezas = listaPiezas;
     }
 

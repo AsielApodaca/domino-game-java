@@ -7,7 +7,7 @@ package presentacion.tablerodomino;
 import contenedorView.FormContenedorModel;
 import contenedorView.ScaleObserver;
 import contenedorView.ScaleProvider;
-import dominio.FichaDomino;
+import dominio.FichaDominoEntity;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
@@ -67,7 +67,7 @@ public class TableroDominoController implements ScaleObserver{
 
             if (index != -1) {
                 try {
-                    FichaDomino selectedFicha = model.getListaFichasUsuario().get(index);
+                    FichaDominoEntity selectedFicha = model.getListaFichasUsuario().get(index);
                     System.out.println("Ficha Seleccionada: [" + selectedFicha.getExtremo1()
                             + " | " + selectedFicha.getExtremo2() + "]");
                     model.setFichaSeleccionada(selectedFicha);

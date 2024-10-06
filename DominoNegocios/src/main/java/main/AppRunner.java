@@ -8,8 +8,8 @@ import contenedorView.FormContenedorController;
 import contenedorView.FormContenedorModel;
 import contenedorView.FormContenedorView;
 import mediadorNavegacion.MediadorNavegacionPantallas;
-import dominio.FichaDomino;
-import dominio.Pozo;
+import dominio.FichaDominoEntity;
+import dominio.PozoEntity;
 import java.util.List;
 import javax.swing.JPanel;
 import logica.Pozo.PozoLogica;
@@ -55,7 +55,7 @@ public class AppRunner {
         
         
         //PRUEBAS LOGICA POZO (FUNCIONA)
-//        Pozo pozo = new Pozo(null); //pozo vacio
+//        PozoEntity pozo = new PozoEntity(null); //pozo vacio
 //        PozoLogica pozoLogica = new PozoLogica(pozo);
 //
 //        ControladorFichasLogica controladorFichas = new ControladorFichasLogica(pozoLogica);
@@ -78,7 +78,7 @@ public class AppRunner {
 //
 //        // paso 4: sacar ficha
 //        try {
-//            FichaDomino fichaSacada = controladorFichas.sacarFicha();
+//            FichaDominoEntity fichaSacada = controladorFichas.sacarFicha();
 //            System.out.println("\nFicha sacada del pozo: " + fichaSacada);
 //        } catch (IllegalStateException e) {
 //            System.out.println(e.getMessage());
@@ -94,7 +94,7 @@ public class AppRunner {
 //        if (fichas == null || fichas.isEmpty()) {
 //            System.out.println("No hay fichas.");
 //        } else {
-//            for (FichaDomino ficha : fichas) {
+//            for (FichaDominoEntity ficha : fichas) {
 //                System.out.println(ficha); 
 //            }
 //

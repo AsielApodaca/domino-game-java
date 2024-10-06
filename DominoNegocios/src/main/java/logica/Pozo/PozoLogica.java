@@ -4,8 +4,8 @@
  */
 package logica.Pozo;
 
-import dominio.FichaDomino;
-import dominio.Pozo;
+import dominio.FichaDominoEntity;
+import dominio.PozoEntity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,10 +19,10 @@ import java.util.List;
  */
 public class PozoLogica {
 
-    private List<FichaDomino> listaPiezas = new ArrayList<>();
-    private Pozo pozo;
+    private List<FichaDominoEntity> listaPiezas = new ArrayList<>();
+    private PozoEntity pozo;
 
-    public PozoLogica(Pozo pozo) {
+    public PozoLogica(PozoEntity pozo) {
         this.pozo = pozo;
     }
 
@@ -35,7 +35,7 @@ public class PozoLogica {
         // Generar todas las fichas posibles del dominó (del 0-0 al 6-6)
         for (int i = 0; i <= 6; i++) {
             for (int j = i; j <= 6; j++) {
-                listaPiezas.add(new FichaDomino(i, j));
+                listaPiezas.add(new FichaDominoEntity(i, j));
             }
         }
         // Mezcla las fichas
@@ -43,11 +43,11 @@ public class PozoLogica {
         pozo.setListaPiezas(listaPiezas);
     }
 
-    public List<FichaDomino> getListaPiezas() {
+    public List<FichaDominoEntity> getListaPiezas() {
         return listaPiezas;
     }
 
-    public void setListaPiezas(List<FichaDomino> listaPiezas) {
+    public void setListaPiezas(List<FichaDominoEntity> listaPiezas) {
         this.listaPiezas = listaPiezas;
     }
 

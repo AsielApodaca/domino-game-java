@@ -1,6 +1,6 @@
 package presentacion.tablerodomino;
 
-import dominio.FichaDomino;
+import dominio.FichaDominoEntity;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -98,11 +98,11 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     }
 
     @Override
-    public void onChangeListaFichasUsuario(List<FichaDomino> listaFichasUsuario) {
+    public void onChangeListaFichasUsuario(List<FichaDominoEntity> listaFichasUsuario) {
         fichasDominoUsuario.clear();
         fichaUsuarioPanel.removeAll();
 
-        for (FichaDomino fichaDomino : listaFichasUsuario) {
+        for (FichaDominoEntity fichaDomino : listaFichasUsuario) {
             FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(fichaDomino);
             fichasDominoUsuario.add(fichaDominoPanel);
             fichaUsuarioPanel.add(fichaDominoPanel);
@@ -116,7 +116,7 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     }
 
     @Override
-    public void onChangeFichaComparativa(FichaDomino fichaComparativaModel) {
+    public void onChangeFichaComparativa(FichaDominoEntity fichaComparativaModel) {
         fichaComparativaPanel.removeAll();
 
         fichaComparativaPanel = new FichaDominoPanel(fichaComparativaModel);
@@ -127,12 +127,12 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     }
 
     @Override
-    public void onChangeFichasComparativas(List<FichaDomino> listaFichasComparativas) {
+    public void onChangeFichasComparativas(List<FichaDominoEntity> listaFichasComparativas) {
 
     }
 
     @Override
-    public void onChangeFichaSeleccionada(FichaDomino fichaSeleccionada) {
+    public void onChangeFichaSeleccionada(FichaDominoEntity fichaSeleccionada) {
 
     }
 
