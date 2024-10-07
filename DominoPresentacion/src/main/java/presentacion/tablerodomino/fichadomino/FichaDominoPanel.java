@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
  */
 public class FichaDominoPanel extends JPanel {
 
+    private FichaDominoDTO fichaDominoDTO;
     private final JLabel labelExtremo1;
     private final JLabel labelExtremo2;
     private boolean isSelected = false;
@@ -43,6 +44,7 @@ public class FichaDominoPanel extends JPanel {
         //setPreferredSize(new Dimension(70, 110));
         setLayout(new GridLayout(2, 1, 2, 2));
 
+        this.fichaDominoDTO = ficha;
         fondoFicha = new ImageIcon(getClass().getResource("/multimedia/DominoFondo.png")).getImage();
 
         labelExtremo1 = new JLabel(cargarImagenPorNumero(ficha.getValorExtremo1()), SwingConstants.CENTER);
