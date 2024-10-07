@@ -35,6 +35,9 @@ public class TableroDominoEntity {
         this.posicionMula.setPosicionY(4);
         this.posicionMula.setRotacion(0);
         
+        this.valorExtremo1 = -1;
+        this.valorExtremo2 = -1;
+        
         this.anchoTablero = 20;
         this.altoTablero = 9;
         this.direccionExtremo1 = IZQUIERDA;
@@ -63,6 +66,12 @@ public class TableroDominoEntity {
 
     public int getValorExtremo2() {
         return valorExtremo2;
+    }
+    
+    public PosicionEntity obtenerPrimerElemento() {
+        if(valorExtremo1 == -1) return null;
+        if(posicionExtremo1 == null) return posicionMula;
+        return posicionExtremo1;
     }
     
     public void colocarMula(FichaDominoEntity mula) {

@@ -41,6 +41,19 @@ public class MapeadorDTO {
     }
     
     public TableroDominoDTO tableroDominoEntityADTO(TableroDominoEntity tableroDomino) {
-        TableroDomino
+        
+        int anchoTablero = tableroDomino.getAnchoTablero();
+        int altoTablero = tableroDomino.getAltoTablero();
+        TableroDominoDTO tableroDominoDTO = new TableroDominoDTO(anchoTablero, altoTablero);
+        
+        PosicionEntity posicion = tableroDomino.obtenerPrimerElemento();
+        if(posicion != null) { // el tablero tiene por lo menos una ficha
+            do { // Recorre todas las posiciones de fichas
+                tableroDominoDTO.addPosicion(posicionEntityADTO(posicion));
+            }while(posicion.getSiguientePosicion() != null);
+            
+        }
+        
+        return tableroDominoDTO;
     }
 }
