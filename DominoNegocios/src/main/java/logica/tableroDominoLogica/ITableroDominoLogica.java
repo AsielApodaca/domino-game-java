@@ -13,5 +13,5 @@ package logica.tableroDominoLogica;
  */
 public interface ITableroDominoLogica {
 
-    public void crearYMostrarPantalla();
+    public void iniciar();
 }

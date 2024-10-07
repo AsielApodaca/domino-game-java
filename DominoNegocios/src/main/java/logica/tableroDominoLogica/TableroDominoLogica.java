@@ -6,6 +6,7 @@ package logica.tableroDominoLogica;
 
 import contenedorView.FormContenedorModel;
 import dominio.FichaDominoEntity;
+import dominio.PozoEntity;
 import dominodto.FichaDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,12 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
     
     
     @Override
-    public void crearYMostrarPantalla() {
+    public void iniciar() {
+        crearPresentcionPartida();
+        // simularListaFichasDTO() // Se colocará este metodo cuando el mvc ya tenga listeners
+    }
+    
+    private void crearPresentcionPartida() {
         this.model = new PartidaDominoModel();
         this.model.setEscala(proveedorDeEscala.getScale());
         simularListaFichasDTO(); // Asigna lista simulada de fichas de domino a modelo
@@ -50,6 +56,9 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         MediadorNavegacionPantallas.getInstance().navegarA(view);
     }
     
+    private void crearPozo() {
+        PozoEntity pozo = new PozoEntity();
+    }
     public void simularListaFichasDTO() { // temporal
         List<FichaDominoDTO> listaFichas = new ArrayList<>();
         

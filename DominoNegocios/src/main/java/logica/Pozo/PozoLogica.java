@@ -17,7 +17,7 @@ import java.util.List;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PozoLogica {
+public class PozoLogica { // borrar uwu
 
     private List<FichaDominoEntity> listaFichas = new ArrayList<>();
     private PozoEntity pozo;

@@ -5,7 +5,7 @@
 package mapeodto;
 
 import dominio.FichaDominoEntity;
-import dominio.PosicionEntity;
+import dominio.CasillaEntity;
 import dominio.TableroDominoEntity;
 import dominodto.FichaDominoDTO;
 import dominodto.PosicionDTO;
@@ -24,7 +24,7 @@ public class MapeadorDTO {
         
     }
     
-    public PosicionDTO posicionEntityADTO(PosicionEntity posicion) {
+    public PosicionDTO posicionEntityADTO(CasillaEntity posicion) {
         PosicionDTO posicionDTO = new PosicionDTO();
         
         posicionDTO.setPosicionX(posicion.getPosicionX());
@@ -46,7 +46,7 @@ public class MapeadorDTO {
         int altoTablero = tableroDomino.getAltoTablero();
         TableroDominoDTO tableroDominoDTO = new TableroDominoDTO(anchoTablero, altoTablero);
         
-        PosicionEntity posicion = tableroDomino.obtenerPrimerElemento();
+        CasillaEntity posicion = tableroDomino.obtenerPrimerElemento();
         if(posicion != null) { // el tablero tiene por lo menos una ficha
             do { // Recorre todas las posiciones de fichas
                 tableroDominoDTO.addPosicion(posicionEntityADTO(posicion));

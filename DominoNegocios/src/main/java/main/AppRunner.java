@@ -46,7 +46,7 @@ public class AppRunner {
         asistenteNavegacionPantallas.setContenedor(contenedor);
 
         ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica(formContenedorModel);
-        tableroDominoLogica.crearYMostrarPantalla();
+        tableroDominoLogica.iniciar();
 
         
         

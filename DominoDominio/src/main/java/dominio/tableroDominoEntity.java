@@ -13,35 +13,40 @@ public class TableroDominoEntity {
     private final int IZQUIERDA = 0;
     private final int DERECHA = 1;
     
+    private final int anchoTablero = 9; // ancho usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
+    private final int alturaTablero = 20; // altura usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
+    
+    private final int anchoCasillaMula = 2; // Ancho de la casilla donde se colocará la mula
+    private final int alturaCasillaMula = 1; // Altura de la casilla donde se colocará la mula
+    private final int casillaMulaLocacionX = 9; // Locacion de la casilla de la mula en el eje X
+    private final int casillaMulaLocacionY = 4; // Locacion de la casilla de la mula en el eje Y
+    
+    // DERECHA o IZQUIERDA
     private int direccionExtremo1; // Hacia que dirección se extiende el extremo1
     private int direccionExtremo2; // Hacia que direccion se extiende el extremo2
     
-    private PosicionEntity posicionMula; // referencia a la posición que contiene la ficha mula
-    private PosicionEntity posicionExtremo1; // referencia a la posición del extremo 1
-    private PosicionEntity posicionExtremo2; // referencia a la posición del extremo 2
-    
-    private final int anchoTablero; // ancho usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
-    private final int altoTablero; // altura usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
+    private CasillaEntity casillaMula; // referencia a la posición que contiene la ficha mula
+    private CasillaEntity casillaExtremo1; // referencia a la casilla del extremo 1
+    private CasillaEntity casillaExtremo2; // referencia a la casilla del extremo 2
     
     private int valorExtremo1; // Valor del primer extremo
     private int valorExtremo2; // Valor del segundo extremo
 
 
     public TableroDominoEntity() {
-        this.posicionMula = new PosicionEntity();
-        this.posicionMula.setAlturaPosicion(1);
-        this.posicionMula.setAnchoPosicion(2);
-        this.posicionMula.setPosicionX(9);
-        this.posicionMula.setPosicionY(4);
-        this.posicionMula.setRotacion(0);
-        
+        iniciarCasillaMula();
         this.valorExtremo1 = -1;
         this.valorExtremo2 = -1;
-        
-        this.anchoTablero = 20;
-        this.altoTablero = 9;
         this.direccionExtremo1 = IZQUIERDA;
         this.direccionExtremo2 = DERECHA;
+    }
+    
+    private void iniciarCasillaMula() {
+        this.casillaMula = new CasillaEntity();
+        this.casillaMula.setAnchoCasilla(anchoCasillaMula);
+        this.casillaMula.setAlturaCasilla(alturaCasillaMula);
+        this.casillaMula.setLocacionX(casillaMulaLocacionX);
+        this.casillaMula.setLocacionY(casillaMulaLocacionY);
     }
 
     public int getAnchoTablero() {
@@ -49,166 +54,166 @@ public class TableroDominoEntity {
     }
 
     public int getAltoTablero() {
-        return altoTablero;
+        return alturaTablero;
     }
 
     public int getValorExtremo1() {
         return valorExtremo1;
     }
 
-    public PosicionEntity getPosicionExtremo1() {
-        return posicionExtremo1;
+    public CasillaEntity getCasillaExtremo1() {
+        return casillaExtremo1;
     }
 
-    public PosicionEntity getPosicionExtremo2() {
-        return posicionExtremo2;
+    public CasillaEntity getCasillaExtremo2() {
+        return casillaExtremo2;
     }
 
     public int getValorExtremo2() {
         return valorExtremo2;
     }
     
-    public PosicionEntity obtenerPrimerElemento() {
+    public CasillaEntity obtenerPrimerElemento() {
         if(valorExtremo1 == -1) return null;
-        if(posicionExtremo1 == null) return posicionMula;
-        return posicionExtremo1;
+        if(casillaExtremo1 == null) return casillaMula;
+        return casillaExtremo1;
     }
     
     public void colocarMula(FichaDominoEntity mula) {
-        this.posicionMula.setFichaDomino(mula);
+        this.casillaMula.setFichaDomino(mula);
         this.valorExtremo1 = mula.getExtremo1();
         this.valorExtremo2 = mula.getExtremo2();
     }
     
     public void colocarFichaExtremo1(FichaDominoEntity ficha) {
-        PosicionEntity posicion = new PosicionEntity();
-        posicion.setFichaDomino(ficha); // Se le asigna ficha a la posición
+        CasillaEntity casilla = new CasillaEntity();
+        casilla.setFichaDomino(ficha); // Se le asigna ficha a la casilla
         
-        // Se asigna la posición al extremo y se conecta a la lista
-        if(posicionExtremo1 == null) {
-            posicionMula.setAnteriorPosicion(posicion);
-            posicion.setSiguientePosicion(posicionMula);
+        // Se asigna la casilla al extremo y se conecta a la lista
+        if(casillaExtremo1 == null) {
+            casillaMula.setAnteriorCasilla(casilla);
+            casilla.setSiguienteCasilla(casillaMula);
         } else {
-            posicionExtremo1.setAnteriorPosicion(posicion);
-            posicion.setSiguientePosicion(posicionExtremo1);
+            casillaExtremo1.setAnteriorCasilla(casilla);
+            casilla.setSiguienteCasilla(casillaExtremo1);
         }
-        posicionExtremo1 = posicion;
+        casillaExtremo1 = casilla;
         
-        // Ajusta la posición del nuevo extremo
-        ajustarPosicionExtremo1();
+        // Define posición de la nueva casilla
+        posicionarCasillaExtremo1();
         
     }
     
     public void colocarFichaExtremo2(FichaDominoEntity ficha) {
-        PosicionEntity posicion = new PosicionEntity();
-        posicion.setFichaDomino(ficha); // Se le asigna ficha a la posición
+        CasillaEntity casilla = new CasillaEntity();
+        casilla.setFichaDomino(ficha); // Se le asigna ficha a la casilla
         
-        // Se asigna la posición al extremo y se conecta a la lista
-        if(posicionExtremo2 == null) {
-            posicionMula.setSiguientePosicion(posicion);
-            posicion.setAnteriorPosicion(posicionMula);
+        // Se asigna la casilla al extremo y se conecta a la lista
+        if(casillaExtremo2 == null) {
+            casillaMula.setSiguienteCasilla(casilla);
+            casilla.setAnteriorCasilla(casillaMula);
         } else {
-            posicionExtremo1.setSiguientePosicion(posicion);
-            posicion.setAnteriorPosicion(posicionExtremo1);
+            casillaExtremo1.setSiguienteCasilla(casilla);
+            casilla.setAnteriorCasilla(casillaExtremo1);
         }
-        posicionExtremo2 = posicion;
+        casillaExtremo2 = casilla;
         
-        // Ajusta la posición del nuevo extremo
-        ajustarPosicionExtremo2();
+        // Define posición de la nueva casilla
+        posicionarCasillaExtremo2();
         
     }
     
-    private void ajustarPosicionExtremo1() {
-        // La nueva posicion es horizontal
-        posicionExtremo1.setAnchoPosicion(2); 
-        posicionExtremo1.setAlturaPosicion(1);
+    private void posicionarCasillaExtremo1() {
+        // La nueva casilla es horizontal
+        casillaExtremo1.setAnchoCasilla(2); 
+        casillaExtremo1.setAlturaCasilla(1);
         
-        int fichaExtremo1 = posicionExtremo1.getFichaDomino().getExtremo1(); // Valor del extremo 1 de la ficha
-        int fichaExtremo2 = posicionExtremo2.getFichaDomino().getExtremo2(); // Valor del extremo 2 de la ficha
+        int fichaExtremo1 = casillaExtremo1.getFichaDomino().getExtremo1(); // Valor del extremo 1 de la ficha
+        int fichaExtremo2 = casillaExtremo2.getFichaDomino().getExtremo2(); // Valor del extremo 2 de la ficha
         
-        int posicionExtremo1SiguienteLocacionX = posicionExtremo1.getSiguientePosicion().getPosicionX(); // locacion x de la siguiente posicion en la lista
-        int posicionExtremo1SiguienteLocacionY = posicionExtremo1.getSiguientePosicion().getPosicionY(); // locacion y de la siguiente posicion en la lista
-        boolean posicionExtremo1SiguienteEsVertical = posicionExtremo1.getSiguientePosicion().getAnchoPosicion() == 1; // Si el ancho es 1, está en vertical, 2 de lo contrario
+        int casillaExtremo1SiguienteLocacionX = casillaExtremo1.getSiguienteCasilla().getLocacionX(); // locacion x de la siguiente casilla en la d-linked list
+        int casillaExtremo1SiguienteLocacionY = casillaExtremo1.getSiguienteCasilla().getLocacionY(); // locacion y de la siguiente casilla en la d-linked list
+        boolean casillaExtremo1SiguienteEsVertical = casillaExtremo1.getSiguienteCasilla().getAnchoCasilla() == 1; // Si el ancho es 1, está en vertical, 2 de lo contrario
         
         // Asigna coordenadas y medidas del nuevo extremo
         if(direccionExtremo1 == IZQUIERDA) {
-            if(posicionExtremo1SiguienteEsVertical) { // Si la posición siguiente de la lista era vertical
-                posicionExtremo1.setPosicionX(posicionExtremo1SiguienteLocacionX - 2); // Se coloca 2 a la izquierda
-                posicionExtremo1.setPosicionY(posicionExtremo1SiguienteLocacionY - 1); // Se coloca 1 abajo
+            if(casillaExtremo1SiguienteEsVertical) { // Si la casilla siguiente de la d-linked list era vertical
+                casillaExtremo1.setLocacionX(casillaExtremo1SiguienteLocacionX - 2); // Se coloca 2 a la izquierda
+                casillaExtremo1.setLocacionY(casillaExtremo1SiguienteLocacionY - 1); // Se coloca 1 abajo
                 // rotacion
                 if(fichaExtremo2 == valorExtremo1) {
-                    posicionExtremo1.setRotacion(0);
+                    casillaExtremo1.setRotacion(0);
                     valorExtremo1 = fichaExtremo1;
                 } else {
-                    posicionExtremo1.setRotacion(180);
+                    casillaExtremo1.setRotacion(180);
                     valorExtremo1 = fichaExtremo2;
                 }
-            } else if(posicionExtremo1SiguienteLocacionX - 2 < 0) { // Si la coordenada X para la nueva posicion es menor a 0, no cabe y cambia de direccion
-                posicionExtremo1.setPosicionX(posicionExtremo1SiguienteLocacionX); // Se coloca 0 a la izquierda
-                posicionExtremo1.setPosicionY(posicionExtremo1SiguienteLocacionY - 1); // Se coloca 1 a abajo
-                // La nueva cambia a vertical
-                posicionExtremo1.setAnchoPosicion(1);
-                posicionExtremo1.setAlturaPosicion(2);
-                // Cambia de dirección para las siguientes posicionExtremo1es
+            } else if(casillaExtremo1SiguienteLocacionX - 2 < 0) { // Si la coordenada X para la nueva casilla es menor a 0, no cabe y cambia de direccion
+                casillaExtremo1.setLocacionX(casillaExtremo1SiguienteLocacionX); // Se coloca 0 a la izquierda
+                casillaExtremo1.setLocacionY(casillaExtremo1SiguienteLocacionY - 1); // Se coloca 1 a abajo
+                // La nueva casilla cambia a vertical
+                casillaExtremo1.setAnchoCasilla(1);
+                casillaExtremo1.setAlturaCasilla(2);
+                // Cambia de dirección para las siguientes casillas
                 direccionExtremo1 = DERECHA;
                 // rotacion
                 if(fichaExtremo2 == valorExtremo1) {
-                    posicionExtremo1.setRotacion(90);
+                    casillaExtremo1.setRotacion(90);
                     valorExtremo1 = fichaExtremo1;
                 } else {
-                    posicionExtremo1.setRotacion(270);
+                    casillaExtremo1.setRotacion(270);
                     valorExtremo1 = fichaExtremo2;
                 }
-            } else { // La nueva posición si cabe en el tablero y no proviene de una posicion vertical
-                posicionExtremo1.setPosicionX(posicionExtremo1SiguienteLocacionX - 2); // Se coloca 2 a la izquierda
-                posicionExtremo1.setPosicionY(posicionExtremo1SiguienteLocacionY); // Se coloca 0 a abajo
+            } else { // La nueva casilla si cabe en el tablero y no proviene de una casilla vertical
+                casillaExtremo1.setLocacionX(casillaExtremo1SiguienteLocacionX - 2); // Se coloca 2 a la izquierda
+                casillaExtremo1.setLocacionY(casillaExtremo1SiguienteLocacionY); // Se coloca 0 a abajo
                 // rotacion
                 if(fichaExtremo2 == valorExtremo1) {
-                    posicionExtremo1.setRotacion(0);
+                    casillaExtremo1.setRotacion(0);
                     valorExtremo1 = fichaExtremo1;
                 } else {
-                    posicionExtremo1.setRotacion(180);
+                    casillaExtremo1.setRotacion(180);
                     valorExtremo1 = fichaExtremo2;
                 }
             }
             
         } else if(direccionExtremo1 == DERECHA) {
-            if(posicionExtremo1SiguienteEsVertical) { // Si la posición siguiente de la lista era vertical
-                posicionExtremo1.setPosicionX(posicionExtremo1SiguienteLocacionX + 1); // Se coloca 1 a la derecha
-                posicionExtremo1.setPosicionY(posicionExtremo1SiguienteLocacionY - 1); // Se coloca 1 abajo
+            if(casillaExtremo1SiguienteEsVertical) { // Si la casilla siguiente de la lista era vertical
+                casillaExtremo1.setLocacionX(casillaExtremo1SiguienteLocacionX + 1); // Se coloca 1 a la derecha
+                casillaExtremo1.setLocacionY(casillaExtremo1SiguienteLocacionY - 1); // Se coloca 1 abajo
                 // rotacion
                 if(fichaExtremo1 == valorExtremo1) {
-                    posicionExtremo1.setRotacion(0);
+                    casillaExtremo1.setRotacion(0);
                     valorExtremo1 = fichaExtremo2;
                 } else {
-                    posicionExtremo1.setRotacion(180);
+                    casillaExtremo1.setRotacion(180);
                     valorExtremo1 = fichaExtremo1;
                 }
-            } else if(posicionExtremo1SiguienteLocacionX + 4 > anchoTablero) { // Si la coordenada X para la nueva posicion es mayor que 20, no cabe y cambia de direccion
-                posicionExtremo1.setPosicionX(posicionExtremo1SiguienteLocacionX + 1); // Se coloca 1 a la derecha
-                posicionExtremo1.setPosicionY(posicionExtremo1SiguienteLocacionY - 1); // Se coloca 1 a abajo
-                // La nueva posicon es vertical
-                posicionExtremo1.setAnchoPosicion(1);
-                posicionExtremo1.setAlturaPosicion(2);
-                // Cambia de dirección para las siguientes posicionExtremo1es
+            } else if(casillaExtremo1SiguienteLocacionX + 4 > anchoTablero) { // Si la coordenada X para la nueva casilla es mayor que 20, no cabe y cambia de direccion
+                casillaExtremo1.setLocacionX(casillaExtremo1SiguienteLocacionX + 1); // Se coloca 1 a la derecha
+                casillaExtremo1.setLocacionY(casillaExtremo1SiguienteLocacionY - 1); // Se coloca 1 a abajo
+                // La nueva casilla es vertical
+                casillaExtremo1.setAnchoCasilla(1);
+                casillaExtremo1.setAlturaCasilla(2);
+                // Cambia de dirección para las siguientes casillas
                 direccionExtremo1 = IZQUIERDA;
                 // rotacion
                 if(fichaExtremo1 == valorExtremo1) {
-                    posicionExtremo1.setRotacion(270);
+                    casillaExtremo1.setRotacion(270);
                     valorExtremo1 = fichaExtremo2;
                 } else {
-                    posicionExtremo1.setRotacion(90);
+                    casillaExtremo1.setRotacion(90);
                     valorExtremo1 = fichaExtremo1;
                 }
-            } else { // La nueva posición si cabe en el tablero y no proviene de una posicion vertical
-                posicionExtremo1.setPosicionX(posicionExtremo1SiguienteLocacionX + 2); // Se coloca 2 a la izquierda
-                posicionExtremo1.setPosicionY(posicionExtremo1SiguienteLocacionY); // Se coloca 0 a abajo
+            } else { // La nueva casilla si cabe en el tablero y no proviene de una casilla vertical
+                casillaExtremo1.setLocacionX(casillaExtremo1SiguienteLocacionX + 2); // Se coloca 2 a la izquierda
+                casillaExtremo1.setLocacionY(casillaExtremo1SiguienteLocacionY); // Se coloca 0 a abajo
                 // rotacion
                 if(fichaExtremo1 == valorExtremo1) {
-                    posicionExtremo1.setRotacion(0);
+                    casillaExtremo1.setRotacion(0);
                     valorExtremo1 = fichaExtremo2;
                 } else {
-                    posicionExtremo1.setRotacion(180);
+                    casillaExtremo1.setRotacion(180);
                     valorExtremo1 = fichaExtremo1;
                 }
             }
@@ -216,199 +221,199 @@ public class TableroDominoEntity {
     }
     
     
-    private void ajustarPosicionExtremo2() {
-        // La nueva posicion es horizontal
-        posicionExtremo2.setAnchoPosicion(2); 
-        posicionExtremo2.setAlturaPosicion(1);
+    private void posicionarCasillaExtremo2() {
+        // La nueva casilla es horizontal
+        casillaExtremo2.setAnchoCasilla(2); 
+        casillaExtremo2.setAlturaCasilla(1);
         
-        int fichaExtremo1 = posicionExtremo2.getFichaDomino().getExtremo1(); // Valor del extremo 1 de la ficha
-        int fichaExtremo2 = posicionExtremo2.getFichaDomino().getExtremo2(); // Valor del extremo 2 de la ficha
+        int fichaExtremo1 = casillaExtremo2.getFichaDomino().getExtremo1(); // Valor del extremo 1 de la ficha
+        int fichaExtremo2 = casillaExtremo2.getFichaDomino().getExtremo2(); // Valor del extremo 2 de la ficha
         
-        int posicionExtremo2AnteriorLocacionX = posicionExtremo2.getAnteriorPosicion().getPosicionX(); // locacion x de la anterior posicion en la lista
-        int posicionExtremo2AnteriorLocacionY = posicionExtremo2.getAnteriorPosicion().getPosicionY(); // locacion y de la anterior posicion en la lista
-        boolean posicionExtremo2AnteriorEsVertical = posicionExtremo2.getAnteriorPosicion().getAnchoPosicion() == 1; // Si el ancho es 1, está en vertical, 2 de lo contrario
+        int casillaExtremo2AnteriorLocacionX = casillaExtremo2.getAnteriorCasilla().getLocacionX(); // locacion x de la anterior casilla en la d-linked list
+        int casillaExtremo2AnteriorLocacionY = casillaExtremo2.getAnteriorCasilla().getLocacionY(); // locacion y de la anterior casilla en la d-linked list
+        boolean casillaExtremo2AnteriorEsVertical = casillaExtremo2.getAnteriorCasilla().getAnchoCasilla() == 1; // Si el ancho es 1, está en vertical, 2 de lo contrario
         
         // Asigna coordenadas y medidas del nuevo extremo
         if(direccionExtremo2 == IZQUIERDA) {
-            if(posicionExtremo2AnteriorEsVertical) { // Si la posición anterior de la lista era vertical
-                posicionExtremo2.setPosicionX(posicionExtremo2AnteriorLocacionX - 2); // Se coloca 2 a la izquierda
-                posicionExtremo2.setPosicionY(posicionExtremo2AnteriorLocacionY - 1); // Se coloca 1 abajo
+            if(casillaExtremo2AnteriorEsVertical) { // Si la casilla anterior de la d-linked list era vertical
+                casillaExtremo2.setLocacionX(casillaExtremo2AnteriorLocacionX - 2); // Se coloca 2 a la izquierda
+                casillaExtremo2.setLocacionY(casillaExtremo2AnteriorLocacionY - 1); // Se coloca 1 abajo
                 // rotacion
                 if(fichaExtremo2 == valorExtremo2) {
-                    posicionExtremo2.setRotacion(0);
+                    casillaExtremo2.setRotacion(0);
                     valorExtremo2 = fichaExtremo1;
                 } else {
-                    posicionExtremo2.setRotacion(180);
+                    casillaExtremo2.setRotacion(180);
                     valorExtremo2 = fichaExtremo2;
                 }
-            } else if(posicionExtremo2AnteriorLocacionX - 2 < 0) { // Si la coordenada X para la nueva posicion es menor a 0, no cabe y cambia de direccion
-                posicionExtremo2.setPosicionX(posicionExtremo2AnteriorLocacionX); // Se coloca 0 a la izquierda
-                posicionExtremo2.setPosicionY(posicionExtremo2AnteriorLocacionY - 1); // Se coloca 1 a abajo
-                // La nueva cambia a vertical
-                posicionExtremo2.setAnchoPosicion(1);
-                posicionExtremo2.setAlturaPosicion(2);
-                // Cambia de dirección para las siguientes posiciones
+            } else if(casillaExtremo2AnteriorLocacionX - 2 < 0) { // Si la coordenada X para la nueva casilla es menor a 0, no cabe y cambia de direccion
+                casillaExtremo2.setLocacionX(casillaExtremo2AnteriorLocacionX); // Se coloca 0 a la izquierda
+                casillaExtremo2.setLocacionY(casillaExtremo2AnteriorLocacionY - 1); // Se coloca 1 a abajo
+                // La nueva casilla cambia a vertical
+                casillaExtremo2.setAnchoCasilla(1);
+                casillaExtremo2.setAlturaCasilla(2);
+                // Cambia de dirección para las siguientes casilla
                 direccionExtremo2 = DERECHA;
                 // rotacion
                 if(fichaExtremo2 == valorExtremo2) {
-                    posicionExtremo2.setRotacion(270);
+                    casillaExtremo2.setRotacion(270);
                     valorExtremo2 = fichaExtremo1;
                 } else {
-                    posicionExtremo2.setRotacion(90);
+                    casillaExtremo2.setRotacion(90);
                     valorExtremo2 = fichaExtremo2;
                 }
-            } else { // La nueva posición si cabe en el tablero y no proviene de una posicion vertical
-                posicionExtremo2.setPosicionX(posicionExtremo2AnteriorLocacionX - 2); // Se coloca 2 a la izquierda
-                posicionExtremo2.setPosicionY(posicionExtremo2AnteriorLocacionY); // Se coloca 0 a abajo
+            } else { // La nueva casilla si cabe en el tablero y no proviene de una casilla vertical
+                casillaExtremo2.setLocacionX(casillaExtremo2AnteriorLocacionX - 2); // Se coloca 2 a la izquierda
+                casillaExtremo2.setLocacionY(casillaExtremo2AnteriorLocacionY); // Se coloca 0 a abajo
                 // rotacion
                 if(fichaExtremo2 == valorExtremo2) {
-                    posicionExtremo2.setRotacion(0);
+                    casillaExtremo2.setRotacion(0);
                     valorExtremo2 = fichaExtremo1;
                 } else {
-                    posicionExtremo2.setRotacion(180);
+                    casillaExtremo2.setRotacion(180);
                     valorExtremo2 = fichaExtremo2;
                 }
             }
             
         } else if(direccionExtremo2 == DERECHA) {
-            if(posicionExtremo2AnteriorEsVertical) { // Si la posición anterior de la lista era vertical
-                posicionExtremo2.setPosicionX(posicionExtremo2AnteriorLocacionX + 1); // Se coloca 1 a la derecha
-                posicionExtremo2.setPosicionY(posicionExtremo2AnteriorLocacionY - 1); // Se coloca 1 abajo
+            if(casillaExtremo2AnteriorEsVertical) { // Si la casilla anterior de la d-linked list era vertical
+                casillaExtremo2.setLocacionX(casillaExtremo2AnteriorLocacionX + 1); // Se coloca 1 a la derecha
+                casillaExtremo2.setLocacionY(casillaExtremo2AnteriorLocacionY - 1); // Se coloca 1 abajo
                 // rotacion
                 if(fichaExtremo1 == valorExtremo2) {
-                    posicionExtremo2.setRotacion(0);
+                    casillaExtremo2.setRotacion(0);
                     valorExtremo2 = fichaExtremo2;
                 } else {
-                    posicionExtremo2.setRotacion(180);
+                    casillaExtremo2.setRotacion(180);
                     valorExtremo2 = fichaExtremo1;
                 }
-            } else if(posicionExtremo2AnteriorLocacionX + 4 > anchoTablero) { // Si la coordenada X para la nueva posicion es mayor que 20, no cabe y cambia de direccion
-                posicionExtremo2.setPosicionX(posicionExtremo2AnteriorLocacionX + 1); // Se coloca 1 a la derecha
-                posicionExtremo2.setPosicionY(posicionExtremo2AnteriorLocacionY - 1); // Se coloca 1 a abajo
+            } else if(casillaExtremo2AnteriorLocacionX + 4 > anchoTablero) { // Si la coordenada X para la nueva casilla es mayor que 20, no cabe y cambia de direccion
+                casillaExtremo2.setLocacionX(casillaExtremo2AnteriorLocacionX + 1); // Se coloca 1 a la derecha
+                casillaExtremo2.setLocacionY(casillaExtremo2AnteriorLocacionY - 1); // Se coloca 1 a abajo
                 // La nueva posicon es vertical
-                posicionExtremo2.setAnchoPosicion(1);
-                posicionExtremo2.setAlturaPosicion(2);
-                // Cambia de dirección para las siguientes posiciones
+                casillaExtremo2.setAnchoCasilla(1);
+                casillaExtremo2.setAlturaCasilla(2);
+                // Cambia de dirección para las siguientes casilla
                 direccionExtremo2 = IZQUIERDA;
                 // rotacion
                 if(fichaExtremo1 == valorExtremo2) {
-                    posicionExtremo2.setRotacion(90);
+                    casillaExtremo2.setRotacion(90);
                     valorExtremo2 = fichaExtremo2;
                 } else {
-                    posicionExtremo2.setRotacion(270);
+                    casillaExtremo2.setRotacion(270);
                     valorExtremo2 = fichaExtremo1;
                 }
-            } else { // La nueva posición si cabe en el tablero y no proviene de una posicion vertical
-                posicionExtremo2.setPosicionX(posicionExtremo2AnteriorLocacionX + 2); // Se coloca 2 a la izquierda
-                posicionExtremo2.setPosicionY(posicionExtremo2AnteriorLocacionY); // Se coloca 0 a abajo
+            } else { // La nueva casilla si cabe en el tablero y no proviene de una casilla vertical
+                casillaExtremo2.setLocacionX(casillaExtremo2AnteriorLocacionX + 2); // Se coloca 2 a la izquierda
+                casillaExtremo2.setLocacionY(casillaExtremo2AnteriorLocacionY); // Se coloca 0 a abajo
                 // rotacion
                 if(fichaExtremo1 == valorExtremo2) {
-                    posicionExtremo2.setRotacion(0);
+                    casillaExtremo2.setRotacion(0);
                     valorExtremo2 = fichaExtremo2;
                 } else {
-                    posicionExtremo2.setRotacion(180);
+                    casillaExtremo2.setRotacion(180);
                     valorExtremo2 = fichaExtremo1;
                 }
             }
         }
     }
     
-    public PosicionEntity obtenerPosiblePosicionMula() {
+    public CasillaEntity obtenerPosibleCasillaMula() {
         // Se supone este método sea llamado unicamente cuando aun no se ha
-        // colocado la mula, por lo que se puede regresar esta posicion que
+        // colocado la mula, por lo que se puede regresar esta casilla que
         // al momento de llamar este método, aún no se le ha asignado una ficha
-        // a esta posición.
-        return posicionMula;
+        // a esta casilla.
+        return casillaMula;
     }
     
-    public PosicionEntity obtenerPosiblePosicionExtremo1() {
-        PosicionEntity posiblePosicion = new PosicionEntity();
-        // La posible posición es horizontal
-        posiblePosicion.setAnchoPosicion(2); 
-        posiblePosicion.setAlturaPosicion(1);
+    public CasillaEntity obtenerPosibleCasillaExtremo1() {
+        CasillaEntity posibleCasilla = new CasillaEntity();
+        // La posible casilla es horizontal
+        posibleCasilla.setAnchoCasilla(2); 
+        posibleCasilla.setAlturaCasilla(1);
         
-        int posicionExtremo1X = posicionExtremo1.getPosicionX(); // locacion x de la posicion del extremo 1
-        int posicionExtremo1Y = posicionExtremo1.getPosicionY(); // locacion y de la posicion del extremo 1
-        boolean Extremo1EsVertical = posicionExtremo1.getAnchoPosicion() == 1; // Si el ancho es 1, está en vertical, 2 de lo contrario
+        int casillaExtremo1X = casillaExtremo1.getLocacionX(); // locacion x de la casilla del extremo 1
+        int casillaExtremo1Y = casillaExtremo1.getLocacionY(); // locacion y de la casilla del extremo 1
+        boolean Extremo1EsVertical = casillaExtremo1.getAnchoCasilla() == 1; // Si el ancho es 1, está en vertical, 2 de lo contrario
         
-        // Asigna coordenadas y medidas de la posible posición
+        // Asigna coordenadas y medidas de la posible casilla
         if(direccionExtremo1 == IZQUIERDA) {
-            if(Extremo1EsVertical) { // Si la posición extremo 1 es vertical
-                posiblePosicion.setPosicionX(posicionExtremo1X - 2); // Se coloca 2 a la izquierda
-                posiblePosicion.setPosicionY(posicionExtremo1Y - 1); // Se coloca 1 abajo
-            } else if(posicionExtremo1X - 2 < 0) { // Si la coordenada X para la posible posicion es menor a 0, no cabe y cambia de direccion
-                posiblePosicion.setPosicionX(posicionExtremo1X); // Se coloca 0 a la izquierda
-                posiblePosicion.setPosicionY(posicionExtremo1Y - 1); // Se coloca 1 a abajo
-                // La posible posicion cambia a vertical
-                posiblePosicion.setAnchoPosicion(1);
-                posiblePosicion.setAlturaPosicion(2);
-            } else { // La posible posición si cabe en el tablero y extremo1 no es una posicion vertical
-                posiblePosicion.setPosicionX(posicionExtremo1X - 2); // Se coloca 2 a la izquierda
-                posiblePosicion.setPosicionY(posicionExtremo1Y); // Se coloca 0 a abajo
+            if(Extremo1EsVertical) { // Si la casilla del extremo 1 es vertical
+                posibleCasilla.setLocacionX(casillaExtremo1X - 2); // Se coloca 2 a la izquierda
+                posibleCasilla.setLocacionY(casillaExtremo1Y - 1); // Se coloca 1 abajo
+            } else if(casillaExtremo1X - 2 < 0) { // Si la coordenada X para la posible casilla es menor a 0, no cabe y cambia de direccion
+                posibleCasilla.setLocacionX(casillaExtremo1X); // Se coloca 0 a la izquierda
+                posibleCasilla.setLocacionY(casillaExtremo1Y - 1); // Se coloca 1 a abajo
+                // La posible casilla cambia a vertical
+                posibleCasilla.setAnchoCasilla(1);
+                posibleCasilla.setAlturaCasilla(2);
+            } else { // La posible casilla si cabe en el tablero y extremo1 no es una casilla vertical
+                posibleCasilla.setLocacionX(casillaExtremo1X - 2); // Se coloca 2 a la izquierda
+                posibleCasilla.setLocacionY(casillaExtremo1Y); // Se coloca 0 a abajo
             }
             
         } else if(direccionExtremo1 == DERECHA) {
-            if(Extremo1EsVertical) { // Si la posición extremo 1 es vertical
-                posiblePosicion.setPosicionX(posicionExtremo1X + 1); // Se coloca 1 a la derecha
-                posiblePosicion.setPosicionY(posicionExtremo1Y - 1); // Se coloca 1 abajo
-            } else if(posicionExtremo1X + 4 > anchoTablero) { // Si la coordenada X para la posible posicion es mayor que 20, no cabe y cambia de direccion
-                posiblePosicion.setPosicionX(posicionExtremo1X + 1); // Se coloca 1 a la derecha
-                posiblePosicion.setPosicionY(posicionExtremo1Y - 1); // Se coloca 1 a abajo
-                // La nueva posicon es vertical
-                posiblePosicion.setAnchoPosicion(1);
-                posiblePosicion.setAlturaPosicion(2);
-            } else { // La nueva posición si cabe en el tablero y no proviene de una posicion vertical
-                posiblePosicion.setPosicionX(posicionExtremo1X + 2); // Se coloca 2 a la izquierda
-                posiblePosicion.setPosicionY(posicionExtremo1Y); // Se coloca 0 a abajo
+            if(Extremo1EsVertical) { // Si la casilla extremo 1 es vertical
+                posibleCasilla.setLocacionX(casillaExtremo1X + 1); // Se coloca 1 a la derecha
+                posibleCasilla.setLocacionY(casillaExtremo1Y - 1); // Se coloca 1 abajo
+            } else if(casillaExtremo1X + 4 > anchoTablero) { // Si la coordenada X para la posible casilla es mayor que 20, no cabe y cambia de direccion
+                posibleCasilla.setLocacionX(casillaExtremo1X + 1); // Se coloca 1 a la derecha
+                posibleCasilla.setLocacionY(casillaExtremo1Y - 1); // Se coloca 1 a abajo
+                // La nueva casilla es vertical
+                posibleCasilla.setAnchoCasilla(1);
+                posibleCasilla.setAlturaCasilla(2);
+            } else { // La nueva casilla si cabe en el tablero y no proviene de una casilla vertical
+                posibleCasilla.setLocacionX(casillaExtremo1X + 2); // Se coloca 2 a la izquierda
+                posibleCasilla.setLocacionY(casillaExtremo1Y); // Se coloca 0 a abajo
             }
         }
         
-        return posiblePosicion;
+        return posibleCasilla;
     }
     
     
-    public PosicionEntity obtenerPosiblePosicionExtremo2() {
-        PosicionEntity posiblePosicion = new PosicionEntity();
-        // La posible posición es horizontal
-        posiblePosicion.setAnchoPosicion(2); 
-        posiblePosicion.setAlturaPosicion(1);
+    public CasillaEntity obtenerPosiblePosicionExtremo2() {
+        CasillaEntity posibleCasilla = new CasillaEntity();
+        // La posible casilla es horizontal
+        posibleCasilla.setAnchoCasilla(2); 
+        posibleCasilla.setAlturaCasilla(1);
         
-        int posicionExtremo2X = posicionExtremo2.getPosicionX(); // locacion x de la posicion del extremo 2
-        int posicionExtremo2Y = posicionExtremo2.getPosicionY(); // locacion y de la posicion del extremo 2
-        boolean Extremo2EsVertical = posicionExtremo2.getAnchoPosicion() == 1; // Si el ancho es 1, está en vertical, 2 de lo contrario
+        int casillaExtremo2X = casillaExtremo2.getLocacionX(); // locacion x de la casilla del extremo 2
+        int casillaExtremo2Y = casillaExtremo2.getLocacionY(); // locacion y de la casilla del extremo 2
+        boolean Extremo2EsVertical = casillaExtremo2.getAnchoCasilla() == 1; // Si el ancho es 1, está en vertical, 2 de lo contrario
         
-        // Asigna coordenadas y medidas a la posible posición
+        // Asigna coordenadas y medidas a la posible casilla
         if(direccionExtremo2 == IZQUIERDA) {
             if(Extremo2EsVertical) { // Si el extremo 2 es vertical
-                posiblePosicion.setPosicionX(posicionExtremo2X - 2); // Se coloca 2 a la izquierda
-                posiblePosicion.setPosicionY(posicionExtremo2Y - 1); // Se coloca 1 abajo
-            } else if(posicionExtremo2X - 2 < 0) { // Si la coordenada X para la posible posición es menor a 0, no cabe y cambia de direccion
-                posiblePosicion.setPosicionX(posicionExtremo2X); // Se coloca 0 a la izquierda
-                posiblePosicion.setPosicionY(posicionExtremo2Y - 1); // Se coloca 1 a abajo
-                // La posible posición cambia a vertical
-                posiblePosicion.setAnchoPosicion(1);
-                posiblePosicion.setAlturaPosicion(2);
-            } else { // La posible posición si cabe en el tablero y extremo 2 no es vertical
-                posiblePosicion.setPosicionX(posicionExtremo2X - 2); // Se coloca 2 a la izquierda
-                posiblePosicion.setPosicionY(posicionExtremo2Y); // Se coloca 0 a abajo
+                posibleCasilla.setLocacionX(casillaExtremo2X - 2); // Se coloca 2 a la izquierda
+                posibleCasilla.setLocacionY(casillaExtremo2Y - 1); // Se coloca 1 abajo
+            } else if(casillaExtremo2X - 2 < 0) { // Si la coordenada X para la posible casilla es menor a 0, no cabe y cambia de direccion
+                posibleCasilla.setLocacionX(casillaExtremo2X); // Se coloca 0 a la izquierda
+                posibleCasilla.setLocacionY(casillaExtremo2Y - 1); // Se coloca 1 a abajo
+                // La posible casilla cambia a vertical
+                posibleCasilla.setAnchoCasilla(1);
+                posibleCasilla.setAlturaCasilla(2);
+            } else { // La posible casilla si cabe en el tablero y extremo 2 no es vertical
+                posibleCasilla.setLocacionX(casillaExtremo2X - 2); // Se coloca 2 a la izquierda
+                posibleCasilla.setLocacionY(casillaExtremo2Y); // Se coloca 0 a abajo
             }
             
         } else if(direccionExtremo2 == DERECHA) {
             if(Extremo2EsVertical) { // Si el extremo 2 es vertical
-                posiblePosicion.setPosicionX(posicionExtremo2X + 1); // Se coloca 1 a la derecha
-                posiblePosicion.setPosicionY(posicionExtremo2Y - 1); // Se coloca 1 abajo
-            } else if(posicionExtremo2X + 4 > anchoTablero) { // Si la coordenada X para la posible posicion es mayor que 20, no cabe y cambia de direccion
-                posiblePosicion.setPosicionX(posicionExtremo2X + 1); // Se coloca 1 a la derecha
-                posiblePosicion.setPosicionY(posicionExtremo2Y - 1); // Se coloca 1 a abajo
-                // La posible posicon es vertical
-                posiblePosicion.setAnchoPosicion(1);
-                posiblePosicion.setAlturaPosicion(2);
-            } else { // La posible posición si cabe en el tablero y extremo 2 no es vertical
-                posiblePosicion.setPosicionX(posicionExtremo2X + 2); // Se coloca 2 a la izquierda
-                posiblePosicion.setPosicionY(posicionExtremo2Y); // Se coloca 0 a abajo
+                posibleCasilla.setLocacionX(casillaExtremo2X + 1); // Se coloca 1 a la derecha
+                posibleCasilla.setLocacionY(casillaExtremo2Y - 1); // Se coloca 1 abajo
+            } else if(casillaExtremo2X + 4 > anchoTablero) { // Si la coordenada X para la posible casilla es mayor que 20, no cabe y cambia de direccion
+                posibleCasilla.setLocacionX(casillaExtremo2X + 1); // Se coloca 1 a la derecha
+                posibleCasilla.setLocacionY(casillaExtremo2Y - 1); // Se coloca 1 a abajo
+                // La posible casilla es vertical
+                posibleCasilla.setAnchoCasilla(1);
+                posibleCasilla.setAlturaCasilla(2);
+            } else { // La posible casilla si cabe en el tablero y extremo 2 no es vertical
+                posibleCasilla.setLocacionX(casillaExtremo2X + 2); // Se coloca 2 a la izquierda
+                posibleCasilla.setLocacionY(casillaExtremo2Y); // Se coloca 0 a abajo
             }
         }
         
-        return posiblePosicion;
+        return posibleCasilla;
     }
 }
