@@ -104,7 +104,7 @@ public class PartidaDominoView extends JPanel{
         setPreferredSize(new Dimension(ancho, altura));
         
         // Redimencionar y posicionar panelContenedorFichasJugadorLocal
-        int anchoContenedorFichasJugadorLocal = (int) (model.getAnchoFichaJugadorLocal() * model.getListaFichasJugadorLocal().size() * model.getEscala());
+        int anchoContenedorFichasJugadorLocal = (int) (model.getAnchoFichaJugadorLocal() * (model.getListaFichasJugadorLocal().size() + 1) * model.getEscala());
         int altoContenedorFichasJugadorLocal = (int) (model.getAlturaMinimaContenedorFichasJugadorLocal() * model.getEscala());
         int contenedorFichasJugadorLocalY = (int) (model.getContenedorFichasJugadorLocalLocacionY() * model.getEscala());
         // Calcular la posición X para centrar panelContenedorFichasJugadorLocal horizontalmente
@@ -138,7 +138,6 @@ public class PartidaDominoView extends JPanel{
             int fichaAltura = (int) (model.getAlturaFichaJugadorLocal() * model.getEscala());
             ficha.setPreferredSize(new Dimension(fichaAncho, fichaAltura));
         }
-        System.out.println("fichas: " + listaFichasJugadorLocal.size());
         revalidate();
         repaint();
     }
