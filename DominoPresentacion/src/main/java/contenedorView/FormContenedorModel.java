@@ -13,9 +13,9 @@ import javax.swing.JPanel;
  *
  * @author asielapodaca
  */
-public class FormContenedorModel implements ScaleProvider, ScaleObservable{    
+public class FormContenedorModel implements EscalaProveedor, EscalaObservable{    
     
-    private List<ScaleObserver> observers = new ArrayList<>(); // Observers de escala
+    private List<EscalaObserver> observers = new ArrayList<>(); // Observers de escala
     
     private int anchoFrame; // Ancho actual de FormContenedorView
     private int alturaFrame; // Alto actual de FormContenedorView
@@ -160,10 +160,9 @@ public class FormContenedorModel implements ScaleProvider, ScaleObservable{
     }
 
     public void setEscala(float escala) {
-        if (this.escala != escala) {
-            this.escala = escala;
-            notifyScaleObservers();
-        }
+        this.escala = escala;
+        notifyScaleObservers();
+        
     }
 
     @Override
@@ -172,18 +171,18 @@ public class FormContenedorModel implements ScaleProvider, ScaleObservable{
     }
 
     @Override
-    public void addScaleObserver(ScaleObserver observer) {
+    public void addScaleObserver(EscalaObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void removeScaleObserver(ScaleObserver observer) {
+    public void removeScaleObserver(EscalaObserver observer) {
         observers.remove(observer);
     }
 
     @Override
     public void notifyScaleObservers() {
-        for (ScaleObserver observer : observers) {
+        for (EscalaObserver observer : observers) {
             observer.onScaleChanged(this.escala);
         }
     }

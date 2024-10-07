@@ -8,6 +8,6 @@ package contenedorView;
  *
  * @author asielapodaca
  */
-public interface ScaleObserver {
-    void onScaleChanged(float newScale);
+public interface EscalaProveedor {
+    float getScale();
 }

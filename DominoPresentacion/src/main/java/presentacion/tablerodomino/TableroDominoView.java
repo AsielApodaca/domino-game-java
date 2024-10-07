@@ -1,6 +1,7 @@
 package presentacion.tablerodomino;
 
 import dominio.FichaDominoEntity;
+import dominodto.FichaDominoDTO;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -98,16 +99,16 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     }
 
     @Override
-    public void onChangeListaFichasUsuario(List<FichaDominoEntity> listaFichasUsuario) {
+    public void onChangeListaFichasUsuario(List<FichaDominoDTO> listaFichasUsuario) {
         fichasDominoUsuario.clear();
         fichaUsuarioPanel.removeAll();
 
-        for (FichaDominoEntity fichaDomino : listaFichasUsuario) {
+        for (FichaDominoDTO fichaDomino : listaFichasUsuario) {
             FichaDominoPanel fichaDominoPanel = new FichaDominoPanel(fichaDomino);
             fichasDominoUsuario.add(fichaDominoPanel);
             fichaUsuarioPanel.add(fichaDominoPanel);
             fichaDominoPanel.agregarListenerAlSeleccionar(e -> {
-                System.out.println("Ficha seleccionada: " + fichaDomino.getExtremo1() + " - " + fichaDomino.getExtremo2());
+                System.out.println("Ficha seleccionada: " + fichaDomino.getValorExtremo1() + " - " + fichaDomino.getValorExtremo2());
             });
         }
 
@@ -116,7 +117,7 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     }
 
     @Override
-    public void onChangeFichaComparativa(FichaDominoEntity fichaComparativaModel) {
+    public void onChangeFichaComparativa(FichaDominoDTO fichaComparativaModel) {
         fichaComparativaPanel.removeAll();
 
         fichaComparativaPanel = new FichaDominoPanel(fichaComparativaModel);
@@ -127,12 +128,12 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     }
 
     @Override
-    public void onChangeFichasComparativas(List<FichaDominoEntity> listaFichasComparativas) {
+    public void onChangeFichasComparativas(List<FichaDominoDTO> listaFichasComparativas) {
 
     }
 
     @Override
-    public void onChangeFichaSeleccionada(FichaDominoEntity fichaSeleccionada) {
+    public void onChangeFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
 
     }
 

@@ -8,8 +8,8 @@ package contenedorView;
  *
  * @author asielapodaca
  */
-public interface ScaleObservable {
-    void addScaleObserver(ScaleObserver observer);
-    void removeScaleObserver(ScaleObserver observer);
+public interface EscalaObservable {
+    void addScaleObserver(EscalaObserver observer);
+    void removeScaleObserver(EscalaObserver observer);
     void notifyScaleObservers();
 }

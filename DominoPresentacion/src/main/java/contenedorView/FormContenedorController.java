@@ -43,8 +43,7 @@ public class FormContenedorController {
         model.setAlturaBarraTituloVentana(view.getInsets().top);
         updateFrameContainerValues();
 
-        // Asigna la escala de tamaño del contenedor
-        updateScale();
+        
         
         // Asigna la locación centrada para el contenedor
         updateContainerLocation();
@@ -54,6 +53,9 @@ public class FormContenedorController {
         
         // Ajustar el tamaño minimo del Frame
         view.updateFrameMinimumSize();
+        
+        // Asigna la escala de tamaño del contenedor
+        updateScale();
     }
     
     private void updateFrameContainerValues() {

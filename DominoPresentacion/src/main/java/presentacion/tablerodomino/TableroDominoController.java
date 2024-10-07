@@ -5,12 +5,13 @@
 package presentacion.tablerodomino;
 
 import contenedorView.FormContenedorModel;
-import contenedorView.ScaleObserver;
-import contenedorView.ScaleProvider;
 import dominio.FichaDominoEntity;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
+import contenedorView.EscalaObserver;
+import contenedorView.EscalaProveedor;
+import dominodto.FichaDominoDTO;
 
 /**
  *
@@ -19,11 +20,11 @@ import javax.swing.JPanel;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class TableroDominoController implements ScaleObserver{
+public class TableroDominoController implements EscalaObserver{
     
     private TableroDominoModel model ;
     private TableroDominoView view ;
-    private ScaleProvider scaleProvider;
+    private EscalaProveedor scaleProvider;
     
     public TableroDominoController(TableroDominoModel model, TableroDominoView view, FormContenedorModel formContenedorModel) {
         this.model = model;
@@ -67,9 +68,9 @@ public class TableroDominoController implements ScaleObserver{
 
             if (index != -1) {
                 try {
-                    FichaDominoEntity selectedFicha = model.getListaFichasUsuario().get(index);
-                    System.out.println("Ficha Seleccionada: [" + selectedFicha.getExtremo1()
-                            + " | " + selectedFicha.getExtremo2() + "]");
+                    FichaDominoDTO selectedFicha = model.getListaFichasUsuario().get(index);
+                    System.out.println("Ficha Seleccionada: [" + selectedFicha.getValorExtremo1()
+                            + " | " + selectedFicha.getValorExtremo2() + "]");
                     model.setFichaSeleccionada(selectedFicha);
                     model.validarExtremoCompatible(selectedFicha);
 

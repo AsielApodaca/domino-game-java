@@ -23,7 +23,7 @@ public class FormContenedorView extends JFrame{
         this.model = model;
         // Configuración del JFrame
         setTitle("DOT;MINO");
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximizado por defecto
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(model.getFrameBrackgroundColor()); // Color del Frame
         setLayout(null); // Usar null layout para posicionar manualmente el JPanel
@@ -33,6 +33,8 @@ public class FormContenedorView extends JFrame{
         containerPanel.setBackground(model.getContenedorBrackgroundColor()); // Color del contenedor
         containerPanel.setLayout(new BorderLayout()); // Usar BorderLayout en el JPanel
         add(containerPanel); // Añadir el JPanel al JFrame
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximizado por defecto
     }
     
     public void updateContainerSize() {

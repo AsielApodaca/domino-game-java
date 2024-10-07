@@ -1,8 +1,10 @@
 package presentacion.tablerodomino.fichadomino;
 
-import dominio.FichaDominoEntity;
+import dominodto.FichaDominoDTO;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
@@ -37,14 +39,14 @@ public class FichaDominoPanel extends JPanel {
      *
      * @param ficha
      */
-    public FichaDominoPanel(FichaDominoEntity ficha) {
-        setPreferredSize(new Dimension(70, 110));
+    public FichaDominoPanel(FichaDominoDTO ficha) {
+        //setPreferredSize(new Dimension(70, 110));
         setLayout(new GridLayout(2, 1, 2, 2));
 
         fondoFicha = new ImageIcon(getClass().getResource("/multimedia/DominoFondo.png")).getImage();
 
-        labelExtremo1 = new JLabel(cargarImagenPorNumero(ficha.getExtremo1()), SwingConstants.CENTER);
-        labelExtremo2 = new JLabel(cargarImagenPorNumero(ficha.getExtremo2()), SwingConstants.CENTER);
+        labelExtremo1 = new JLabel(cargarImagenPorNumero(ficha.getValorExtremo1()), SwingConstants.CENTER);
+        labelExtremo2 = new JLabel(cargarImagenPorNumero(ficha.getValorExtremo2()), SwingConstants.CENTER);
 
         add(labelExtremo1);
         add(labelExtremo2);
@@ -62,11 +64,12 @@ public class FichaDominoPanel extends JPanel {
         super.paintComponent(g);
 
         if (fondoFicha != null) {
+            // Solo dibujar la imagen si hay fondo, pero no pintar el rectángulo
             g.drawImage(fondoFicha, 0, 0, getWidth(), getHeight(), this);
         }
     }
 
-    /**
+        /**
      * Agrega un listener para manejar la selección de la ficha al hacer clic.
      *
      * @param listener Acción a realizar al seleccionar la ficha
