@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
-import presentacion.tablerodomino.mesadomino.MesaDominoPanel;
 
 /**
  *
@@ -33,7 +32,7 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
     private final TableroDominoModel tableroDominoModel;
     private final List<FichaDominoPanel> fichasDominoUsuario;
     private final JPanel fichaUsuarioPanel;
-    private final JPanel mesaDominoPanel;
+//    private final JPanel mesaDominoPanel;
     private JPanel fichaComparativaPanel;
     private BufferedImage fondoPantalla;
 
@@ -56,8 +55,8 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         }
 
         // Crear el panel MesaDominoPanel
-        mesaDominoPanel = new MesaDominoPanel();
-        mesaDominoPanel.setOpaque(true);  // Hacer el panel transparente
+//        mesaDominoPanel = new MesaDominoPanel();
+//        mesaDominoPanel.setOpaque(true);  // Hacer el panel transparente
 
         fichaComparativaPanel = new JPanel(new GridBagLayout()); // Crear el panel comparativo
         fichaComparativaPanel.setOpaque(false);  // Hacer el panel transparente
@@ -69,7 +68,7 @@ public class TableroDominoView extends JPanel implements ITableroDominoModeloLis
         
 
         // Agregar el panel MesaDominoPanel al centro
-        add(mesaDominoPanel, BorderLayout.CENTER);
+//        add(mesaDominoPanel, BorderLayout.CENTER);
 
         add(fichaUsuarioPanel, BorderLayout.SOUTH);
 
