@@ -16,18 +16,18 @@ import java.util.List;
  */
 public class PozoEntity {
 
-    private List<FichaDominoEntity> listaPiezas;
+    private List<FichaDominoEntity> listaFichas;
 
-    public PozoEntity(List<FichaDominoEntity> listaPiezas) {
-        this.listaPiezas = listaPiezas;
+    public PozoEntity() {
+        this.listaFichas = new ArrayList<>();
     }
 
-    public List<FichaDominoEntity> getListaPiezas() {
-        return listaPiezas;
+    public List<FichaDominoEntity> getListaFichas() {
+        return listaFichas;
     }
 
-    public void setListaPiezas(List<FichaDominoEntity> listaPiezas) {
-        this.listaPiezas = listaPiezas;
+    public void setListaFichas(List<FichaDominoEntity> listaFichas) {
+        this.listaFichas = listaFichas;
     }
 
 }

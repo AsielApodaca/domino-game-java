@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class PozoLogica {
 
-    private List<FichaDominoEntity> listaPiezas = new ArrayList<>();
+    private List<FichaDominoEntity> listaFichas = new ArrayList<>();
     private PozoEntity pozo;
 
     public PozoLogica(PozoEntity pozo) {
@@ -31,24 +31,24 @@ public class PozoLogica {
      * mezclarlas de forma aleatoria
      */
     public void generarFichas() {
-        listaPiezas = new ArrayList<>();
+        listaFichas = new ArrayList<>();
         // Generar todas las fichas posibles del dominó (del 0-0 al 6-6)
         for (int i = 0; i <= 6; i++) {
             for (int j = i; j <= 6; j++) {
-                listaPiezas.add(new FichaDominoEntity(i, j));
+                listaFichas.add(new FichaDominoEntity(i, j));
             }
         }
         // Mezcla las fichas
-        Collections.shuffle(listaPiezas);
-        pozo.setListaPiezas(listaPiezas);
+        Collections.shuffle(listaFichas);
+        pozo.setListaFichas(listaFichas);
     }
 
-    public List<FichaDominoEntity> getListaPiezas() {
-        return listaPiezas;
+    public List<FichaDominoEntity> getListaFichas() {
+        return listaFichas;
     }
 
-    public void setListaPiezas(List<FichaDominoEntity> listaPiezas) {
-        this.listaPiezas = listaPiezas;
+    public void setListaFichas(List<FichaDominoEntity> listaFichas) {
+        this.listaFichas = listaFichas;
     }
 
 }

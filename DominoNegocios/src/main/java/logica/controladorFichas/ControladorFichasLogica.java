@@ -36,8 +36,8 @@ public class ControladorFichasLogica {
     public List<FichaDominoEntity> repartirFichas(int cantidad) {
         List<FichaDominoEntity> fichasRepartidas = new ArrayList<>();
         for (int i = 0; i < cantidad; i++) {
-            if (!pozo.getListaPiezas().isEmpty()) {
-                fichasRepartidas.add(pozo.getListaPiezas().remove(0)); // Se saca la primera ficha del pozo
+            if (!pozo.getListaFichas().isEmpty()) {
+                fichasRepartidas.add(pozo.getListaFichas().remove(0)); // Se saca la primera ficha del pozo
             }
         }
         return fichasRepartidas;
@@ -52,10 +52,10 @@ public class ControladorFichasLogica {
      * @return
      */
     public FichaDominoEntity sacarFicha() {
-        if (pozo.getListaPiezas().isEmpty()) {
+        if (pozo.getListaFichas().isEmpty()) {
             throw new IllegalStateException("No hay fichas en el pozo");
         }
-        return pozo.getListaPiezas().remove(0);
+        return pozo.getListaFichas().remove(0);
     }
 
     public void asignarFichas() {
