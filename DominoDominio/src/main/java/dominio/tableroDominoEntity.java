@@ -8,10 +8,10 @@ package dominio;
  *
  * @author asielapodaca
  */
-public class tableroDominoEntity {
+public class TableroDominoEntity {
     
-    private int IZQUIERDA = 0;
-    private int DERECHA = 1;
+    private final int IZQUIERDA = 0;
+    private final int DERECHA = 1;
     
     private int direccionExtremo1; // Hacia que dirección se extiende el extremo1
     private int direccionExtremo2; // Hacia que direccion se extiende el extremo2
@@ -20,14 +20,14 @@ public class tableroDominoEntity {
     private PosicionEntity posicionExtremo1; // referencia a la posición del extremo 1
     private PosicionEntity posicionExtremo2; // referencia a la posición del extremo 2
     
-    private int anchoTablero; // ancho usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
-    private int altoTablero; // altura usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
+    private final int anchoTablero; // ancho usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
+    private final int altoTablero; // altura usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
     
     private int valorExtremo1; // Valor del primer extremo
     private int valorExtremo2; // Valor del segundo extremo
 
 
-    public tableroDominoEntity() {
+    public TableroDominoEntity() {
         this.posicionMula = new PosicionEntity();
         this.posicionMula.setAlturaPosicion(1);
         this.posicionMula.setAnchoPosicion(2);
