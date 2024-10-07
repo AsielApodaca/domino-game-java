@@ -4,7 +4,6 @@
  */
 package dominio;
 
-import dominoenums.ExtremoCompatible;
 
 /**
  *
@@ -17,17 +16,10 @@ public class FichaDominoEntity {
 
     private Integer extremo1;
     private Integer extremo2;
-    private ExtremoCompatible posicion;
 
     public FichaDominoEntity(Integer extremo1, Integer extremo2) {
         this.extremo1 = extremo1;
         this.extremo2 = extremo2;
-    }
-
-    public FichaDominoEntity(Integer extremo1, Integer extremo2, ExtremoCompatible posicion) {
-        this.extremo1 = extremo1;
-        this.extremo2 = extremo2;
-        this.posicion = posicion;
     }
 
     public Integer getExtremo1() {
@@ -44,14 +36,6 @@ public class FichaDominoEntity {
 
     public void setExtremo2(Integer extremo2) {
         this.extremo2 = extremo2;
-    }
-
-    public ExtremoCompatible getPosicion() {
-        return posicion;
-    }
-
-    public void setPosicion(ExtremoCompatible posicion) {
-        this.posicion = posicion;
     }
 
 }
