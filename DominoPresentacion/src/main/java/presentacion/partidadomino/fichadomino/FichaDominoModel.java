@@ -5,7 +5,7 @@
 package presentacion.partidadomino.fichadomino;
 
 import dominodto.FichaDominoDTO;
-import dominodto.PosicionDTO;
+import dominodto.CasillaDTO;
 
 /**
  *
@@ -19,7 +19,7 @@ public class FichaDominoModel {
     private int alturaFicha; // altura del panel de la ficha
     
     // Mayormente usado para fichas colocadas en el tablero
-    private PosicionDTO posicionDTO; // Almacena coordenadas y ficha asignada
+    private CasillaDTO posicionDTO; // Almacena coordenadas y ficha asignada
     private int rotacion; // Ángulo de rotación en radianes, 0, 90, 180, 270
     private int locacionX; // Locación en eje de las X
     private int locacionY; // Locación en eje de las Y
@@ -31,14 +31,37 @@ public class FichaDominoModel {
     // Numero de extremos por lado, por ejemplo: 1 horizontal, 2 vertical, significa que la ficha está en vertical, 2 y 1 de lo contrario
     private int extremosHorizontal; // 2 o 1
     private int extremosVertical; // 2 o 1
+    
+    private boolean compatible; // Si la ficha es compatible con uno de los 2 extremos
+    private boolean seleccionada; // Si la ficha está seleccionada
+    private boolean colocada; // Si la ficha ha sido colocada en el tablero;
 
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) {
         this.fichaDominoDTO = fichaDominoDTO;
+        iniciarFichaJugadorLocal();
+    }
+
+    public FichaDominoModel(CasillaDTO posicionDTO) {
+        this.posicionDTO = posicionDTO;
+        iniciarFichaParaTablero();
+    }
+    
+    private void iniciarFichaJugadorLocal() {
         this.anchoFicha = 30;
         this.alturaFicha = 60;
         this.extremosHorizontal = 1;
         this.extremosVertical = 2;
     }
+    
+    private void iniciarFichaParaTablero() {
+        
+        this.anchoFicha = 30;
+        this.alturaFicha = 60;
+        this.extremosHorizontal = 1;
+        this.extremosVertical = 2;
+    }
+    
+    
     
     
     

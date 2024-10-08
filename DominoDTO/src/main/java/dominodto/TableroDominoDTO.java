@@ -14,7 +14,7 @@ import java.util.List;
 public class TableroDominoDTO {
     private int anchoTablero; // ancho usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
     private int altoTablero;// altura usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
-    private List<PosicionDTO> listaPosiciones; // lista de posiciones utilizadas en el tablero
+    private List<CasillaDTO> listaPosiciones; // lista de posiciones utilizadas en el tablero
 
     public TableroDominoDTO(int anchoTablero, int altoTablero) {
         this.anchoTablero = anchoTablero;
@@ -38,15 +38,15 @@ public class TableroDominoDTO {
         this.altoTablero = altoTablero;
     }
 
-    public List<PosicionDTO> getListaPosiciones() {
+    public List<CasillaDTO> getListaPosiciones() {
         return listaPosiciones;
     }
 
-    public void setListaPosiciones(List<PosicionDTO> listaPosiciones) {
+    public void setListaPosiciones(List<CasillaDTO> listaPosiciones) {
         this.listaPosiciones = listaPosiciones;
     }
     
-    public void addPosicion(PosicionDTO posicionDTO) {
+    public void addPosicion(CasillaDTO posicionDTO) {
         this.listaPosiciones.add(posicionDTO);
     }
     

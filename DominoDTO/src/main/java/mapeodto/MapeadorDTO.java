@@ -8,7 +8,7 @@ import dominio.FichaDominoEntity;
 import dominio.CasillaEntity;
 import dominio.TableroDominoEntity;
 import dominodto.FichaDominoDTO;
-import dominodto.PosicionDTO;
+import dominodto.CasillaDTO;
 import dominodto.TableroDominoDTO;
 
 /**
@@ -24,14 +24,14 @@ public class MapeadorDTO {
         
     }
     
-    public PosicionDTO posicionEntityADTO(CasillaEntity posicion) {
-        PosicionDTO posicionDTO = new PosicionDTO();
+    public CasillaDTO posicionEntityADTO(CasillaEntity posicion) {
+        CasillaDTO posicionDTO = new CasillaDTO();
         
-        posicionDTO.setPosicionX(posicion.getPosicionX());
-        posicionDTO.setPosicionY(posicion.getPosicionY());
+        posicionDTO.setLocacionX(posicion.getLocacionX());
+        posicionDTO.setLocacionY(posicion.getLocacionY());
         posicionDTO.setRotacion(posicion.getRotacion());
-        posicionDTO.setAnchoPosicion(posicion.getAlturaPosicion());
-        posicionDTO.setAlturaPosicion(posicion.getAlturaPosicion());
+        posicionDTO.setAnchoCasilla(posicion.getAlturaCasilla());
+        posicionDTO.setAlturaCasilla(posicion.getAlturaCasilla());
         FichaDominoDTO fichaDominoDTO = fichaEntityADTO(posicion.getFichaDomino());
         if(fichaDominoDTO != null) {
             posicionDTO.setFichaDominoDTO(fichaDominoDTO);
@@ -50,7 +50,7 @@ public class MapeadorDTO {
         if(posicion != null) { // el tablero tiene por lo menos una ficha
             do { // Recorre todas las posiciones de fichas
                 tableroDominoDTO.addPosicion(posicionEntityADTO(posicion));
-            }while(posicion.getSiguientePosicion() != null);
+            }while(posicion.getSiguienteCasilla() != null);
             
         }
         
