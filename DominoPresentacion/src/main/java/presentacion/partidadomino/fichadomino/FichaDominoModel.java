@@ -9,17 +9,21 @@ import dominodto.CasillaDTO;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class FichaDominoModel {
     
+    private String imagenMargenDomino;
     // Mayormente usado para panel de fichas del jugador local
     private FichaDominoDTO fichaDominoDTO; // Ficha que representa el panel
     private int anchoFicha; // ancho del panel de la ficha
     private int alturaFicha; // altura del panel de la ficha
     
     // Mayormente usado para fichas colocadas en el tablero
-    private CasillaDTO posicionDTO; // Almacena coordenadas y ficha asignada
+    private CasillaDTO casillaDTO; // Almacena coordenadas y ficha asignada
     private int rotacion; // Ángulo de rotación en radianes, 0, 90, 180, 270
     private int locacionX; // Locación en eje de las X
     private int locacionY; // Locación en eje de las Y
@@ -38,11 +42,15 @@ public class FichaDominoModel {
 
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) {
         this.fichaDominoDTO = fichaDominoDTO;
+        this.imagenMargenDomino = "/multimedia/DominoFondo.png";
+        this.imgExtremo1 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo1());
+        this.imgExtremo2 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo2());
+        
         iniciarFichaJugadorLocal();
     }
 
-    public FichaDominoModel(CasillaDTO posicionDTO) {
-        this.posicionDTO = posicionDTO;
+    public FichaDominoModel(CasillaDTO casillaDTO) {
+        this.casillaDTO = casillaDTO;
         iniciarFichaParaTablero();
     }
     
@@ -55,10 +63,22 @@ public class FichaDominoModel {
     
     private void iniciarFichaParaTablero() {
         
-        this.anchoFicha = 30;
-        this.alturaFicha = 60;
+        this.anchoFicha = 15;
+        this.alturaFicha = 30;
         this.extremosHorizontal = 1;
         this.extremosVertical = 2;
+    }
+
+    public String getImagenMargenDomino() {
+        return imagenMargenDomino;
+    }
+
+    public String getImgExtremo1() {
+        return imgExtremo1;
+    }
+
+    public String getImgExtremo2() {
+        return imgExtremo2;
     }
     
     

@@ -8,7 +8,6 @@ import dominodto.FichaDominoDTO;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -17,11 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
+import presentacion.partidadomino.fichadomino.FichaDominoView;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class PartidaDominoView extends JPanel{
     
@@ -30,15 +32,15 @@ public class PartidaDominoView extends JPanel{
     private BufferedImage fondoPantalla; // Fondo de pantalla de PartidaDominoView
     
     private JPanel panelContenedorFichasJugadorLocal; // Panel que contendrá las fichas del jugador local
-    private List<FichaDominoPanel> listaFichasJugadorLocal; // Lista de paneles de las fichas del jugador local
+    private List<FichaDominoView> listaFichasJugadorLocal; // Lista de paneles de las fichas del jugador local
     
     private JPanel panelTablero; // Panel de tablero donde se colocarán las fichas
-    private List<FichaDominoPanel> listaFichasEnTablero; // Lista de paneles de fichas colocados en el tablero
+    private List<FichaDominoView> listaFichasMesa; // Lista de paneles de fichas colocados en el tablero
 
     public PartidaDominoView(PartidaDominoModel model) {
         this.model = model;
         this.listaFichasJugadorLocal = new ArrayList<>();
-        this.listaFichasEnTablero = new ArrayList<>();
+        this.listaFichasMesa = new ArrayList<>();
         
         cargarComponentes();
     }
@@ -133,7 +135,7 @@ public class PartidaDominoView extends JPanel{
     
     private void redimencionarFichasJugadorLocal() {
         // Redimencionar fichas
-        for (FichaDominoPanel ficha : listaFichasJugadorLocal) {
+        for (FichaDominoView ficha : listaFichasJugadorLocal) {
             int fichaAncho = (int) (model.getAnchoFichaJugadorLocal() * model.getEscala());
             int fichaAltura = (int) (model.getAlturaFichaJugadorLocal() * model.getEscala());
             ficha.setPreferredSize(new Dimension(fichaAncho, fichaAltura));
@@ -142,18 +144,18 @@ public class PartidaDominoView extends JPanel{
         repaint();
     }
     
-    public void actualizarListaFichasJugadorLocal() {
-        listaFichasJugadorLocal.clear();
-        panelContenedorFichasJugadorLocal.removeAll();
-        List<FichaDominoDTO> listaFichas = model.getListaFichasJugadorLocal();
-        for(FichaDominoDTO ficha : listaFichas) {
-            FichaDominoPanel fichaPanel = new FichaDominoPanel(ficha);
-            fichaPanel.setOpaque(false);
-            listaFichasJugadorLocal.add(fichaPanel);
-            panelContenedorFichasJugadorLocal.add(fichaPanel);
-        }
-        redimencionarFichasJugadorLocal();
-    }
+//    public void actualizarListaFichasJugadorLocal() {
+//        listaFichasJugadorLocal.clear();
+//        panelContenedorFichasJugadorLocal.removeAll();
+//        List<FichaDominoDTO> listaFichas = model.getListaFichasJugadorLocal();
+//        for(FichaDominoDTO ficha : listaFichas) {
+//            FichaDominoView fichaPanel = new FichaDominoView(ficha);
+//            fichaPanel.setOpaque(false);
+//            listaFichasJugadorLocal.add(fichaPanel);
+//            panelContenedorFichasJugadorLocal.add(fichaPanel);
+//        }
+//        redimencionarFichasJugadorLocal();
+//    }
     
     @Override
     protected void paintComponent(Graphics g) {

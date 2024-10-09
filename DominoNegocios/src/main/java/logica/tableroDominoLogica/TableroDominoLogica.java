@@ -14,7 +14,7 @@ import mediadorNavegacion.MediadorNavegacionPantallas;
 import presentacion.partidadomino.PartidaDominoController;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.PartidaDominoView;
-import presentacion.tablerodomino.*;
+//import presentacion.tablerodomino.*;
 
 /**
  *
@@ -23,7 +23,7 @@ import presentacion.tablerodomino.*;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class TableroDominoLogica implements ITableroDominoLogica, ITableroDominoModeloListener {
+public class TableroDominoLogica implements ITableroDominoLogica {
 
 //    TableroDominoModel model;
 //    TableroDominoView view;
@@ -74,75 +74,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         
     }
 
-    @Override
-    public void onChangeListaFichasUsuario(List<FichaDominoDTO> listaFichasUsuario) {
-        return;
+   
     }
 
-    @Override
-    public void onChangeFichaComparativa(FichaDominoDTO fichaComparativa) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public void onChangeFichasComparativas(List<FichaDominoDTO> listaFichasComparativas) {
-//        model.getListaFichasValidas().clear();
-//        FichaDominoDTO fichaIzquierda = model.getFichasComparativas().getFirst();
-//        FichaDominoDTO fichaDerecha = model.getFichasComparativas().getLast();
-//        model.getListaFichasUsuario().forEach(ficha -> {
-//            boolean coincideConIzquierda = ficha.getExtremo1().equals(fichaIzquierda.getExtremo1())
-//                    || ficha.getExtremo2().equals(fichaIzquierda.getExtremo1());
-//
-//            boolean coincideConDerecha = ficha.getExtremo1().equals(fichaDerecha.getExtremo2())
-//                    || ficha.getExtremo2().equals(fichaDerecha.getExtremo2());
-//
-//            if (coincideConIzquierda || coincideConDerecha) {
-//                model.getListaFichasValidas().add(ficha);
-//            }
-//            
-//            System.out.println(model.getListaFichasValidas().toString());
-//        });
-    }
-
-    @Override
-    public void onChangeFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
-//        FichaDominoDTO fichaIzquierda = model.getFichasComparativas().getFirst();
-//        FichaDominoDTO fichaDerecha = model.getFichasComparativas().getLast();
-//        
-//        boolean sePuedeColocarIzquierda = false;
-//        boolean sePuedeColocarDerecha = false;
-//
-//        List<String> extremosIzquierdaUsados = new ArrayList<>();
-//        List<String> extremosDerechaUsados = new ArrayList<>();
-//
-//        if (fichaSeleccionada.getExtremo1().equals(fichaIzquierda.getExtremo1())) {
-//            sePuedeColocarIzquierda = true;
-//            extremosIzquierdaUsados.add("extremo1");
-//        }
-//        if (fichaSeleccionada.getExtremo2().equals(fichaIzquierda.getExtremo1())) {
-//            sePuedeColocarIzquierda = true;
-//            extremosIzquierdaUsados.add("extremo2");
-//        }
-//
-//        if (fichaSeleccionada.getExtremo1().equals(fichaDerecha.getExtremo2())) {
-//            sePuedeColocarDerecha = true;
-//            extremosDerechaUsados.add("extremo1");
-//        }
-//        if (fichaSeleccionada.getExtremo2().equals(fichaDerecha.getExtremo2())) {
-//            sePuedeColocarDerecha = true;
-//            extremosDerechaUsados.add("extremo2");
-//        }
-//
-//        if (sePuedeColocarIzquierda && sePuedeColocarDerecha) {
-//            //SE PUEDE COLOCAR EN LOS 2 LADOS
-//        } else if (sePuedeColocarIzquierda) {
-//            //NOMAS SE PUEDE COLOCAR EN EL LADO IZQUIERDO
-//        } else if (sePuedeColocarDerecha) {
-//            //NOMAS SE PUEDE COLOCAR EN EL LADO DERECHO
-//        } else {
-//            //NO SE PUEDE COLOCAR, PERO PUES NO DEBERIA DE LLEGAR AQUI SIN YA FUE VALIDADO PREVIAMENTE
-//        }
-
-    }
-
-}
