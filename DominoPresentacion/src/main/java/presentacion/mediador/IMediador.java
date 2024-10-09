@@ -19,6 +19,8 @@ public interface IMediador {
     List<FichaDominoDTO> obtenerListaFichasJugadorLocal();
     float obtenerEscala();
     void actualizarEscala(float escala);
+    int getRedimencionFichasJugadorLocalAncho();
+    int getRedimencionFichasJugadorLocalAlto();
 
     void crearNuevaFicha(FichaDominoDTO fichaDominoDTO);
 

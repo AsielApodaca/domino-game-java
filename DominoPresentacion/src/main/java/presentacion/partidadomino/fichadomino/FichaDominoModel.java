@@ -6,6 +6,8 @@ package presentacion.partidadomino.fichadomino;
 
 import dominodto.FichaDominoDTO;
 import dominodto.CasillaDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,6 +23,8 @@ public class FichaDominoModel {
     private FichaDominoDTO fichaDominoDTO; // Ficha que representa el panel
     private int anchoFicha; // ancho del panel de la ficha
     private int alturaFicha; // altura del panel de la ficha
+    private List<FichaDominoDTO> listaFichasJugadorLocal;
+    
     
     // Mayormente usado para fichas colocadas en el tablero
     private CasillaDTO posicionDTO; // Almacena coordenadas y ficha asignada
@@ -45,6 +49,7 @@ public class FichaDominoModel {
         this.imagenMargenDomino = "/multimedia/DominoFondo.png";
         this.imgExtremo1 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo1());
         this.imgExtremo2 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo2());
+        listaFichasJugadorLocal = new ArrayList<>();
         
         iniciarFichaJugadorLocal();
     }
@@ -78,6 +83,10 @@ public class FichaDominoModel {
 
     public String getImgExtremo2() {
         return imgExtremo2;
+    }
+
+    public List<FichaDominoDTO> getListaFichasJugadorLocal() {
+        return listaFichasJugadorLocal;
     }
     
     

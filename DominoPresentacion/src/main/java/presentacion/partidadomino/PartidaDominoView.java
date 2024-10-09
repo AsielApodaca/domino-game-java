@@ -32,16 +32,10 @@ public class PartidaDominoView extends JPanel{
     private BufferedImage fondoPantalla; // Fondo de pantalla de PartidaDominoView
     
     private JPanel panelContenedorFichasJugadorLocal; // Panel que contendrá las fichas del jugador local
-    private List<FichaDominoView> listaFichasJugadorLocal; // Lista de paneles de las fichas del jugador local
-    
     private JPanel panelTablero; // Panel de tablero donde se colocarán las fichas
-    private List<FichaDominoView> listaFichasMesa; // Lista de paneles de fichas colocados en el tablero
 
     public PartidaDominoView(PartidaDominoModel model) {
-        this.model = model;
-        this.listaFichasJugadorLocal = new ArrayList<>();
-        this.listaFichasMesa = new ArrayList<>();
-        
+        this.model = model;        
         cargarComponentes();
     }
     
@@ -54,7 +48,7 @@ public class PartidaDominoView extends JPanel{
             e.printStackTrace();
         }
         
-        // Inicializar paneles
+        // Pintar contenedor de fichas
         panelContenedorFichasJugadorLocal = new JPanel() { // Panel transparente
             @Override
             protected void paintComponent(Graphics g) {
@@ -74,7 +68,8 @@ public class PartidaDominoView extends JPanel{
         };
         panelContenedorFichasJugadorLocal.setOpaque(false); // Hacer que el panel no sea opaco, para permitir la transparencia
         
-        panelTablero = new JPanel() { // Tablero transparente
+        //Pintar Tablero
+        panelTablero = new JPanel() { 
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -135,11 +130,7 @@ public class PartidaDominoView extends JPanel{
     
     private void redimencionarFichasJugadorLocal() {
         // Redimencionar fichas
-        for (FichaDominoView ficha : listaFichasJugadorLocal) {
-            int fichaAncho = (int) (model.getAnchoFichaJugadorLocal() * model.getEscala());
-            int fichaAltura = (int) (model.getAlturaFichaJugadorLocal() * model.getEscala());
-            ficha.setPreferredSize(new Dimension(fichaAncho, fichaAltura));
-        }
+        
         revalidate();
         repaint();
     }
@@ -157,6 +148,7 @@ public class PartidaDominoView extends JPanel{
 //        redimencionarFichasJugadorLocal();
 //    }
     
+    //Pintar fondo de pantalla
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

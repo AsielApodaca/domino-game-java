@@ -5,6 +5,7 @@
 package presentacion.mediador;
 
 import dominodto.FichaDominoDTO;
+import java.awt.Dimension;
 import java.util.List;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.fichadomino.FichaDominoModel;
@@ -53,6 +54,19 @@ public class Mediador implements IMediador {
     public void crearNuevaFicha(
             FichaDominoDTO fichaDominoDTO) {
         fichaDominoModel = new FichaDominoModel(fichaDominoDTO);
+    }
+
+    @Override
+    public int getRedimencionFichasJugadorLocalAncho() {
+        int fichaAncho = (int) (partidaDomino.getAnchoFichaJugadorLocal() * partidaDomino.getEscala());
+        return fichaAncho;
+
+    }
+
+    @Override
+    public int getRedimencionFichasJugadorLocalAlto() {
+        int fichaAltura = (int) (partidaDomino.getAlturaFichaJugadorLocal() * partidaDomino.getEscala());
+        return fichaAltura;
     }
 
 }

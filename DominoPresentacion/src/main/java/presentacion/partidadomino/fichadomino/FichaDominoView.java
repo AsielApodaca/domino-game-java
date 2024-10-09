@@ -4,6 +4,8 @@
  */
 package presentacion.partidadomino.fichadomino;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,17 +23,17 @@ import javax.swing.SwingConstants;
 public class FichaDominoView extends JPanel {
 
     private FichaDominoModel model;
+    private BufferedImage margen;
     private JLabel labelExtremo1;
     private JLabel labelExtremo2;
 
-    public FichaDominoView() throws IOException {
-        this.model = new FichaDominoModel();
+    public FichaDominoView(FichaDominoModel model) throws IOException {
         cargarComponentes();
         asignarExtremos(model);
     }
 
     private void cargarComponentes() throws IOException {
-        ImageIO.read(getClass().getResource(model.getImagenMargenDomino()));
+        margen = ImageIO.read(getClass().getResource(model.getImagenMargenDomino()));
     }
 
     /**
@@ -46,6 +48,14 @@ public class FichaDominoView extends JPanel {
 
         add(labelExtremo1);
         add(labelExtremo2);
+    }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (margen != null) {
+            g.drawImage(margen, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 
 }
