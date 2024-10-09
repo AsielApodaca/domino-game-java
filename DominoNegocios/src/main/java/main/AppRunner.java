@@ -9,8 +9,11 @@ import contenedorView.FormContenedorModel;
 import contenedorView.FormContenedorView;
 import mediadorNavegacion.MediadorNavegacionPantallas;
 import dominio.FichaDominoEntity;
+import dominio.JugadorDominoEntity;
 import dominio.PozoEntity;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Icon;
 import javax.swing.JPanel;
 import logica.controladorFichas.ControladorFichasLogica;
 import logica.tableroDominoLogica.ITableroDominoLogica;
@@ -47,28 +50,30 @@ public class AppRunner {
         ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica(formContenedorModel);
         tableroDominoLogica.iniciar();
 
-        
-        
-        
-        
-        
-        
 //        //PRUEBAS LOGICA POZO (FUNCIONA)
 //        PozoEntity pozo = new PozoEntity();
-//
 //        ControladorFichasLogica controladorFichas = new ControladorFichasLogica(pozo);
 //        System.out.println("Entrooo!");
-//        
+//
 //        // paso 1: Generar todas las fichas posibles
 //        System.out.println("Fichas generadas en el pozo:");
 //        imprimirFichas(pozo.getListaFichas());  // Imprimir todas las fichas generadas
 //
 //        // paso2: repartir fichas
-//        System.out.println("\nRepartiendo fichas a un jugador...");
-//        List<FichaDominoEntity> fichasJugador = controladorFichas.repartirFichas(7);
-//        System.out.println("Fichas del jugador:");
-//        imprimirFichas(fichasJugador);
-//        
+//        int NUMERO_JUGADORES = 4;
+//        int FICHAS_POR_JUGADOR = 5;
+//        List<JugadorDominoEntity> jugadores = new ArrayList<>();
+//        for (int i = 0; i < NUMERO_JUGADORES; i++) {
+//            String nombre = "Jugador " + (i + 1);
+//            Icon icon = null; // Puedes agregar un ícono si lo deseas
+//            List<FichaDominoEntity> fichasJugador = controladorFichas.repartirFichas(FICHAS_POR_JUGADOR);
+//            JugadorDominoEntity jugador = new JugadorDominoEntity(nombre, icon, fichasJugador);
+//            jugadores.add(jugador);
+//
+//            System.out.println("\nFichas del " + nombre + ":");
+//            imprimirFichas(fichasJugador);
+//        }
+//
 //        // paso 3: verifica fichas despues de repartir
 //        System.out.println("\nFichas restantes en el pozo:");
 //        imprimirFichas(pozo.getListaFichas());
@@ -92,10 +97,10 @@ public class AppRunner {
 //            System.out.println("No hay fichas.");
 //        } else {
 //            for (FichaDominoEntity ficha : fichas) {
-//                System.out.println(ficha); 
+//                System.out.println(ficha);
 //            }
 //
 //        }
-    
+
     }
 }
