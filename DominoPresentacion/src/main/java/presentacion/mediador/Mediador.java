@@ -22,11 +22,10 @@ public class Mediador implements IMediador {
     private PartidaDominoModel partidaDomino;
     private FichaDominoModel fichaDominoModel;
 
-    public Mediador(
-            PartidaDominoModel partidaDomino,
-            FichaDominoModel fichaDominoModel) {
-        this.partidaDomino = partidaDomino;
-        this.fichaDominoModel = fichaDominoModel;
+    
+    public Mediador() {
+        this.partidaDomino = new PartidaDominoModel();
+        this.fichaDominoModel = new FichaDominoModel();
     }
 
     @Override
@@ -55,18 +54,13 @@ public class Mediador implements IMediador {
             FichaDominoDTO fichaDominoDTO) {
         fichaDominoModel = new FichaDominoModel(fichaDominoDTO);
     }
-
+    
     @Override
-    public int getRedimencionFichasJugadorLocalAncho() {
-        int fichaAncho = (int) (partidaDomino.getAnchoFichaJugadorLocal() * partidaDomino.getEscala());
-        return fichaAncho;
-
+    public void redimencionarFichasJugadorLocal(){
+        
     }
 
-    @Override
-    public int getRedimencionFichasJugadorLocalAlto() {
-        int fichaAltura = (int) (partidaDomino.getAlturaFichaJugadorLocal() * partidaDomino.getEscala());
-        return fichaAltura;
-    }
+  
+    
 
 }

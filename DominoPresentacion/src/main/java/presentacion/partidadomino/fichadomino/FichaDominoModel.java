@@ -22,9 +22,7 @@ public class FichaDominoModel {
     // Mayormente usado para panel de fichas del jugador local
     private FichaDominoDTO fichaDominoDTO; // Ficha que representa el panel
     private int anchoFicha; // ancho del panel de la ficha
-    private int alturaFicha; // altura del panel de la ficha
-    private List<FichaDominoDTO> listaFichasJugadorLocal;
-    
+    private int alturaFicha; // altura del panel de la ficha    
     
     // Mayormente usado para fichas colocadas en el tablero
     private CasillaDTO casillaDTO; // Almacena coordenadas y ficha asignada
@@ -44,12 +42,15 @@ public class FichaDominoModel {
     private boolean seleccionada; // Si la ficha está seleccionada
     private boolean colocada; // Si la ficha ha sido colocada en el tablero;
 
+    public FichaDominoModel() {
+    }
+
+    
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) {
         this.fichaDominoDTO = fichaDominoDTO;
         this.imagenMargenDomino = "/multimedia/DominoFondo.png";
         this.imgExtremo1 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo1());
         this.imgExtremo2 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo2());
-        listaFichasJugadorLocal = new ArrayList<>();
         
         iniciarFichaJugadorLocal();
     }
@@ -86,9 +87,7 @@ public class FichaDominoModel {
         return imgExtremo2;
     }
 
-    public List<FichaDominoDTO> getListaFichasJugadorLocal() {
-        return listaFichasJugadorLocal;
-    }
+    
     
     
     

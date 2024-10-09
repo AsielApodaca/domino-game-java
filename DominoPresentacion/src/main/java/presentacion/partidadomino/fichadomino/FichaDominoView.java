@@ -4,6 +4,8 @@
  */
 package presentacion.partidadomino.fichadomino;
 
+import dominodto.FichaDominoDTO;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -12,6 +14,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import presentacion.mediador.IMediador;
+import presentacion.mediador.Mediador;
 
 /**
  *
@@ -23,11 +27,13 @@ import javax.swing.SwingConstants;
 public class FichaDominoView extends JPanel {
 
     private FichaDominoModel model;
+    private IMediador mediador;
     private BufferedImage margen;
     private JLabel labelExtremo1;
     private JLabel labelExtremo2;
 
     public FichaDominoView(FichaDominoModel model) throws IOException {
+        mediador = new Mediador();
         cargarComponentes();
         asignarExtremos(model);
     }
@@ -56,6 +62,10 @@ public class FichaDominoView extends JPanel {
         if (margen != null) {
             g.drawImage(margen, 0, 0, getWidth(), getHeight(), this);
         }
+    }
+    private void redimencionarFichasJugadorLocal() {
+        // Redimencionar fichas
+        
     }
 
 }
