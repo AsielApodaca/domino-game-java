@@ -9,10 +9,14 @@ import dominodto.CasillaDTO;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class FichaDominoModel {
     
+    private String imagenMargenDomino;
     // Mayormente usado para panel de fichas del jugador local
     private FichaDominoDTO fichaDominoDTO; // Ficha que representa el panel
     private int anchoFicha; // ancho del panel de la ficha
@@ -38,11 +42,14 @@ public class FichaDominoModel {
 
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) {
         this.fichaDominoDTO = fichaDominoDTO;
+        this.imagenMargenDomino = "/multimedia/DominoFondo.png";
+        this.imgExtremo1 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo1());
+        this.imgExtremo2 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo2());
+        
         iniciarFichaJugadorLocal();
     }
 
-    public FichaDominoModel(CasillaDTO posicionDTO) {
-        this.posicionDTO = posicionDTO;
+    public FichaDominoModel() {
         iniciarFichaParaTablero();
     }
     
@@ -59,6 +66,18 @@ public class FichaDominoModel {
         this.alturaFicha = 60;
         this.extremosHorizontal = 1;
         this.extremosVertical = 2;
+    }
+
+    public String getImagenMargenDomino() {
+        return imagenMargenDomino;
+    }
+
+    public String getImgExtremo1() {
+        return imgExtremo1;
+    }
+
+    public String getImgExtremo2() {
+        return imgExtremo2;
     }
     
     

@@ -9,7 +9,10 @@ import contenedorView.FormContenedorModel;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class PartidaDominoController implements EscalaObserver{
 
@@ -24,7 +27,7 @@ public class PartidaDominoController implements EscalaObserver{
         this.view = view;
         
         view.repintarComponentes();
-        view.actualizarListaFichasJugadorLocal();
+//        view.actualizarListaFichasJugadorLocal();
     }
     
     
