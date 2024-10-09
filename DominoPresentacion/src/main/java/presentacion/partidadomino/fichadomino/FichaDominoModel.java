@@ -19,7 +19,7 @@ public class FichaDominoModel {
     private int alturaFicha; // altura del panel de la ficha
     
     // Mayormente usado para fichas colocadas en el tablero
-    private CasillaDTO posicionDTO; // Almacena coordenadas y ficha asignada
+    private CasillaDTO casillaDTO; // Almacena coordenadas y ficha asignada
     private int rotacion; // Ángulo de rotación en radianes, 0, 90, 180, 270
     private int locacionX; // Locación en eje de las X
     private int locacionY; // Locación en eje de las Y
@@ -41,8 +41,8 @@ public class FichaDominoModel {
         iniciarFichaJugadorLocal();
     }
 
-    public FichaDominoModel(CasillaDTO posicionDTO) {
-        this.posicionDTO = posicionDTO;
+    public FichaDominoModel(CasillaDTO casillaDTO) {
+        this.casillaDTO = casillaDTO;
         iniciarFichaParaTablero();
     }
     
@@ -55,8 +55,8 @@ public class FichaDominoModel {
     
     private void iniciarFichaParaTablero() {
         
-        this.anchoFicha = 30;
-        this.alturaFicha = 60;
+        this.anchoFicha = 15;
+        this.alturaFicha = 30;
         this.extremosHorizontal = 1;
         this.extremosVertical = 2;
     }

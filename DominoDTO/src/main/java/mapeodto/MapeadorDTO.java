@@ -30,8 +30,6 @@ public class MapeadorDTO {
         posicionDTO.setLocacionX(posicion.getLocacionX());
         posicionDTO.setLocacionY(posicion.getLocacionY());
         posicionDTO.setRotacion(posicion.getRotacion());
-        posicionDTO.setAnchoCasilla(posicion.getAlturaCasilla());
-        posicionDTO.setAlturaCasilla(posicion.getAlturaCasilla());
         FichaDominoDTO fichaDominoDTO = fichaEntityADTO(posicion.getFichaDomino());
         if(fichaDominoDTO != null) {
             posicionDTO.setFichaDominoDTO(fichaDominoDTO);
