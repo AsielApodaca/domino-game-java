@@ -5,9 +5,10 @@
 package logica.controladorFichas;
 
 import dominio.FichaDominoEntity;
+import dominio.PozoEntity;
 import java.util.ArrayList;
 import java.util.List;
-import logica.Pozo.PozoLogica;
+
 
 /**
  *
@@ -18,9 +19,9 @@ import logica.Pozo.PozoLogica;
  */
 public class ControladorFichasLogica {
 
-    private PozoLogica pozo;
+    private PozoEntity pozo;
 
-    public ControladorFichasLogica(PozoLogica pozo) {
+    public ControladorFichasLogica(PozoEntity pozo) {
         this.pozo = pozo;
     }
 

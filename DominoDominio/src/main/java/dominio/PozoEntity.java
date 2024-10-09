@@ -47,9 +47,4 @@ public class PozoEntity {
         // Mezcla las fichas
         Collections.shuffle(listaFichas);
     }
-    
-    
-    
-    
-
 }

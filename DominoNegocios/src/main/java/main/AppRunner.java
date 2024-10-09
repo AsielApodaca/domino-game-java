@@ -12,7 +12,6 @@ import dominio.FichaDominoEntity;
 import dominio.PozoEntity;
 import java.util.List;
 import javax.swing.JPanel;
-import logica.Pozo.PozoLogica;
 import logica.controladorFichas.ControladorFichasLogica;
 import logica.tableroDominoLogica.ITableroDominoLogica;
 import logica.tableroDominoLogica.TableroDominoLogica;
@@ -54,27 +53,25 @@ public class AppRunner {
         
         
         
-        //PRUEBAS LOGICA POZO (FUNCIONA)
-//        PozoEntity pozo = new PozoEntity(null); //pozo vacio
-//        PozoLogica pozoLogica = new PozoLogica(pozo);
+//        //PRUEBAS LOGICA POZO (FUNCIONA)
+//        PozoEntity pozo = new PozoEntity();
 //
-//        ControladorFichasLogica controladorFichas = new ControladorFichasLogica(pozoLogica);
+//        ControladorFichasLogica controladorFichas = new ControladorFichasLogica(pozo);
 //        System.out.println("Entrooo!");
 //        
 //        // paso 1: Generar todas las fichas posibles
-//        pozoLogica.generarFichas();
 //        System.out.println("Fichas generadas en el pozo:");
-//        imprimirFichas(pozo.getListaPiezas());  // Imprimir todas las fichas generadas
+//        imprimirFichas(pozo.getListaFichas());  // Imprimir todas las fichas generadas
 //
 //        // paso2: repartir fichas
 //        System.out.println("\nRepartiendo fichas a un jugador...");
-//        List<FichaDomino> fichasJugador = controladorFichas.repartirFichas(7);
+//        List<FichaDominoEntity> fichasJugador = controladorFichas.repartirFichas(7);
 //        System.out.println("Fichas del jugador:");
 //        imprimirFichas(fichasJugador);
 //        
 //        // paso 3: verifica fichas despues de repartir
 //        System.out.println("\nFichas restantes en el pozo:");
-//        imprimirFichas(pozo.getListaPiezas());
+//        imprimirFichas(pozo.getListaFichas());
 //
 //        // paso 4: sacar ficha
 //        try {
@@ -86,11 +83,11 @@ public class AppRunner {
 //
 //        // paso 5: volver a verificar ficahs despues de haber sacado una fiocha
 //        System.out.println("\nFichas restantes en el pozo después de sacar una ficha:");
-//        imprimirFichas(pozo.getListaPiezas());
+//        imprimirFichas(pozo.getListaFichas());
 //    }
 //
 //    // metodo auxiliar solo para imprimir 
-//    public static void imprimirFichas(List<FichaDomino> fichas) {
+//    public static void imprimirFichas(List<FichaDominoEntity> fichas) {
 //        if (fichas == null || fichas.isEmpty()) {
 //            System.out.println("No hay fichas.");
 //        } else {
@@ -99,6 +96,6 @@ public class AppRunner {
 //            }
 //
 //        }
-//    }
+    
     }
 }
