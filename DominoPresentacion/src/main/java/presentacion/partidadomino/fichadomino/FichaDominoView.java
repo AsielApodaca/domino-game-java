@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presentacion.partidadomino.fichadomino;
 
-import dominodto.FichaDominoDTO;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -27,13 +22,12 @@ import presentacion.mediador.Mediador;
 public class FichaDominoView extends JPanel {
 
     private FichaDominoModel model;
-    private IMediador mediador;
     private BufferedImage margen;
     private JLabel labelExtremo1;
     private JLabel labelExtremo2;
 
     public FichaDominoView(FichaDominoModel model) throws IOException {
-        mediador = new Mediador();
+        this.model = model;
         cargarComponentes();
         asignarExtremos(model);
     }
@@ -55,7 +49,7 @@ public class FichaDominoView extends JPanel {
         add(labelExtremo1);
         add(labelExtremo2);
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -63,9 +57,13 @@ public class FichaDominoView extends JPanel {
             g.drawImage(margen, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    private void redimencionarFichasJugadorLocal() {
-        // Redimencionar fichas
-        
+
+    public void actualizar() {
+        setPreferredSize(new Dimension(model.getAnchoFicha(), model.getAlturaFicha()));
+        revalidate();
+        repaint();
     }
+    
+    
 
 }

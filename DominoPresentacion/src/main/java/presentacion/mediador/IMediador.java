@@ -6,6 +6,7 @@ package presentacion.mediador;
 
 import dominodto.FichaDominoDTO;
 import java.util.List;
+import presentacion.partidadomino.fichadomino.FichaDominoModel;
 
 /**
  *
@@ -15,13 +16,9 @@ import java.util.List;
  * @author Asiel Apodaca Monge
  */
 public interface IMediador {
-    void actualizarListaFichasJugadorLocal(List<FichaDominoDTO> fichas);
-    List<FichaDominoDTO> obtenerListaFichasJugadorLocal();
-    float obtenerEscala();
-    void actualizarEscala(float escala);
+    void crearFichasJugadorLocal();
+    List<FichaDominoModel> obtenerFichasJugadorLocal();
     void redimencionarFichasJugadorLocal();
-
-    void crearNuevaFicha(FichaDominoDTO fichaDominoDTO);
 
 
 }

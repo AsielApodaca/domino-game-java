@@ -6,6 +6,7 @@ package presentacion.mediador;
 
 import dominodto.FichaDominoDTO;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.fichadomino.FichaDominoModel;
@@ -20,47 +21,35 @@ import presentacion.partidadomino.fichadomino.FichaDominoModel;
 public class Mediador implements IMediador {
 
     private PartidaDominoModel partidaDomino;
-    private FichaDominoModel fichaDominoModel;
+    private List<FichaDominoModel> fichaModels;
 
-    
     public Mediador() {
-        this.partidaDomino = new PartidaDominoModel();
-        this.fichaDominoModel = new FichaDominoModel();
+
     }
 
     @Override
-    public void actualizarListaFichasJugadorLocal(
-            List<FichaDominoDTO> fichas) {
-        partidaDomino.setListaFichasJugadorLocal(fichas);
+    public void crearFichasJugadorLocal() {
+        List<FichaDominoDTO> fichas = partidaDomino.getListaFichasJugadorLocal();
+        for (FichaDominoDTO ficha : fichas) {
+            FichaDominoModel model = new FichaDominoModel(ficha);
+            fichaModels.add(model);
+        }
     }
 
     @Override
-    public List<FichaDominoDTO> obtenerListaFichasJugadorLocal() {
-        return partidaDomino.getListaFichasJugadorLocal();
+    public List<FichaDominoModel> obtenerFichasJugadorLocal() {
+        return fichaModels;
     }
 
     @Override
-    public float obtenerEscala() {
-        return partidaDomino.getEscala();
-    }
+    public void redimencionarFichasJugadorLocal() {
+        float escala = partidaDomino.getEscala();
+        int anchoFicha = (int) (partidaDomino.getAnchoFichaJugadorLocal() * escala);
+        int altoFicha = (int) (partidaDomino.getAlturaFichaJugadorLocal() * escala);
 
-    @Override
-    public void actualizarEscala(float escala) {
-        partidaDomino.setEscala(escala);
+        for (FichaDominoModel model : fichaModels) {
+            model.setDimensiones(anchoFicha, altoFicha);
+        }
     }
-
-    @Override
-    public void crearNuevaFicha(
-            FichaDominoDTO fichaDominoDTO) {
-        fichaDominoModel = new FichaDominoModel(fichaDominoDTO);
-    }
-    
-    @Override
-    public void redimencionarFichasJugadorLocal(){
-        
-    }
-
-  
-    
 
 }

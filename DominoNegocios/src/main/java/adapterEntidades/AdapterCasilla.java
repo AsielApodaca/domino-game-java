@@ -28,8 +28,8 @@ public class AdapterCasilla implements IAdapterCasilla {
         dto.setLocacionX(entity.getLocacionX());
         dto.setLocacionY(entity.getLocacionY());
         dto.setRotacion(entity.getRotacion());
-        dto.setAnchoCasilla(entity.getAnchoCasilla());
-        dto.setAlturaCasilla(entity.getAlturaCasilla());
+//        dto.setAnchoCasilla(entity.getAnchoCasilla());
+//        dto.setAlturaCasilla(entity.getAlturaCasilla());
 
         if (entity.getFichaDomino() != null) {
             dto.setFichaDominoDTO(adapterFichaDomino.adaptToDTO(entity.getFichaDomino()));
@@ -48,8 +48,8 @@ public class AdapterCasilla implements IAdapterCasilla {
         entity.setLocacionX(dto.getLocacionX());
         entity.setLocacionY(dto.getLocacionY());
         entity.setRotacion(dto.getRotacion());
-        entity.setAnchoCasilla(dto.getAnchoCasilla());
-        entity.setAlturaCasilla(dto.getAlturaCasilla());
+//        entity.setAnchoCasilla(dto.getAnchoCasilla());
+//        entity.setAlturaCasilla(dto.getAlturaCasilla());
 
         if (dto.getFichaDominoDTO() != null) {
             entity.setFichaDomino(adapterFichaDomino.adaptToEntity(dto.getFichaDominoDTO()));

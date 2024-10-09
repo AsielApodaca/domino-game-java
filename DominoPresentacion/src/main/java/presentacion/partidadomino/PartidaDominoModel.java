@@ -1,13 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presentacion.partidadomino;
 
 import dominodto.FichaDominoDTO;
 import dominodto.TableroDominoDTO;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import presentacion.mediador.IMediador;
+import presentacion.mediador.Mediador;
+import presentacion.partidadomino.fichadomino.FichaDominoModel;
+import presentacion.partidadomino.fichadomino.FichaDominoView;
 
 /**
  *
@@ -17,37 +18,37 @@ import java.util.List;
  * @author Asiel Apodaca Monge
  */
 public class PartidaDominoModel {
-    
+
     private float escala; // Escala de view, afecta el tamaño de todos los componentes para adaptarse al Frame
-    
+    private IMediador mediador;
     // media
     private String fondoDePantalla;
-    
+
     // Medidas originales
     private int anchoPantalla; // ancho del panel de la pantalla
     private int alturaPantalla; // altura del panel de la pantalla
-    
+
     private int anchoFichaJugadorLocal; // ancho de las fichas del jugador del dispositivo
     private int alturaFichaJugadorLocal; // ancho de las fichas del jugador del dispositivo
-    
+
     private int anchoFichaJugadorExterno; // ancho de las fichas de los jugadores externos.
     private int alturaFichaJugadorExterno; // altura de las fichas de los jugadores externos.
-    
+
     private int alturaMinimaContenedorFichasJugadorLocal; // altura del panel que contiene las fichas del jugador local
     private int anchoMinimoContenedorFichasJugadorLocal; // ancho del panel que contiene las fichas del jugador local
     private int contenedorFichasJugadorLocalLocacionY; // posicion del contenedor de fichas locales en eje de las Y
-    
+
     private int anchoTablero; // ancho del panel del tablero donde iran las fichas colocadas.
     private int alturaTablero; // altura del panel del tablero donde iran las fichas colocadas.
     private int tableroLocacionX; // locación del tablero en el eje de las X
     private int tableroLocacionY; // locación del tablero en el eje de las Y
-    
+
     private int anchoFichaTablero; // ancho de las fichas dentro del tablero
     private int altoFichaTablero; // alto de las fichas dentro del tablero
-    
+
     // Configuración de la partida
     private int numeroDeJugadores; // Número de jugadores dentro de la partida
-    
+
     // Partida
     private TableroDominoDTO tableroDominoDTO; // tablero con posiciones de las fichas
     private List<FichaDominoDTO> listaFichasJugadorLocal; // Lista de fichas del jugador del disposivo
@@ -73,6 +74,28 @@ public class PartidaDominoModel {
         this.altoFichaTablero = 30;
         this.numeroDeJugadores = 1; // temporal
         this.listaFichasJugadorLocal = new ArrayList<>();
+        mediador = new Mediador();
+    }
+
+    public FichaDominoView crearFichasLocales() {
+        mediador.crearFichasJugadorLocal();
+        List<FichaDominoView> fichasView = null;
+        FichaDominoView fichaView = null;
+
+        
+        List<FichaDominoModel> fichaModels = mediador.obtenerFichasJugadorLocal();
+        for (FichaDominoModel fichaModel : fichaModels) {
+            try {
+                fichaView = new FichaDominoView(fichaModel);
+                fichasView.add(fichaView);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            
+        }
+        return null; //lanzar excepcion personalizada
     }
 
     public void setListaFichasJugadorLocal(List<FichaDominoDTO> listaFichasJugadorLocal) {
@@ -90,7 +113,7 @@ public class PartidaDominoModel {
     public int getContenedorFichasJugadorLocalLocacionY() {
         return contenedorFichasJugadorLocalLocacionY;
     }
-    
+
     public String getFondoDePantalla() {
         return fondoDePantalla;
     }
@@ -158,13 +181,5 @@ public class PartidaDominoModel {
     public List<FichaDominoDTO> getListaFichasJugadorLocal() {
         return listaFichasJugadorLocal;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

@@ -8,14 +8,7 @@ import contenedorView.FormContenedorController;
 import contenedorView.FormContenedorModel;
 import contenedorView.FormContenedorView;
 import mediadorNavegacion.MediadorNavegacionPantallas;
-import dominio.FichaDominoEntity;
-import dominio.JugadorDominoEntity;
-import dominio.PozoEntity;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.Icon;
 import javax.swing.JPanel;
-import logica.controladorFichas.ControladorFichasLogica;
 import logica.tableroDominoLogica.ITableroDominoLogica;
 import logica.tableroDominoLogica.TableroDominoLogica;
 

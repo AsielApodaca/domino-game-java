@@ -23,12 +23,12 @@ import presentacion.mediador.Mediador;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoView extends JPanel{
-    
+public class PartidaDominoView extends JPanel {
+
     private PartidaDominoModel model; // modelo de PartidaDomino
-    
+
     private BufferedImage fondoPantalla; // Fondo de pantalla de PartidaDominoView
-    
+
     private JPanel panelContenedorFichasJugadorLocal; // Panel que contendrá las fichas del jugador local
     private JPanel panelTablero; // Panel de tablero donde se colocarán las fichas
 
@@ -37,7 +37,7 @@ public class PartidaDominoView extends JPanel{
 
         cargarComponentes();
     }
-    
+
     private void cargarComponentes() {
         setLayout(null);
         // Cargar la imagen de fondo de pantalla
@@ -46,7 +46,7 @@ public class PartidaDominoView extends JPanel{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         // Pintar contenedor de fichas
         panelContenedorFichasJugadorLocal = new JPanel() { // Panel transparente
             @Override
@@ -64,11 +64,12 @@ public class PartidaDominoView extends JPanel{
 
                 g2d.dispose();
             }
+
         };
         panelContenedorFichasJugadorLocal.setOpaque(false); // Hacer que el panel no sea opaco, para permitir la transparencia
-        
+
         //Pintar Tablero
-        panelTablero = new JPanel() { 
+        panelTablero = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -87,42 +88,44 @@ public class PartidaDominoView extends JPanel{
         };
         // Hacer que el panel no sea opaco, para permitir la transparencia
         panelTablero.setOpaque(false);
-        
+
         add(panelContenedorFichasJugadorLocal);
         add(panelTablero);
-        
+
         repintarComponentes();
     }
+
+    private void crearFichasLocales() {
+             panelContenedorFichasJugadorLocal.add(model.crearFichasLocales());
+        }
     
+    
+
     public void repintarComponentes() {
         int ancho = (int) (model.getAnchoPantalla() * model.getEscala());
         int altura = (int) (model.getAlturaPantalla() * model.getEscala());
         setPreferredSize(new Dimension(ancho, altura));
-        
+
         repintarContenedorFicha(ancho);
         repintarTablero();
 
 //        model.redimencionarFichasJugadorLocal();
-        
         revalidate();
         repaint();
     }
-    
-    private void repintarContenedorFicha(int ancho){
-         // Redimencionar y posicionar panelContenedorFichasJugadorLocal
-        int anchoContenedorFichasJugadorLocal = (int) 
-                (model.getAnchoFichaJugadorLocal() * 
-                (model.getListaFichasJugadorLocal().size() + 1) * 
-                model.getEscala());
-        int altoContenedorFichasJugadorLocal = (int) 
-                (model.getAlturaMinimaContenedorFichasJugadorLocal() * 
-                model.getEscala());
-        int contenedorFichasJugadorLocalY = (int) 
-                (model.getContenedorFichasJugadorLocalLocacionY() * 
-                model.getEscala());
+
+    private void repintarContenedorFicha(int ancho) {
+        // Redimencionar y posicionar panelContenedorFichasJugadorLocal
+        int anchoContenedorFichasJugadorLocal = (int) (model.getAnchoFichaJugadorLocal()
+                * (model.getListaFichasJugadorLocal().size() + 1)
+                * model.getEscala());
+        int altoContenedorFichasJugadorLocal = (int) (model.getAlturaMinimaContenedorFichasJugadorLocal()
+                * model.getEscala());
+        int contenedorFichasJugadorLocalY = (int) (model.getContenedorFichasJugadorLocalLocacionY()
+                * model.getEscala());
         // Calcular la posición X para centrar panelContenedorFichasJugadorLocal horizontalmente
         int contenedorFichasJugadorLocalX = (ancho - anchoContenedorFichasJugadorLocal) / 2;
-        
+
         panelContenedorFichasJugadorLocal.setBounds(
                 contenedorFichasJugadorLocalX,
                 contenedorFichasJugadorLocalY,
@@ -130,8 +133,8 @@ public class PartidaDominoView extends JPanel{
                 altoContenedorFichasJugadorLocal
         );
     }
-    
-    private void repintarTablero(){
+
+    private void repintarTablero() {
         // Redimencionar y posicionar panelTablero
         int tableroAncho = (int) (model.getAnchoTablero() * model.getEscala());
         int tableroAltura = (int) (model.getAlturaTablero() * model.getEscala());
@@ -139,8 +142,7 @@ public class PartidaDominoView extends JPanel{
         int tableroY = (int) (model.getTableroLocacionY() * model.getEscala());
         panelTablero.setBounds(tableroX, tableroY, tableroAncho, tableroAltura);
     }
-    
-    
+
     //Pintar fondo de pantalla
     @Override
     protected void paintComponent(Graphics g) {
@@ -149,5 +151,5 @@ public class PartidaDominoView extends JPanel{
             g.drawImage(fondoPantalla, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    
+
 }
