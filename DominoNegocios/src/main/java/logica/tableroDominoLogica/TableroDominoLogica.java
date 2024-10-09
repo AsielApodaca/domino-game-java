@@ -42,11 +42,11 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     
     @Override
     public void iniciar() {
-        crearPresentcionPartida();
+        crearPresentacionPartida();
         // simularListaFichasDTO() // Se colocará este metodo cuando el mvc ya tenga listeners
     }
     
-    private void crearPresentcionPartida() {
+    private void crearPresentacionPartida() {
         this.model = new PartidaDominoModel();
         this.model.setEscala(proveedorDeEscala.getScale());
         simularListaFichasDTO(); // Asigna lista simulada de fichas de domino a modelo
