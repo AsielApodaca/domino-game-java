@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import presentacion.tablerodomino.fichadomino.FichaDominoPanel;
+import presentacion.fichadomino.FichaDominoPanel;
 
 /**
  *

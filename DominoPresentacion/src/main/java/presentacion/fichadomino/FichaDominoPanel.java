@@ -1,10 +1,7 @@
-package presentacion.tablerodomino.fichadomino;
+package presentacion.fichadomino;
 
 import dominodto.FichaDominoDTO;
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
