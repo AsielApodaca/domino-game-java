@@ -2,14 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package contenedorView;
+package logica.contenedorpantallas;
 
 /**
  *
  * @author asielapodaca
  */
-public interface EscalaObservable {
-    void addScaleObserver(EscalaObserver observer);
-    void removeScaleObserver(EscalaObserver observer);
-    void notifyScaleObservers();
+public interface IContenedorPantallasLogica {
+    public void iniciarContenedorDePantallas();
 }

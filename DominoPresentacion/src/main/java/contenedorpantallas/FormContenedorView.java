@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package contenedorView;
+package contenedorpantallas;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -56,6 +56,10 @@ public class FormContenedorView extends JFrame{
         int anchoMinimo = model.getAnchoMinimoFrame();
         int alturaMinima = model.getAlturaMinimaFrameAjustado();
         setMinimumSize(new Dimension(anchoMinimo, alturaMinima));
+    }
+    
+    public JPanel getContainerPanel() {
+        return containerPanel;
     }
     
 }

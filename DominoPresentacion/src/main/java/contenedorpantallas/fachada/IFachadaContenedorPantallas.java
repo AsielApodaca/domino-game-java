@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package contenedorView;
+package contenedorpantallas.fachada;
 
 /**
  *
  * @author asielapodaca
  */
-public interface EscalaProveedor {
-    float getScale();
+public interface IFachadaContenedorPantallas {
+    public void iniciarContenedorDePantallas();
 }

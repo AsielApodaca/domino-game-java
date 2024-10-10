@@ -9,6 +9,7 @@ import presentacion.mediador.IMediador;
 import presentacion.mediador.Mediador;
 import presentacion.partidadomino.fichadomino.FichaDominoModel;
 import presentacion.partidadomino.fichadomino.FichaDominoView;
+import contenedorpantallas.IContenidoController;
 
 /**
  *
@@ -17,7 +18,7 @@ import presentacion.partidadomino.fichadomino.FichaDominoView;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoModel {
+public class PartidaDominoModel{
 
     private float escala; // Escala de view, afecta el tamaño de todos los componentes para adaptarse al Frame
     private IMediador mediador;
@@ -181,5 +182,6 @@ public class PartidaDominoModel {
     public List<FichaDominoDTO> getListaFichasJugadorLocal() {
         return listaFichasJugadorLocal;
     }
+
 
 }

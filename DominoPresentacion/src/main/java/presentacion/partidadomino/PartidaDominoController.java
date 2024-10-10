@@ -4,8 +4,8 @@
  */
 package presentacion.partidadomino;
 
-import contenedorView.EscalaObserver;
-import contenedorView.FormContenedorModel;
+import contenedorpantallas.IContenidoController;
+import javax.swing.JPanel;
 
 /**
  *
@@ -14,15 +14,12 @@ import contenedorView.FormContenedorModel;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoController implements EscalaObserver{
+public class PartidaDominoController implements IContenidoController{
 
     private PartidaDominoModel model;
     private PartidaDominoView view;
-    private FormContenedorModel proveedorDeEscala;
 
-    public PartidaDominoController(PartidaDominoModel model, PartidaDominoView view, FormContenedorModel proveedorDeEscala) {
-        this.proveedorDeEscala = proveedorDeEscala;
-        this.proveedorDeEscala.addScaleObserver(this); // Controller ahora escucha cuando la escala cambia
+    public PartidaDominoController(PartidaDominoModel model, PartidaDominoView view) {
         this.model = model;
         this.view = view;
         
@@ -30,11 +27,19 @@ public class PartidaDominoController implements EscalaObserver{
 //        view.actualizarListaFichasJugadorLocal();
     }
     
-    
+    public void showView() {
+        view.setVisible(true);
+    }
+
     @Override
-    public void onScaleChanged(float newScale) {
-        model.setEscala(newScale);
+    public void actualizarEscala(float escala) {
+        model.setEscala(escala);
         view.repintarComponentes();
+    }
+
+    @Override
+    public JPanel obtenerView() {
+        return this.view;
     }
     
 }

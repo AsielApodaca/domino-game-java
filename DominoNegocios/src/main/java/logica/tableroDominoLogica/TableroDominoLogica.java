@@ -4,16 +4,12 @@
  */
 package logica.tableroDominoLogica;
 
-import contenedorView.FormContenedorModel;
-import dominio.FichaDominoEntity;
 import dominio.PozoEntity;
 import dominodto.FichaDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
-import mediadorNavegacion.MediadorNavegacionPantallas;
-import presentacion.partidadomino.PartidaDominoController;
-import presentacion.partidadomino.PartidaDominoModel;
-import presentacion.partidadomino.PartidaDominoView;
+import presentacion.partidadomino.fachada.FachadaPartidaDomino;
+import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
 //import presentacion.tablerodomino.*;
 
 /**
@@ -24,22 +20,13 @@ import presentacion.partidadomino.PartidaDominoView;
  * @author Asiel Apodaca Monge
  */
 public class TableroDominoLogica implements ITableroDominoLogica {
-
-//    TableroDominoModel model;
-//    TableroDominoView view;
-//    TableroDominoController controller;
-    private PartidaDominoModel model;
-    private PartidaDominoView view;
-    private PartidaDominoController controller;
     
-    FormContenedorModel proveedorDeEscala;
+    private IFachadaPartidaDomino fachadaPartidaDomino;
 
-    public TableroDominoLogica(FormContenedorModel proveedorDeEscala) {
-        this.proveedorDeEscala = proveedorDeEscala;
+    public TableroDominoLogica() { 
+        this.fachadaPartidaDomino = new  FachadaPartidaDomino();
     }
 
-    
-    
     @Override
     public void iniciar() {
         crearPresentacionPartida();
@@ -47,19 +34,14 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     }
     
     private void crearPresentacionPartida() {
-        this.model = new PartidaDominoModel();
-        this.model.setEscala(proveedorDeEscala.getScale());
-        simularListaFichasDTO(); // Asigna lista simulada de fichas de domino a modelo
-        this.view = new PartidaDominoView(model);
-        this.controller = new PartidaDominoController(model, view, proveedorDeEscala);
-        //this.model.addListener(this);
-        MediadorNavegacionPantallas.getInstance().navegarA(view);
+        fachadaPartidaDomino.iniciarPantalla();
+        //MediadorNavegacionPantallas.getInstance().navegarA(view);
     }
     
     private void crearPozo() {
         PozoEntity pozo = new PozoEntity();
     }
-    public void simularListaFichasDTO() { // temporal
+    private void simularListaFichasDTO() { // temporal
         List<FichaDominoDTO> listaFichas = new ArrayList<>();
         
         listaFichas.add(new FichaDominoDTO(6, 6));
@@ -70,7 +52,7 @@ public class TableroDominoLogica implements ITableroDominoLogica {
         listaFichas.add(new FichaDominoDTO(3, 4));
         listaFichas.add(new FichaDominoDTO(3, 6));
         
-        model.setListaFichasJugadorLocal(listaFichas);
+        fachadaPartidaDomino.actualizarFichasJugadorLocal(listaFichas);
         
     }
 

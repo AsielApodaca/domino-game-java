@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package contenedorView;
+package contenedorpantallas;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -13,9 +13,7 @@ import javax.swing.JPanel;
  *
  * @author asielapodaca
  */
-public class FormContenedorModel implements EscalaProveedor, EscalaObservable{    
-    
-    private List<EscalaObserver> observers = new ArrayList<>(); // Observers de escala
+public class FormContenedorModel{    
     
     private int anchoFrame; // Ancho actual de FormContenedorView
     private int alturaFrame; // Alto actual de FormContenedorView
@@ -36,7 +34,7 @@ public class FormContenedorModel implements EscalaProveedor, EscalaObservable{
     // Por ejemplo, 2/3, la altura será 2/3 del largo del ancho
     private float relacionAlturaAncho;
     
-    private float escala; // Proporción del contenedor conforme a sus medida base/original
+    private static float escala; // Proporción del contenedor conforme a sus medida base/original
     
     private JPanel contenedorPanel; // Panel que contendrá pantallas del juego
     
@@ -60,8 +58,6 @@ public class FormContenedorModel implements EscalaProveedor, EscalaObservable{
     public Color getContenedorBrackgroundColor() {
         return contenedorBrackgroundColor;
     }
-
-    
     
     public JPanel getContenedorPanel() {
         return contenedorPanel;
@@ -161,33 +157,11 @@ public class FormContenedorModel implements EscalaProveedor, EscalaObservable{
 
     public void setEscala(float escala) {
         this.escala = escala;
-        notifyScaleObservers();
-        
     }
 
-    @Override
-    public float getScale() {
+    public float getEcale() {
         return this.escala;
     }
-
-    @Override
-    public void addScaleObserver(EscalaObserver observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeScaleObserver(EscalaObserver observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyScaleObservers() {
-        for (EscalaObserver observer : observers) {
-            observer.onScaleChanged(this.escala);
-        }
-    }
-    
-    
     
     
 }

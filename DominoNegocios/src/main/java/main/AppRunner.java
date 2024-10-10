@@ -4,11 +4,8 @@
  */
 package main;
 
-import contenedorView.FormContenedorController;
-import contenedorView.FormContenedorModel;
-import contenedorView.FormContenedorView;
-import mediadorNavegacion.MediadorNavegacionPantallas;
-import javax.swing.JPanel;
+import logica.contenedorpantallas.ContenedorPantallasLogica;
+import logica.contenedorpantallas.IContenedorPantallasLogica;
 import logica.tableroDominoLogica.ITableroDominoLogica;
 import logica.tableroDominoLogica.TableroDominoLogica;
 
@@ -26,22 +23,14 @@ public class AppRunner {
      */
     public static void main(String[] args) {
 
-        // Se instancia MVC que presentará el contenedor de las pantallas del juego
-        FormContenedorModel formContenedorModel = new FormContenedorModel();
-        FormContenedorView formContenedorView = new FormContenedorView(formContenedorModel);
-        FormContenedorController formContenedorController = new FormContenedorController(formContenedorModel, formContenedorView);
-        formContenedorController.showView();
+        // Inicia los procesos del contenedor de pantallas
+        IContenedorPantallasLogica contenedorPantallasLogica = new ContenedorPantallasLogica();
+        contenedorPantallasLogica.iniciarContenedorDePantallas();
         
-        // Obtiene el asistente de navegación de pantallas
-        MediadorNavegacionPantallas asistenteNavegacionPantallas
-                = MediadorNavegacionPantallas.getInstance();
-
-        // Obtiene el contenedor del FormContenedor y se establece al asistente
-        JPanel contenedor = formContenedorModel.getContenedorPanel();
-        asistenteNavegacionPantallas.setContenedor(contenedor);
-
-        ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica(formContenedorModel);
+        // Inicia los procesos del tablero de domino
+        ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica();
         tableroDominoLogica.iniciar();
+        
 
 //        //PRUEBAS LOGICA POZO (FUNCIONA)
 //        PozoEntity pozo = new PozoEntity();

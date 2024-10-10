@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package contenedorView;
+package contenedorpantallas;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.JPanel;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.awt.event.ComponentEvent;
  */
 public class FormContenedorController {
     
+    private final MediadorContenedorContenido mediadorEscala = MediadorContenedorContenido.getInstance();
     private FormContenedorModel model; // Modelo FormContenedorModel
     private FormContenedorView view; // JFrame FormContenedorView
 
@@ -36,6 +38,14 @@ public class FormContenedorController {
         view.setVisible(true);
     }
     
+    public JPanel getContenedorPanel() {
+        return view.getContainerPanel();
+    }
+    
+    public float getEscala() {
+        return model.getEcale();
+    }
+    
     private void updateModelAndView() {
         // Actualizar el modelo con el nuevo tamaño
         model.setAnchoFrame(view.getWidth());
@@ -56,6 +66,9 @@ public class FormContenedorController {
         
         // Asigna la escala de tamaño del contenedor
         updateScale();
+        
+        // Notifica el cambio de escala al contenido del contenedor
+        mediadorEscala.notificarEscalaAContenido();
     }
     
     private void updateFrameContainerValues() {
