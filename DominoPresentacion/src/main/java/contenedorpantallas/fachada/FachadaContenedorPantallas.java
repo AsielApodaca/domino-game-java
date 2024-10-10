@@ -4,7 +4,7 @@
  */
 package contenedorpantallas.fachada;
 
-import contenedorpantallas.MediadorContenedorContenido;
+import contenedorpantallas.SingletonContenedorContenido;
 import contenedorpantallas.FormContenedorModel;
 import contenedorpantallas.FormContenedorView;
 import contenedorpantallas.FormContenedorController;
@@ -18,7 +18,7 @@ public class FachadaContenedorPantallas implements IFachadaContenedorPantallas{
     private FormContenedorModel model;
     private FormContenedorView view;
     private FormContenedorController controller;
-    private final MediadorContenedorContenido medContenedorContenido = MediadorContenedorContenido.getInstance();
+    private final SingletonContenedorContenido medContenedorContenido = SingletonContenedorContenido.getInstance();
 
     public FachadaContenedorPantallas() {
     }

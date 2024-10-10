@@ -10,18 +10,18 @@ import javax.swing.JPanel;
  *
  * @author asielapodaca
  */
-public class MediadorContenedorContenido {
-    private static MediadorContenedorContenido instance;
+public class SingletonContenedorContenido {
+    private static SingletonContenedorContenido instance;
     private FormContenedorController contenedorController;
     private IContenidoController contenidoController;
     private JPanel contenedorPanel;
 
-    private MediadorContenedorContenido() {
+    private SingletonContenedorContenido() {
     }
 
-    public static MediadorContenedorContenido getInstance() {
+    public static SingletonContenedorContenido getInstance() {
         if (instance == null) {
-            instance = new MediadorContenedorContenido();
+            instance = new SingletonContenedorContenido();
         }
         return instance;
     }

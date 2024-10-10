@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  */
 public class FormContenedorController {
     
-    private final MediadorContenedorContenido mediadorEscala = MediadorContenedorContenido.getInstance();
+    private final SingletonContenedorContenido singletonEscala = SingletonContenedorContenido.getInstance();
     private FormContenedorModel model; // Modelo FormContenedorModel
     private FormContenedorView view; // JFrame FormContenedorView
 
@@ -68,7 +68,7 @@ public class FormContenedorController {
         updateScale();
         
         // Notifica el cambio de escala al contenido del contenedor
-        mediadorEscala.notificarEscalaAContenido();
+        singletonEscala.notificarEscalaAContenido();
     }
     
     private void updateFrameContainerValues() {

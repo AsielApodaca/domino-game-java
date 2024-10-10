@@ -5,8 +5,7 @@
 package presentacion.mediador;
 
 import dominodto.FichaDominoDTO;
-import java.awt.Dimension;
-import java.util.ArrayList;
+
 import java.util.List;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.fichadomino.FichaDominoModel;
