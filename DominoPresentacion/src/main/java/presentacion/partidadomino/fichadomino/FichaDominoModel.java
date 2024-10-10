@@ -31,13 +31,13 @@ public class FichaDominoModel {
     private int locacionX; // Locación en eje de las X
     private int locacionY; // Locación en eje de las Y
 
+    // Valor de los extremos
+    private int valorExtremo1;
+    private int valorExtremo2;
+    
     // Imagenes de los numeros de cada extremo
     private String imgExtremo1; // Fuente de la imagen del extremo 1
     private String imgExtremo2; // Fuente de la imagen del extremo 1
-
-    // Numero de extremos por lado, por ejemplo: 1 horizontal, 2 vertical, significa que la ficha está en vertical, 2 y 1 de lo contrario
-    private int extremosHorizontal; // 2 o 1
-    private int extremosVertical; // 2 o 1
 
     private boolean compatible; // Si la ficha es compatible con uno de los 2 extremos
     private boolean seleccionada; // Si la ficha está seleccionada
@@ -46,17 +46,14 @@ public class FichaDominoModel {
     public FichaDominoModel() {
     }
 
-    public FichaDominoModel(FichaDominoDTO fichaDominoDTO) {
+    
+    public FichaDominoModel(FichaDominoDTO fichaDominoDTO) { // Se instancia cuando la ficha es para la mano del jugador local
         this.fichaDominoDTO = fichaDominoDTO;
-        this.imagenMargenDomino = "/multimedia/DominoFondo.png";
-        this.imgExtremo1 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo1());
-        this.imgExtremo2 = String.format("/multimedia/Domino%d.png", fichaDominoDTO.getValorExtremo2());
         this.observers = new ArrayList<>();
-
         iniciarFichaJugadorLocal();
     }
 
-    public FichaDominoModel(CasillaDTO casillaDTO) {
+    public FichaDominoModel(CasillaDTO casillaDTO) { // Se instancia cuando la ficha es para colocar en el tablero
         this.casillaDTO = casillaDTO;
         iniciarFichaParaTablero();
     }
@@ -68,16 +65,50 @@ public class FichaDominoModel {
     private void iniciarFichaJugadorLocal() {
         this.anchoFicha = 30;
         this.alturaFicha = 60;
-        this.extremosHorizontal = 1;
-        this.extremosVertical = 2;
+        this.rotacion = 0;
+        
+        this.valorExtremo1 = this.fichaDominoDTO.getValorExtremo1();
+        this.valorExtremo2 = this.fichaDominoDTO.getValorExtremo2();
+        
+        cargarImagenesFicha(this.valorExtremo1, this.valorExtremo2);
     }
 
     private void iniciarFichaParaTablero() {
-
-        this.anchoFicha = 15;
-        this.alturaFicha = 30;
-        this.extremosHorizontal = 1;
-        this.extremosVertical = 2;
+        this.fichaDominoDTO = this.casillaDTO.getFichaDominoDTO();
+        this.rotacion = this.casillaDTO.getRotacion();
+        
+        switch(this.rotacion) { // Asigna orientación de la ficha
+            case 0: // Horizontal
+                this.anchoFicha = 30;
+                this.alturaFicha = 15;
+            case 90: // Vertical
+                this.anchoFicha = 15;
+                this.alturaFicha = 30;
+                voltearExtremosFicha();
+                break;
+            case 180: // Horizontal
+                this.anchoFicha = 30;
+                this.alturaFicha = 15;
+                voltearExtremosFicha();
+            case 270: // Vertical
+                this.anchoFicha = 15;
+                this.alturaFicha = 30;
+        }
+        
+        cargarImagenesFicha(valorExtremo1, valorExtremo2);
+        
+    }
+    
+    private void voltearExtremosFicha() {
+        int valorExtremo1Copia = this.valorExtremo1;
+        this.valorExtremo1 = this.valorExtremo2;
+        this.valorExtremo2 = valorExtremo1Copia;
+    }
+    
+    private void cargarImagenesFicha(int primerValor, int segundoValor) {
+        this.imagenMargenDomino = "/multimedia/DominoFondo.png";
+        this.imgExtremo1 = String.format("/multimedia/Domino%d.png", primerValor);
+        this.imgExtremo2 = String.format("/multimedia/Domino%d.png", segundoValor);
     }
 
     public String getImagenMargenDomino() {
