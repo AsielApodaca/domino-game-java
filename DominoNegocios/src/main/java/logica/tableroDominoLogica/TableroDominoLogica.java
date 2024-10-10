@@ -30,12 +30,11 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     @Override
     public void iniciar() {
         crearPresentacionPartida();
-        // simularListaFichasDTO() // Se colocará este metodo cuando el mvc ya tenga listeners
+        simularListaFichasDTO(); // Se colocará este metodo cuando el mvc ya tenga listeners
     }
     
     private void crearPresentacionPartida() {
         fachadaPartidaDomino.iniciarPantalla();
-        //MediadorNavegacionPantallas.getInstance().navegarA(view);
     }
     
     private void crearPozo() {
