@@ -7,6 +7,8 @@ package contenedorpantallas;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JPanel;
+import presentacion.mediador.IMediador;
+import presentacion.mediador.Mediador;
 
 /**
  *
@@ -14,7 +16,7 @@ import javax.swing.JPanel;
  */
 public class FormContenedorController {
     
-    private final MediadorContenedorContenido mediadorEscala = MediadorContenedorContenido.getInstance();
+    private final IMediador mediador = Mediador.getInstance();
     private FormContenedorModel model; // Modelo FormContenedorModel
     private FormContenedorView view; // JFrame FormContenedorView
 
@@ -68,7 +70,7 @@ public class FormContenedorController {
         updateScale();
         
         // Notifica el cambio de escala al contenido del contenedor
-        mediadorEscala.notificarEscalaAContenido();
+        mediador.notificarEscalaAContenido();
     }
     
     private void updateFrameContainerValues() {

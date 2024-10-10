@@ -4,7 +4,8 @@
  */
 package presentacion.mediador;
 
-import dominodto.FichaDominoDTO;
+import contenedorpantallas.FormContenedorController;
+import contenedorpantallas.IContenidoController;
 import java.util.List;
 import presentacion.partidadomino.fichadomino.FichaDominoModel;
 
@@ -19,7 +20,10 @@ public interface IMediador {
     void crearFichasJugadorLocal();
     List<FichaDominoModel> obtenerFichasJugadorLocal();
     void redimencionarFichasJugadorLocal();
-
+    public void setContenedorController(FormContenedorController contenedorController);
+    public void setContenidoController(IContenidoController contenidoController);
+    public void notificarEscalaAContenido();
+    public void mostrarPantalla();
 
 }
 

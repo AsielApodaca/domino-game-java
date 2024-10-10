@@ -4,10 +4,11 @@
  */
 package presentacion.mediador;
 
+import contenedorpantallas.FormContenedorController;
+import contenedorpantallas.IContenidoController;
 import dominodto.FichaDominoDTO;
-import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JPanel;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.fichadomino.FichaDominoModel;
 
@@ -20,11 +21,22 @@ import presentacion.partidadomino.fichadomino.FichaDominoModel;
  */
 public class Mediador implements IMediador {
 
+    private static Mediador instance;
+    private FormContenedorController contenedorController;
+    private IContenidoController contenidoController;
+    private JPanel contenedorPanel;
+    
     private PartidaDominoModel partidaDomino;
     private List<FichaDominoModel> fichaModels;
 
-    public Mediador() {
-
+    private Mediador() {
+    }
+    
+    public static Mediador getInstance() { // Retorna una instancia estática de si mismo
+        if (instance == null) {
+            instance = new Mediador();
+        }
+        return instance;
     }
 
     @Override
@@ -51,5 +63,42 @@ public class Mediador implements IMediador {
             model.setDimensiones(anchoFicha, altoFicha);
         }
     }
+    
+    // Inicio de navegación entre pantallas y notificación de cambio de escala
+    
+    @Override
+    public void setContenedorController(FormContenedorController contenedorController) {
+        this.contenedorController = contenedorController;
+        setContenedorPanel();
+    }
+    
+    private void setContenedorPanel() {
+        this.contenedorPanel = contenedorController.getContenedorPanel();
+    }
+    
+    @Override
+    public void setContenidoController(IContenidoController contenidoController) {
+        this.contenidoController = contenidoController;
+        notificarEscalaAContenido();
+    }
+    
+    @Override
+    public void notificarEscalaAContenido() {
+        if(contenedorController != null && contenidoController != null) {
+            this.contenidoController.actualizarEscala(contenedorController.getEscala());
+        }
+    }
+    
+    @Override
+    public void mostrarPantalla() {
+        if (contenedorPanel != null) {
+            contenedorPanel.removeAll();
+            contenedorPanel.add(contenidoController.obtenerView());
+            contenedorPanel.revalidate();
+            contenedorPanel.repaint();
+        }
+    }
+    
+    // Fin de navegación entre pantallas y notificación de cambio de escala
 
 }
