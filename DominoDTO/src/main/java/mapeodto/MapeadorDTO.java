@@ -12,44 +12,62 @@ import dominodto.CasillaDTO;
 import dominodto.TableroDominoDTO;
 
 /**
- *
+ * Clase MapeadorDTO.
+ * Esta clase se encarga de mapear las entidades del dominio a sus respectivos Data Transfer Objects (DTO).
+ * 
  * @author asielapodaca
  */
 public class MapeadorDTO {
+
+    /**
+     * Mapea una entidad de ficha de dominó a su correspondiente DTO.
+     *
+     * @param ficha La entidad de la ficha de dominó a mapear.
+     * @return Un objeto FichaDominoDTO que representa la ficha de dominó.
+     */
     public FichaDominoDTO fichaEntityADTO(FichaDominoEntity ficha) {
         int extremo1 = ficha.getExtremo1();
         int extremo2 = ficha.getExtremo2();
         
         return new FichaDominoDTO(extremo1, extremo2);
-        
     }
     
-    public CasillaDTO posicionEntityADTO(CasillaEntity posicion) {
-        CasillaDTO posicionDTO = new CasillaDTO();
+    /**
+     * Mapea una entidad de casilla a su correspondiente DTO.
+     *
+     * @param posicion La entidad de la casilla a mapear.
+     * @return Un objeto CasillaDTO que representa la casilla.
+     */
+    public CasillaDTO casillaEntityADTO(CasillaEntity posicion) {
+        CasillaDTO casillaDTO = new CasillaDTO();
         
-        posicionDTO.setLocacionX(posicion.getLocacionX());
-        posicionDTO.setLocacionY(posicion.getLocacionY());
-        posicionDTO.setRotacion(posicion.getRotacion());
+        casillaDTO.setLocacionX(posicion.getLocacionX());
+        casillaDTO.setLocacionY(posicion.getLocacionY());
+        casillaDTO.setRotacion(posicion.getRotacion());
         FichaDominoDTO fichaDominoDTO = fichaEntityADTO(posicion.getFichaDomino());
         if(fichaDominoDTO != null) {
-            posicionDTO.setFichaDominoDTO(fichaDominoDTO);
+            casillaDTO.setFichaDominoDTO(fichaDominoDTO);
         }
         
-        return posicionDTO;
+        return casillaDTO;
     }
     
+    /**
+     * Mapea una entidad de tablero de dominó a su correspondiente DTO.
+     *
+     * @param tableroDomino La entidad del tablero de dominó a mapear.
+     * @return Un objeto TableroDominoDTO que representa el tablero de dominó.
+     */
     public TableroDominoDTO tableroDominoEntityADTO(TableroDominoEntity tableroDomino) {
-        
         int anchoTablero = tableroDomino.getAnchoTablero();
         int altoTablero = tableroDomino.getAltoTablero();
         TableroDominoDTO tableroDominoDTO = new TableroDominoDTO(anchoTablero, altoTablero);
         
-        CasillaEntity posicion = tableroDomino.obtenerPrimerElemento();
-        if(posicion != null) { // el tablero tiene por lo menos una ficha
+        CasillaEntity casilla = tableroDomino.obtenerPrimerElemento();
+        if(casilla != null) { // el tablero tiene por lo menos una ficha
             do { // Recorre todas las posiciones de fichas
-                tableroDominoDTO.addPosicion(posicionEntityADTO(posicion));
-            }while(posicion.getSiguienteCasilla() != null);
-            
+                tableroDominoDTO.addPosicion(casillaEntityADTO(casilla));
+            } while(casilla.getSiguienteCasilla() != null);
         }
         
         return tableroDominoDTO;
