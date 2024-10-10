@@ -9,6 +9,7 @@ import presentacion.mediador.IMediador;
 import presentacion.mediador.Mediador;
 import presentacion.partidadomino.fichadomino.FichaDominoModel;
 import presentacion.partidadomino.fichadomino.FichaDominoView;
+import contenedorpantallas.IContenidoController;
 
 /**
  *
@@ -20,7 +21,7 @@ import presentacion.partidadomino.fichadomino.FichaDominoView;
 public class PartidaDominoModel{
 
     private float escala; // Escala de view, afecta el tamaño de todos los componentes para adaptarse al Frame
-    private final IMediador mediador = Mediador.getInstance();
+    private IMediador mediador;
     // media
     private String fondoDePantalla;
 
@@ -74,6 +75,7 @@ public class PartidaDominoModel{
         this.altoFichaTablero = 30;
         this.numeroDeJugadores = 1; // temporal
         this.listaFichasJugadorLocal = new ArrayList<>();
+        mediador = new Mediador();
     }
 
     public FichaDominoView crearFichasLocales() {

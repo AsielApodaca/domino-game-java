@@ -4,8 +4,7 @@
  */
 package contenedorpantallas.fachada;
 
-import presentacion.mediador.IMediador;
-import presentacion.mediador.Mediador;
+import contenedorpantallas.MediadorContenedorContenido;
 import contenedorpantallas.FormContenedorModel;
 import contenedorpantallas.FormContenedorView;
 import contenedorpantallas.FormContenedorController;
@@ -19,7 +18,7 @@ public class FachadaContenedorPantallas implements IFachadaContenedorPantallas{
     private FormContenedorModel model;
     private FormContenedorView view;
     private FormContenedorController controller;
-    private final IMediador mediador = Mediador.getInstance();
+    private final MediadorContenedorContenido medContenedorContenido = MediadorContenedorContenido.getInstance();
 
     public FachadaContenedorPantallas() {
     }
@@ -38,7 +37,7 @@ public class FachadaContenedorPantallas implements IFachadaContenedorPantallas{
     }
     
     private void iniciarMediadorContenedorContenido() {
-        this.mediador.setContenedorController(controller);
+        this.medContenedorContenido.setContenedorController(controller);
     }
     
 }
