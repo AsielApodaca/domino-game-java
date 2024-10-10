@@ -13,14 +13,12 @@ package dominio;
  */
 public class TableroDominoEntity {
 
-    private final int IZQUIERDA = 0;
-    private final int DERECHA = 1;
+    private final int IZQUIERDA = 0; // El extremo de la cadena de fichas se extiende actualmente hacia la izquierda
+    private final int DERECHA = 1; // El extremo de la cadena de fichas se extiende actualmente hacia la derecha
 
     private final int anchoTablero = 9; // ancho usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
     private final int alturaTablero = 20; // altura usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
 
-    private final int anchoCasillaMula = 2; // Ancho de la casilla donde se colocará la mula
-    private final int alturaCasillaMula = 1; // Altura de la casilla donde se colocará la mula
     private final int casillaMulaLocacionX = 9; // Locacion de la casilla de la mula en el eje X
     private final int casillaMulaLocacionY = 4; // Locacion de la casilla de la mula en el eje Y
 
@@ -37,18 +35,26 @@ public class TableroDominoEntity {
 
     public TableroDominoEntity() {
         iniciarCasillaMula();
-        this.valorExtremo1 = -1;
-        this.valorExtremo2 = -1;
-        this.direccionExtremo1 = IZQUIERDA;
-        this.direccionExtremo2 = DERECHA;
-    }
+        iniciarCasillasExtremos();
+    } // como definir cuanto tiempo dura una iteración
 
     private void iniciarCasillaMula() {
         this.casillaMula = new CasillaEntity();
+        // La locación de la casilla de la mula siempre será la misma
         this.casillaMula.setLocacionX(casillaMulaLocacionX);
         this.casillaMula.setLocacionY(casillaMulaLocacionY);
         this.casillaExtremo1 = casillaMula;
         this.casillaExtremo2 = casillaMula;
+    }
+    
+    private void iniciarCasillasExtremos() {
+        this.valorExtremo1 = -1; // Sin ficha asignada no hay valor
+        this.valorExtremo2 = -1; // Sin ficha asignada no hay valor
+        // inicialmente la casilla de la mula involucra ambos extremos.
+        this.casillaExtremo1 = casillaMula; 
+        this.casillaExtremo2 = casillaMula;
+        this.direccionExtremo1 = IZQUIERDA; // Orientación inicial de las casillas a colocar hacia la izquierda
+        this.direccionExtremo2 = DERECHA; // Orientación inicial de las casillas a colocar hacia la izquierda
     }
 
     public int getAnchoTablero() {
