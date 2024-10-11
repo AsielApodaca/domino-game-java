@@ -50,7 +50,7 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
      * Dicha ficha es la primera disponible del pozo y despues la elimina de la
      * lista de fichas del pozo
      *
-     * @return
+     * @return primer ficha disponible
      */
     public FichaDominoEntity sacarFicha() {
         if (pozo.getListaFichas().isEmpty()) {

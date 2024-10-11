@@ -90,25 +90,9 @@ public class PartidaDominoModel{
         });
     }
 
-    public FichaDominoView crearFichasLocales() {
+    public void crearFichasLocales() {
         mediador.crearFichasJugadorLocal();
-        List<FichaDominoView> fichasView = null;
-        FichaDominoView fichaView = null;
-
-        
-        List<FichaDominoModel> fichaModels = mediador.obtenerFichasJugadorLocal();
-        for (FichaDominoModel fichaModel : fichaModels) {
-            try {
-                fichaView = new FichaDominoView(fichaModel);
-                fichasView.add(fichaView);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-            
-        }
-        return null; //lanzar excepcion personalizada
+//        mediador.redimencionarFichasJugadorLocal();
     }
 
     public void setListaFichasJugadorLocal(List<FichaDominoDTO> listaFichasJugadorLocal) {

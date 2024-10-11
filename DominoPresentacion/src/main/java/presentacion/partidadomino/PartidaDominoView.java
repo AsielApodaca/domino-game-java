@@ -99,7 +99,7 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
     }
 
     private void crearFichasLocales() {
-             panelContenedorFichasJugadorLocal.add(model.crearFichasLocales());
+          
         }
     
     

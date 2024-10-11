@@ -12,5 +12,11 @@ package presentacion.partidadomino.fichadomino;
  * @author Asiel Apodaca Monge
  */
 public class FichaDominoController {
+    private FichaDominoModel model;
+    private FichaDominoView view;
+    
+    public void crearFicha(){
+        
+    }
     
 }

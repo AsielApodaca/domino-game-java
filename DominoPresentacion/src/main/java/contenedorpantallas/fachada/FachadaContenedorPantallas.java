@@ -8,6 +8,7 @@ import contenedorpantallas.SingletonContenedorContenido;
 import contenedorpantallas.FormContenedorModel;
 import contenedorpantallas.FormContenedorView;
 import contenedorpantallas.FormContenedorController;
+import presentacion.partidadomino.PartidaDominoModel;
 
 /**
  *
@@ -30,9 +31,7 @@ public class FachadaContenedorPantallas implements IFachadaContenedorPantallas{
         this.controller.showView();
     }
     
-    public void mostrarFichas(){
-        
-    }
+   
     
     private void instanciarMVC() {
         this.model = new FormContenedorModel();

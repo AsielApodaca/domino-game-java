@@ -23,6 +23,12 @@ public class UsuarioEntity {
         this.icon = icon;
     }
 
+    //provisional
+    public UsuarioEntity(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
     public String getNombre() {
         return nombre;
     }

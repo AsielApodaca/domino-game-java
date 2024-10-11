@@ -9,8 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import presentacion.mediador.IMediador;
-import presentacion.mediador.Mediador;
 
 /**
  *
@@ -31,6 +29,8 @@ public class FichaDominoView extends JPanel {
         cargarComponentes();
         asignarExtremos(model);
     }
+    
+    
 
     private void cargarComponentes() throws IOException {
         margen = ImageIO.read(getClass().getResource(model.getImagenMargenDomino()));
