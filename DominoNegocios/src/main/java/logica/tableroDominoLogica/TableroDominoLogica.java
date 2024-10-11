@@ -70,7 +70,7 @@ public class TableroDominoLogica implements ITableroDominoLogica {
                     fichasRepartidasDTO.add(
                             new FichaDominoDTO(
                                     fichaEntity.getExtremo1(),
-                                    fichaEntity.getExtremo2())); // Conversión
+                                    fichaEntity.getExtremo2())); 
                 }
 
             }
@@ -79,6 +79,7 @@ public class TableroDominoLogica implements ITableroDominoLogica {
         }
     }
 
+    //jugador entity no se ha convertido a jugador dto
     public void mostrarFichas() {
         fachadaPartidaDomino.mostrarFichas(jugadorDominoDTO.getListaFichasJugador());
     }
