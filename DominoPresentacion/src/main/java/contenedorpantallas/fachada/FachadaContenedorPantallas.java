@@ -30,6 +30,10 @@ public class FachadaContenedorPantallas implements IFachadaContenedorPantallas{
         this.controller.showView();
     }
     
+    public void mostrarFichas(){
+        
+    }
+    
     private void instanciarMVC() {
         this.model = new FormContenedorModel();
         this.view = new FormContenedorView(model);
