@@ -34,21 +34,26 @@ public class TableroDominoLogica implements ITableroDominoLogica {
 
     private List<FichaDominoDTO> fichasRepartidasDTO;
     private TableroDominoEntity tableroDominoEntity;
+    private List<JugadorDominoEntity> jugadoresEntity;
 
     public TableroDominoLogica(ConfiguracionJuegoEntity configuracionEntity) {
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.tableroDominoEntity = new TableroDominoEntity();
         this.fichasRepartidasDTO = new ArrayList<>();
         this.jugadorDominoDTO = new JugadorDominoDTO();
-        repartirFichasJugador(configuracionEntity.getCantidadFichas());
+        this.jugadoresEntity = tableroDominoEntity.getListaJugadores();
         crearPozo();
         controladorFicha = new ControladorFichasLogica(pozo);
+        repartirFichasJugador(configuracionEntity.getCantidadFichas());
+
     }
 
     @Override
     public void iniciar() {
         crearPresentacionPartida();
-        simularListaFichasDTO(); // Se colocará este metodo cuando el mvc ya tenga listeners
+        simularListaFichasDTO();
+        mostrarFichas();
+        // Se colocará este metodo cuando el mvc ya tenga listeners
     }
 
     private void crearPresentacionPartida() {
@@ -56,24 +61,26 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     }
 
     private void repartirFichasJugador(int cantidadFichas) {
-        for (JugadorDominoEntity jugadorEntity : tableroDominoEntity.getListaJugadores()) {
-            List<FichaDominoEntity> fichasRepartidasEntity = controladorFicha.repartirFichas(cantidadFichas);
-            jugadorEntity.setListaFichasJugador(fichasRepartidasEntity);
+        try {
+            for (JugadorDominoEntity jugadorEntity : jugadoresEntity) {
+                List<FichaDominoEntity> fichasRepartidasEntity = controladorFicha.repartirFichas(cantidadFichas);
+                jugadorEntity.setListaFichasJugador(fichasRepartidasEntity);
 
-            for (FichaDominoEntity fichaEntity : fichasRepartidasEntity) {
-                fichasRepartidasDTO.add(
-                        new FichaDominoDTO(
-                                fichaEntity.getExtremo1(),
-                                fichaEntity.getExtremo2())); // Conversión
+                for (FichaDominoEntity fichaEntity : fichasRepartidasEntity) {
+                    fichasRepartidasDTO.add(
+                            new FichaDominoDTO(
+                                    fichaEntity.getExtremo1(),
+                                    fichaEntity.getExtremo2())); // Conversión
+                }
+
             }
-
+        } catch (Exception e) {
+            e.printStackTrace(); // Mostrar el tipo de excepción y su stack trace
         }
     }
-    
-    
 
     public void mostrarFichas() {
-         fachadaPartidaDomino.mostrarFichas(jugadorDominoDTO.getListaFichasJugador());
+        fachadaPartidaDomino.mostrarFichas(jugadorDominoDTO.getListaFichasJugador());
     }
 
     private void crearPozo() {

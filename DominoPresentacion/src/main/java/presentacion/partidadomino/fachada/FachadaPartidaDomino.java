@@ -27,10 +27,16 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
     private PartidaDominoView view;
     private PartidaDominoController controller;
     private FichaDominoModel fichaDominoModel;
+    
 
     public FachadaPartidaDomino() {
+
     }
     
+    /**
+     *
+     * @param fichasJugador
+     */
     @Override
      public void mostrarFichas(List<FichaDominoDTO> fichasJugador){
         for(FichaDominoDTO ficha : fichasJugador){

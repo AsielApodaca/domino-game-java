@@ -22,11 +22,19 @@ public class JugadorDominoEntity extends UsuarioEntity {
         super(nombre, icon);
     }
 
+    //provisional
+    public JugadorDominoEntity(String nombre) {
+        super(nombre);
+    }
+
+    
     
     public JugadorDominoEntity(String nombre, Icon icon, List<FichaDominoEntity> listaFichasJugador) {
         super(nombre, icon);
         this.listaFichasJugador = listaFichasJugador;
     }
+    
+    
 
     public List<FichaDominoEntity> getListaFichasJugador() {
         return listaFichasJugador;

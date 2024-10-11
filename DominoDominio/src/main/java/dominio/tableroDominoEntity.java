@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dominio;
 
 import java.util.ArrayList;
@@ -42,9 +38,20 @@ public class TableroDominoEntity {
     public TableroDominoEntity() {
         iniciarCasillaMula();
         iniciarCasillasExtremos();
-        listaJugadores = new ArrayList<>();        
+        listaJugadores = new ArrayList<>();
+        agregarJugadoresProvicional();
     } // como definir cuanto tiempo dura una iteración
 
+    private void agregarJugadoresProvicional(){
+        JugadorDominoEntity jugador1 = new JugadorDominoEntity("Juan");
+        JugadorDominoEntity jugador2 = new JugadorDominoEntity("Francis");
+        JugadorDominoEntity jugador3 = new JugadorDominoEntity("Minerva");
+        JugadorDominoEntity jugador4 = new JugadorDominoEntity("Hermione");
+        listaJugadores.add(jugador1);
+        listaJugadores.add(jugador2);
+        listaJugadores.add(jugador3);
+        listaJugadores.add(jugador4);
+    }
     private void iniciarCasillaMula() {
         this.casillaMula = new CasillaEntity();
         // La locación de la casilla de la mula siempre será la misma
