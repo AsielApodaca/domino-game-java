@@ -6,15 +6,19 @@ package mapeodto;
 
 import dominio.FichaDominoEntity;
 import dominio.CasillaEntity;
+import dominio.JugadorDominoEntity;
 import dominio.TableroDominoEntity;
 import dominodto.FichaDominoDTO;
 import dominodto.CasillaDTO;
+import dominodto.JugadorDominoDTO;
 import dominodto.TableroDominoDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Clase MapeadorDTO.
- * Esta clase se encarga de mapear las entidades del dominio a sus respectivos Data Transfer Objects (DTO).
- * 
+ * Clase MapeadorDTO. Esta clase se encarga de mapear las entidades del dominio
+ * a sus respectivos Data Transfer Objects (DTO).
+ *
  * @author asielapodaca
  */
 public class MapeadorDTO {
@@ -28,10 +32,10 @@ public class MapeadorDTO {
     public FichaDominoDTO fichaEntityADTO(FichaDominoEntity ficha) {
         int extremo1 = ficha.getExtremo1();
         int extremo2 = ficha.getExtremo2();
-        
+
         return new FichaDominoDTO(extremo1, extremo2);
     }
-    
+
     /**
      * Mapea una entidad de casilla a su correspondiente DTO.
      *
@@ -40,18 +44,18 @@ public class MapeadorDTO {
      */
     public CasillaDTO casillaEntityADTO(CasillaEntity posicion) {
         CasillaDTO casillaDTO = new CasillaDTO();
-        
+
         casillaDTO.setLocacionX(posicion.getLocacionX());
         casillaDTO.setLocacionY(posicion.getLocacionY());
         casillaDTO.setRotacion(posicion.getRotacion());
         FichaDominoDTO fichaDominoDTO = fichaEntityADTO(posicion.getFichaDomino());
-        if(fichaDominoDTO != null) {
+        if (fichaDominoDTO != null) {
             casillaDTO.setFichaDominoDTO(fichaDominoDTO);
         }
-        
+
         return casillaDTO;
     }
-    
+
     /**
      * Mapea una entidad de tablero de dominó a su correspondiente DTO.
      *
@@ -62,14 +66,23 @@ public class MapeadorDTO {
         int anchoTablero = tableroDomino.getAnchoTablero();
         int altoTablero = tableroDomino.getAltoTablero();
         TableroDominoDTO tableroDominoDTO = new TableroDominoDTO(anchoTablero, altoTablero);
-        
+
         CasillaEntity casilla = tableroDomino.obtenerPrimerElemento();
-        if(casilla != null) { // el tablero tiene por lo menos una ficha
+        if (casilla != null) { // el tablero tiene por lo menos una ficha
             do { // Recorre todas las posiciones de fichas
                 tableroDominoDTO.addPosicion(casillaEntityADTO(casilla));
-            } while(casilla.getSiguienteCasilla() != null);
+            } while (casilla.getSiguienteCasilla() != null);
         }
-        
+
         return tableroDominoDTO;
+    }
+
+    private JugadorDominoDTO convertirEntityADTO(JugadorDominoEntity jugadorEntity) {
+        JugadorDominoDTO jugadorDominoDTO = new JugadorDominoDTO();
+        for (FichaDominoEntity fichaEntity : jugadorEntity.getListaFichasJugador()) {
+            FichaDominoDTO fichaDTO = new FichaDominoDTO(fichaEntity.getExtremo1(), fichaEntity.getExtremo2());
+            jugadorDominoDTO.getListaFichasJugador().add(fichaDTO);
+        }
+        return jugadorDominoDTO;
     }
 }

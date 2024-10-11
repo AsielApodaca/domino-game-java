@@ -35,6 +35,7 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     private List<FichaDominoDTO> fichasRepartidasDTO;
     private TableroDominoEntity tableroDominoEntity;
     private List<JugadorDominoEntity> jugadoresEntity;
+    private List<JugadorDominoDTO> jugadoresDTO = new ArrayList<>();
 
     public TableroDominoLogica(ConfiguracionJuegoEntity configuracionEntity) {
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
@@ -63,23 +64,28 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     private void repartirFichasJugador(int cantidadFichas) {
         try {
             for (JugadorDominoEntity jugadorEntity : jugadoresEntity) {
+                // Repartir fichas para el jugador actual
                 List<FichaDominoEntity> fichasRepartidasEntity = controladorFicha.repartirFichas(cantidadFichas);
                 jugadorEntity.setListaFichasJugador(fichasRepartidasEntity);
 
+                // Crear un nuevo JugadorDominoDTO y guardar su lista de fichas
+                JugadorDominoDTO jugadorDTO = new JugadorDominoDTO();
                 for (FichaDominoEntity fichaEntity : fichasRepartidasEntity) {
-                    fichasRepartidasDTO.add(
-                            new FichaDominoDTO(
-                                    fichaEntity.getExtremo1(),
-                                    fichaEntity.getExtremo2())); 
+                    FichaDominoDTO fichaDTO = new FichaDominoDTO(fichaEntity.getExtremo1(), fichaEntity.getExtremo2());
+                    jugadorDTO.getListaFichasJugador().add(fichaDTO);
+
+                    // Agregar tambien a fichasRepartidasDTO
+                    fichasRepartidasDTO.add(fichaDTO);
                 }
 
+                // Agregar el jugadorDTO a la lista de jugadoresDTO
+                jugadoresDTO.add(jugadorDTO);
             }
         } catch (Exception e) {
             e.printStackTrace(); // Mostrar el tipo de excepción y su stack trace
         }
     }
 
-    //jugador entity no se ha convertido a jugador dto
     public void mostrarFichas() {
         fachadaPartidaDomino.mostrarFichas(jugadorDominoDTO.getListaFichasJugador());
     }
