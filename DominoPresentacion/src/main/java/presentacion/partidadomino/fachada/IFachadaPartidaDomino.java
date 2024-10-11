@@ -4,6 +4,7 @@
  */
 package presentacion.partidadomino.fachada;
 
+import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import java.util.List;
 
@@ -14,5 +15,6 @@ import java.util.List;
 public interface IFachadaPartidaDomino {
     public void iniciarPantalla();
     public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino);
-    public void colocarFichaTablero(FichaDominoDTO fichaDominoDTO);
+    public void colocarFichaTablero(CasillaDTO casillaDTO);
+    public void mostrarCasillaParaColocarFicha(CasillaDTO casillaDTO);
 }

@@ -14,7 +14,6 @@ import logica.controladorFichas.ControladorFichasLogica;
 import logica.controladorFichas.IControladorFichasLogica;
 import presentacion.partidadomino.fachada.FachadaPartidaDomino;
 import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
-//import presentacion.tablerodomino.*;
 
 /**
  *

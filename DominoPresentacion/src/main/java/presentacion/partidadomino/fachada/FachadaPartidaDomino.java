@@ -5,6 +5,7 @@
 package presentacion.partidadomino.fachada;
 
 import contenedorpantallas.SingletonContenedorContenido;
+import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import java.util.List;
 import presentacion.partidadomino.PartidaDominoController;
@@ -41,13 +42,18 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
     }
 
     @Override
-    public void colocarFichaTablero(FichaDominoDTO fichaDominoDTO) {
+    public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino) {
+        model.setListaFichasJugadorLocal(listaFichasDomino);
+    }
+
+    @Override
+    public void colocarFichaTablero(CasillaDTO casillaDTO) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino) {
-        model.setListaFichasJugadorLocal(listaFichasDomino);
+    public void mostrarCasillaParaColocarFicha(CasillaDTO casillaDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 
