@@ -17,7 +17,6 @@ import presentacion.partidadomino.fichadomino.FichaDominoModel;
  */
 public interface IMediador {
     void crearFichasJugadorLocal();
-    List<FichaDominoModel> obtenerFichasJugadorLocal();
     void redimencionarFichasJugadorLocal();
 
 

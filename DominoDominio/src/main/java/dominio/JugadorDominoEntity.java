@@ -17,7 +17,12 @@ import javax.swing.Icon;
 public class JugadorDominoEntity extends UsuarioEntity {
 
     private List<FichaDominoEntity> listaFichasJugador;
+    
+    public JugadorDominoEntity(String nombre, Icon icon) {
+        super(nombre, icon);
+    }
 
+    
     public JugadorDominoEntity(String nombre, Icon icon, List<FichaDominoEntity> listaFichasJugador) {
         super(nombre, icon);
         this.listaFichasJugador = listaFichasJugador;

@@ -10,6 +10,6 @@ package listeners;
  */
 public interface IPartidaDominoViewListener {
     
-    void onListaFichasDominoUsuarioChange() ;
+    void onListaFichasDominoUsuarioChange();
     
 }

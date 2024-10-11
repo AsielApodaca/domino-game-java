@@ -4,6 +4,7 @@
  */
 package main;
 
+import dominio.ConfiguracionJuegoEntity;
 import logica.contenedorpantallas.ContenedorPantallasLogica;
 import logica.contenedorpantallas.IContenedorPantallasLogica;
 import logica.tableroDominoLogica.ITableroDominoLogica;
@@ -26,9 +27,9 @@ public class AppRunner {
         // Inicia los procesos del contenedor de pantallas
         IContenedorPantallasLogica contenedorPantallasLogica = new ContenedorPantallasLogica();
         contenedorPantallasLogica.iniciarContenedorDePantallas();
-        
+        ConfiguracionJuegoEntity configuracionJuegoEntity = new ConfiguracionJuegoEntity(5);
         // Inicia los procesos del tablero de domino
-        ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica();
+        ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica(configuracionJuegoEntity);
         tableroDominoLogica.iniciar();
         
 

@@ -50,17 +50,26 @@ public class FichaDominoModel {
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) { // Se instancia cuando la ficha es para la mano del jugador local
         this.fichaDominoDTO = fichaDominoDTO;
         this.observers = new ArrayList<>();
+        asignarExtremos(fichaDominoDTO);
         iniciarFichaJugadorLocal();
     }
+    
 
     public FichaDominoModel(CasillaDTO casillaDTO) { // Se instancia cuando la ficha es para colocar en el tablero
         this.casillaDTO = casillaDTO;
         iniciarFichaParaTablero();
     }
+    
+    public void asignarExtremos(FichaDominoDTO ficha){
+        valorExtremo1 = ficha.getValorExtremo1();
+        valorExtremo2 = ficha.getValorExtremo2();
+    }
 
     public void addObserver(FichaDominoView view) {
         observers.add(view);
     }
+   
+
 
     private void iniciarFichaJugadorLocal() {
         this.anchoFicha = 30;
@@ -145,7 +154,7 @@ public class FichaDominoModel {
         notifyObservers();
     }
 
-    private void notifyObservers() {
+    public void notifyObservers() {
         for (FichaDominoView view : observers) {
             view.actualizar();
         }

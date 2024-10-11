@@ -11,6 +11,7 @@ import java.util.List;
 import presentacion.partidadomino.PartidaDominoController;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.PartidaDominoView;
+import presentacion.partidadomino.fichadomino.FichaDominoModel;
 
 /**
  *
@@ -25,8 +26,16 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
     private PartidaDominoModel model;
     private PartidaDominoView view;
     private PartidaDominoController controller;
+    private FichaDominoModel fichaDominoModel;
 
     public FachadaPartidaDomino() {
+    }
+    
+    @Override
+     public void mostrarFichas(List<FichaDominoDTO> fichasJugador){
+        for(FichaDominoDTO ficha : fichasJugador){
+            fichaDominoModel.asignarExtremos(ficha);
+        }
     }
     
     @Override
@@ -34,7 +43,6 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
         this.model = new PartidaDominoModel();
         this.view = new PartidaDominoView(model);
         this.controller = new PartidaDominoController(model, view);
-        
         sgContenedorContenido.setContenidoController(controller);
         sgContenedorContenido.mostrarPantalla();
         this.controller.showView();
