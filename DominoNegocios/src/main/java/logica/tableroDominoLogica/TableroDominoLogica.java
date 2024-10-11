@@ -4,10 +4,14 @@
  */
 package logica.tableroDominoLogica;
 
+import dominio.JugadorDominoEntity;
 import dominio.PozoEntity;
+import dominio.TableroDominoEntity;
 import dominodto.FichaDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
+import logica.controladorFichas.ControladorFichasLogica;
+import logica.controladorFichas.IControladorFichasLogica;
 import presentacion.partidadomino.fachada.FachadaPartidaDomino;
 import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
 //import presentacion.tablerodomino.*;
@@ -22,13 +26,19 @@ import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
 public class TableroDominoLogica implements ITableroDominoLogica {
     
     private IFachadaPartidaDomino fachadaPartidaDomino;
-
+    private IControladorFichasLogica controladorFicha;
+    private PozoEntity pozo;
+    private TableroDominoEntity tableroDominoEntity;
+    
     public TableroDominoLogica() { 
         this.fachadaPartidaDomino = new  FachadaPartidaDomino();
+        this.tableroDominoEntity = new TableroDominoEntity();
+        crearPozo();
+        controladorFicha = new ControladorFichasLogica(pozo);
     }
 
     @Override
-    public void iniciar() {
+    public void iniciar() { 
         crearPresentacionPartida();
         simularListaFichasDTO(); // Se colocará este metodo cuando el mvc ya tenga listeners
     }
@@ -37,8 +47,16 @@ public class TableroDominoLogica implements ITableroDominoLogica {
         fachadaPartidaDomino.iniciarPantalla();
     }
     
+    private void repartirFichasJugador(int cantidadFichas){
+        for(JugadorDominoEntity jugador: tableroDominoEntity.getListaJugadores()){
+            jugador.setListaFichasJugador(controladorFicha.repartirFichas(cantidadFichas));
+        }
+        
+        
+    }
+    
     private void crearPozo() {
-        PozoEntity pozo = new PozoEntity();
+        pozo = new PozoEntity();
     }
     private void simularListaFichasDTO() { // temporal
         List<FichaDominoDTO> listaFichas = new ArrayList<>();

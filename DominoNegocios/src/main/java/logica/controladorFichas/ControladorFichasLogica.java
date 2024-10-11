@@ -17,7 +17,7 @@ import java.util.List;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class ControladorFichasLogica {
+public class ControladorFichasLogica implements IControladorFichasLogica{
 
     private PozoEntity pozo;
 
@@ -34,9 +34,9 @@ public class ControladorFichasLogica {
      * @param cantidad
      * @return fichas repartidas
      */
-    public List<FichaDominoEntity> repartirFichas(int cantidad) {
+    public List<FichaDominoEntity> repartirFichas(int cantidadFichas) {
         List<FichaDominoEntity> fichasRepartidas = new ArrayList<>();
-        for (int i = 0; i < cantidad; i++) {
+        for (int i = 0; i < cantidadFichas; i++) {
             if (!pozo.getListaFichas().isEmpty()) {
                 fichasRepartidas.add(pozo.getListaFichas().remove(0)); // Se saca la primera ficha del pozo
             }
@@ -59,7 +59,4 @@ public class ControladorFichasLogica {
         return pozo.getListaFichas().remove(0);
     }
 
-    public void asignarFichas() {
-
-    }
 }

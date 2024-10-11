@@ -4,6 +4,9 @@
  */
 package dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Hisamy Cinco Cota
@@ -32,10 +35,14 @@ public class TableroDominoEntity {
 
     private int valorExtremo1; // Valor del primer extremo
     private int valorExtremo2; // Valor del segundo extremo
+    
+    private FichaDominoEntity fichaSeleccionada;
+    private List<JugadorDominoEntity> listaJugadores;
 
     public TableroDominoEntity() {
         iniciarCasillaMula();
         iniciarCasillasExtremos();
+        listaJugadores = new ArrayList<>();        
     } // como definir cuanto tiempo dura una iteración
 
     private void iniciarCasillaMula() {
@@ -45,6 +52,7 @@ public class TableroDominoEntity {
         this.casillaMula.setLocacionY(casillaMulaLocacionY);
         this.casillaExtremo1 = casillaMula;
         this.casillaExtremo2 = casillaMula;
+        
     }
     
     private void iniciarCasillasExtremos() {
@@ -80,6 +88,12 @@ public class TableroDominoEntity {
     public int getValorExtremo2() {
         return valorExtremo2;
     }
+
+    public List<JugadorDominoEntity> getListaJugadores() {
+        return listaJugadores;
+    }
+    
+    
 
     public CasillaEntity obtenerPrimerElemento() {
         if (valorExtremo1 == -1) {
@@ -476,4 +490,6 @@ public class TableroDominoEntity {
 
         return posibleCasilla;
     }
+    
+    
 }

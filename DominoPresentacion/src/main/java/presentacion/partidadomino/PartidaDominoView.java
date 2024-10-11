@@ -9,10 +9,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import listeners.IPartidaDominoViewListener;
 import presentacion.mediador.IMediador;
 import presentacion.mediador.Mediador;
 
@@ -23,7 +26,7 @@ import presentacion.mediador.Mediador;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoView extends JPanel {
+public class PartidaDominoView extends JPanel implements IPartidaDominoViewListener {
 
     private PartidaDominoModel model; // modelo de PartidaDomino
 
@@ -34,8 +37,8 @@ public class PartidaDominoView extends JPanel {
 
     public PartidaDominoView(PartidaDominoModel model) {
         this.model = model;
-
         cargarComponentes();
+        asignarListeners();
     }
 
     private void cargarComponentes() {
@@ -150,6 +153,15 @@ public class PartidaDominoView extends JPanel {
         if (fondoPantalla != null) {
             g.drawImage(fondoPantalla, 0, 0, getWidth(), getHeight(), this);
         }
+    }
+    
+    private void asignarListeners() {
+        this.model.agregarListenerFichasUsuario(this);
+    }
+
+    @Override
+    public void onListaFichasDominoUsuarioChange() {
+        repintarComponentes();
     }
 
 }

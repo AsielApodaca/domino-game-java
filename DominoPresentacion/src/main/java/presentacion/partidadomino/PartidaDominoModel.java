@@ -10,6 +10,9 @@ import presentacion.mediador.Mediador;
 import presentacion.partidadomino.fichadomino.FichaDominoModel;
 import presentacion.partidadomino.fichadomino.FichaDominoView;
 import contenedorpantallas.IContenidoController;
+import java.awt.event.ActionListener;
+import java.util.Observer;
+import listeners.IPartidaDominoViewListener;
 
 /**
  *
@@ -55,6 +58,8 @@ public class PartidaDominoModel{
     private List<FichaDominoDTO> listaFichasJugadorLocal; // Lista de fichas del jugador del disposivo
     //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
 
+    private List<IPartidaDominoViewListener> listenersFichasUsuario ;
+    
     public PartidaDominoModel() {
         this.fondoDePantalla = "/multimedia/FondoPartida.jpg";
         this.escala = 1.0f;
@@ -76,6 +81,13 @@ public class PartidaDominoModel{
         this.numeroDeJugadores = 1; // temporal
         this.listaFichasJugadorLocal = new ArrayList<>();
         mediador = new Mediador();
+        listenersFichasUsuario = new ArrayList() ;
+    }
+    
+    public void notificarFichasJugadorChange (){
+        listenersFichasUsuario.forEach(listener -> {
+            listener.onListaFichasDominoUsuarioChange();
+        });
     }
 
     public FichaDominoView crearFichasLocales() {
@@ -101,6 +113,7 @@ public class PartidaDominoModel{
 
     public void setListaFichasJugadorLocal(List<FichaDominoDTO> listaFichasJugadorLocal) {
         this.listaFichasJugadorLocal = listaFichasJugadorLocal;
+        notificarFichasJugadorChange();
     }
 
     public int getAlturaMinimaContenedorFichasJugadorLocal() {
@@ -183,5 +196,16 @@ public class PartidaDominoModel{
         return listaFichasJugadorLocal;
     }
 
+    public List<IPartidaDominoViewListener> getListenersFichasUsuario() {
+        return listenersFichasUsuario;
+    }
+
+    public void setListenersFichasUsuario(List<IPartidaDominoViewListener> listenersFichasUsuario) {
+        this.listenersFichasUsuario = listenersFichasUsuario;
+    }
+    
+    public void agregarListenerFichasUsuario(IPartidaDominoViewListener listener) {
+        this.listenersFichasUsuario.add(listener) ;
+    }
 
 }

@@ -13,7 +13,10 @@ import presentacion.partidadomino.PartidaDominoView;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class FachadaPartidaDomino implements IFachadaPartidaDomino{
 
@@ -46,5 +49,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
     public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino) {
         model.setListaFichasJugadorLocal(listaFichasDomino);
     }
+
+
     
 }
