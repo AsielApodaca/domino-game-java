@@ -46,7 +46,6 @@ public class TableroDominoLogica implements ITableroDominoLogica {
         this.tableroDominoEntity = new TableroDominoEntity();
         this.fichasRepartidasDTO = new ArrayList<>();
         this.adapterFichaDomino = new AdapterFichaDomino();
-        this.jugadorDominoDTO = new JugadorDominoDTO();
         this.jugadoresEntity = tableroDominoEntity.getListaJugadores();
         crearPozo();
         controladorFicha = new ControladorFichasLogica(pozo);

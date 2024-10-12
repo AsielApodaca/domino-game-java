@@ -40,14 +40,23 @@ public class AdapterFichaDomino implements IAdapterFichaDomino {
         );
     }
     
+    @Override
     public List<FichaDominoDTO> adaptListToDTO(List<FichaDominoEntity> listaFichasEntity){
         List<FichaDominoDTO> listaFichasDominoDTO = new ArrayList<>();
          for (FichaDominoEntity fichaEntity : listaFichasEntity) {
-                    FichaDominoDTO fichaDTO = new FichaDominoDTO(fichaEntity.getExtremo1(), fichaEntity.getExtremo2());
-                    // Agregar tambien a fichasRepartidasDTO
-                    listaFichasDominoDTO.add(fichaDTO);
-                }
+               listaFichasDominoDTO.add(adaptToDTO(fichaEntity));
+         }
          return listaFichasDominoDTO;
+    }
+
+    @Override
+    public List<FichaDominoEntity> adaptListToEntity(List<FichaDominoDTO> listaFichasDTO) {
+        List<FichaDominoEntity> listaFichasDominoEntity = new ArrayList<>() ;
+        for(FichaDominoDTO fichaDTO : listaFichasDTO) {
+            listaFichasDominoEntity.add(adaptToEntity(fichaDTO)) ;
+        }
+        
+        return listaFichasDominoEntity ;
     }
 
 }

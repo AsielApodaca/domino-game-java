@@ -78,7 +78,7 @@ public class MapeadorDTO {
     }
 
     private JugadorDominoDTO convertirEntityADTO(JugadorDominoEntity jugadorEntity) {
-        JugadorDominoDTO jugadorDominoDTO = new JugadorDominoDTO();
+        JugadorDominoDTO jugadorDominoDTO = new JugadorDominoDTO(jugadorEntity.getNombre(), jugadorEntity.getIcon());
         for (FichaDominoEntity fichaEntity : jugadorEntity.getListaFichasJugador()) {
             FichaDominoDTO fichaDTO = new FichaDominoDTO(fichaEntity.getExtremo1(), fichaEntity.getExtremo2());
             jugadorDominoDTO.getListaFichasJugador().add(fichaDTO);
