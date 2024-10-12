@@ -43,5 +43,13 @@ public class FichaDominoController {
         return view;
     }
     
+    public void addMouseListenerToView() {
+        this.view.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mediador.notificarFichaSeleccionada(fichaDominoModel.getFichaDominoDTO());
+            }
+        });
+    }
     
 }
