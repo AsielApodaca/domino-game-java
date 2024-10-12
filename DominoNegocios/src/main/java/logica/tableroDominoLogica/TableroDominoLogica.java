@@ -17,6 +17,7 @@ import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
+import listeners.ITableroDominoLogicaListener;
 import logica.controladorFichas.ControladorFichasLogica;
 import logica.controladorFichas.IControladorFichasLogica;
 import presentacion.partidadomino.fachada.FachadaPartidaDomino;
@@ -29,7 +30,7 @@ import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class TableroDominoLogica implements ITableroDominoLogica {
+public class TableroDominoLogica implements ITableroDominoLogica, ITableroDominoLogicaListener {
 
     private IFachadaPartidaDomino fachadaPartidaDomino;
     private IControladorFichasLogica controladorFicha;
@@ -113,5 +114,10 @@ public class TableroDominoLogica implements ITableroDominoLogica {
 //        fachadaPartidaDomino.actualizarFichasJugadorLocal(listaFichas);
 //
 //    }
+
+    @Override
+    public void onFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
+        this.tableroDominoEntity.setFichaSeleccionada(this.adapterFichaDomino.adaptToEntity(fichaSeleccionada));
+    }
 
 }

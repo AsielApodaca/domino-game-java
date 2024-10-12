@@ -34,6 +34,7 @@ public class TableroDominoEntity {
     
     private FichaDominoEntity fichaSeleccionada;
     private List<JugadorDominoEntity> listaJugadores;
+    
 
     public TableroDominoEntity() {
         iniciarCasillaMula();
@@ -98,6 +99,14 @@ public class TableroDominoEntity {
 
     public List<JugadorDominoEntity> getListaJugadores() {
         return listaJugadores;
+    }
+
+    public FichaDominoEntity getFichaSeleccionada() {
+        return fichaSeleccionada;
+    }
+
+    public void setFichaSeleccionada(FichaDominoEntity fichaSeleccionada) {
+        this.fichaSeleccionada = fichaSeleccionada;
     }
     
     

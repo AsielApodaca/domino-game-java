@@ -4,10 +4,14 @@
  */
 package listeners;
 
+import dominodto.FichaDominoDTO;
+
 /**
  *
  * @author olive
  */
 public interface ITableroDominoLogicaListener {
+    
+    void onFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada);
     
 }

@@ -2,6 +2,9 @@ package presentacion.partidadomino.fichadomino;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -9,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import listeners.ITableroDominoLogicaListener;
 
 /**
  *
@@ -63,7 +67,4 @@ public class FichaDominoView extends JPanel {
         revalidate();
         repaint();
     }
-    
-    
-
 }

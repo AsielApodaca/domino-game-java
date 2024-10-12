@@ -11,8 +11,8 @@ import presentacion.partidadomino.fichadomino.FichaDominoModel;
 import presentacion.partidadomino.fichadomino.FichaDominoView;
 import contenedorpantallas.IContenidoController;
 import java.awt.event.ActionListener;
-import java.util.Observer;
 import listeners.IPartidaDominoViewListener;
+import listeners.ITableroDominoLogicaListener;
 
 /**
  *
@@ -58,7 +58,9 @@ public class PartidaDominoModel{
     private List<FichaDominoDTO> listaFichasJugadorLocal; // Lista de fichas del jugador del disposivo
     //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
 
-    private List<IPartidaDominoViewListener> listenersFichasUsuario ;
+    private List<IPartidaDominoViewListener> listenersView ;
+    private List<ITableroDominoLogicaListener> listenersFichaDominoView ;
+    private FichaDominoDTO fichaSeleccionada ;
     
     public PartidaDominoModel() {
         this.fondoDePantalla = "/multimedia/FondoPartida.jpg";
@@ -81,12 +83,18 @@ public class PartidaDominoModel{
         this.numeroDeJugadores = 1; // temporal
         this.listaFichasJugadorLocal = new ArrayList<>();
         mediador = new Mediador();
-        listenersFichasUsuario = new ArrayList() ;
+        listenersView = new ArrayList() ;
     }
     
     public void notificarFichasJugadorChange (){
-        listenersFichasUsuario.forEach(listener -> {
+        listenersView.forEach(listener -> {
             listener.onListaFichasDominoUsuarioChange();
+        });
+    }
+    
+    public void notificarFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
+        listenersFichaDominoView.forEach(listener -> {
+            listener.onFichaSeleccionadaChange(fichaSeleccionada);
         });
     }
 
@@ -180,16 +188,37 @@ public class PartidaDominoModel{
         return listaFichasJugadorLocal;
     }
 
-    public List<IPartidaDominoViewListener> getListenersFichasUsuario() {
-        return listenersFichasUsuario;
+    public List<IPartidaDominoViewListener> getListenersView() {
+        return listenersView;
     }
 
-    public void setListenersFichasUsuario(List<IPartidaDominoViewListener> listenersFichasUsuario) {
-        this.listenersFichasUsuario = listenersFichasUsuario;
+    public void setListenersView(List<IPartidaDominoViewListener> listenersFichasUsuario) {
+        this.listenersView = listenersFichasUsuario;
     }
     
-    public void agregarListenerFichasUsuario(IPartidaDominoViewListener listener) {
-        this.listenersFichasUsuario.add(listener) ;
+    public void agregarListenerView(IPartidaDominoViewListener listener) {
+        this.listenersView.add(listener) ;
     }
 
+    public FichaDominoDTO getFichaSeleccionada() {
+        return fichaSeleccionada;
+    }
+
+    public void setFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
+        notificarFichaSeleccionadaChange(fichaSeleccionada);
+        this.fichaSeleccionada = fichaSeleccionada;
+    }
+
+    public List<ITableroDominoLogicaListener> getListenersFichaDominoView() {
+        return listenersFichaDominoView;
+    }
+
+    public void setListenersFichaDominoView(List<ITableroDominoLogicaListener> listenersFichaDominoView) {
+        this.listenersFichaDominoView = listenersFichaDominoView;
+    }
+
+    public void agregarListenerFichaDominoView(ITableroDominoLogicaListener fichaDominoView) {
+        this.listenersFichaDominoView.add(fichaDominoView) ;
+    }
+    
 }

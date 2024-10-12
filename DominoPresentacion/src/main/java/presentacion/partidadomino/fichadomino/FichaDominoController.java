@@ -5,10 +5,13 @@
 package presentacion.partidadomino.fichadomino;
 
 import dominodto.FichaDominoDTO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import presentacion.mediador.IMediador;
 
 /**
  *
@@ -20,11 +23,13 @@ import java.util.logging.Logger;
 public class FichaDominoController {
     private FichaDominoModel fichaDominoModel;
     private FichaDominoView view;
+    private IMediador mediador;
 
     public FichaDominoController() {
         this.fichaDominoModel = new FichaDominoModel();
         try {
             this.view = new FichaDominoView(fichaDominoModel);
+            addMouseListenerToView();
         } catch (IOException ex) {
             Logger.getLogger(FichaDominoController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,4 +46,13 @@ public class FichaDominoController {
         
     }
     
+    public void addMouseListenerToView() {
+        this.view.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mediador.notificarFichaSeleccionada(fichaDominoModel.getFichaDominoDTO());
+            }
+        });
+    }
+
 }
