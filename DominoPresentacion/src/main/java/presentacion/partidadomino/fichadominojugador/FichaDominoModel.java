@@ -18,12 +18,11 @@ import java.util.List;
  */
 public class FichaDominoModel {
 
-    private String imagenMargenDomino;
+    private final String imagenMargenDomino = "/multimedia/DominoFondo.png";
     // Mayormente usado para panel de fichas del jugador local
     private FichaDominoDTO fichaDominoDTO; // Ficha que representa el panel
-    private int anchoFicha; // ancho del panel de la ficha
-    private int alturaFicha; // altura del panel de la ficha    
-    private List<FichaDominoView> observers;
+    private final int anchoFicha = 30; // ancho del panel de la ficha
+    private final int alturaFicha = 60; // altura del panel de la ficha    
 
     // Mayormente usado para fichas colocadas en el tablero
     private CasillaDTO casillaDTO; // Almacena coordenadas y ficha asignada
@@ -43,62 +42,52 @@ public class FichaDominoModel {
     private boolean seleccionada; // Si la ficha está seleccionada
     private boolean colocada; // Si la ficha ha sido colocada en el tablero;
 
-    public FichaDominoModel() {
-    }
-
+    private float escala; // Escala
     
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) { // Se instancia cuando la ficha es para la mano del jugador local
         this.fichaDominoDTO = fichaDominoDTO;
-        this.observers = new ArrayList<>();
-        iniciarFichaJugadorLocal();
+    }
+
+    public float getEscala() {
+        return escala;
+    }
+
+    public void setEscala(float escala) {
+        this.escala = escala;
     }
     
-
-    public FichaDominoModel(CasillaDTO casillaDTO) { // Se instancia cuando la ficha es para colocar en el tablero
-        this.casillaDTO = casillaDTO;
-        iniciarFichaParaTablero();
-    }
-    
-   
-
-    public void addObserver(FichaDominoView view) {
-        observers.add(view);
-    }
-   
-
-
-    private void iniciarFichaJugadorLocal() {
-        this.anchoFicha = 30;
-        this.alturaFicha = 60;
-        this.rotacion = 0;
-        
-        this.valorExtremo1 = this.fichaDominoDTO.getValorExtremo1();
-        this.valorExtremo2 = this.fichaDominoDTO.getValorExtremo2();
-            }
-
-    private void iniciarFichaParaTablero() {
-        this.fichaDominoDTO = this.casillaDTO.getFichaDominoDTO();
-        this.rotacion = this.casillaDTO.getRotacion();
-        
-        switch(this.rotacion) { // Asigna orientación de la ficha
-            case 0: // Horizontal
-                this.anchoFicha = 30;
-                this.alturaFicha = 15;
-            case 90: // Vertical
-                this.anchoFicha = 15;
-                this.alturaFicha = 30;
-                voltearExtremosFicha();
-                break;
-            case 180: // Horizontal
-                this.anchoFicha = 30;
-                this.alturaFicha = 15;
-                voltearExtremosFicha();
-            case 270: // Vertical
-                this.anchoFicha = 15;
-                this.alturaFicha = 30;
-        }
-                
-    }
+//    private void iniciarFichaJugadorLocal() {
+//        this.anchoFicha = 30;
+//        this.alturaFicha = 60;
+//        this.rotacion = 0;
+//        
+//        this.valorExtremo1 = this.fichaDominoDTO.getValorExtremo1();
+//        this.valorExtremo2 = this.fichaDominoDTO.getValorExtremo2();
+//            }
+//
+//    private void iniciarFichaParaTablero() {
+//        this.fichaDominoDTO = this.casillaDTO.getFichaDominoDTO();
+//        this.rotacion = this.casillaDTO.getRotacion();
+//        
+//        switch(this.rotacion) { // Asigna orientación de la ficha
+//            case 0: // Horizontal
+//                this.anchoFicha = 30;
+//                this.alturaFicha = 15;
+//            case 90: // Vertical
+//                this.anchoFicha = 15;
+//                this.alturaFicha = 30;
+//                voltearExtremosFicha();
+//                break;
+//            case 180: // Horizontal
+//                this.anchoFicha = 30;
+//                this.alturaFicha = 15;
+//                voltearExtremosFicha();
+//            case 270: // Vertical
+//                this.anchoFicha = 15;
+//                this.alturaFicha = 30;
+//        }
+//                
+//    }
     
     private void voltearExtremosFicha() {
         int valorExtremo1Copia = this.valorExtremo1;
@@ -122,22 +111,8 @@ public class FichaDominoModel {
         return anchoFicha;
     }
 
-    public void setAnchoFicha(int anchoFicha) {
-        this.anchoFicha = anchoFicha;
-    }
-
     public int getAlturaFicha() {
         return alturaFicha;
-    }
-
-    public void setAlturaFicha(int alturaFicha) {
-        this.alturaFicha = alturaFicha;
-    }
-
-    public void setDimensiones(int ancho, int alto) {
-        this.anchoFicha = ancho;
-        this.alturaFicha = alto;
-        notifyObservers();
     }
 
     public int getValorExtremo1() {
@@ -156,22 +131,12 @@ public class FichaDominoModel {
         this.valorExtremo2 = valorExtremo2;
     }
 
-    public void setImagenMargenDomino(String imagenMargenDomino) {
-        this.imagenMargenDomino = imagenMargenDomino;
-    }
-
     public void setImgExtremo1(String imgExtremo1) {
         this.imgExtremo1 = imgExtremo1;
     }
 
     public void setImgExtremo2(String imgExtremo2) {
         this.imgExtremo2 = imgExtremo2;
-    }
-
-    public void notifyObservers() {
-        for (FichaDominoView view : observers) {
-            view.actualizar();
-        }
     }
 
     public FichaDominoDTO getFichaDominoDTO() {

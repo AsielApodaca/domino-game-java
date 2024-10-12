@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface IFachadaPartidaDomino {
     void iniciarPantalla();
-    void mostrarFichas(List<FichaDominoDTO> fichasJugador);
+    void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador);
     public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino);
     public void colocarFichaTablero(CasillaDTO casillaDTO);
     public void mostrarCasillaParaColocarFicha(CasillaDTO casillaDTO);

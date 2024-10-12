@@ -15,5 +15,13 @@ public class JugadorDominoAdmin extends JugadorDominoEntity {
     public JugadorDominoAdmin(String nombre, Icon icon, List<FichaDominoEntity> listaFichasJugador) {
         super(nombre, icon, listaFichasJugador);
     }
+    
+    public JugadorDominoAdmin(JugadorDominoEntity jugadorDominoEntity) {
+        super(
+                jugadorDominoEntity.getNombre(),
+                jugadorDominoEntity.getIcon(),
+                jugadorDominoEntity.getListaFichasJugador()
+        );
+    }
 
 }

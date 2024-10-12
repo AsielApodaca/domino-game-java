@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import presentacion.mediador.IMediador;
+import listeners.IPartidaDominoModelListener;
+import presentacion.mediador.Mediador;
 
 /**
  *
@@ -21,22 +23,17 @@ import presentacion.mediador.IMediador;
  * @author Asiel Apodaca Monge
  */
 public class FichaDominoController {
-    private FichaDominoModel fichaDominoModel;
+    private FichaDominoModel model;
     private FichaDominoView view;
-    private IMediador mediador;
+    private Mediador mediador;
 
-    public FichaDominoController(FichaDominoView view, FichaDominoModel model) {
-        this.fichaDominoModel = new FichaDominoModel();
-        try {
-            this.view = new FichaDominoView(fichaDominoModel);
-            addMouseListenerToView();
-        } catch (IOException ex) {
-            Logger.getLogger(FichaDominoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public FichaDominoController(FichaDominoModel model, FichaDominoView view) {
+        this.model = model;
+        this.view = view;
     }
 
     public FichaDominoModel getFichaDominoModel() {
-        return fichaDominoModel;
+        return model;
     }
 
     public FichaDominoView getView() {
@@ -47,9 +44,14 @@ public class FichaDominoController {
         this.view.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                mediador.notificarFichaSeleccionada(fichaDominoModel.getFichaDominoDTO());
+                mediador.notificarFichaSeleccionada(model.getFichaDominoDTO());
             }
         });
+    }
+
+    public void actualizarEscala(float escala) {
+        model.setEscala(escala);
+        view.repintar();
     }
     
 }

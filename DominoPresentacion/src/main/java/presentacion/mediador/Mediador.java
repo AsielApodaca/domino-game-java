@@ -8,8 +8,10 @@ package presentacion.mediador;
 import dominodto.FichaDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
+import presentacion.partidadomino.PartidaDominoController;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.PartidaDominoView;
+import presentacion.partidadomino.fichadominojugador.FichaDominoController;
 import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
 
@@ -22,22 +24,27 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoView;
  */
 public class Mediador implements IMediador {
 
-    private PartidaDominoModel partidaDominoModel;
-    private FichaDominoModel fichaModel;
-    private List<FichaDominoModel> fichasModels;
-    private PartidaDominoView partidaDominoView;
+    private static Mediador instancia; // Instancia única de si mismo
+    private PartidaDominoController partidaDominoController; // MVC con el que se comunican las fichas
+    private List<FichaDominoController> listaFichasJugadorLocal;
     
 
-    public Mediador() {
-        this.fichasModels = new ArrayList<>();
-        this.fichaModel = new FichaDominoModel();
-
+    private Mediador() {
+    }
+    
+    public static Mediador getInstance() {
+        if(instancia == null) {
+            instancia = new Mediador();
+        }
+        return (Mediador) instancia;
     }
     
     @Override
-    public void crearFichasJugadorLocalView() {
+    public void crearFichasJugadorLocalView() { // no lo use
        
     }
+    
+    
    
 
     
@@ -54,18 +61,40 @@ public class Mediador implements IMediador {
 //    }
 
     @Override
-    public void redimencionarFichasJugadorLocal() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void redimencionarFichasJugadorLocal(float escala) {
+        if(listaFichasJugadorLocal != null)
+        for(FichaDominoController fichaController : listaFichasJugadorLocal) {
+            fichaController.actualizarEscala(escala);
+        }
     }
+    
 
     @Override
     public void notificarFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
-        partidaDominoModel.setFichaSeleccionada(fichaSeleccionada);
+        //partidaDominoModel.setFichaSeleccionada(fichaSeleccionada);
     }
 
     @Override
     public void notificarColocarFicha() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    public PartidaDominoController getPartidaDominoController() {
+        return partidaDominoController;
+    }
+
+    public void setPartidaDominoController(PartidaDominoController partidaDominoController) {
+        this.partidaDominoController = partidaDominoController;
+    }
+
+    public List<FichaDominoController> getListaFichasJugadorLocal() {
+        return listaFichasJugadorLocal;
+    }
+
+    public void setListaFichasJugadorLocal(List<FichaDominoController> listaFichasJugadorLocal) {
+        this.listaFichasJugadorLocal = listaFichasJugadorLocal;
+    }
+    
+    
 
 }

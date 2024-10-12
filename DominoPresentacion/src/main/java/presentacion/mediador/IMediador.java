@@ -5,8 +5,6 @@
 package presentacion.mediador;
 
 import dominodto.FichaDominoDTO;
-import java.util.List;
-import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 
 /**
  *
@@ -17,7 +15,7 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
  */
 public interface IMediador {
     void crearFichasJugadorLocalView();
-    void redimencionarFichasJugadorLocal();
+    void redimencionarFichasJugadorLocal(float escala);
     void notificarFichaSeleccionada(FichaDominoDTO fichaSeleccionada) ;
     void notificarColocarFicha() ;
 

@@ -11,8 +11,8 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
 import contenedorpantallas.IContenidoController;
 import java.awt.event.ActionListener;
-import listeners.IPartidaDominoViewListener;
 import listeners.ITableroDominoLogicaListener;
+import listeners.IPartidaDominoModelListener;
 
 /**
  *
@@ -24,7 +24,6 @@ import listeners.ITableroDominoLogicaListener;
 public class PartidaDominoModel{
 
     private float escala; // Escala de view, afecta el tamaño de todos los componentes para adaptarse al Frame
-    private IMediador mediador;
     // media
     private String fondoDePantalla;
 
@@ -56,9 +55,10 @@ public class PartidaDominoModel{
     // Partida
     private TableroDominoDTO tableroDominoDTO; // tablero con posiciones de las fichas
     private List<FichaDominoDTO> listaFichasJugadorLocal; // Lista de fichas del jugador del disposivo
+    private List<FichaDominoView> listaPanelesFichasJugadorLocal; // Lista de panales de fichas del jugador del dispositivo
     //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
 
-    private List<IPartidaDominoViewListener> listenersView ;
+    private List<IPartidaDominoModelListener> listeners ;
     private List<ITableroDominoLogicaListener> listenersFichaDominoView ;
     private FichaDominoDTO fichaSeleccionada ;
     
@@ -82,12 +82,12 @@ public class PartidaDominoModel{
         this.altoFichaTablero = 30;
         this.numeroDeJugadores = 1; // temporal
         this.listaFichasJugadorLocal = new ArrayList<>();
-        mediador = new Mediador();
-        listenersView = new ArrayList() ;
+        this.listaFichasJugadorLocal = new ArrayList<>();
+        listeners = new ArrayList() ;
     }
     
     public void notificarFichasJugadorChange (){
-        listenersView.forEach(listener -> {
+        listeners.forEach(listener -> {
             listener.onListaFichasDominoUsuarioChange();
         });
     }
@@ -98,7 +98,13 @@ public class PartidaDominoModel{
         });
     }
 
-   
+    public List<FichaDominoView> getListaPanelesFichasJugadorLocal() {
+        return listaPanelesFichasJugadorLocal;
+    }
+
+    public void setListaPanelesFichasJugadorLocal(List<FichaDominoView> listaPanelesFichasJugadorLocal) {
+        this.listaPanelesFichasJugadorLocal = listaPanelesFichasJugadorLocal;
+    }
 
     public void setListaFichasJugadorLocal(List<FichaDominoDTO> listaFichasJugadorLocal) {
         this.listaFichasJugadorLocal = listaFichasJugadorLocal;
@@ -185,16 +191,16 @@ public class PartidaDominoModel{
         return listaFichasJugadorLocal;
     }
 
-    public List<IPartidaDominoViewListener> getListenersView() {
-        return listenersView;
+    public List<IPartidaDominoModelListener> getListenersView() {
+        return listeners;
     }
 
-    public void setListenersView(List<IPartidaDominoViewListener> listenersFichasUsuario) {
-        this.listenersView = listenersFichasUsuario;
+    public void setListenersView(List<IPartidaDominoModelListener> listenersFichasUsuario) {
+        this.listeners= listenersFichasUsuario;
     }
     
-    public void agregarListenerView(IPartidaDominoViewListener listener) {
-        this.listenersView.add(listener) ;
+    public void agregarListener(IPartidaDominoModelListener listener) {
+        this.listeners.add(listener) ;
     }
 
     public FichaDominoDTO getFichaSeleccionada() {

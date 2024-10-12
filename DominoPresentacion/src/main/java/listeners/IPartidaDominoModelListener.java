@@ -11,7 +11,7 @@ package listeners;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public interface IPartidaDominoViewListener {
+public interface IPartidaDominoModelListener {
     
     void onListaFichasDominoUsuarioChange();
     
