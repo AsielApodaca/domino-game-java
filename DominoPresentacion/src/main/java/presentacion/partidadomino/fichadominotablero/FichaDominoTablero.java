@@ -24,7 +24,7 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 public class FichaDominoTablero extends JPanel{
     
     private CasillaDTO casillaDTO;
-    private final String imagenMargenDomino = "/multimedia/DominoFondo.png";
+    private final String imagenMargenDomino = "/multimedia/DominoTableroFondo.png";
     private int valorExtremo1;
     private int valorExtremo2;
     private String imgExtremo1; 
