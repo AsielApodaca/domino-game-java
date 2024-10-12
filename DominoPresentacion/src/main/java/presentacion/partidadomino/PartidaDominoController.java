@@ -5,6 +5,9 @@
 package presentacion.partidadomino;
 
 import contenedorpantallas.IContenidoController;
+import dominodto.CasillaDTO;
+import dominodto.FichaDominoDTO;
+import java.util.List;
 import javax.swing.JPanel;
 
 /**
@@ -25,6 +28,18 @@ public class PartidaDominoController implements IContenidoController{
         
         view.repintarComponentes();
 //        view.actualizarListaFichasJugadorLocal();
+    }
+
+    public void colocarFichaTablero(CasillaDTO casillaDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void mostrarCasillaParaColocarFicha(CasillaDTO casillaDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public void mostrarFichas(List<FichaDominoDTO> fichasJugador){
+        model.setListaFichasJugadorLocal(fichasJugador);
     }
     
     public void showView() {

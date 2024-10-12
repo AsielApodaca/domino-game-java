@@ -24,28 +24,23 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
 
     private final SingletonContenedorContenido sgContenedorContenido = SingletonContenedorContenido.getInstance();
     private PartidaDominoController partidaDominoController;
+    private PartidaDominoModel partidaDominoModel;
+    private PartidaDominoView partidaDominoView;
     
 
     public FachadaPartidaDomino() {
-        this.fichaDominoModel = new FichaDominoModel();
     }
     
     /**
      *
      * @param fichasJugador
      */
-    @Override
-     public void mostrarFichas(List<FichaDominoDTO> fichasJugador){
-        
-    }
-     
-    
     
     @Override
     public void iniciarPantalla() {
-        this.partidoDominoModel = new PartidaDominoModel();
-        this.partidaDominoView = new PartidaDominoView(partidoDominoModel);
-        this.partidaDominoController = new PartidaDominoController(partidoDominoModel, partidaDominoView);
+        this.partidaDominoModel = new PartidaDominoModel();
+        this.partidaDominoView = new PartidaDominoView(partidaDominoModel);
+        this.partidaDominoController = new PartidaDominoController(partidaDominoModel, partidaDominoView);
         sgContenedorContenido.setContenidoController(partidaDominoController);
         sgContenedorContenido.mostrarPantalla();
         this.partidaDominoController.showView();
@@ -54,19 +49,21 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
 
     @Override
     public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino) {
-        partidoDominoModel.setListaFichasJugadorLocal(listaFichasDomino);
+        partidaDominoModel.setListaFichasJugadorLocal(listaFichasDomino);
+    }
+    
+    @Override
+    public void mostrarFichas(List<FichaDominoDTO> fichasJugador) {
+        partidaDominoController.mostrarFichas(fichasJugador);
     }
 
     @Override
     public void colocarFichaTablero(CasillaDTO casillaDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        partidaDominoController.colocarFichaTablero(casillaDTO);
     }
 
     @Override
     public void mostrarCasillaParaColocarFicha(CasillaDTO casillaDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        partidaDominoController.mostrarCasillaParaColocarFicha(casillaDTO);
     }
-
-
-    
 }

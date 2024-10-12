@@ -100,7 +100,7 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
 
     private void crearFichasLocales() {
           
-        }
+    }
     
     
 
@@ -109,7 +109,7 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
         int altura = (int) (model.getAlturaPantalla() * model.getEscala());
         setPreferredSize(new Dimension(ancho, altura));
 
-        repintarContenedorFicha(ancho);
+        repintarContenedorFicha();
         repintarTablero();
 
 //        model.redimencionarFichasJugadorLocal();
@@ -117,7 +117,8 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
         repaint();
     }
 
-    private void repintarContenedorFicha(int ancho) {
+    private void repintarContenedorFicha() {
+        int ancho = (int) (model.getAnchoPantalla() * model.getEscala());
         // Redimencionar y posicionar panelContenedorFichasJugadorLocal
         int anchoContenedorFichasJugadorLocal = (int) (model.getAnchoFichaJugadorLocal()
                 * (model.getListaFichasJugadorLocal().size() + 1)
@@ -135,6 +136,10 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
                 anchoContenedorFichasJugadorLocal,
                 altoContenedorFichasJugadorLocal
         );
+    }
+    
+    private void repintarFichasJugador() {
+        
     }
 
     private void repintarTablero() {
@@ -161,7 +166,8 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
 
     @Override
     public void onListaFichasDominoUsuarioChange() {
-        repintarComponentes();
+        repintarContenedorFicha() ;
+        repintarFichasJugador();
     }
 
 }
