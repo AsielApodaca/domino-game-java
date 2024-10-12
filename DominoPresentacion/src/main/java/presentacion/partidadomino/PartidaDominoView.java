@@ -7,6 +7,7 @@ package presentacion.partidadomino;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -71,6 +72,7 @@ public class PartidaDominoView extends JPanel{
 
         };
         panelContenedorFichasJugadorLocal.setOpaque(false); // Hacer que el panel no sea opaco, para permitir la transparencia
+        panelContenedorFichasJugadorLocal.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Sin espacios entre componentes
 
         //Pintar Tablero
         panelTablero = new JPanel() {
@@ -123,7 +125,7 @@ public class PartidaDominoView extends JPanel{
         int ancho = (int) (model.getAnchoPantalla() * model.getEscala());
         // Redimencionar y posicionar panelContenedorFichasJugadorLocal
         int anchoContenedorFichasJugadorLocal = (int) (model.getAnchoFichaJugadorLocal()
-                * (model.getListaFichasJugadorLocal().size() + 1)
+                * (model.getListaFichasJugadorLocal().size())
                 * model.getEscala());
         int altoContenedorFichasJugadorLocal = (int) (model.getAlturaMinimaContenedorFichasJugadorLocal()
                 * model.getEscala());

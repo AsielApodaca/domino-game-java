@@ -18,6 +18,7 @@ public class FichaDominoView extends JPanel {
     public FichaDominoView(FichaDominoModel model) throws IOException {
         this.model = model;
         setOpaque(false);
+        setLayout(null); // Usar layout null para control total sobre el tamaño y posición
     }
 
     public void cargarComponentes() throws IOException {
@@ -49,18 +50,18 @@ public class FichaDominoView extends JPanel {
         }
 
         // Calcular el tamaño y posición de las imágenes de los extremos
-        int extremoWidth = (int) (width * 0.8);
-        int extremoHeight = (int) (height * 0.4);
+        int extremoWidth = (int) (width * 0.9);
+        int extremoHeight = (int) (height * 0.45);
         int extremoX = (width - extremoWidth) / 2;
 
         // Dibujar el primer extremo en la parte superior
         if (imgExtremo1 != null) {
-            g2d.drawImage(imgExtremo1, extremoX, height / 10, extremoWidth, extremoHeight, this);
+            g2d.drawImage(imgExtremo1, extremoX, height / 20, extremoWidth, extremoHeight, this);
         }
 
         // Dibujar el segundo extremo en la parte inferior
         if (imgExtremo2 != null) {
-            g2d.drawImage(imgExtremo2, extremoX, height / 2 + height / 10, extremoWidth, extremoHeight, this);
+            g2d.drawImage(imgExtremo2, extremoX, height / 2 + height / 20, extremoWidth, extremoHeight, this);
         }
 
         g2d.dispose();
@@ -69,12 +70,15 @@ public class FichaDominoView extends JPanel {
     public void actualizarTamanio() {
         int ancho = (int) (model.getAnchoFicha() * model.getEscala());
         int altura = (int) (model.getAlturaFicha() * model.getEscala());
+        setSize(new Dimension(ancho, altura));
         setPreferredSize(new Dimension(ancho, altura));
-        revalidate();
-        repaint();
+        setMinimumSize(new Dimension(ancho, altura));
+        setMaximumSize(new Dimension(ancho, altura));
     }
 
     public void repintar() {
         actualizarTamanio();
+        revalidate();
+        repaint();
     }
 }
