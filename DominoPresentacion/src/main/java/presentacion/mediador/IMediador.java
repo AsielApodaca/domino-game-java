@@ -18,7 +18,8 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 public interface IMediador {
     void crearFichasJugadorLocalView();
     void redimencionarFichasJugadorLocal();
-
+    void notificarFichaSeleccionada(FichaDominoDTO fichaSeleccionada) ;
+    void notificarColocarFicha() ;
 
 }
 

@@ -154,7 +154,7 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
     }
     
     private void asignarListeners() {
-        this.model.agregarListenerFichasUsuario(this);
+        this.model.agregarListenerView(this);
     }
 
     @Override

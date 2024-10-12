@@ -4,6 +4,8 @@
  */
 package listeners;
 
+import dominodto.FichaDominoDTO;
+
 /**
  *
  * @author Hisamy Cinco Cota
@@ -12,5 +14,7 @@ package listeners;
  * @author Asiel Apodaca Monge
  */
 public interface ITableroDominoLogicaListener {
+    
+    void onFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada);
     
 }

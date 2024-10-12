@@ -5,6 +5,7 @@
 package presentacion.mediador;
 
 
+import dominodto.FichaDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
 import presentacion.partidadomino.PartidaDominoModel;
@@ -21,7 +22,7 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoView;
  */
 public class Mediador implements IMediador {
 
-    private PartidaDominoModel partidaDomino;
+    private PartidaDominoModel partidaDominoModel;
     private FichaDominoModel fichaModel;
     private List<FichaDominoModel> fichasModels;
     private PartidaDominoView partidaDominoView;
@@ -54,6 +55,16 @@ public class Mediador implements IMediador {
 
     @Override
     public void redimencionarFichasJugadorLocal() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void notificarFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
+        partidaDominoModel.setFichaSeleccionada(fichaSeleccionada);
+    }
+
+    @Override
+    public void notificarColocarFicha() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

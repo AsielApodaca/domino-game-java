@@ -5,6 +5,8 @@
 package presentacion.partidadomino.fichadominojugador;
 
 import dominodto.FichaDominoDTO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,11 +23,13 @@ import presentacion.mediador.IMediador;
 public class FichaDominoController {
     private FichaDominoModel fichaDominoModel;
     private FichaDominoView view;
+    private IMediador mediador;
 
     public FichaDominoController(FichaDominoView view, FichaDominoModel model) {
         this.fichaDominoModel = new FichaDominoModel();
         try {
             this.view = new FichaDominoView(fichaDominoModel);
+            addMouseListenerToView();
         } catch (IOException ex) {
             Logger.getLogger(FichaDominoController.class.getName()).log(Level.SEVERE, null, ex);
         }

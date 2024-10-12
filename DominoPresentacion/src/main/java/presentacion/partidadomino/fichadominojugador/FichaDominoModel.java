@@ -174,4 +174,12 @@ public class FichaDominoModel {
         }
     }
 
+    public FichaDominoDTO getFichaDominoDTO() {
+        return fichaDominoDTO;
+    }
+
+    public void setFichaDominoDTO(FichaDominoDTO fichaDominoDTO) {
+        this.fichaDominoDTO = fichaDominoDTO;
+    }
+
 }
