@@ -7,8 +7,10 @@ package presentacion.partidadomino;
 import contenedorpantallas.IContenidoController;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import presentacion.partidadomino.fichadominojugador.FichaDominoView;
 
 /**
  *
@@ -19,12 +21,14 @@ import javax.swing.JPanel;
  */
 public class PartidaDominoController implements IContenidoController{
 
+    private List<FichaDominoView> fichasDominoUsuarioLocal;
     private PartidaDominoModel model;
     private PartidaDominoView view;
 
     public PartidaDominoController(PartidaDominoModel model, PartidaDominoView view) {
         this.model = model;
         this.view = view;
+        this.fichasDominoUsuarioLocal = new ArrayList<>();
         
         view.repintarComponentes();
 //        view.actualizarListaFichasJugadorLocal();
@@ -38,7 +42,7 @@ public class PartidaDominoController implements IContenidoController{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public void mostrarFichas(List<FichaDominoDTO> fichasJugador){
+    public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador){
         model.setListaFichasJugadorLocal(fichasJugador);
     }
     
@@ -55,6 +59,12 @@ public class PartidaDominoController implements IContenidoController{
     @Override
     public JPanel obtenerView() {
         return this.view;
+    }
+    
+     private void repintarFichasJugadorLocal() {
+        for(FichaDominoView ficha:fichasDominoUsuarioLocal ){
+            
+        }
     }
     
 }

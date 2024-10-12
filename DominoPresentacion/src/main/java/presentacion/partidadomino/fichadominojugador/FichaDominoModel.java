@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package presentacion.partidadomino.fichadomino;
+package presentacion.partidadomino.fichadominojugador;
 
 import dominodto.FichaDominoDTO;
 import dominodto.CasillaDTO;
@@ -50,7 +50,6 @@ public class FichaDominoModel {
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) { // Se instancia cuando la ficha es para la mano del jugador local
         this.fichaDominoDTO = fichaDominoDTO;
         this.observers = new ArrayList<>();
-        asignarExtremos(fichaDominoDTO);
         iniciarFichaJugadorLocal();
     }
     
@@ -60,10 +59,7 @@ public class FichaDominoModel {
         iniciarFichaParaTablero();
     }
     
-    public void asignarExtremos(FichaDominoDTO ficha){
-        valorExtremo1 = ficha.getValorExtremo1();
-        valorExtremo2 = ficha.getValorExtremo2();
-    }
+   
 
     public void addObserver(FichaDominoView view) {
         observers.add(view);
@@ -78,9 +74,7 @@ public class FichaDominoModel {
         
         this.valorExtremo1 = this.fichaDominoDTO.getValorExtremo1();
         this.valorExtremo2 = this.fichaDominoDTO.getValorExtremo2();
-        
-        cargarImagenesFicha(this.valorExtremo1, this.valorExtremo2);
-    }
+            }
 
     private void iniciarFichaParaTablero() {
         this.fichaDominoDTO = this.casillaDTO.getFichaDominoDTO();
@@ -103,9 +97,7 @@ public class FichaDominoModel {
                 this.anchoFicha = 15;
                 this.alturaFicha = 30;
         }
-        
-        cargarImagenesFicha(valorExtremo1, valorExtremo2);
-        
+                
     }
     
     private void voltearExtremosFicha() {
@@ -114,12 +106,6 @@ public class FichaDominoModel {
         this.valorExtremo2 = valorExtremo1Copia;
     }
     
-    private void cargarImagenesFicha(int primerValor, int segundoValor) {
-        this.imagenMargenDomino = "/multimedia/DominoFondo.png";
-        this.imgExtremo1 = String.format("/multimedia/Domino%d.png", primerValor);
-        this.imgExtremo2 = String.format("/multimedia/Domino%d.png", segundoValor);
-    }
-
     public String getImagenMargenDomino() {
         return imagenMargenDomino;
     }
@@ -152,6 +138,34 @@ public class FichaDominoModel {
         this.anchoFicha = ancho;
         this.alturaFicha = alto;
         notifyObservers();
+    }
+
+    public int getValorExtremo1() {
+        return valorExtremo1;
+    }
+
+    public int getValorExtremo2() {
+        return valorExtremo2;
+    }
+
+    public void setValorExtremo1(int valorExtremo1) {
+        this.valorExtremo1 = valorExtremo1;
+    }
+
+    public void setValorExtremo2(int valorExtremo2) {
+        this.valorExtremo2 = valorExtremo2;
+    }
+
+    public void setImagenMargenDomino(String imagenMargenDomino) {
+        this.imagenMargenDomino = imagenMargenDomino;
+    }
+
+    public void setImgExtremo1(String imgExtremo1) {
+        this.imgExtremo1 = imgExtremo1;
+    }
+
+    public void setImgExtremo2(String imgExtremo2) {
+        this.imgExtremo2 = imgExtremo2;
     }
 
     public void notifyObservers() {

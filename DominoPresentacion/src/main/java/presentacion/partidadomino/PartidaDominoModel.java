@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import presentacion.mediador.IMediador;
 import presentacion.mediador.Mediador;
-import presentacion.partidadomino.fichadomino.FichaDominoModel;
-import presentacion.partidadomino.fichadomino.FichaDominoView;
+import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
+import presentacion.partidadomino.fichadominojugador.FichaDominoView;
 import contenedorpantallas.IContenidoController;
 import java.awt.event.ActionListener;
 import java.util.Observer;
@@ -90,10 +90,7 @@ public class PartidaDominoModel{
         });
     }
 
-    public void crearFichasLocales() {
-        mediador.crearFichasJugadorLocal();
-//        mediador.redimencionarFichasJugadorLocal();
-    }
+   
 
     public void setListaFichasJugadorLocal(List<FichaDominoDTO> listaFichasJugadorLocal) {
         this.listaFichasJugadorLocal = listaFichasJugadorLocal;

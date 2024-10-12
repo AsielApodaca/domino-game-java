@@ -97,11 +97,6 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
 
         repintarComponentes();
     }
-
-    private void crearFichasLocales() {
-          
-    }
-    
     
 
     public void repintarComponentes() {
@@ -138,9 +133,7 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
         );
     }
     
-    private void repintarFichasJugador() {
-        
-    }
+   
 
     private void repintarTablero() {
         // Redimencionar y posicionar panelTablero
@@ -167,7 +160,6 @@ public class PartidaDominoView extends JPanel implements IPartidaDominoViewListe
     @Override
     public void onListaFichasDominoUsuarioChange() {
         repintarContenedorFicha() ;
-        repintarFichasJugador();
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import presentacion.partidadomino.PartidaDominoController;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.PartidaDominoView;
-import presentacion.partidadomino.fichadomino.FichaDominoModel;
+import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 
 /**
  *
@@ -54,7 +54,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
     
     @Override
     public void mostrarFichas(List<FichaDominoDTO> fichasJugador) {
-        partidaDominoController.mostrarFichas(fichasJugador);
+        partidaDominoController.mostrarFichasJugadorLocal(fichasJugador);
     }
 
     @Override

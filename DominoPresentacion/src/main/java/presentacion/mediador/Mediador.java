@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.PartidaDominoView;
-import presentacion.partidadomino.fichadomino.FichaDominoModel;
-import presentacion.partidadomino.fichadomino.FichaDominoView;
+import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
+import presentacion.partidadomino.fichadominojugador.FichaDominoView;
 
 /**
  *
@@ -34,11 +34,8 @@ public class Mediador implements IMediador {
     }
     
     @Override
-    public void crearFichasJugadorLocal() {
-       for(FichaDominoModel ficha : fichasModels){
-           fichaModel.notifyObservers();
-           
-       }
+    public void crearFichasJugadorLocalView() {
+       
     }
    
 
