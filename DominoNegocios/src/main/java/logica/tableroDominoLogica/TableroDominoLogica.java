@@ -4,6 +4,8 @@
  */
 package logica.tableroDominoLogica;
 
+import adapterEntidades.AdapterFichaDomino;
+import adapterEntidades.IAdapterFichaDomino;
 import dominio.ConfiguracionJuegoEntity;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
@@ -35,12 +37,15 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     private List<FichaDominoDTO> fichasRepartidasDTO;
     private TableroDominoEntity tableroDominoEntity;
     private List<JugadorDominoEntity> jugadoresEntity;
+    private IAdapterFichaDomino adapterFichaDomino;
     private List<JugadorDominoDTO> jugadoresDTO = new ArrayList<>();
+ 
 
     public TableroDominoLogica(ConfiguracionJuegoEntity configuracionEntity) {
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.tableroDominoEntity = new TableroDominoEntity();
         this.fichasRepartidasDTO = new ArrayList<>();
+        this.adapterFichaDomino = new AdapterFichaDomino();
         this.jugadorDominoDTO = new JugadorDominoDTO();
         this.jugadoresEntity = tableroDominoEntity.getListaJugadores();
         crearPozo();
@@ -68,23 +73,19 @@ public class TableroDominoLogica implements ITableroDominoLogica {
                 List<FichaDominoEntity> fichasRepartidasEntity = controladorFicha.repartirFichas(cantidadFichas);
                 jugadorEntity.setListaFichasJugador(fichasRepartidasEntity);
 
-                // Crear un nuevo JugadorDominoDTO y guardar su lista de fichas
-                JugadorDominoDTO jugadorDTO = new JugadorDominoDTO();
-                for (FichaDominoEntity fichaEntity : fichasRepartidasEntity) {
-                    FichaDominoDTO fichaDTO = new FichaDominoDTO(fichaEntity.getExtremo1(), fichaEntity.getExtremo2());
-                    jugadorDTO.getListaFichasJugador().add(fichaDTO);
-
-                    // Agregar tambien a fichasRepartidasDTO
-                    fichasRepartidasDTO.add(fichaDTO);
-                }
-
-                // Agregar el jugadorDTO a la lista de jugadoresDTO
-                jugadoresDTO.add(jugadorDTO);
             }
         } catch (Exception e) {
             e.printStackTrace(); // Mostrar el tipo de excepción y su stack trace
         }
     }
+    private void asignarJugadorLocal(){
+        jugadoresEntity.getFirst();
+        jugadorDominoDTO
+    }          
+    
+    
+    
+            
 
     public void mostrarFichas() {
         fachadaPartidaDomino.mostrarFichas(jugadorDominoDTO.getListaFichasJugador());
