@@ -5,7 +5,9 @@
 package logica.tableroDominoLogica;
 
 import adapterEntidades.AdapterFichaDomino;
+import adapterEntidades.AdapterJugadorDomino;
 import adapterEntidades.IAdapterFichaDomino;
+import adapterEntidades.IAdapterJugadorDomino;
 import dominio.ConfiguracionJuegoEntity;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
@@ -38,26 +40,30 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     private TableroDominoEntity tableroDominoEntity;
     private List<JugadorDominoEntity> jugadoresEntity;
     private IAdapterFichaDomino adapterFichaDomino;
+    private IAdapterJugadorDomino adapterJugadorDomino;
     private List<JugadorDominoDTO> jugadoresDTO = new ArrayList<>();
  
 
     public TableroDominoLogica(ConfiguracionJuegoEntity configuracionEntity) {
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.tableroDominoEntity = new TableroDominoEntity();
+        this.adapterJugadorDomino = new AdapterJugadorDomino();
         this.fichasRepartidasDTO = new ArrayList<>();
         this.adapterFichaDomino = new AdapterFichaDomino();
         this.jugadoresEntity = tableroDominoEntity.getListaJugadores();
         crearPozo();
         controladorFicha = new ControladorFichasLogica(pozo);
         repartirFichasJugador(configuracionEntity.getCantidadFichas());
+        asignarJugadorLocal();
 
     }
 
     @Override
     public void iniciar() {
         crearPresentacionPartida();
-        simularListaFichasDTO();
+//        simularListaFichasDTO();
         mostrarFichas();
+        
         // Se colocará este metodo cuando el mvc ya tenga listeners
     }
 
@@ -77,9 +83,8 @@ public class TableroDominoLogica implements ITableroDominoLogica {
             e.printStackTrace(); // Mostrar el tipo de excepción y su stack trace
         }
     }
-    private void asignarJugadorLocal(){
-        jugadoresEntity.getFirst();
-        jugadorDominoDTO
+    private void asignarJugadorLocal(){    
+        jugadorDominoDTO = adapterJugadorDomino.adaptToDTO(jugadoresEntity.getFirst());
     }          
     
     
@@ -93,20 +98,20 @@ public class TableroDominoLogica implements ITableroDominoLogica {
     private void crearPozo() {
         pozo = new PozoEntity();
     }
-
-    private void simularListaFichasDTO() { // temporal
-        List<FichaDominoDTO> listaFichas = new ArrayList<>();
-
-        listaFichas.add(new FichaDominoDTO(6, 6));
-        listaFichas.add(new FichaDominoDTO(1, 6));
-        listaFichas.add(new FichaDominoDTO(1, 4));
-        listaFichas.add(new FichaDominoDTO(4, 4));
-        listaFichas.add(new FichaDominoDTO(4, 5));
-        listaFichas.add(new FichaDominoDTO(3, 4));
-        listaFichas.add(new FichaDominoDTO(3, 6));
-
-        fachadaPartidaDomino.actualizarFichasJugadorLocal(listaFichas);
-
-    }
+//
+//    private void simularListaFichasDTO() { // temporal
+//        List<FichaDominoDTO> listaFichas = new ArrayList<>();
+//
+//        listaFichas.add(new FichaDominoDTO(6, 6));
+//        listaFichas.add(new FichaDominoDTO(1, 6));
+//        listaFichas.add(new FichaDominoDTO(1, 4));
+//        listaFichas.add(new FichaDominoDTO(4, 4));
+//        listaFichas.add(new FichaDominoDTO(4, 5));
+//        listaFichas.add(new FichaDominoDTO(3, 4));
+//        listaFichas.add(new FichaDominoDTO(3, 6));
+//
+//        fachadaPartidaDomino.actualizarFichasJugadorLocal(listaFichas);
+//
+//    }
 
 }

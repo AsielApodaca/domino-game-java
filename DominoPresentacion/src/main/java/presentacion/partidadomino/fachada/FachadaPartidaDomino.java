@@ -23,14 +23,11 @@ import presentacion.partidadomino.fichadomino.FichaDominoModel;
 public class FachadaPartidaDomino implements IFachadaPartidaDomino{
 
     private final SingletonContenedorContenido sgContenedorContenido = SingletonContenedorContenido.getInstance();
-    private PartidaDominoModel model;
-    private PartidaDominoView view;
-    private PartidaDominoController controller;
-    private FichaDominoModel fichaDominoModel;
+    private PartidaDominoController partidaDominoController;
     
 
     public FachadaPartidaDomino() {
-
+        this.fichaDominoModel = new FichaDominoModel();
     }
     
     /**
@@ -39,25 +36,25 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
      */
     @Override
      public void mostrarFichas(List<FichaDominoDTO> fichasJugador){
-        for(FichaDominoDTO ficha : fichasJugador){
-            fichaDominoModel.asignarExtremos(ficha);
-        }
+        
     }
+     
+    
     
     @Override
     public void iniciarPantalla() {
-        this.model = new PartidaDominoModel();
-        this.view = new PartidaDominoView(model);
-        this.controller = new PartidaDominoController(model, view);
-        sgContenedorContenido.setContenidoController(controller);
+        this.partidoDominoModel = new PartidaDominoModel();
+        this.partidaDominoView = new PartidaDominoView(partidoDominoModel);
+        this.partidaDominoController = new PartidaDominoController(partidoDominoModel, partidaDominoView);
+        sgContenedorContenido.setContenidoController(partidaDominoController);
         sgContenedorContenido.mostrarPantalla();
-        this.controller.showView();
+        this.partidaDominoController.showView();
         
     }
 
     @Override
     public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino) {
-        model.setListaFichasJugadorLocal(listaFichasDomino);
+        partidoDominoModel.setListaFichasJugadorLocal(listaFichasDomino);
     }
 
     @Override
