@@ -109,7 +109,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         listaFichas.add(new FichaDominoDTO(4, 4));
         listaFichas.add(new FichaDominoDTO(4, 5));
         listaFichas.add(new FichaDominoDTO(3, 4));
-        listaFichas.add(new FichaDominoDTO(3, 6));
+        listaFichas.add(new FichaDominoDTO(3, 0));
 
         fachadaPartidaDomino.mostrarFichasJugadorLocal(listaFichas);
 
