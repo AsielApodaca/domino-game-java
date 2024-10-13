@@ -24,8 +24,7 @@ public class ControladorTurno implements IControladorTurno {
     private boolean turnosAsignados;
     private FichaDominoEntity fichaMulaMasAlta;
 
-    public ControladorTurno(List<JugadorDominoEntity> jugadores) {
-        this.jugadores = jugadores;
+    public ControladorTurno() {
         this.jugadorActualIndex = 0;
         this.turnosAsignados = false; 
         this.fichaMulaMasAlta = null;
@@ -42,7 +41,7 @@ public class ControladorTurno implements IControladorTurno {
      * El proceso de asignarTurno solo debe ocurrir una sola vez
      */
     @Override
-    public void asignarTurno() {
+    public void asignarTurnos() {
         if (turnosAsignados) {
             throw new IllegalStateException("Los turnos ya han sido asignados");
         }
@@ -142,4 +141,10 @@ public class ControladorTurno implements IControladorTurno {
         }
         return jugadorConMulaMasAlta;
     }
+
+    public void setJugadores(List<JugadorDominoEntity> jugadores) {
+        this.jugadores = jugadores;
+    }
+    
+    
 }

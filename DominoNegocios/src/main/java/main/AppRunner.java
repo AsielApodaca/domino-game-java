@@ -2,6 +2,7 @@ package main;
 
 import dominio.ConfiguracionJuegoEntity;
 import dominio.JugadorDominoEntity;
+import dominio.SalaEntity;
 import java.util.ArrayList;
 import java.util.List;
 import logica.contenedorpantallas.ContenedorPantallasLogica;
@@ -27,13 +28,16 @@ public class AppRunner {
         IContenedorPantallasLogica contenedorPantallasLogica = new ContenedorPantallasLogica();
         contenedorPantallasLogica.iniciarContenedorDePantallas();
        
+        // Sala simulada
+        SalaEntity salaEntity = new SalaEntity();
+        ConfiguracionJuegoEntity configuracionDeSala = new ConfiguracionJuegoEntity();
+        configuracionDeSala.setFichasPorJugador(7);
+        salaEntity.setConfiguracionPartida(configuracionDeSala);
         
-        
-        ConfiguracionJuegoEntity configuracionJuegoEntity = new ConfiguracionJuegoEntity(5);
         // Inicia los procesos del tablero de domino
-        ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica(configuracionJuegoEntity);
+        ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica(salaEntity);
         tableroDominoLogica.iniciar();
-
+        
 //        // Paso 1: Crear el pozo y el controlador de fichas
 //        PozoEntity pozo = new PozoEntity();
 //        ControladorFichasLogica controladorFichas = new ControladorFichasLogica(pozo);

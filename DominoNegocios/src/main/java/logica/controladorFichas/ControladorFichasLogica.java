@@ -21,8 +21,7 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
 
     private PozoEntity pozo;
 
-    public ControladorFichasLogica(PozoEntity pozo) {
-        this.pozo = pozo;
+    public ControladorFichasLogica() {
     }
 
     /**
@@ -58,5 +57,11 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
         }
         return pozo.getListaFichas().remove(0);
     }
+
+    public void setPozo(PozoEntity pozo) {
+        this.pozo = pozo;
+    }
+    
+    
 
 }

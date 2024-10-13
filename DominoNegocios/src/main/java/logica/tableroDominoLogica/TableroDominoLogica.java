@@ -21,6 +21,8 @@ import java.util.List;
 import listeners.ITableroDominoLogicaListener;
 import logica.controladorFichas.ControladorFichasLogica;
 import logica.controladorFichas.IControladorFichasLogica;
+import logica.controladorTurno.ControladorTurno;
+import logica.controladorTurno.IControladorTurno;
 import presentacion.partidadomino.fachada.FachadaPartidaDomino;
 import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
 
@@ -34,36 +36,36 @@ import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
 public class TableroDominoLogica implements ITableroDominoLogica, ITableroDominoLogicaListener {
 
     private IFachadaPartidaDomino fachadaPartidaDomino;
-    private IControladorFichasLogica controladorFicha;
-    private PozoEntity pozo;
-    private JugadorDominoDTO jugadorDominoDTO;
+    private IControladorFichasLogica controladorFichas;
+    private IControladorTurno controladorTurno;
+    private JugadorDominoDTO jugadorLocalDTO;
     private SalaEntity salaEntity;
-    private List<FichaDominoDTO> fichasRepartidasDTO;
     private TableroDominoEntity tableroDominoEntity;
-    private List<JugadorDominoEntity> jugadoresEntity;
     private IAdapterFichaDomino adapterFichaDomino;
     private IAdapterJugadorDomino adapterJugadorDomino;
     private List<JugadorDominoDTO> jugadoresDTO = new ArrayList<>();
  
 
-    public TableroDominoLogica(ConfiguracionJuegoEntity configuracionEntity) {
+    public TableroDominoLogica(SalaEntity salaEntity) {
+        this.salaEntity = salaEntity;
+        System.out.println(salaEntity.getConfiguracionPartida().getFichasPorJugador());
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.tableroDominoEntity = new TableroDominoEntity();
         this.adapterJugadorDomino = new AdapterJugadorDomino();
-        this.fichasRepartidasDTO = new ArrayList<>();
         this.adapterFichaDomino = new AdapterFichaDomino();
-        this.jugadoresEntity = salaEntity.getListaJugadores();
-        crearPozo();
-        controladorFicha = new ControladorFichasLogica(pozo);
-        repartirFichasJugador(configuracionEntity.getCantidadFichas());
-        asignarJugadorLocal();
+        this.controladorFichas = new ControladorFichasLogica();
+        this.controladorTurno = new ControladorTurno();
 
     }
 
     @Override
     public void iniciar() {
         crearPresentacionPartida();
-        simularListaFichasDTO();
+        crearPozoDeFichas();
+        repartirFichasAJugadores();
+        asignarTurnosAJugadores();
+        obtenerJugadorLocal();
+        mostrarFichas();
 //        mostrarFichas();
         
         // Se colocará este metodo cuando el mvc ya tenga listeners
@@ -73,32 +75,31 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         fachadaPartidaDomino.iniciarPantalla();
     }
 
-    private void repartirFichasJugador(int cantidadFichas) {
-        try {
-            for (JugadorDominoEntity jugadorEntity : jugadoresEntity) {
-                // Repartir fichas para el jugador actual
-                List<FichaDominoEntity> fichasRepartidasEntity = controladorFicha.repartirFichas(cantidadFichas);
-                jugadorEntity.setListaFichasJugador(fichasRepartidasEntity);
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // Mostrar el tipo de excepción y su stack trace
+    private void repartirFichasAJugadores() {
+        int fichasPorJugador = this.salaEntity.getConfiguracionPartida().getFichasPorJugador();
+        for(JugadorDominoEntity jugadorEntity : salaEntity.getListaJugadores()) {
+            List<FichaDominoEntity> setDeFichas = controladorFichas.repartirFichas(fichasPorJugador);
+            jugadorEntity.setListaFichasJugador(setDeFichas);
         }
     }
-    private void asignarJugadorLocal(){    
-        jugadorDominoDTO = adapterJugadorDomino.adaptToDTO(jugadoresEntity.getFirst());
+    private void obtenerJugadorLocal(){    
+        this.jugadorLocalDTO = adapterJugadorDomino.adaptToDTO(salaEntity.getJugadorLocal());
     }          
     
-    
+    private void asignarTurnosAJugadores() {
+        controladorTurno.setJugadores(salaEntity.getListaJugadores());
+        controladorTurno.asignarTurnos();
+    }
     
             
 
     public void mostrarFichas() {
-        fachadaPartidaDomino.mostrarFichasJugadorLocal(jugadorDominoDTO.getListaFichasJugador());
+        fachadaPartidaDomino.mostrarFichasJugadorLocal(jugadorLocalDTO.getListaFichasJugador());
     }
 
-    private void crearPozo() {
-        pozo = new PozoEntity();
+    private void crearPozoDeFichas() {
+        PozoEntity pozo = new PozoEntity();
+        controladorFichas.setPozo(pozo);
     }
 
     private void simularListaFichasDTO() { // temporal

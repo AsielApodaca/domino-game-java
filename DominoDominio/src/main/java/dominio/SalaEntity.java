@@ -13,14 +13,10 @@ import java.util.List;
  */
 public class SalaEntity {
 
-    // Configuracion de la sala
-    private JugadorDominoAdmin jugadorAdmin; // Creador de la sala
-    private String nombreSala; // Nombre de la sala
-    private int limiteJugadores; // Tamaño máximo de la sala
-    private int fichasPorJugador; // Cantidad de fichas que se distribuye a cada jugador al iniciar la partida
 
-    // Juego
+    private ConfiguracionJuegoEntity configuracionPartida; // Configuración de la partida
     private List<JugadorDominoEntity> listaJugadores; // Lista de jugadores en la sala
+    private JugadorDominoEntity jugadorLocal; // Jugador de este dispositivo
     private PartidaEntity partida; // Partida en juego
 
     public SalaEntity() {
@@ -37,6 +33,41 @@ public class SalaEntity {
         listaJugadores.add(jugador2);
         listaJugadores.add(jugador3);
         listaJugadores.add(jugador4);
+        jugadorLocal = jugador1;
     }
+
+    public ConfiguracionJuegoEntity getConfiguracionPartida() {
+        return configuracionPartida;
+    }
+
+    public void setConfiguracionPartida(ConfiguracionJuegoEntity configuracionPartida) {
+        this.configuracionPartida = configuracionPartida;
+    }
+
+    public List<JugadorDominoEntity> getListaJugadores() {
+        return listaJugadores;
+    }
+
+    public void setListaJugadores(List<JugadorDominoEntity> listaJugadores) {
+        this.listaJugadores = listaJugadores;
+    }
+
+    public JugadorDominoEntity getJugadorLocal() {
+        return jugadorLocal;
+    }
+
+    public void setJugadorLocal(JugadorDominoEntity jugadorLocal) {
+        this.jugadorLocal = jugadorLocal;
+    }
+
+    public PartidaEntity getPartida() {
+        return partida;
+    }
+
+    public void setPartida(PartidaEntity partida) {
+        this.partida = partida;
+    }
+    
+    
 
 }

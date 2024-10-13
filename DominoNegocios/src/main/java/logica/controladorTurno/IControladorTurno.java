@@ -6,6 +6,7 @@ package logica.controladorTurno;
 
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
+import java.util.List;
 
 /**
  *
@@ -22,7 +23,7 @@ public interface IControladorTurno {
      * Otorga el orden basandose en asignar al jugador con mula mas alta en
      * primer lugar y barajando el orden del resto de jugadores.
      */
-    void asignarTurno();
+    void asignarTurnos();
 
     /**
      * Metodo para encontrar al jugador con la ficha mula mas alta
@@ -57,5 +58,7 @@ public interface IControladorTurno {
      * @return La ficha mula más alta
      */
     FichaDominoEntity obtenerFichaMulaMasAlta();
+    
+    void setJugadores(List<JugadorDominoEntity> jugadores);
 
 }

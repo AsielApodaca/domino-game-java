@@ -5,6 +5,7 @@
 package logica.controladorFichas;
 
 import dominio.FichaDominoEntity;
+import dominio.PozoEntity;
 import java.util.List;
 
 /**
@@ -13,4 +14,5 @@ import java.util.List;
  */
 public interface IControladorFichasLogica {
       List<FichaDominoEntity> repartirFichas(int cantidad);   
+      void setPozo(PozoEntity pozoEntity);
 }

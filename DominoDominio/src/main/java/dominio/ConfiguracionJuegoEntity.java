@@ -9,22 +9,49 @@ package dominio;
  * @author hisam
  */
 public class ConfiguracionJuegoEntity {
-    private Integer cantidadFichas;
+    
+    // Configuracion de la sala
+    private JugadorDominoAdmin jugadorAdmin; // Creador de la sala
+    private String nombreSala; // Nombre de la sala
+    private int limiteJugadores; // Tamaño máximo de la sala
+    private int fichasPorJugador; // Cantidad de fichas que se distribuye a cada jugador al iniciar la partida
 
     public ConfiguracionJuegoEntity() {
     }
 
-    public ConfiguracionJuegoEntity(Integer cantidadFichas) {
-        this.cantidadFichas = cantidadFichas;
+    public JugadorDominoAdmin getJugadorAdmin() {
+        return jugadorAdmin;
     }
 
-    public Integer getCantidadFichas() {
-        return cantidadFichas;
+    public void setJugadorAdmin(JugadorDominoAdmin jugadorAdmin) {
+        this.jugadorAdmin = jugadorAdmin;
     }
 
-    public void setCantidadFichas(Integer cantidadFichas) {
-        this.cantidadFichas = cantidadFichas;
+    public String getNombreSala() {
+        return nombreSala;
     }
+
+    public void setNombreSala(String nombreSala) {
+        this.nombreSala = nombreSala;
+    }
+
+    public int getLimiteJugadores() {
+        return limiteJugadores;
+    }
+
+    public void setLimiteJugadores(int limiteJugadores) {
+        this.limiteJugadores = limiteJugadores;
+    }
+
+    public int getFichasPorJugador() {
+        return fichasPorJugador;
+    }
+
+    public void setFichasPorJugador(int fichasPorJugador) {
+        this.fichasPorJugador = fichasPorJugador;
+    }
+
+    
     
     
 }
