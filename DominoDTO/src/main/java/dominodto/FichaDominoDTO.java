@@ -24,5 +24,14 @@ public class FichaDominoDTO {
         return valorExtremo2;
     }
 
+    public void setValorExtremo1(int valorExtremo1) {
+        this.valorExtremo1 = valorExtremo1;
+    }
+
+    public void setValorExtremo2(int valorExtremo2) {
+        this.valorExtremo2 = valorExtremo2;
+    }
+
+    
     
 }

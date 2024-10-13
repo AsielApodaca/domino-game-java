@@ -13,11 +13,12 @@ public class FichaBuilderUsuario implements IFichaBuilder {
     private FichaDominoModel fichaDominoModel;
     private FichaDominoView fichaDominoView;
     private FichaDominoController fichaDominoController;
+    private FichaDominoDTO fichaDTO;
     
     @Override
-    public void asignarExtremos(FichaDominoDTO ficha) {
-        fichaDominoModel.setValorExtremo1(ficha.getValorExtremo1());
-        fichaDominoModel.setValorExtremo2(ficha.getValorExtremo2());
+    public void asignarExtremos() {
+        fichaDominoModel.setValorExtremo1(fichaDTO.getValorExtremo1());
+        fichaDominoModel.setValorExtremo2(fichaDTO.getValorExtremo2());
     }
      
     @Override
@@ -27,13 +28,14 @@ public class FichaBuilderUsuario implements IFichaBuilder {
     }
 
     public FichaDominoController construirFicha(FichaDominoDTO fichaDTO) throws IOException {
+        this.fichaDTO = fichaDTO;
         try {
             fichaDominoModel = new FichaDominoModel(fichaDTO);
             fichaDominoView = new FichaDominoView(fichaDominoModel);
             fichaDominoController = new FichaDominoController(fichaDominoModel, fichaDominoView);
  
             fichaDominoModel.setFichaDominoDTO(fichaDTO);
-            asignarExtremos(fichaDTO);
+            asignarExtremos();
             cargarImagenesFicha(fichaDominoModel.getValorExtremo1(), fichaDominoModel.getValorExtremo2());
             fichaDominoView.cargarComponentes();
         } catch (IOException ex) {

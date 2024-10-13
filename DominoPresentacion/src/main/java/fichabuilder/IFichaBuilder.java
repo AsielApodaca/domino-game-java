@@ -14,6 +14,6 @@ import dominodto.FichaDominoDTO;
  * @author Asiel Apodaca Monge
  */
 public interface IFichaBuilder {
-    void asignarExtremos(FichaDominoDTO ficha);
+    void asignarExtremos();
     void cargarImagenesFicha(int extremo1, int extremo2);
 }

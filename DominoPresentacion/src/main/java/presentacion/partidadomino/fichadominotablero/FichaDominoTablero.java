@@ -5,6 +5,7 @@
 package presentacion.partidadomino.fichadominotablero;
 
 import dominodto.CasillaDTO;
+import dominodto.FichaDominoDTO;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -23,7 +24,6 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
  */
 public class FichaDominoTablero extends JPanel{
     
-    private CasillaDTO casillaDTO;
     private final String imagenMargenDomino = "/multimedia/DominoTableroFondo.png";
     private int valorExtremo1;
     private int valorExtremo2;
@@ -32,10 +32,10 @@ public class FichaDominoTablero extends JPanel{
     private BufferedImage margen;
     private JLabel labelExtremo1;
     private JLabel labelExtremo2;
+    private FichaDominoDTO fichaDominoDTO;
     
 
-    public FichaDominoTablero(CasillaDTO casillaDTO) {
-        this.casillaDTO = casillaDTO;
+    public FichaDominoTablero() {
     }
     
     public void cargarFondo(){
@@ -68,14 +68,31 @@ public class FichaDominoTablero extends JPanel{
         add(labelExtremo2);
     }
 
-    public CasillaDTO getCasillaDTO() {
-        return casillaDTO;
+    public JLabel getLabelExtremo1() {
+        return labelExtremo1;
     }
 
-    public void setCasillaDTO(CasillaDTO casillaDTO) {
-        this.casillaDTO = casillaDTO;
+    public void setLabelExtremo1(JLabel labelExtremo1) {
+        this.labelExtremo1 = labelExtremo1;
     }
 
+    public JLabel getLabelExtremo2() {
+        return labelExtremo2;
+    }
+
+    public void setLabelExtremo2(JLabel labelExtremo2) {
+        this.labelExtremo2 = labelExtremo2;
+    }
+
+    public FichaDominoDTO getFichaDominoDTO() {
+        return fichaDominoDTO;
+    }
+
+    public void setFichaDominoDTO(FichaDominoDTO fichaDominoDTO) {
+        this.fichaDominoDTO = fichaDominoDTO;
+    }
+
+    
     public int getValorExtremo1() {
         return valorExtremo1;
     }
