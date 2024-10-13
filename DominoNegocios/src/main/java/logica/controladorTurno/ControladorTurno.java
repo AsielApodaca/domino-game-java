@@ -25,7 +25,7 @@ public class ControladorTurno implements IControladorTurno {
     private FichaDominoEntity fichaMulaMasAlta;
 
     public ControladorTurno(List<JugadorDominoEntity> jugadores) {
-        this.jugadores = new ArrayList<>(jugadores);
+        this.jugadores = jugadores;
         this.jugadorActualIndex = 0;
         this.turnosAsignados = false; 
         this.fichaMulaMasAlta = null;

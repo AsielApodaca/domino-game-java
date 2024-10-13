@@ -12,6 +12,7 @@ import dominio.ConfiguracionJuegoEntity;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
 import dominio.PozoEntity;
+import dominio.SalaEntity;
 import dominio.TableroDominoEntity;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
@@ -36,7 +37,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
     private IControladorFichasLogica controladorFicha;
     private PozoEntity pozo;
     private JugadorDominoDTO jugadorDominoDTO;
-
+    private SalaEntity salaEntity;
     private List<FichaDominoDTO> fichasRepartidasDTO;
     private TableroDominoEntity tableroDominoEntity;
     private List<JugadorDominoEntity> jugadoresEntity;
@@ -51,7 +52,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         this.adapterJugadorDomino = new AdapterJugadorDomino();
         this.fichasRepartidasDTO = new ArrayList<>();
         this.adapterFichaDomino = new AdapterFichaDomino();
-        this.jugadoresEntity = tableroDominoEntity.getListaJugadores();
+        this.jugadoresEntity = salaEntity.getListaJugadores();
         crearPozo();
         controladorFicha = new ControladorFichasLogica(pozo);
         repartirFichasJugador(configuracionEntity.getCantidadFichas());
@@ -119,5 +120,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
     public void onFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
         this.tableroDominoEntity.setFichaSeleccionada(this.adapterFichaDomino.adaptToEntity(fichaSeleccionada));
     }
+    
+    
 
 }
