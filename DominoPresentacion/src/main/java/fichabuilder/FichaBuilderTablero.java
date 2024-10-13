@@ -9,12 +9,14 @@ public class FichaBuilderTablero implements IFichaBuilder {
     private CasillaDTO casillaDTO;
     private FichaDominoDTO fichaDTO;
 
-    public void construirFicha(CasillaDTO casillaDTO) {
+    public FichaDominoTablero construirFicha(CasillaDTO casillaDTO) {
         this.casillaDTO = casillaDTO;
         this.fichaDTO = casillaDTO.getFichaDominoDTO();
         this.fichaDominoTablero = new FichaDominoTablero();
         iniciarFichaParaTablero();
         cargarImagenesFicha();
+        
+        return fichaDominoTablero;
     }
 
     private void iniciarFichaParaTablero() {
