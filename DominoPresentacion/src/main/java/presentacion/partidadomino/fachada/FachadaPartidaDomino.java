@@ -20,22 +20,20 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class FachadaPartidaDomino implements IFachadaPartidaDomino{
+public class FachadaPartidaDomino implements IFachadaPartidaDomino {
 
     private final SingletonContenedorContenido sgContenedorContenido = SingletonContenedorContenido.getInstance();
     private PartidaDominoController partidaDominoController;
     private PartidaDominoModel partidaDominoModel;
     private PartidaDominoView partidaDominoView;
-    
 
     public FachadaPartidaDomino() {
     }
-    
+
     /**
      *
      * @param fichasJugador
      */
-    
     @Override
     public void iniciarPantalla() {
         this.partidaDominoModel = new PartidaDominoModel();
@@ -44,14 +42,14 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
         sgContenedorContenido.setContenidoController(partidaDominoController);
         sgContenedorContenido.mostrarPantalla();
         this.partidaDominoController.showView();
-        
+
     }
 
     @Override
     public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino) {
         partidaDominoModel.setListaFichasJugadorLocal(listaFichasDomino);
     }
-    
+
     @Override
     public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador) {
         partidaDominoController.mostrarFichasJugadorLocal(fichasJugador);
@@ -63,7 +61,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino{
     }
 
     @Override
-    public void mostrarCasillaParaColocarFicha(CasillaDTO casillaDTO) {
-        partidaDominoController.mostrarCasillaParaColocarFicha(casillaDTO);
+    public void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO) {
+        partidaDominoController.mostrarCasillasParaColocarFicha(casillasDTO);
     }
 }

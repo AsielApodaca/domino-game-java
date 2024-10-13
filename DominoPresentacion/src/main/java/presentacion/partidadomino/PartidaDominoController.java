@@ -28,18 +28,17 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoView;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoController implements IContenidoController, IPartidaDominoModelListener{
+public class PartidaDominoController implements IContenidoController, IPartidaDominoModelListener {
 
     private PartidaDominoModel model;
     private PartidaDominoView view;
     private final Mediador mediador = Mediador.getInstance();
-    
 
     public PartidaDominoController(PartidaDominoModel model, PartidaDominoView view) {
         this.model = model;
         this.view = view;
         //this.model.agregarListener(this);
-        
+
         view.repintarVista();
 //        view.actualizarListaFichasJugadorLocal();
     }
@@ -48,16 +47,16 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void mostrarCasillaParaColocarFicha(CasillaDTO casillaDTO) {
+    public void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador){
+
+    public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador) {
         model.setListaFichasJugadorLocal(fichasJugador);
         crearMVCFichasJugadorLocal();
         repintarFichasJugadorLocal();
     }
-    
+
     public void showView() {
         view.setVisible(true);
     }
@@ -67,29 +66,28 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
         model.setEscala(escala);
         mediador.redimencionarFichasJugadorLocal(escala);
         view.repintarVista();
-        
+
     }
 
     @Override
     public JPanel obtenerView() {
         return this.view;
     }
-    
 
     @Override
     public void onListaFichasDominoUsuarioChange() { // Escucha cuando la lista de fichas del jugador local cambia
 //        crearMVCFichasJugadorLocal();
 //        repintarFichasJugadorLocal();
 //        
-        
+
     }
-    
+
     private void crearMVCFichasJugadorLocal() {
         FichaBuilderUsuario fichaBuilder = new FichaBuilderUsuario();
         List<FichaDominoController> listaFichasMVC = new ArrayList<>(); // Lista de instancias de mvc de fichas
         List<FichaDominoView> listaPanelesFichasJugadorLocal = new ArrayList<>();
-        
-        for(FichaDominoDTO fichaDTO : model.getListaFichasJugadorLocal()) {
+
+        for (FichaDominoDTO fichaDTO : model.getListaFichasJugadorLocal()) {
             FichaDominoController fichaController = null;
             try {
                 fichaController = fichaBuilder.construirFicha(fichaDTO);
@@ -100,17 +98,17 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
             listaFichasMVC.add(fichaController);
             listaPanelesFichasJugadorLocal.add(fichaController.getView());
         }
-        
+
         mediador.setListaFichasJugadorLocal(listaFichasMVC);
         model.setListaPanelesFichasJugadorLocal(listaPanelesFichasJugadorLocal);
-        
+
     }
-    
+
     private void repintarFichasJugadorLocal() {
         view.repintarContenedorFichasJugadorLocal();
         view.repintarFichasJugadorLocal();
     }
-    
+
     private float getEscala() {
         return model.getEscala();
     }

@@ -8,14 +8,17 @@ import adapterEntidades.AdapterFichaDomino;
 import adapterEntidades.AdapterJugadorDomino;
 import adapterEntidades.IAdapterFichaDomino;
 import adapterEntidades.IAdapterJugadorDomino;
+import dominio.CasillaEntity;
 import dominio.ConfiguracionJuegoEntity;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
 import dominio.PozoEntity;
 import dominio.SalaEntity;
 import dominio.TableroDominoEntity;
+import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
+import dominodto.TableroDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
 import listeners.ITableroDominoLogicaListener;
@@ -23,6 +26,7 @@ import logica.controladorFichas.ControladorFichasLogica;
 import logica.controladorFichas.IControladorFichasLogica;
 import logica.controladorTurno.ControladorTurno;
 import logica.controladorTurno.IControladorTurno;
+import mapeodto.MapeadorDTO;
 import presentacion.partidadomino.fachada.FachadaPartidaDomino;
 import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
 
@@ -43,8 +47,8 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
     private TableroDominoEntity tableroDominoEntity;
     private IAdapterFichaDomino adapterFichaDomino;
     private IAdapterJugadorDomino adapterJugadorDomino;
+    private MapeadorDTO mapeadorDTO;
     private List<JugadorDominoDTO> jugadoresDTO = new ArrayList<>();
- 
 
     public TableroDominoLogica(SalaEntity salaEntity) {
         this.salaEntity = salaEntity;
@@ -55,6 +59,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         this.adapterFichaDomino = new AdapterFichaDomino();
         this.controladorFichas = new ControladorFichasLogica();
         this.controladorTurno = new ControladorTurno();
+        this.mapeadorDTO = new MapeadorDTO();
 
     }
 
@@ -67,7 +72,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         obtenerJugadorLocal();
         mostrarFichas();
 //        mostrarFichas();
-        
+
         // Se colocará este metodo cuando el mvc ya tenga listeners
     }
 
@@ -77,21 +82,20 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
 
     private void repartirFichasAJugadores() {
         int fichasPorJugador = this.salaEntity.getConfiguracionPartida().getFichasPorJugador();
-        for(JugadorDominoEntity jugadorEntity : salaEntity.getListaJugadores()) {
+        for (JugadorDominoEntity jugadorEntity : salaEntity.getListaJugadores()) {
             List<FichaDominoEntity> setDeFichas = controladorFichas.repartirFichas(fichasPorJugador);
             jugadorEntity.setListaFichasJugador(setDeFichas);
         }
     }
-    private void obtenerJugadorLocal(){    
+
+    private void obtenerJugadorLocal() {
         this.jugadorLocalDTO = adapterJugadorDomino.adaptToDTO(salaEntity.getJugadorLocal());
-    }          
-    
+    }
+
     private void asignarTurnosAJugadores() {
         controladorTurno.setJugadores(salaEntity.getListaJugadores());
         controladorTurno.asignarTurnos();
     }
-    
-            
 
     public void mostrarFichas() {
         fachadaPartidaDomino.mostrarFichasJugadorLocal(jugadorLocalDTO.getListaFichasJugador());
@@ -120,8 +124,36 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
     @Override
     public void onFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
         this.tableroDominoEntity.setFichaSeleccionada(this.adapterFichaDomino.adaptToEntity(fichaSeleccionada));
+        mostrarPosiblesMovimientos();
     }
-    
-    
+
+    private void mostrarPosiblesMovimientos() {
+        FichaDominoEntity fichaSeleccionada = tableroDominoEntity.getFichaSeleccionada();
+        if (fichaSeleccionada == null) {
+            return;
+        }
+        List<CasillaDTO> posiblesCasillasColocables = new ArrayList<>();
+        if (tableroDominoEntity.getValorExtremo1() == -1
+                && tableroDominoEntity.getValorExtremo2() == -1) {
+            CasillaDTO casillaMula = mapeadorDTO.casillaEntityADTO(tableroDominoEntity.obtenerPosibleCasillaMula());
+            posiblesCasillasColocables.add(casillaMula);
+        } else {
+            // Verificar si la ficha se puede colocar en el extremo 1
+            if (puedeColocarEnExtremo(fichaSeleccionada, tableroDominoEntity.getValorExtremo2())) {
+                CasillaDTO casillaExtremo1 = mapeadorDTO.casillaEntityADTO(tableroDominoEntity.obtenerPosibleCasillaExtremo1());
+                posiblesCasillasColocables.add(casillaExtremo1);
+            }
+            // Verificar si la ficha se puede colocar en el extremo 2
+            if (puedeColocarEnExtremo(fichaSeleccionada, tableroDominoEntity.getValorExtremo2())) {
+                CasillaDTO casillaExtremo2 = mapeadorDTO.casillaEntityADTO(tableroDominoEntity.obtenerPosiblePosicionExtremo2());
+                posiblesCasillasColocables.add(casillaExtremo2);
+            }
+        }
+        fachadaPartidaDomino.mostrarCasillasParaColocarFicha(posiblesCasillasColocables);
+    }
+
+    private boolean puedeColocarEnExtremo(FichaDominoEntity ficha, int valorExtremo) {
+        return ficha.getExtremo1() == valorExtremo || ficha.getExtremo2() == valorExtremo;
+    }
 
 }
