@@ -13,30 +13,24 @@ public class FichaBuilderUsuario implements IFichaBuilder {
     private FichaDominoModel fichaDominoModel;
     private FichaDominoView fichaDominoView;
     private FichaDominoController fichaDominoController;
-    private FichaDominoDTO fichaDTO;
     
-    @Override
-    public void asignarExtremos() {
-        fichaDominoModel.setValorExtremo1(fichaDTO.getValorExtremo1());
-        fichaDominoModel.setValorExtremo2(fichaDTO.getValorExtremo2());
-    }
      
     @Override
-    public void cargarImagenesFicha(int extremo1, int extremo2) {
+    public void cargarImagenesFicha() {
+        int extremo1 = fichaDominoModel.getValorExtremo1();
+        int extremo2 = fichaDominoModel.getValorExtremo2();
         fichaDominoModel.setImgExtremo1(String.format("/multimedia/Domino%d.png", extremo1));
         fichaDominoModel.setImgExtremo2(String.format("/multimedia/Domino%d.png", extremo2));
     }
 
     public FichaDominoController construirFicha(FichaDominoDTO fichaDTO) throws IOException {
-        this.fichaDTO = fichaDTO;
         try {
             fichaDominoModel = new FichaDominoModel(fichaDTO);
             fichaDominoView = new FichaDominoView(fichaDominoModel);
             fichaDominoController = new FichaDominoController(fichaDominoModel, fichaDominoView);
  
             fichaDominoModel.setFichaDominoDTO(fichaDTO);
-            asignarExtremos();
-            cargarImagenesFicha(fichaDominoModel.getValorExtremo1(), fichaDominoModel.getValorExtremo2());
+            cargarImagenesFicha();
             fichaDominoView.cargarComponentes();
         } catch (IOException ex) {
             Logger.getLogger(FichaBuilderUsuario.class.getName()).log(Level.SEVERE, "Error al construir la ficha", ex);

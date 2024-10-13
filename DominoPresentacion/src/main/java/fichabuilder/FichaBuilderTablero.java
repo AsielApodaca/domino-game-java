@@ -1,78 +1,61 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package fichabuilder;
 
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
-import java.awt.Dimension;
-import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
 
-/**
- *
- * @author Hisamy Cinco Cota
- * @author Gael Rafael Castro Molina
- * @author Oliver Inzunza Valle
- * @author Asiel Apodaca Monge
- */
 public class FichaBuilderTablero implements IFichaBuilder {
-
     private FichaDominoTablero fichaDominoTablero;
     private CasillaDTO casillaDTO;
-
-    @Override
-    public void asignarExtremos() {
-//        fichaDominoTablero.setValorExtremo1(ficha.getValorExtremo1());
-//        fichaDominoTablero.setValorExtremo2(ficha.getValorExtremo2());
-    }
-
-    @Override
-    public void cargarImagenesFicha(int extremo1, int extremo2) {
-        fichaDominoTablero.setImgExtremo1(String.format("/multimedia/Domino%d.png", extremo1));
-        fichaDominoTablero.setImgExtremo2(String.format("/multimedia/Domino%d.png", extremo2));
-    }
+    private FichaDominoDTO fichaDTO;
 
     public void construirFicha(CasillaDTO casillaDTO) {
         this.casillaDTO = casillaDTO;
+        this.fichaDTO = casillaDTO.getFichaDominoDTO();
         this.fichaDominoTablero = new FichaDominoTablero();
         iniciarFichaParaTablero();
+        cargarImagenesFicha();
     }
 
     private void iniciarFichaParaTablero() {
         fichaDominoTablero.setFichaDominoDTO(casillaDTO.getFichaDominoDTO());
         int rotacion = casillaDTO.getRotacion();
-        int anchoFicha = -1;
-        int alturaFicha = -1;
+        boolean isHorizontal = (rotacion == 0 || rotacion == 180);
         
-        switch(rotacion) { // Asigna orientación de la ficha
-            case 0: // Horizontal
-                anchoFicha = 30;
-                alturaFicha = 15;
-            case 90: // Vertical
-                anchoFicha = 15;
-                alturaFicha = 30;
-                voltearExtremosFicha();
-                break;
-            case 180: // Horizontal
-                anchoFicha = 30;
-                alturaFicha = 15;
-                voltearExtremosFicha();
-            case 270: // Vertical
-                anchoFicha = 15;
-                alturaFicha = 30;
-        }
+        fichaDominoTablero.setRotacion(rotacion);
+        fichaDominoTablero.setHorizontal(isHorizontal);
         
-        fichaDominoTablero.setPreferredSize(new Dimension(anchoFicha, alturaFicha));
-                
+        // Set the base size (this will be scaled later)
+        fichaDominoTablero.setAnchoSinEscala(isHorizontal ? 30 : 15);
+        fichaDominoTablero.setAlturaSinEscala(isHorizontal ? 15 : 30);
     }
     
-    private void voltearExtremosFicha() {
-        FichaDominoDTO fichaDTO = this.casillaDTO.getFichaDominoDTO();
-        int valorExtremo1Copia = fichaDTO.getValorExtremo1();
-        fichaDTO.setValorExtremo1(fichaDTO.getValorExtremo2());
-        fichaDTO.setValorExtremo2(valorExtremo1Copia);
+    @Override
+    public void cargarImagenesFicha() {
+        int extremo1 = fichaDTO.getValorExtremo1();
+        int extremo2 = fichaDTO.getValorExtremo2();
+        
+        String img1 = String.format("/multimedia/Domino%d.png", extremo1);
+        String img2 = String.format("/multimedia/Domino%d.png", extremo2);
+        
+        // The order of images depends on the rotation
+        switch (casillaDTO.getRotacion()) {
+            case 0:
+                fichaDominoTablero.setImgExtremo1(img1);
+                fichaDominoTablero.setImgExtremo2(img2);
+                break;
+            case 90:
+                fichaDominoTablero.setImgExtremo1(img2);
+                fichaDominoTablero.setImgExtremo2(img1);
+                break;
+            case 180:
+                fichaDominoTablero.setImgExtremo1(img2);
+                fichaDominoTablero.setImgExtremo2(img1);
+                break;
+            case 270:
+                fichaDominoTablero.setImgExtremo1(img1);
+                fichaDominoTablero.setImgExtremo2(img2);
+                break;
+        }
     }
-
 }

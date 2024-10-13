@@ -1,51 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presentacion.partidadomino.fichadominotablero;
 
-import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 
-/**
- *
- * @author hisam
- */
-public class FichaDominoTablero extends JPanel{
-    
+public class FichaDominoTablero extends JPanel {
     private final String imagenMargenDomino = "/multimedia/DominoTableroFondo.png";
-    private int valorExtremo1;
-    private int valorExtremo2;
-    private String imgExtremo1; 
-    private String imgExtremo2;
     private BufferedImage margen;
+    private String imgExtremo1;
+    private String imgExtremo2;
     private JLabel labelExtremo1;
     private JLabel labelExtremo2;
     private FichaDominoDTO fichaDominoDTO;
-    
+    private int anchoSinEscala;
+    private int alturaSinEscala;
+    private int rotacion;
+    private boolean isHorizontal;
 
     public FichaDominoTablero() {
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     }
-    
-    public void cargarFondo(){
+
+    public void cargarFondo() {
         try {
             margen = ImageIO.read(getClass().getResource(imagenMargenDomino));
         } catch (IOException ex) {
             Logger.getLogger(FichaDominoTablero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -53,19 +41,51 @@ public class FichaDominoTablero extends JPanel{
             g.drawImage(margen, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    
-    /**
-     * A cada extremo se le asigna una imágen previamente cargada en el modelo.
-     *
-     * @param model
-     * @throws IOException Si ocurre un error al intentar leer el archivo.
-     */
-    private void asignarExtremos() throws IOException {
-        labelExtremo2 = new JLabel(new ImageIcon(imgExtremo2), SwingConstants.CENTER);
-        labelExtremo2 = new JLabel(new ImageIcon(imgExtremo1), SwingConstants.CENTER);
 
-        add(labelExtremo1);
-        add(labelExtremo2);
+    public void asignarExtremos() {
+        removeAll();
+        
+        labelExtremo1 = createScaledLabel(imgExtremo1);
+        labelExtremo2 = createScaledLabel(imgExtremo2);
+
+        if (isHorizontal) {
+            setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        } else {
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        }
+
+        if (rotacion == 0 || rotacion == 270) {
+            add(labelExtremo1);
+            add(labelExtremo2);
+        } else {
+            add(labelExtremo2);
+            add(labelExtremo1);
+        }
+
+        revalidate();
+        repaint();
+    }
+
+    private JLabel createScaledLabel(String imagePath) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
+        Image img = icon.getImage();
+        Image scaledImg = img.getScaledInstance(getWidth() / 2, getHeight() / 2, Image.SCALE_SMOOTH);
+        return new JLabel(new ImageIcon(scaledImg));
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        int width = isHorizontal ? 60 : 30;
+        int height = isHorizontal ? 30 : 60;
+        return new Dimension(width, height);
+    }
+
+    public void setRotacion(int rotacion) {
+        this.rotacion = rotacion;
+    }
+
+    public void setHorizontal(boolean horizontal) {
+        isHorizontal = horizontal;
     }
 
     public JLabel getLabelExtremo1() {
@@ -92,22 +112,6 @@ public class FichaDominoTablero extends JPanel{
         this.fichaDominoDTO = fichaDominoDTO;
     }
 
-    
-    public int getValorExtremo1() {
-        return valorExtremo1;
-    }
-
-    public void setValorExtremo1(int valorExtremo1) {
-        this.valorExtremo1 = valorExtremo1;
-    }
-
-    public int getValorExtremo2() {
-        return valorExtremo2;
-    }
-
-    public void setValorExtremo2(int valorExtremo2) {
-        this.valorExtremo2 = valorExtremo2;
-    }
 
     public String getImgExtremo1() {
         return imgExtremo1;
@@ -127,6 +131,22 @@ public class FichaDominoTablero extends JPanel{
 
     public String getImagenMargenDomino() {
         return imagenMargenDomino;
+    }
+
+    public int getAnchoSinEscala() {
+        return anchoSinEscala;
+    }
+
+    public void setAnchoSinEscala(int anchoSinEscala) {
+        this.anchoSinEscala = anchoSinEscala;
+    }
+
+    public int getAlturaSinEscala() {
+        return alturaSinEscala;
+    }
+
+    public void setAlturaSinEscala(int alturaSinEscala) {
+        this.alturaSinEscala = alturaSinEscala;
     }
 
     

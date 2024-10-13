@@ -116,11 +116,11 @@ public class FichaDominoModel {
     }
 
     public int getValorExtremo1() {
-        return valorExtremo1;
+        return fichaDominoDTO.getValorExtremo1();
     }
 
     public int getValorExtremo2() {
-        return valorExtremo2;
+        return fichaDominoDTO.getValorExtremo2();
     }
 
     public void setValorExtremo1(int valorExtremo1) {
