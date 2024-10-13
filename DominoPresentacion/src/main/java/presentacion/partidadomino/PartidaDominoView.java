@@ -4,22 +4,22 @@
  */
 package presentacion.partidadomino;
 
+import dominodto.CasillaDTO;
+import dominodto.FichaDominoDTO;
+import fichabuilder.FichaBuilderTablero;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import presentacion.mediador.IMediador;
-import presentacion.mediador.Mediador;
-import listeners.IPartidaDominoModelListener;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
+import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
 
 /**
  *
@@ -36,11 +36,30 @@ public class PartidaDominoView extends JPanel{
 
     private JPanel panelContenedorFichasJugadorLocal; // Panel que contendrá las fichas del jugador local
     private JPanel panelTablero; // Panel de tablero donde se colocarán las fichas
+    private List<FichaDominoTablero> listaPanelesFichasSobreTablero;
 
     public PartidaDominoView(PartidaDominoModel model) {
         this.model = model;
         cargarComponentes();
 //        asignarListeners();
+        // pruebas
+        FichaBuilderTablero fichaBuilderTablero = new FichaBuilderTablero();
+        FichaDominoDTO fichaDominoDTO = new FichaDominoDTO(2, 6);
+        CasillaDTO casillaDTO = new CasillaDTO();
+        casillaDTO.setFichaDominoDTO(fichaDominoDTO);
+        casillaDTO.setLocacionX(50);
+        casillaDTO.setLocacionY(50);
+        casillaDTO.setRotacion(270);
+        FichaDominoTablero fichaDominoTablero = fichaBuilderTablero.construirFicha(casillaDTO);
+
+        panelTablero.add(fichaDominoTablero);
+        if (casillaDTO.getRotacion() == 0 || casillaDTO.getRotacion() == 180) {
+            fichaDominoTablero.setBounds(50, 50, 300, 150); // Horizontal
+        } else {
+            fichaDominoTablero.setBounds(50, 50, 150, 300); // Vertical
+        }
+        revalidate();
+        repaint();
     }
 
     private void cargarComponentes() {
@@ -94,6 +113,7 @@ public class PartidaDominoView extends JPanel{
         };
         // Hacer que el panel no sea opaco, para permitir la transparencia
         panelTablero.setOpaque(false);
+        panelTablero.setLayout(null);
 
         add(panelContenedorFichasJugadorLocal);
         add(panelTablero);

@@ -3,6 +3,7 @@ package presentacion.partidadomino.fichadominotablero;
 import dominodto.FichaDominoDTO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -10,146 +11,130 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FichaDominoTablero extends JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(FichaDominoTablero.class.getName());
     private final String imagenMargenDomino = "/multimedia/DominoTableroFondo.png";
     private BufferedImage margen;
-    private String imgExtremo1;
-    private String imgExtremo2;
-    private JLabel labelExtremo1;
-    private JLabel labelExtremo2;
+    private BufferedImage imageExtremo1;
+    private BufferedImage imageExtremo2;
     private FichaDominoDTO fichaDominoDTO;
-    private int anchoSinEscala;
-    private int alturaSinEscala;
     private int rotacion;
-    private boolean isHorizontal;
 
     public FichaDominoTablero() {
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(null);
+        setOpaque(false);
+        cargarFondo();
     }
 
     public void cargarFondo() {
         try {
             margen = ImageIO.read(getClass().getResource(imagenMargenDomino));
-        } catch (IOException ex) {
-            Logger.getLogger(FichaDominoTablero.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | IllegalArgumentException ex) {
+            LOGGER.log(Level.SEVERE, "No se pudo cargar la imagen de fondo: " + imagenMargenDomino, ex);
+        }
+    }
+
+    private BufferedImage cargarImagen(String rutaImagen) {
+        if (rutaImagen == null || rutaImagen.isEmpty()) {
+            LOGGER.warning("Ruta de imagen no especificada");
+            return null;
+        }
+        try {
+            return ImageIO.read(getClass().getResource(rutaImagen));
+        } catch (IOException | IllegalArgumentException ex) {
+            LOGGER.log(Level.SEVERE, "No se pudo cargar la imagen: " + rutaImagen, ex);
+            return null;
         }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
+        int width = getWidth();
+        int height = getHeight();
+
+        // Dibujar el fondo rotado
         if (margen != null) {
-            g.drawImage(margen, 0, 0, getWidth(), getHeight(), this);
+            if (rotacion == 0 || rotacion == 180) {
+                AffineTransform old = g2d.getTransform();
+                g2d.translate(width / 2, height / 2);
+                g2d.rotate(Math.toRadians(90));
+                g2d.translate(-height / 2, -width / 2);
+                g2d.drawImage(margen, 0, 0, height, width, null);
+                g2d.setTransform(old);
+            } else {
+                g2d.drawImage(margen, 0, 0, width, height, null);
+            }
         }
+        // Dibujar los extremos
+        if (imageExtremo1 != null && imageExtremo2 != null) {
+
+            if (rotacion == 0 || rotacion == 180) {
+                // Ficha horizontal
+                int extremoWidth = height;
+                int extremoHeight = height;
+
+                // Dibujar el primer extremo (izquierda)
+                AffineTransform old = g2d.getTransform();
+                g2d.translate(height / 2, height / 2);
+                g2d.rotate(Math.toRadians(90));
+                g2d.translate(-height / 2, -height / 2);
+                g2d.drawImage(imageExtremo1, 0, 0, extremoHeight, extremoWidth, null);
+                g2d.setTransform(old);
+
+                // Dibujar el segundo extremo (derecha)
+                //g2d.rotate(Math.toRadians(-90));
+                old = g2d.getTransform();
+                g2d.rotate(Math.toRadians(90));
+                g2d.translate(0, -width);
+                g2d.drawImage(imageExtremo2, 0, 0, extremoHeight, extremoWidth, null);
+                g2d.setTransform(old);
+            } else {
+                int extremoWidth = width;
+                int extremoHeight = height / 2;
+
+                // Dibujar el segundo extremo (arriba)
+                g2d.drawImage(imageExtremo2, 0, 0, extremoWidth, extremoHeight, null);
+
+                // Dibujar el primer extremo (abajo)
+                g2d.drawImage(imageExtremo1, 0, extremoHeight, extremoWidth, extremoHeight, null);
+            }
+        }
+
+        g2d.dispose();
     }
+    
 
-    public void asignarExtremos() {
-        removeAll();
-        
-        labelExtremo1 = createScaledLabel(imgExtremo1);
-        labelExtremo2 = createScaledLabel(imgExtremo2);
-
-        if (isHorizontal) {
-            setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        } else {
-            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        }
-
-        if (rotacion == 0 || rotacion == 270) {
-            add(labelExtremo1);
-            add(labelExtremo2);
-        } else {
-            add(labelExtremo2);
-            add(labelExtremo1);
-        }
-
+    public void setRotacion(int rotacion) {
+        this.rotacion = rotacion;
         revalidate();
         repaint();
     }
 
-    private JLabel createScaledLabel(String imagePath) {
-        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
-        Image img = icon.getImage();
-        Image scaledImg = img.getScaledInstance(getWidth() / 2, getHeight() / 2, Image.SCALE_SMOOTH);
-        return new JLabel(new ImageIcon(scaledImg));
+    public void setImgExtremo1(String imgExtremo1) {
+        this.imageExtremo1 = cargarImagen(imgExtremo1);
+        if (this.imageExtremo1 == null) {
+            LOGGER.warning("No se pudo cargar la imagen del extremo 1: " + imgExtremo1);
+        } else {
+            LOGGER.info("Imagen del extremo 1 cargada correctamente: " + imgExtremo1);
+        }
     }
 
-    @Override
-    public Dimension getPreferredSize() {
-        int width = isHorizontal ? 60 : 30;
-        int height = isHorizontal ? 30 : 60;
-        return new Dimension(width, height);
-    }
-
-    public void setRotacion(int rotacion) {
-        this.rotacion = rotacion;
-    }
-
-    public void setHorizontal(boolean horizontal) {
-        isHorizontal = horizontal;
-    }
-
-    public JLabel getLabelExtremo1() {
-        return labelExtremo1;
-    }
-
-    public void setLabelExtremo1(JLabel labelExtremo1) {
-        this.labelExtremo1 = labelExtremo1;
-    }
-
-    public JLabel getLabelExtremo2() {
-        return labelExtremo2;
-    }
-
-    public void setLabelExtremo2(JLabel labelExtremo2) {
-        this.labelExtremo2 = labelExtremo2;
-    }
-
-    public FichaDominoDTO getFichaDominoDTO() {
-        return fichaDominoDTO;
+    public void setImgExtremo2(String imgExtremo2) {
+        this.imageExtremo2 = cargarImagen(imgExtremo2);
+        if (this.imageExtremo2 == null) {
+            LOGGER.warning("No se pudo cargar la imagen del extremo 2: " + imgExtremo2);
+        } else {
+            LOGGER.info("Imagen del extremo 2 cargada correctamente: " + imgExtremo2);
+        }
     }
 
     public void setFichaDominoDTO(FichaDominoDTO fichaDominoDTO) {
         this.fichaDominoDTO = fichaDominoDTO;
     }
 
-
-    public String getImgExtremo1() {
-        return imgExtremo1;
+    public FichaDominoDTO getFichaDominoDTO() {
+        return fichaDominoDTO;
     }
-
-    public void setImgExtremo1(String imgExtremo1) {
-        this.imgExtremo1 = imgExtremo1;
-    }
-
-    public String getImgExtremo2() {
-        return imgExtremo2;
-    }
-
-    public void setImgExtremo2(String imgExtremo2) {
-        this.imgExtremo2 = imgExtremo2;
-    }
-
-    public String getImagenMargenDomino() {
-        return imagenMargenDomino;
-    }
-
-    public int getAnchoSinEscala() {
-        return anchoSinEscala;
-    }
-
-    public void setAnchoSinEscala(int anchoSinEscala) {
-        this.anchoSinEscala = anchoSinEscala;
-    }
-
-    public int getAlturaSinEscala() {
-        return alturaSinEscala;
-    }
-
-    public void setAlturaSinEscala(int alturaSinEscala) {
-        this.alturaSinEscala = alturaSinEscala;
-    }
-
-    
-    
-   
 }
