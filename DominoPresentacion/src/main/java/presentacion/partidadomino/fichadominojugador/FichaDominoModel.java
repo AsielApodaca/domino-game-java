@@ -51,7 +51,6 @@ public class FichaDominoModel {
 
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) { // Se instancia cuando la ficha es para la mano del jugador local
         this.fichaDominoDTO = fichaDominoDTO;
-        this.compatible = true;
         this.fondoFicha = "/multimedia/DominoFondo.png";
     }
 
@@ -191,6 +190,9 @@ public class FichaDominoModel {
 
     public void setCompatible(boolean compatible) {
         this.compatible = compatible;
+        if(compatible) {
+            this.fondoFicha = getFondoCompatible();
+        }
     }
 
 }

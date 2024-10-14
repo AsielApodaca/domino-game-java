@@ -9,6 +9,7 @@ public class FichaDominoDTO {
 
     private int valorExtremo1; // Número del 0 al 6 en el extremo 1 de la ficha
     private int valorExtremo2; // Número del 0 al 6 en el extremo 2 de la ficha
+    private boolean compatible; // Si la ficha es compatible con algún extremo
 
 
     public FichaDominoDTO(int valorExtremo1, int valorExtremo2) {
@@ -30,6 +31,14 @@ public class FichaDominoDTO {
 
     public void setValorExtremo2(int valorExtremo2) {
         this.valorExtremo2 = valorExtremo2;
+    }
+
+    public boolean isCompatible() {
+        return compatible;
+    }
+
+    public void setCompatible(boolean compatible) {
+        this.compatible = compatible;
     }
 
     

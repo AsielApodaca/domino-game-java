@@ -30,6 +30,7 @@ public class FichaBuilderUsuario implements IFichaBuilder {
             fichaDominoController = new FichaDominoController(fichaDominoModel, fichaDominoView);
  
             fichaDominoModel.setFichaDominoDTO(fichaDTO);
+            fichaDominoModel.setCompatible(fichaDTO.isCompatible());
             cargarImagenesFicha();
             fichaDominoView.cargarComponentes();
         } catch (IOException ex) {

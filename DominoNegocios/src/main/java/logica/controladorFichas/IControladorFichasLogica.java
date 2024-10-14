@@ -6,6 +6,7 @@ package logica.controladorFichas;
 
 import dominio.FichaDominoEntity;
 import dominio.PozoEntity;
+import dominio.TableroDominoEntity;
 import java.util.List;
 
 /**
@@ -14,5 +15,9 @@ import java.util.List;
  */
 public interface IControladorFichasLogica {
       List<FichaDominoEntity> repartirFichas(int cantidad);   
-      void setPozo(PozoEntity pozoEntity);
+      void setPozo(PozoEntity pozo);
+      void setTableroDomino(TableroDominoEntity tableroDominoEntity);
+      List<FichaDominoEntity> obtenerFichasCompatibles(List<FichaDominoEntity> listaFichas);
+      List<FichaDominoEntity> obtenerFichasNoCompatibles(List<FichaDominoEntity> listaFichas);
 }
+      
