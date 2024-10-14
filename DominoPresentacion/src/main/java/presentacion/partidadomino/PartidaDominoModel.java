@@ -7,6 +7,9 @@ import java.util.List;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
 import listeners.ITableroDominoLogicaListener;
 import listeners.IPartidaDominoModelListener;
+import notificaciones.PresentacionNotificacionesManager;
+import notificaciones.eventos.Evento;
+import notificaciones.eventos.FichaSeleccionadaEvento;
 import presentacion.partidadomino.tablero.CasillaPanel;
 import presentacion.partidadomino.tablero.FichaDominoTablero;
 
@@ -57,7 +60,7 @@ public class PartidaDominoModel{
     //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
 
     private List<IPartidaDominoModelListener> listeners ;
-    private ITableroDominoLogicaListener listenerTableroDominoLogica ;
+    private PresentacionNotificacionesManager presentacionNotificacionesManager ;
     private FichaDominoDTO fichaSeleccionada ;
     
     public PartidaDominoModel() {
@@ -84,6 +87,14 @@ public class PartidaDominoModel{
         this.listaPanelesFichasSobreTablero = new ArrayList<>();
         listeners = new ArrayList() ;
     }
+
+    public void setPresentacionNotificacionesManager(PresentacionNotificacionesManager presentacionNotificacionesManager) {
+        this.presentacionNotificacionesManager = presentacionNotificacionesManager;
+    }
+
+    public PresentacionNotificacionesManager getPresentacionNotificacionesManager() {
+        return presentacionNotificacionesManager;
+    }
     
     public void notificarFichasJugadorChange (){
         listeners.forEach(listener -> {
@@ -92,7 +103,9 @@ public class PartidaDominoModel{
     }
     
     public void notificarFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
-        listenerTableroDominoLogica.onFichaSeleccionadaChange(fichaSeleccionada);
+        FichaSeleccionadaEvento evento = new FichaSeleccionadaEvento();
+        evento.setFichaSeleccionada(fichaSeleccionada);
+        presentacionNotificacionesManager.notificarCambioAPresentacionListener(evento);
     }
 
     public List<CasillaPanel> getListaPanelesCasillasParaColocarFichas() {

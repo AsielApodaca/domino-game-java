@@ -8,12 +8,11 @@ import contenedorpantallas.SingletonContenedorContenido;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import java.util.List;
-import logica.tableroDominoLogica.TableroDominoLogica;
+import notificaciones.PresentacionNotificacionesManager;
 import presentacion.mediador.Mediador;
 import presentacion.partidadomino.PartidaDominoController;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.PartidaDominoView;
-import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 
 /**
  *
@@ -65,7 +64,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     }
 
     @Override
-    public void escucharFichaSeleccionada(TableroDominoLogica tableroDominoLogica) {
-        partidaDominoModel.setListenerTableroDominoLogica(tableroDominoLogica);
+    public void establecerComunicacionConListener(PresentacionNotificacionesManager presentacionNotificacionesManager) {
+        partidaDominoModel.setPresentacionNotificacionesManager(presentacionNotificacionesManager);
     }
 }
