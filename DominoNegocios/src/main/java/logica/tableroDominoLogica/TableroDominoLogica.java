@@ -18,13 +18,11 @@ import dominio.TableroDominoEntity;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
-import dominodto.TableroDominoDTO;
 import estrategiacomparador.EstrategiaComparadorEntidades;
 import estrategiacomparador.IEstrategiaComparadorEntidades;
 import java.util.ArrayList;
 import java.util.List;
 import listeners.IPresentacionListener;
-import listeners.ITableroDominoLogicaListener;
 import logica.controladorFichas.ControladorFichasLogica;
 import logica.controladorFichas.IControladorFichasLogica;
 import logica.controladorTurno.ControladorTurno;
@@ -159,25 +157,9 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
         PozoEntity pozo = new PozoEntity();
         controladorFichas.setPozo(pozo);
     }
-
-//    private void simularListaFichasDTO() { // temporal
-//        List<FichaDominoDTO> listaFichas = new ArrayList<>();
-//
-//        listaFichas.add(new FichaDominoDTO(6, 6));
-//        listaFichas.add(new FichaDominoDTO(1, 6));
-//        listaFichas.add(new FichaDominoDTO(1, 4));
-//        listaFichas.add(new FichaDominoDTO(4, 4));
-//        listaFichas.add(new FichaDominoDTO(4, 5));
-//        listaFichas.add(new FichaDominoDTO(3, 4));
-//        listaFichas.add(new FichaDominoDTO(3, 0));
-//
-//        fachadaPartidaDomino.mostrarFichasJugadorLocal(listaFichas);
-//
-//    }
-
     
     private void ocultarPosiblesMovimientos() {
-        
+        fachadaPartidaDomino.ocultarCasillasParaColocarFicha();
     }
 
     private void mostrarPosiblesMovimientos() {

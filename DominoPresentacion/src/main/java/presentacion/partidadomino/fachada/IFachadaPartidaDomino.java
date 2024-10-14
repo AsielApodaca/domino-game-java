@@ -26,5 +26,7 @@ public interface IFachadaPartidaDomino {
 
     void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO);
     
+    void ocultarCasillasParaColocarFicha();
+    
     void establecerComunicacionConListener(PresentacionNotificacionesManager presentacionNotificacionesManager);
 }

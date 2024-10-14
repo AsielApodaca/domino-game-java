@@ -42,14 +42,15 @@ public class MapeadorDTO {
      * @param posicion La entidad de la casilla a mapear.
      * @return Un objeto CasillaDTO que representa la casilla.
      */
-    public CasillaDTO casillaEntityADTO(CasillaEntity posicion) {
+    public CasillaDTO casillaEntityADTO(CasillaEntity casilla) {
         CasillaDTO casillaDTO = new CasillaDTO();
 
-        casillaDTO.setLocacionX(posicion.getLocacionX());
-        casillaDTO.setLocacionY(posicion.getLocacionY());
-        casillaDTO.setRotacion(posicion.getRotacion());
-        FichaDominoDTO fichaDominoDTO = fichaEntityADTO(posicion.getFichaDomino());
-        if (fichaDominoDTO != null) {
+        casillaDTO.setLocacionX(casilla.getLocacionX());
+        casillaDTO.setLocacionY(casilla.getLocacionY());
+        casillaDTO.setRotacion(casilla.getRotacion());
+        
+        if(casilla.getFichaDomino() != null) {
+            FichaDominoDTO fichaDominoDTO = fichaEntityADTO(casilla.getFichaDomino());
             casillaDTO.setFichaDominoDTO(fichaDominoDTO);
         }
 

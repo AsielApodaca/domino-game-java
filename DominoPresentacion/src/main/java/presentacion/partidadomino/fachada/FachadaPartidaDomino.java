@@ -67,4 +67,9 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     public void establecerComunicacionConListener(PresentacionNotificacionesManager presentacionNotificacionesManager) {
         partidaDominoModel.setPresentacionNotificacionesManager(presentacionNotificacionesManager);
     }
+
+    @Override
+    public void ocultarCasillasParaColocarFicha() {
+        partidaDominoController.ocultarCasillasParaColocarFicha();
+    }
 }

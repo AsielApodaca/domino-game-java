@@ -79,6 +79,12 @@ public class PartidaDominoController implements IContenidoController{
         model.setListaPanelesCasillasParaColocarFichas(listaCasillas);
         view.repintarCasillasTablero();
     }
+    
+    public void ocultarCasillasParaColocarFicha() {
+        // Settea una lista vacia
+        model.setListaPanelesCasillasParaColocarFichas(new ArrayList<>());
+        view.repintarCasillasTablero();
+    }
 
     public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador) {
         model.setListaFichasJugadorLocal(fichasJugador);
