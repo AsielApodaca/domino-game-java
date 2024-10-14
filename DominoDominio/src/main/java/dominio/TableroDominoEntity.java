@@ -300,7 +300,7 @@ public class TableroDominoEntity {
                 }
             } else if (extremo2AnteriorLocacionX - 2 < 0) { // Si la coordenada X para la nueva casilla es menor a 0, no cabe y cambia de direccion
                 casillaExtremo2.setLocacionX(extremo2AnteriorLocacionX); // Se coloca 0 a la izquierda
-                casillaExtremo2.setLocacionY(extremo2AnteriorLocacionY - 1); // Se coloca 1 a abajo
+                casillaExtremo2.setLocacionY(extremo2AnteriorLocacionY - 2); // Se coloca 1 a abajo
                 // Cambia de dirección para las siguientes casilla
                 direccionExtremo2 = DERECHA;
                 // rotacion
