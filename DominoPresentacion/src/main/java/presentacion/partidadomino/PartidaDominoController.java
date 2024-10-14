@@ -11,6 +11,8 @@ import fichabuilder.CasillaBuilder;
 import fichabuilder.FichaBuilderTablero;
 import fichabuilder.FichaBuilderUsuario;
 import fichabuilder.IFichaBuilder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import listeners.IPartidaDominoModelListener;
+import notificaciones.PresentacionNotificacionesManager;
+import notificaciones.eventos.CasillaSeleccionadaEvento;
 import presentacion.mediador.IMediador;
 import presentacion.mediador.Mediador;
 import presentacion.partidadomino.fichadominojugador.FichaDominoController;
@@ -77,7 +81,25 @@ public class PartidaDominoController implements IContenidoController{
             listaCasillas.add(casillaBuilder.construirCasilla(casillaDTO));
         }
         model.setListaPanelesCasillasParaColocarFichas(listaCasillas);
+        agregarMouseListenersACasillas();
         view.repintarCasillasTablero();
+    }
+    
+    private void agregarMouseListenersACasillas() {
+        for(CasillaPanel casilla : model.getListaPanelesCasillasParaColocarFichas()) {
+            casilla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                CasillaSeleccionadaEvento evento = new CasillaSeleccionadaEvento();
+                evento.setCasilla(casilla.getCasillaDTO());
+                
+                PresentacionNotificacionesManager presentacionNotificacionesManager = 
+                        model.getPresentacionNotificacionesManager();
+                
+                presentacionNotificacionesManager.notificarCambioAPresentacionListener(evento);
+            }
+        });
+        }
     }
     
     public void ocultarCasillasParaColocarFicha() {

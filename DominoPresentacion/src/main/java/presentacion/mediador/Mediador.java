@@ -27,7 +27,6 @@ public class Mediador implements IMediador {
     private static Mediador instancia; // Instancia única de si mismo
     private PartidaDominoController partidaDominoController; // MVC con el que se comunican las fichas
     private List<FichaDominoController> listaFichasJugadorLocal;
-    private PartidaDominoModel partidaDominoModel;
     
 
     private Mediador() {

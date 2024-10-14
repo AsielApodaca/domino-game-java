@@ -29,6 +29,7 @@ public class CasillaBuilder {
         asignarLocacion();
         asignarExtremoDeTablero();
         casillaPanel.cargarFondo();
+        casillaPanel.setCasillaDTO(casillaDTO);
     }
     
     private void asignarOrientacion() {

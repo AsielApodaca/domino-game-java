@@ -4,6 +4,7 @@
  */
 package logica.controladorFichas;
 
+import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.PozoEntity;
 import dominio.TableroDominoEntity;
@@ -19,5 +20,9 @@ public interface IControladorFichasLogica {
       void setTableroDomino(TableroDominoEntity tableroDominoEntity);
       List<FichaDominoEntity> obtenerFichasCompatibles(List<FichaDominoEntity> listaFichas);
       List<FichaDominoEntity> obtenerFichasNoCompatibles(List<FichaDominoEntity> listaFichas);
+      CasillaEntity colocarMula();
+      CasillaEntity colocarFichaExtremo1();
+      CasillaEntity colocarFichaExtremo2();
+      void removerFichaLista(List<FichaDominoEntity> listaFichas, FichaDominoEntity ficha);
 }
       

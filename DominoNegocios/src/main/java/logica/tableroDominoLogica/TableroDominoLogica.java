@@ -22,6 +22,8 @@ import estrategiacomparador.EstrategiaComparadorEntidades;
 import estrategiacomparador.IEstrategiaComparadorEntidades;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import listeners.IPresentacionListener;
 import logica.controladorFichas.ControladorFichasLogica;
 import logica.controladorFichas.IControladorFichasLogica;
@@ -30,6 +32,7 @@ import logica.controladorTurno.IControladorTurno;
 import mapeodto.MapeadorDTO;
 import notificaciones.IPresentacionNotificacionesManager;
 import notificaciones.PresentacionNotificacionesManager;
+import notificaciones.eventos.CasillaSeleccionadaEvento;
 import notificaciones.eventos.Evento;
 import notificaciones.eventos.FichaSeleccionadaEvento;
 import presentacion.partidadomino.fachada.FachadaPartidaDomino;
@@ -44,6 +47,7 @@ import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
  */
 public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionListener {
 
+    private static final Logger LOG = Logger.getLogger(TableroDominoLogica.class.getName());
     private IFachadaPartidaDomino fachadaPartidaDomino;
     private IControladorFichasLogica controladorFichas;
     private IControladorTurno controladorTurno;
@@ -88,6 +92,11 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
         switch(tipoEvento) {
             case "FichaSeleccionadaEvento":
                 fichaSeleccionadaEvento((FichaSeleccionadaEvento) evento);
+                break;
+            case "CasillaSeleccionadaEvento":
+                casillaSeleccionadaEvento((CasillaSeleccionadaEvento) evento);
+                break;
+                
         }
     }
     
@@ -103,10 +112,53 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
                             fichaSeleccionadaDTO, listaFichasJugador
                     );
             this.tableroDominoEntity.setFichaSeleccionada(fichaSeleccionadaEntity);
+            System.out.println(tableroDominoEntity.getFichaSeleccionada() == null);
             mostrarPosiblesMovimientos();
         }
         
     }
+    
+    private void casillaSeleccionadaEvento(CasillaSeleccionadaEvento evento) {
+        CasillaDTO casillaSeleccionada = evento.getCasilla();
+        CasillaEntity casilla = colocarFichaSeleccionadaEnTableroEntity(casillaSeleccionada.getExtremo());
+        removerFichaAJugador(casilla.getFichaDomino());
+        mostrarFichasJugadorLocal();
+        ocultarPosiblesMovimientos();
+        mostrarFichaEnTablero(casilla);
+        
+    }
+    
+    private void mostrarFichaEnTablero(CasillaEntity casillaEntity) {
+        CasillaDTO fichaAColocar = mapeadorDTO.casillaEntityADTO(casillaEntity);
+        fachadaPartidaDomino.colocarFichaTablero(fichaAColocar);
+        System.out.println(tableroDominoEntity.getValorExtremo1() + " " + tableroDominoEntity.getValorExtremo2());
+    }
+    
+    private void removerFichaAJugador(FichaDominoEntity fichaDominoEntity) {
+        List<FichaDominoEntity> listaFichasJugadorLocal = salaEntity.getJugadorLocal().getListaFichasJugador();
+        controladorFichas.removerFichaLista(listaFichasJugadorLocal, fichaDominoEntity);
+    }
+    
+    private CasillaEntity colocarFichaSeleccionadaEnTableroEntity(int extremoTablero) {
+        CasillaEntity casilla;
+        switch(extremoTablero) {
+            case CasillaDTO.MULA:
+                casilla = controladorFichas.colocarMula();
+                break;
+            case CasillaDTO.EXTREMO1:
+                casilla = controladorFichas.colocarFichaExtremo1();
+                break;
+            case CasillaDTO.EXTREMO2:
+                casilla = controladorFichas.colocarFichaExtremo2();
+                break;
+            default:
+                casilla = null;
+                LOG.log(Level.SEVERE, "La casilla seleccionada no pertenece a ningun extremo");
+        }
+        tableroDominoEntity.setFichaSeleccionada(null);
+        return casilla;
+    }
+    
     
     private void escucharEventosPartidaDomino() {
         presentacionNotificacionesManager.setPresentacionListener(this);
@@ -139,6 +191,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
         List<FichaDominoEntity> fichasCompatibles = controladorFichas.obtenerFichasCompatibles(fichasJugadorLocal);
         List<FichaDominoEntity> fichasNoCompatibles = controladorFichas.obtenerFichasNoCompatibles(fichasJugadorLocal);
         List<FichaDominoDTO> fichasJugadorLocalDTO = new ArrayList<>();
+        
         
         for(FichaDominoEntity ficha : fichasCompatibles) {
             FichaDominoDTO fichaDTO = new FichaDominoDTO(ficha.getExtremo1(), ficha.getExtremo2());
@@ -175,7 +228,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
             posiblesCasillasColocables.add(casillaMula);
         } else {
             // Verificar si la ficha se puede colocar en el extremo 1
-            if (puedeColocarEnExtremo(fichaSeleccionada, tableroDominoEntity.getValorExtremo2())) {
+            if (puedeColocarEnExtremo(fichaSeleccionada, tableroDominoEntity.getValorExtremo1())) {
                 CasillaDTO casillaExtremo1 = mapeadorDTO.casillaEntityADTO(tableroDominoEntity.obtenerPosibleCasillaExtremo1());
                 casillaExtremo1.setExtremo(casillaExtremo1.EXTREMO1);
                 posiblesCasillasColocables.add(casillaExtremo1);

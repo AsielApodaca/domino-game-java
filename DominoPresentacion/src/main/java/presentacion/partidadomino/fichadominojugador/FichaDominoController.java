@@ -48,7 +48,6 @@ public class FichaDominoController {
         this.view.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                mediador.notificarFichaSeleccionada(model.getFichaDominoDTO());
                 if (model.isCompatible()) {
                     model.setSeleccionada(!model.isSeleccionada());
                     if (model.isSeleccionada()) {

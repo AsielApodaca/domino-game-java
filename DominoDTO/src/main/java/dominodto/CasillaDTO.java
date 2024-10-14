@@ -12,9 +12,9 @@ package dominodto;
 public class CasillaDTO {
     
     
-    public final int MULA = 0;
-    public final int EXTREMO1 = 1;
-    public final int EXTREMO2 = 2;
+    public static final int MULA = 0;
+    public static final int EXTREMO1 = 1;
+    public static final int EXTREMO2 = 2;
     private int extremo;
     
     private int locacionX; // posición sobre el tablero en el eje X

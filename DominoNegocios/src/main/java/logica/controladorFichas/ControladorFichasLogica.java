@@ -4,6 +4,7 @@
  */
 package logica.controladorFichas;
 
+import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.PozoEntity;
 import dominio.TableroDominoEntity;
@@ -83,7 +84,7 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
         boolean[] extremosCompatibles = new boolean[2];
         
         int fichaExtremo1 = fichaDominoEntity.getExtremo1();
-        int fichaExtremo2 = fichaDominoEntity.getExtremo1();
+        int fichaExtremo2 = fichaDominoEntity.getExtremo2();
         
         int tableroExtremo1 = tableroDominoEntity.getValorExtremo1();
         int tableroExtremo2 = tableroDominoEntity.getValorExtremo2();
@@ -92,8 +93,8 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
             extremosCompatibles[0] = true;
             extremosCompatibles[1] = true;
         } else {
-            extremosCompatibles[0] = tableroExtremo1 == fichaExtremo1;
-            extremosCompatibles[1] = tableroExtremo2 == fichaExtremo2;
+            extremosCompatibles[0] = tableroExtremo1 == fichaExtremo1 || tableroExtremo1 == fichaExtremo2;
+            extremosCompatibles[1] = tableroExtremo2 == fichaExtremo1 || tableroExtremo2 == fichaExtremo2;
         }
         
         return extremosCompatibles;
@@ -109,18 +110,21 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
      * si aun no hay una mula inicial colocada, retorna la ficha más apropiada
      * para ser la ficha inicial
      */
+    @Override
     public List<FichaDominoEntity> obtenerFichasCompatibles(List<FichaDominoEntity> listaFichas) {
         List<FichaDominoEntity> fichasCompatibles = new ArrayList<>();
         if(tableroDominoEntity.getValorExtremo1() == -1) { // Todavía no hay mula puesta y solo debe haber una ficha compatible
+            System.out.println("if");
             FichaDominoEntity fichaInicial = obtenerMulaMayorEntreFichas(listaFichas);
             if(fichaInicial == null) {
                 fichaInicial = obtenerFichaMayorEntreFichas(listaFichas);
             }
             fichasCompatibles.add(fichaInicial);
         } else { // Ya existe una mula y puede haber varias fichas compatibles
-            
+            System.out.println("else");
             for(FichaDominoEntity ficha : listaFichas) {
                 boolean[] extremosCompatibles = obtenerExtremosCompatibles(ficha);
+                System.out.println(extremosCompatibles[0] + " " + extremosCompatibles[1]);
                 if(extremosCompatibles[0] || extremosCompatibles[1]) {
                     fichasCompatibles.add(ficha);
                 }
@@ -142,7 +146,7 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
         FichaDominoEntity mula = new FichaDominoEntity(-1, -1);
         for(FichaDominoEntity ficha : listaFichas) {
             int extremo1 = ficha.getExtremo1();
-            int extremo2 = ficha.getExtremo1();
+            int extremo2 = ficha.getExtremo2();
             if(extremo1 == extremo2) {
                 
                 int sumaExtremosMula = extremo1 + extremo2;
@@ -169,7 +173,7 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
         FichaDominoEntity fichaMayor = listaFichas.getFirst();
         for(FichaDominoEntity ficha : listaFichas) {
             int sumaExtremosFicha = ficha.getExtremo1() + ficha.getExtremo2();
-            int sumaExtremosFichaMayor = fichaMayor.getExtremo1() + ficha.getExtremo2();
+            int sumaExtremosFichaMayor = fichaMayor.getExtremo1() + fichaMayor.getExtremo2();
             
             if(sumaExtremosFicha > sumaExtremosFichaMayor) {
                 fichaMayor = ficha;
@@ -184,6 +188,7 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
      * @param listaFichas Lista de fichas a comparar si no som compatibles
      * @return las fichas que no son compatibles con ningún extremo
      */
+    @Override
     public List<FichaDominoEntity> obtenerFichasNoCompatibles(List<FichaDominoEntity> listaFichas) {
         List<FichaDominoEntity> listaFichasNoCompatibles = new ArrayList<>();
         List<FichaDominoEntity> listaFichasCompatibles = obtenerFichasCompatibles(listaFichas);
@@ -195,4 +200,34 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
         
         return listaFichasNoCompatibles;
     }
+    
+    @Override
+    public CasillaEntity colocarMula() {
+        FichaDominoEntity mula = tableroDominoEntity.getFichaSeleccionada();
+        tableroDominoEntity.colocarMula(mula);
+        CasillaEntity casillaMula = tableroDominoEntity.getCasillaMula();
+        return casillaMula;
+    }
+    
+    @Override
+    public CasillaEntity colocarFichaExtremo1() {
+        FichaDominoEntity ficha = tableroDominoEntity.getFichaSeleccionada();
+        tableroDominoEntity.colocarFichaExtremo1(ficha);
+        CasillaEntity casillaMula = tableroDominoEntity.getCasillaExtremo1();
+        return casillaMula;
+    }
+    
+    @Override
+    public CasillaEntity colocarFichaExtremo2() {
+        FichaDominoEntity ficha = tableroDominoEntity.getFichaSeleccionada();
+        tableroDominoEntity.colocarFichaExtremo2(ficha);
+        CasillaEntity casillaMula = tableroDominoEntity.getCasillaExtremo2();
+        return casillaMula;
+    }
+    
+    @Override
+    public void removerFichaLista(List<FichaDominoEntity> listaFichas, FichaDominoEntity ficha) {
+        listaFichas.remove(ficha);
+    }
+    
 }

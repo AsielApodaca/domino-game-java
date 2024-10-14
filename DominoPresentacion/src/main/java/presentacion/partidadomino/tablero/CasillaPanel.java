@@ -4,6 +4,7 @@
  */
 package presentacion.partidadomino.tablero;
 
+import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -32,6 +33,7 @@ public class CasillaPanel extends JPanel{
     private boolean esHorizontal;
     private int locacionX;
     private int locacionY;
+    private CasillaDTO casillaDTO;
 
     public CasillaPanel() {
         setLayout(null);
@@ -111,6 +113,14 @@ public class CasillaPanel extends JPanel{
 
     public int getEXTREMO2() {
         return EXTREMO2;
+    }
+
+    public CasillaDTO getCasillaDTO() {
+        return casillaDTO;
+    }
+
+    public void setCasillaDTO(CasillaDTO casillaDTO) {
+        this.casillaDTO = casillaDTO;
     }
     
     

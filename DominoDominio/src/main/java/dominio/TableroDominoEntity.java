@@ -15,8 +15,8 @@ public class TableroDominoEntity {
     private final int IZQUIERDA = 0; // El extremo de la cadena de fichas se extiende actualmente hacia la izquierda
     private final int DERECHA = 1; // El extremo de la cadena de fichas se extiende actualmente hacia la derecha
 
-    private final int anchoTablero = 9; // ancho usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
-    private final int alturaTablero = 20; // altura usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
+    private final int anchoTablero = 20; // ancho usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
+    private final int alturaTablero = 9; // altura usable del tablero para colocar fichas, cada unidad es el ancho de una ficha (1 unidad)
 
     private final int casillaMulaLocacionX = 9; // Locacion de la casilla de la mula en el eje X
     private final int casillaMulaLocacionY = 4; // Locacion de la casilla de la mula en el eje Y
@@ -79,6 +79,10 @@ public class TableroDominoEntity {
         return casillaExtremo2;
     }
 
+    public CasillaEntity getCasillaMula() {
+        return casillaMula;
+    }
+
     public int getValorExtremo2() {
         return valorExtremo2;
     }
@@ -135,8 +139,8 @@ public class TableroDominoEntity {
             casillaMula.setSiguienteCasilla(casilla);
             casilla.setAnteriorCasilla(casillaMula);
         } else {
-            casillaExtremo1.setSiguienteCasilla(casilla);
-            casilla.setAnteriorCasilla(casillaExtremo1);
+            casillaExtremo2.setSiguienteCasilla(casilla);
+            casilla.setAnteriorCasilla(casillaExtremo2);
         }
         casillaExtremo2 = casilla;
 
@@ -146,38 +150,39 @@ public class TableroDominoEntity {
     }
 
     private void posicionarCasillaExtremo1() {
+        System.out.println("Direcion extremo 1 " + direccionExtremo1);
 
         int fichaValorExtremo1 = casillaExtremo1.getFichaDomino().getExtremo1(); // Valor del extremo 1 de la ficha
         int fichaValorExtremo2 = casillaExtremo1.getFichaDomino().getExtremo2(); // Valor del extremo 2 de la ficha
 
-        CasillaEntity extremo1Anterior = casillaExtremo1.getAnteriorCasilla();
+        CasillaEntity extremo1Anterior = casillaExtremo1.getSiguienteCasilla();
         int extremo1AnteriorLocacionX = extremo1Anterior.getLocacionX(); // locacion x del antiguo extremo 1
         int extremo1AnteriorLocacionY = extremo1Anterior.getLocacionY(); // locacion y del antiguo extremo 1
         int extremo1AnteriorRotacion = extremo1Anterior.getRotacion();
-        boolean extremo2AnteriorEsVertical; // Si la ficha es vertical o horizontal
+        boolean extremo1AnteriorEsVertical; // Si la ficha es vertical o horizontal
 
         switch (extremo1AnteriorRotacion) { // verifica la orientación de la ficha
             case 0:
-                extremo2AnteriorEsVertical = false;
+                extremo1AnteriorEsVertical = false;
                 break;
             case 90:
-                extremo2AnteriorEsVertical = true;
+                extremo1AnteriorEsVertical = true;
                 break;
             case 180:
-                extremo2AnteriorEsVertical = false;
+                extremo1AnteriorEsVertical = false;
                 break;
             case 270:
-                extremo2AnteriorEsVertical = true;
+                extremo1AnteriorEsVertical = true;
                 break;
             default:
-                extremo2AnteriorEsVertical = false;
+                extremo1AnteriorEsVertical = false;
         }
 
         // Asigna coordenadas y orientación del nuevo extremo
         if (direccionExtremo1 == IZQUIERDA) {
-            if (extremo2AnteriorEsVertical) { // Si el anterior extremo era vertical
+            if (extremo1AnteriorEsVertical) { // Si el anterior extremo era vertical
                 casillaExtremo1.setLocacionX(extremo1AnteriorLocacionX - 2); // Se coloca 2 a la izquierda
-                casillaExtremo1.setLocacionY(extremo1AnteriorLocacionY - 1); // Se coloca 1 abajo
+                casillaExtremo1.setLocacionY(extremo1AnteriorLocacionY + 1); // Se coloca 1 abajo
                 // rotacion
                 if (fichaValorExtremo2 == valorExtremo1) {
                     casillaExtremo1.setRotacion(0);
@@ -188,7 +193,7 @@ public class TableroDominoEntity {
                 }
             } else if (extremo1AnteriorLocacionX - 2 < 0) { // Si la coordenada X para la nueva casilla es menor a 0, no cabe y cambia de direccion
                 casillaExtremo1.setLocacionX(extremo1AnteriorLocacionX); // Se coloca 0 a la izquierda
-                casillaExtremo1.setLocacionY(extremo1AnteriorLocacionY - 1); // Se coloca 1 a abajo
+                casillaExtremo1.setLocacionY(extremo1AnteriorLocacionY + 1); // Se coloca 1 a abajo
                 // Cambia de dirección para las siguientes casillas
                 direccionExtremo1 = DERECHA;
                 // rotacion
@@ -213,9 +218,9 @@ public class TableroDominoEntity {
             }
 
         } else if (direccionExtremo1 == DERECHA) {
-            if (extremo2AnteriorEsVertical) { // Si el anterior extremo era vertical
+            if (extremo1AnteriorEsVertical) { // Si el anterior extremo era vertical
                 casillaExtremo1.setLocacionX(extremo1AnteriorLocacionX + 1); // Se coloca 1 a la derecha
-                casillaExtremo1.setLocacionY(extremo1AnteriorLocacionY - 1); // Se coloca 1 abajo
+                casillaExtremo1.setLocacionY(extremo1AnteriorLocacionY + 1); // Se coloca 1 abajo
                 // rotacion
                 if (fichaValorExtremo1 == valorExtremo1) {
                     casillaExtremo1.setRotacion(0);
@@ -226,7 +231,7 @@ public class TableroDominoEntity {
                 }
             } else if (extremo1AnteriorLocacionX + 4 > anchoTablero) { // Si la coordenada X para la nueva casilla es mayor que 20, no cabe y cambia de direccion
                 casillaExtremo1.setLocacionX(extremo1AnteriorLocacionX + 1); // Se coloca 1 a la derecha
-                casillaExtremo1.setLocacionY(extremo1AnteriorLocacionY - 1); // Se coloca 1 a abajo
+                casillaExtremo1.setLocacionY(extremo1AnteriorLocacionY + 1); // Se coloca 1 a abajo
                 // Cambia de dirección para las siguientes casillas
                 direccionExtremo1 = IZQUIERDA;
                 // rotacion
@@ -253,11 +258,11 @@ public class TableroDominoEntity {
     }
 
     private void posicionarCasillaExtremo2() {
-
+        System.out.println("Direcion extremo 2 " + direccionExtremo2);
         int fichaValorExtremo1 = casillaExtremo2.getFichaDomino().getExtremo1(); // Valor del extremo 1 de la ficha
         int fichaValorExtremo2 = casillaExtremo2.getFichaDomino().getExtremo2(); // Valor del extremo 2 de la ficha
 
-        CasillaEntity extremo2Anterior = casillaExtremo2.getSiguienteCasilla();
+        CasillaEntity extremo2Anterior = casillaExtremo2.getAnteriorCasilla();
         int extremo2AnteriorLocacionX = extremo2Anterior.getLocacionX(); // locacion x del antiguo extremo 1
         int extremo2AnteriorLocacionY = extremo2Anterior.getLocacionY(); // locacion y del antiguo extremo 1
         int extremo2AnteriorRotacion = extremo2Anterior.getRotacion();
@@ -322,7 +327,7 @@ public class TableroDominoEntity {
         } else if (direccionExtremo2 == DERECHA) {
             if (extremo2AnteriorEsVertical) { // Si la casilla anterior al extremo actual es vertical
                 casillaExtremo2.setLocacionX(extremo2AnteriorLocacionX + 1); // Se coloca 1 a la derecha
-                casillaExtremo2.setLocacionY(extremo2AnteriorLocacionY - 1); // Se coloca 1 abajo
+                casillaExtremo2.setLocacionY(extremo2AnteriorLocacionY); // Se mantiene igual
                 // rotacion
                 if (fichaValorExtremo1 == valorExtremo2) {
                     casillaExtremo2.setRotacion(0);
@@ -333,7 +338,7 @@ public class TableroDominoEntity {
                 }
             } else if (extremo2AnteriorLocacionX + 4 > anchoTablero) { // Si la coordenada X para la nueva casilla es mayor que 20, no cabe y cambia de direccion
                 casillaExtremo2.setLocacionX(extremo2AnteriorLocacionX + 1); // Se coloca 1 a la derecha
-                casillaExtremo2.setLocacionY(extremo2AnteriorLocacionY - 1); // Se coloca 1 a abajo
+                casillaExtremo2.setLocacionY(extremo2AnteriorLocacionY - 2); // Se coloca 2 a arriba
                 // Cambia de dirección para las siguientes casilla
                 direccionExtremo2 = IZQUIERDA;
                 // rotacion
@@ -396,11 +401,11 @@ public class TableroDominoEntity {
         if (direccionExtremo1 == IZQUIERDA) {
             if (extremo1EsVertical) { // Si la casilla del extremo 1 es vertical
                 posibleCasilla.setLocacionX(extremo1LocacionX - 2); // Se coloca 2 a la izquierda
-                posibleCasilla.setLocacionY(extremo1LocacionY - 1); // Se coloca 1 abajo
+                posibleCasilla.setLocacionY(extremo1LocacionY + 1); // Se coloca 1 abajo
                 posibleCasilla.setRotacion(0); // Horizontal
             } else if (extremo1LocacionX - 2 < 0) { // Si la coordenada X para la posible casilla es menor a 0, no cabe y cambia de direccion
                 posibleCasilla.setLocacionX(extremo1LocacionX); // Se coloca 0 a la izquierda
-                posibleCasilla.setLocacionY(extremo1LocacionY - 1); // Se coloca 1 a abajo
+                posibleCasilla.setLocacionY(extremo1LocacionY + 1); // Se coloca 1 a abajo
                 posibleCasilla.setRotacion(90); // Vertical
             } else { // La posible casilla si cabe en el tablero y extremo1 no es una casilla vertical
                 posibleCasilla.setLocacionX(extremo1LocacionX - 2); // Se coloca 2 a la izquierda
@@ -411,11 +416,11 @@ public class TableroDominoEntity {
         } else if (direccionExtremo1 == DERECHA) {
             if (extremo1EsVertical) { // Si la casilla extremo 1 es vertical
                 posibleCasilla.setLocacionX(extremo1LocacionX + 1); // Se coloca 1 a la derecha
-                posibleCasilla.setLocacionY(extremo1LocacionY - 1); // Se coloca 1 abajo
+                posibleCasilla.setLocacionY(extremo1LocacionY + 1); // Se coloca 1 abajo
                 posibleCasilla.setRotacion(0); // Horizontal
             } else if (extremo1LocacionX + 4 > anchoTablero) { // Si la coordenada X para la posible casilla es mayor que 20, no cabe y cambia de direccion
                 posibleCasilla.setLocacionX(extremo1LocacionX + 1); // Se coloca 1 a la derecha
-                posibleCasilla.setLocacionY(extremo1LocacionY - 1); // Se coloca 1 a abajo
+                posibleCasilla.setLocacionY(extremo1LocacionY + 1); // Se coloca 1 a abajo
                 posibleCasilla.setRotacion(90); // Vertical
             } else { // La nueva casilla si cabe en el tablero y no proviene de una casilla vertical
                 posibleCasilla.setLocacionX(extremo1LocacionX + 2); // Se coloca 2 a la izquierda
@@ -456,11 +461,11 @@ public class TableroDominoEntity {
         if (direccionExtremo2 == IZQUIERDA) {
             if (extremo2EsVertical) { // Si el extremo 2 es vertical
                 posibleCasilla.setLocacionX(extremo2LocacionX - 2); // Se coloca 2 a la izquierda
-                posibleCasilla.setLocacionY(extremo2LocacionY - 1); // Se coloca 1 abajo
+                posibleCasilla.setLocacionY(extremo2LocacionY); // Se mantiene igual
                 posibleCasilla.setRotacion(0); // Horizontal
             } else if (extremo2LocacionX - 2 < 0) { // Si la coordenada X para la posible casilla es menor a 0, no cabe y cambia de direccion
                 posibleCasilla.setLocacionX(extremo2LocacionX); // Se coloca 0 a la izquierda
-                posibleCasilla.setLocacionY(extremo2LocacionY - 1); // Se coloca 1 a abajo
+                posibleCasilla.setLocacionY(extremo2LocacionY - 2); // Se coloca 2 a arriba
                 posibleCasilla.setRotacion(90); // Vertical
             } else { // La posible casilla si cabe en el tablero y extremo 2 no es vertical
                 posibleCasilla.setLocacionX(extremo2LocacionX - 2); // Se coloca 2 a la izquierda
@@ -471,11 +476,11 @@ public class TableroDominoEntity {
         } else if (direccionExtremo2 == DERECHA) {
             if (extremo2EsVertical) { // Si el extremo 2 es vertical
                 posibleCasilla.setLocacionX(extremo2LocacionX + 1); // Se coloca 1 a la derecha
-                posibleCasilla.setLocacionY(extremo2LocacionY - 1); // Se coloca 1 abajo
+                posibleCasilla.setLocacionY(extremo2LocacionY); // Se coloca 1 arriba
                 posibleCasilla.setRotacion(0); // Horizontal
             } else if (extremo2LocacionX + 4 > anchoTablero) { // Si la coordenada X para la posible casilla es mayor que 20, no cabe y cambia de direccion
                 posibleCasilla.setLocacionX(extremo2LocacionX + 1); // Se coloca 1 a la derecha
-                posibleCasilla.setLocacionY(extremo2LocacionY - 1); // Se coloca 1 a abajo
+                posibleCasilla.setLocacionY(extremo2LocacionY - 2); // Se coloca 2 a arriba
                 posibleCasilla.setRotacion(90); // Vertical
             } else { // La posible casilla si cabe en el tablero y extremo 2 no es vertical
                 posibleCasilla.setLocacionX(extremo2LocacionX + 2); // Se coloca 2 a la izquierda
