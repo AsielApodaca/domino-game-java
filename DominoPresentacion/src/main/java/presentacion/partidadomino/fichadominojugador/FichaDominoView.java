@@ -3,13 +3,18 @@ package presentacion.partidadomino.fichadominojugador;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class FichaDominoView extends JPanel {
+
     private FichaDominoModel model;
     private BufferedImage margen;
     private BufferedImage imgExtremo1;
@@ -22,10 +27,21 @@ public class FichaDominoView extends JPanel {
     }
 
     public void cargarComponentes() throws IOException {
-        margen = cargarImagen(model.getImagenMargenDomino());
+        margen = cargarImagen(model.getFondoFicha());
         imgExtremo1 = cargarImagen(model.getImgExtremo1());
         imgExtremo2 = cargarImagen(model.getImgExtremo2());
+
         actualizarTamanio();
+    }
+
+    public void actualizarFondo() {
+        try {
+            margen = ImageIO.read(getClass().getResource(model.getFondoFicha()));
+            revalidate();
+            repaint();
+        } catch (IOException ex) {
+            Logger.getLogger(FichaDominoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private BufferedImage cargarImagen(String ruta) throws IOException {

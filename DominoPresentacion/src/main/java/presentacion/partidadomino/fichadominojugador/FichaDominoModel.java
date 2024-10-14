@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class FichaDominoModel {
 
-    private final String imagenMargenDomino = "/multimedia/DominoFondo.png";
+    private String imagenMargenDomino;
     // Mayormente usado para panel de fichas del jugador local
     private FichaDominoDTO fichaDominoDTO; // Ficha que representa el panel
     private final int anchoFicha = 30; // ancho del panel de la ficha
@@ -33,7 +33,7 @@ public class FichaDominoModel {
     // Valor de los extremos
     private int valorExtremo1;
     private int valorExtremo2;
-    
+
     // Imagenes de los numeros de cada extremo
     private String imgExtremo1; // Fuente de la imagen del extremo 1
     private String imgExtremo2; // Fuente de la imagen del extremo 1
@@ -42,10 +42,41 @@ public class FichaDominoModel {
     private boolean seleccionada; // Si la ficha está seleccionada
     private boolean colocada; // Si la ficha ha sido colocada en el tablero;
 
+    private final String fondoFichaNormal = "/multimedia/DominoFondo.png";
+    private String fondoFicha;
+    private final String fondoSeleccionado = "/multimedia/DominoSeleccionadoFondo.png";
+    private final String fondoCompatible = "/multimedia/DominoCompatibleFondo.png";
+
     private float escala; // Escala
-    
+
     public FichaDominoModel(FichaDominoDTO fichaDominoDTO) { // Se instancia cuando la ficha es para la mano del jugador local
         this.fichaDominoDTO = fichaDominoDTO;
+        this.compatible = true;
+        this.fondoFicha = "/multimedia/DominoFondo.png";
+    }
+
+    public void setImagenMargenDomino(String imagenMargenDomino) {
+        this.imagenMargenDomino = imagenMargenDomino;
+    }
+
+    public String getFondoFicha() {
+        return fondoFicha;
+    }
+
+    public void setFondoFicha(String fondoFicha) {
+        this.fondoFicha = fondoFicha;
+    }
+
+    public String getFondoFichaNormal() {
+        return fondoFichaNormal;
+    }
+
+    public String getFondoSeleccionado() {
+        return fondoSeleccionado;
+    }
+
+    public String getFondoCompatible() {
+        return fondoCompatible;
     }
 
     public float getEscala() {
@@ -55,7 +86,7 @@ public class FichaDominoModel {
     public void setEscala(float escala) {
         this.escala = escala;
     }
-    
+
 //    private void iniciarFichaJugadorLocal() {
 //        this.anchoFicha = 30;
 //        this.alturaFicha = 60;
@@ -88,13 +119,12 @@ public class FichaDominoModel {
 //        }
 //                
 //    }
-    
     private void voltearExtremosFicha() {
         int valorExtremo1Copia = this.valorExtremo1;
         this.valorExtremo1 = this.valorExtremo2;
         this.valorExtremo2 = valorExtremo1Copia;
     }
-    
+
     public String getImagenMargenDomino() {
         return imagenMargenDomino;
     }
@@ -145,6 +175,22 @@ public class FichaDominoModel {
 
     public void setFichaDominoDTO(FichaDominoDTO fichaDominoDTO) {
         this.fichaDominoDTO = fichaDominoDTO;
+    }
+
+    public boolean isSeleccionada() {
+        return seleccionada;
+    }
+
+    public void setSeleccionada(boolean seleccionada) {
+        this.seleccionada = seleccionada;
+    }
+
+    public boolean isCompatible() {
+        return compatible;
+    }
+
+    public void setCompatible(boolean compatible) {
+        this.compatible = compatible;
     }
 
 }

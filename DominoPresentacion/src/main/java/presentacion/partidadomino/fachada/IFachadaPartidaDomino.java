@@ -21,8 +21,6 @@ public interface IFachadaPartidaDomino {
 
     void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador);
 
-    public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino);
-
     public void colocarFichaTablero(CasillaDTO casillaDTO);
 
     void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO);

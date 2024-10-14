@@ -46,11 +46,6 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     }
 
     @Override
-    public void actualizarFichasJugadorLocal(List<FichaDominoDTO> listaFichasDomino) {
-        partidaDominoModel.setListaFichasJugadorLocal(listaFichasDomino);
-    }
-
-    @Override
     public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador) {
         partidaDominoController.mostrarFichasJugadorLocal(fichasJugador);
     }

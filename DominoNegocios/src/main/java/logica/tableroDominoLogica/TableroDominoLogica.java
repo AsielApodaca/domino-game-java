@@ -71,7 +71,6 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         asignarTurnosAJugadores();
         obtenerJugadorLocal();
         mostrarFichas();
-//        mostrarFichas();
 
         // Se colocará este metodo cuando el mvc ya tenga listeners
     }
@@ -106,20 +105,20 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         controladorFichas.setPozo(pozo);
     }
 
-    private void simularListaFichasDTO() { // temporal
-        List<FichaDominoDTO> listaFichas = new ArrayList<>();
-
-        listaFichas.add(new FichaDominoDTO(6, 6));
-        listaFichas.add(new FichaDominoDTO(1, 6));
-        listaFichas.add(new FichaDominoDTO(1, 4));
-        listaFichas.add(new FichaDominoDTO(4, 4));
-        listaFichas.add(new FichaDominoDTO(4, 5));
-        listaFichas.add(new FichaDominoDTO(3, 4));
-        listaFichas.add(new FichaDominoDTO(3, 0));
-
-        fachadaPartidaDomino.mostrarFichasJugadorLocal(listaFichas);
-
-    }
+//    private void simularListaFichasDTO() { // temporal
+//        List<FichaDominoDTO> listaFichas = new ArrayList<>();
+//
+//        listaFichas.add(new FichaDominoDTO(6, 6));
+//        listaFichas.add(new FichaDominoDTO(1, 6));
+//        listaFichas.add(new FichaDominoDTO(1, 4));
+//        listaFichas.add(new FichaDominoDTO(4, 4));
+//        listaFichas.add(new FichaDominoDTO(4, 5));
+//        listaFichas.add(new FichaDominoDTO(3, 4));
+//        listaFichas.add(new FichaDominoDTO(3, 0));
+//
+//        fachadaPartidaDomino.mostrarFichasJugadorLocal(listaFichas);
+//
+//    }
 
     @Override
     public void onFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
