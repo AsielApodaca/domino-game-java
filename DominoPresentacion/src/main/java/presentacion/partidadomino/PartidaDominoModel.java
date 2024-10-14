@@ -13,6 +13,7 @@ import contenedorpantallas.IContenidoController;
 import java.awt.event.ActionListener;
 import listeners.ITableroDominoLogicaListener;
 import listeners.IPartidaDominoModelListener;
+import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
 
 /**
  *
@@ -47,7 +48,7 @@ public class PartidaDominoModel{
     private int tableroLocacionY; // locación del tablero en el eje de las Y
 
     private int anchoFichaTablero; // ancho de las fichas dentro del tablero
-    private int altoFichaTablero; // alto de las fichas dentro del tablero
+    private int largoFichaTablero; // alto de las fichas dentro del tablero
 
     // Configuración de la partida
     private int numeroDeJugadores; // Número de jugadores dentro de la partida
@@ -56,6 +57,7 @@ public class PartidaDominoModel{
     private TableroDominoDTO tableroDominoDTO; // tablero con posiciones de las fichas
     private List<FichaDominoDTO> listaFichasJugadorLocal; // Lista de fichas del jugador del disposivo
     private List<FichaDominoView> listaPanelesFichasJugadorLocal; // Lista de panales de fichas del jugador del dispositivo
+    private List<FichaDominoTablero> listaPanelesFichasSobreTablero; // Lista de paneles de fichas sobre el tablero
     //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
 
     private List<IPartidaDominoModelListener> listeners ;
@@ -79,10 +81,11 @@ public class PartidaDominoModel{
         this.tableroLocacionX = 100;
         this.tableroLocacionY = 100;
         this.anchoFichaTablero = 15;
-        this.altoFichaTablero = 30;
+        this.largoFichaTablero = 30;
         this.numeroDeJugadores = 1; // temporal
         this.listaFichasJugadorLocal = new ArrayList<>();
         this.listaFichasJugadorLocal = new ArrayList<>();
+        this.listaPanelesFichasSobreTablero = new ArrayList<>();
         listeners = new ArrayList() ;
     }
     
@@ -98,6 +101,14 @@ public class PartidaDominoModel{
         });
     }
 
+    public List<FichaDominoTablero> getListaPanelesFichasSobreTablero() {
+        return listaPanelesFichasSobreTablero;
+    }
+
+    public void agregarPanelFichaSobreTablero(FichaDominoTablero fichaDominoTablero) {
+        listaPanelesFichasSobreTablero.add(fichaDominoTablero);
+    }
+    
     public List<FichaDominoView> getListaPanelesFichasJugadorLocal() {
         return listaPanelesFichasJugadorLocal;
     }
@@ -179,8 +190,8 @@ public class PartidaDominoModel{
         return anchoFichaTablero;
     }
 
-    public int getAltoFichaTablero() {
-        return altoFichaTablero;
+    public int getLargoFichaTablero() {
+        return largoFichaTablero;
     }
 
     public TableroDominoDTO getTableroDominoDTO() {

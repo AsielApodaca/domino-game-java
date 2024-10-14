@@ -28,7 +28,7 @@ import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoView extends JPanel{
+public class PartidaDominoView extends JPanel {
 
     private PartidaDominoModel model; // modelo de PartidaDomino
 
@@ -42,22 +42,6 @@ public class PartidaDominoView extends JPanel{
         this.model = model;
         cargarComponentes();
 //        asignarListeners();
-        // pruebas
-        FichaBuilderTablero fichaBuilderTablero = new FichaBuilderTablero();
-        FichaDominoDTO fichaDominoDTO = new FichaDominoDTO(2, 6);
-        CasillaDTO casillaDTO = new CasillaDTO();
-        casillaDTO.setFichaDominoDTO(fichaDominoDTO);
-        casillaDTO.setLocacionX(50);
-        casillaDTO.setLocacionY(50);
-        casillaDTO.setRotacion(270);
-        FichaDominoTablero fichaDominoTablero = fichaBuilderTablero.construirFicha(casillaDTO);
-
-        panelTablero.add(fichaDominoTablero);
-        if (casillaDTO.getRotacion() == 0 || casillaDTO.getRotacion() == 180) {
-            fichaDominoTablero.setBounds(50, 50, 300, 150); // Horizontal
-        } else {
-            fichaDominoTablero.setBounds(50, 50, 150, 300); // Vertical
-        }
         revalidate();
         repaint();
     }
@@ -120,23 +104,23 @@ public class PartidaDominoView extends JPanel{
 
         repintarVista();
     }
-    
 
     public void repintarVista() {
         repintarPanel();
         repintarContenedorFichasJugadorLocal();
         repintarTablero();
+        repintarFichasTablero();
 
 //        model.redimencionarFichasJugadorLocal();
         revalidate();
         repaint();
     }
-    
+
     private void repintarPanel() {
         int ancho = (int) (model.getAnchoPantalla() * model.getEscala());
         int altura = (int) (model.getAlturaPantalla() * model.getEscala());
         setPreferredSize(new Dimension(ancho, altura));
-        
+
         revalidate();
         repaint();
     }
@@ -160,20 +144,20 @@ public class PartidaDominoView extends JPanel{
                 anchoContenedorFichasJugadorLocal,
                 altoContenedorFichasJugadorLocal
         );
-        
+
         revalidate();
         repaint();
     }
-    
-   public void repintarFichasJugadorLocal() {
-       panelContenedorFichasJugadorLocal.removeAll();
-       for(FichaDominoView fichaPanel : model.getListaPanelesFichasJugadorLocal()) {
-           panelContenedorFichasJugadorLocal.add(fichaPanel);
-       }
-       
-       revalidate();
-       repaint();
-   }
+
+    public void repintarFichasJugadorLocal() {
+        panelContenedorFichasJugadorLocal.removeAll();
+        for (FichaDominoView fichaPanel : model.getListaPanelesFichasJugadorLocal()) {
+            panelContenedorFichasJugadorLocal.add(fichaPanel);
+        }
+
+        revalidate();
+        repaint();
+    }
 
     private void repintarTablero() {
         // Redimencionar y posicionar panelTablero
@@ -182,7 +166,49 @@ public class PartidaDominoView extends JPanel{
         int tableroX = (int) (model.getTableroLocacionX() * model.getEscala());
         int tableroY = (int) (model.getTableroLocacionY() * model.getEscala());
         panelTablero.setBounds(tableroX, tableroY, tableroAncho, tableroAltura);
-        
+
+        revalidate();
+        repaint();
+    }
+
+    public void colocarFichaTablero(FichaDominoTablero fichaDominoTablero) {
+        panelTablero.add(fichaDominoTablero);
+
+    }
+
+    public void repintarFichasTablero() {
+        float escala = model.getEscala();
+//        int anchoTableroDTO = model.getTableroDominoDTO().getAnchoTablero();
+//        int alturaTableroDTO = model.getTableroDominoDTO().getAltoTablero();
+        int anchoTableroDTO = 20; // temporal
+        int alturaTableroDTO = 9; // temporal
+        int anchoTablero = (int) (model.getAnchoTablero() * escala);
+        int alturaTablero = (int) (model.getAlturaTablero() * escala);
+        int anchoUsableTablero = (int) (anchoTableroDTO * model.getAnchoFichaTablero() * escala);
+        int alturaUsableTablero = (int) (alturaTableroDTO * model.getAnchoFichaTablero() * escala);
+        int margenAnchoTablero = (int) ((anchoTablero - anchoUsableTablero) / 2);
+        int margenAlturaTablero = (int) ((alturaTablero - alturaUsableTablero) / 2);
+
+        for (FichaDominoTablero fichaDominoTablero : model.getListaPanelesFichasSobreTablero()) {
+            int locacionX = (int) (fichaDominoTablero.getLocacionX() * model.getAnchoFichaTablero() * escala);
+            int locacionY = (int) (fichaDominoTablero.getLocacionY() * model.getAnchoFichaTablero() * escala);
+            locacionX += margenAnchoTablero;
+            locacionY += margenAlturaTablero;
+            
+            int anchoFichaTablero;
+            int alturaFichaTablero;
+
+            if (fichaDominoTablero.getEsHorizontal()) {
+                anchoFichaTablero = (int) (escala * model.getLargoFichaTablero()); // Horizontal
+                alturaFichaTablero = (int) (escala * model.getAnchoFichaTablero());
+            } else {
+                anchoFichaTablero = (int) (escala * model.getAnchoFichaTablero()); // Vertical
+                alturaFichaTablero = (int) (escala * model.getLargoFichaTablero());
+            }
+            
+            fichaDominoTablero.setBounds(locacionX, locacionY, anchoFichaTablero, alturaFichaTablero);
+            
+        }
         revalidate();
         repaint();
     }
@@ -195,10 +221,8 @@ public class PartidaDominoView extends JPanel{
             g.drawImage(fondoPantalla, 0, 0, getWidth(), getHeight(), this);
         }
     }
-    
+
 //    private void asignarListeners() {
 //        this.model.agregarListenerView(this);
 //    }
-
-
 }

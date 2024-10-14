@@ -7,6 +7,7 @@ package presentacion.partidadomino;
 import contenedorpantallas.IContenidoController;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
+import fichabuilder.FichaBuilderTablero;
 import fichabuilder.FichaBuilderUsuario;
 import fichabuilder.IFichaBuilder;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import presentacion.mediador.IMediador;
 import presentacion.mediador.Mediador;
 import presentacion.partidadomino.fichadominojugador.FichaDominoController;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
+import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
 
 /**
  *
@@ -33,6 +35,7 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
     private PartidaDominoModel model;
     private PartidaDominoView view;
     private final Mediador mediador = Mediador.getInstance();
+    private final FichaBuilderTablero fichaBuilderTablero = new FichaBuilderTablero();
 
     public PartidaDominoController(PartidaDominoModel model, PartidaDominoView view) {
         this.model = model;
@@ -41,10 +44,27 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
 
         view.repintarVista();
 //        view.actualizarListaFichasJugadorLocal();
+        simularFichaTablero();
+    }
+    
+    private void simularFichaTablero() {
+        
+        FichaDominoDTO fichaDominoDTO = new FichaDominoDTO(2, 6);
+        CasillaDTO casillaDTO = new CasillaDTO();
+        casillaDTO.setFichaDominoDTO(fichaDominoDTO);
+        casillaDTO.setLocacionX(9);
+        casillaDTO.setLocacionY(5);
+        casillaDTO.setRotacion(270);
+        
+        colocarFichaTablero(casillaDTO);
     }
 
     public void colocarFichaTablero(CasillaDTO casillaDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        FichaDominoTablero fichaDominoTablero;
+        fichaDominoTablero = fichaBuilderTablero.construirFicha(casillaDTO);
+        model.agregarPanelFichaSobreTablero(fichaDominoTablero);
+        view.colocarFichaTablero(fichaDominoTablero);
+        view.repintarFichasTablero();
     }
 
     public void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO) {

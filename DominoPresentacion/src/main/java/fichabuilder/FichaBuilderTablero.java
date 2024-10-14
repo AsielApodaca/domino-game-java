@@ -13,17 +13,33 @@ public class FichaBuilderTablero implements IFichaBuilder {
         this.casillaDTO = casillaDTO;
         this.fichaDTO = casillaDTO.getFichaDominoDTO();
         this.fichaDominoTablero = new FichaDominoTablero();
+        this.fichaDominoTablero.setFichaDominoDTO(casillaDTO.getFichaDominoDTO());
+        
         iniciarFichaParaTablero();
-        cargarImagenesFicha();
-        fichaDominoTablero.cargarFondo();
         
         return fichaDominoTablero;
     }
 
     private void iniciarFichaParaTablero() {
-        fichaDominoTablero.setFichaDominoDTO(casillaDTO.getFichaDominoDTO());
+        asignarOrientacion();
+        cargarImagenesFicha();
+        asignarLocacion();
+    }
+    
+    private void asignarOrientacion() {
         int rotacion = casillaDTO.getRotacion();
-        fichaDominoTablero.setRotacion(rotacion);
+        if(rotacion == 0 || rotacion == 180) {
+            fichaDominoTablero.setEsHorizontal(true);
+        } else {
+            fichaDominoTablero.setEsHorizontal(false);
+        }
+    }
+    
+    private void asignarLocacion() {
+        int locacionX = casillaDTO.getLocacionX();
+        int locacionY = casillaDTO.getLocacionY();
+        fichaDominoTablero.setLocacionX(locacionX);
+        fichaDominoTablero.setLocacionY(locacionY);
     }
     
     @Override
@@ -45,5 +61,6 @@ public class FichaBuilderTablero implements IFichaBuilder {
         
         fichaDominoTablero.setImgExtremo1(img1);
         fichaDominoTablero.setImgExtremo2(img2);
+        fichaDominoTablero.cargarFondo();
     }
 }

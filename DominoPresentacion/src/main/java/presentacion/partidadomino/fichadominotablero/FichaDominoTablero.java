@@ -18,7 +18,9 @@ public class FichaDominoTablero extends JPanel {
     private BufferedImage imageExtremo1;
     private BufferedImage imageExtremo2;
     private FichaDominoDTO fichaDominoDTO;
-    private int rotacion;
+    private boolean esHorizontal;
+    private int locacionX;
+    private int locacionY;
 
     public FichaDominoTablero() {
         setLayout(null);
@@ -56,7 +58,7 @@ public class FichaDominoTablero extends JPanel {
 
         // Dibujar el fondo rotado
         if (margen != null) {
-            if (rotacion == 0 || rotacion == 180) {
+            if (esHorizontal) {
                 AffineTransform old = g2d.getTransform();
                 g2d.translate(width / 2, height / 2);
                 g2d.rotate(Math.toRadians(90));
@@ -70,7 +72,7 @@ public class FichaDominoTablero extends JPanel {
         // Dibujar los extremos
         if (imageExtremo1 != null && imageExtremo2 != null) {
 
-            if (rotacion == 0 || rotacion == 180) {
+            if (esHorizontal) {
                 // Ficha horizontal
                 int extremoWidth = height;
                 int extremoHeight = height;
@@ -104,12 +106,31 @@ public class FichaDominoTablero extends JPanel {
 
         g2d.dispose();
     }
-    
 
-    public void setRotacion(int rotacion) {
-        this.rotacion = rotacion;
+    public boolean getEsHorizontal() {
+        return esHorizontal;
+    }
+
+    public void setEsHorizontal(boolean esHorizontal) {
+        this.esHorizontal = esHorizontal;
         revalidate();
         repaint();
+    }
+
+    public int getLocacionX() {
+        return locacionX;
+    }
+
+    public void setLocacionX(int locacionX) {
+        this.locacionX = locacionX;
+    }
+
+    public int getLocacionY() {
+        return locacionY;
+    }
+
+    public void setLocacionY(int locacionY) {
+        this.locacionY = locacionY;
     }
 
     public void setImgExtremo1(String imgExtremo1) {
