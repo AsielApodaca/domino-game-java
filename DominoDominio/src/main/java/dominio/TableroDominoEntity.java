@@ -289,7 +289,7 @@ public class TableroDominoEntity {
         if (direccionExtremo2 == IZQUIERDA) {
             if (extremo2AnteriorEsVertical) { // Si la casilla anterior al extremo actual es vertical
                 casillaExtremo2.setLocacionX(extremo2AnteriorLocacionX - 2); // Se coloca 2 a la izquierda
-                casillaExtremo2.setLocacionY(extremo2AnteriorLocacionY - 1); // Se coloca 1 abajo
+                casillaExtremo2.setLocacionY(extremo2AnteriorLocacionY); // Se mantiene igual
                 // rotacion
                 if (fichaValorExtremo2 == valorExtremo2) {
                     casillaExtremo2.setRotacion(0);
