@@ -2,7 +2,7 @@ package fichabuilder;
 
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
-import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
+import presentacion.partidadomino.tablero.FichaDominoTablero;
 
 public class FichaBuilderTablero implements IFichaBuilder {
     private FichaDominoTablero fichaDominoTablero;

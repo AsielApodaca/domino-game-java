@@ -2,18 +2,13 @@ package presentacion.partidadomino;
 
 import dominodto.FichaDominoDTO;
 import dominodto.TableroDominoDTO;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import presentacion.mediador.IMediador;
-import presentacion.mediador.Mediador;
-import presentacion.partidadomino.fichadominojugador.FichaDominoModel;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
-import contenedorpantallas.IContenidoController;
-import java.awt.event.ActionListener;
 import listeners.ITableroDominoLogicaListener;
 import listeners.IPartidaDominoModelListener;
-import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
+import presentacion.partidadomino.tablero.CasillaPanel;
+import presentacion.partidadomino.tablero.FichaDominoTablero;
 
 /**
  *
@@ -58,10 +53,11 @@ public class PartidaDominoModel{
     private List<FichaDominoDTO> listaFichasJugadorLocal; // Lista de fichas del jugador del disposivo
     private List<FichaDominoView> listaPanelesFichasJugadorLocal; // Lista de panales de fichas del jugador del dispositivo
     private List<FichaDominoTablero> listaPanelesFichasSobreTablero; // Lista de paneles de fichas sobre el tablero
+    private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
     //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
 
     private List<IPartidaDominoModelListener> listeners ;
-    private List<ITableroDominoLogicaListener> listenersFichaDominoView ;
+    private ITableroDominoLogicaListener listenerTableroDominoLogica ;
     private FichaDominoDTO fichaSeleccionada ;
     
     public PartidaDominoModel() {
@@ -96,9 +92,15 @@ public class PartidaDominoModel{
     }
     
     public void notificarFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
-        listenersFichaDominoView.forEach(listener -> {
-            listener.onFichaSeleccionadaChange(fichaSeleccionada);
-        });
+        listenerTableroDominoLogica.onFichaSeleccionadaChange(fichaSeleccionada);
+    }
+
+    public List<CasillaPanel> getListaPanelesCasillasParaColocarFichas() {
+        return listaPanelesCasillasParaColocarFichas;
+    }
+
+    public void setListaPanelesCasillasParaColocarFichas(List<CasillaPanel> listaPanelesCasillasParaColocarFichas) {
+        this.listaPanelesCasillasParaColocarFichas = listaPanelesCasillasParaColocarFichas;
     }
 
     public List<FichaDominoTablero> getListaPanelesFichasSobreTablero() {
@@ -223,16 +225,5 @@ public class PartidaDominoModel{
         this.fichaSeleccionada = fichaSeleccionada;
     }
 
-    public List<ITableroDominoLogicaListener> getListenersFichaDominoView() {
-        return listenersFichaDominoView;
-    }
-
-    public void setListenersFichaDominoView(List<ITableroDominoLogicaListener> listenersFichaDominoView) {
-        this.listenersFichaDominoView = listenersFichaDominoView;
-    }
-
-    public void agregarListenerFichaDominoView(ITableroDominoLogicaListener fichaDominoView) {
-        this.listenersFichaDominoView.add(fichaDominoView) ;
-    }
     
 }

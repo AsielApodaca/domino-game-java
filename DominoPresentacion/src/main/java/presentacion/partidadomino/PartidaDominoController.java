@@ -7,6 +7,7 @@ package presentacion.partidadomino;
 import contenedorpantallas.IContenidoController;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
+import fichabuilder.CasillaBuilder;
 import fichabuilder.FichaBuilderTablero;
 import fichabuilder.FichaBuilderUsuario;
 import fichabuilder.IFichaBuilder;
@@ -21,7 +22,8 @@ import presentacion.mediador.IMediador;
 import presentacion.mediador.Mediador;
 import presentacion.partidadomino.fichadominojugador.FichaDominoController;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
-import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
+import presentacion.partidadomino.tablero.CasillaPanel;
+import presentacion.partidadomino.tablero.FichaDominoTablero;
 
 /**
  *
@@ -30,12 +32,13 @@ import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoController implements IContenidoController, IPartidaDominoModelListener {
+public class PartidaDominoController implements IContenidoController{
 
     private PartidaDominoModel model;
     private PartidaDominoView view;
     private final Mediador mediador = Mediador.getInstance();
     private final FichaBuilderTablero fichaBuilderTablero = new FichaBuilderTablero();
+    private final CasillaBuilder casillaBuilder = new CasillaBuilder();
 
     public PartidaDominoController(PartidaDominoModel model, PartidaDominoView view) {
         this.model = model;
@@ -44,7 +47,7 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
 
         view.repintarVista();
 //        view.actualizarListaFichasJugadorLocal();
-        simularFichaTablero();
+        //simularFichaTablero();
     }
     
     private void simularFichaTablero() {
@@ -68,7 +71,13 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
     }
 
     public void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        List<CasillaPanel> listaCasillas = new ArrayList<>();
+        for(CasillaDTO casillaDTO : casillasDTO) {
+            listaCasillas.add(casillaBuilder.construirCasilla(casillaDTO));
+        }
+        model.setListaPanelesCasillasParaColocarFichas(listaCasillas);
+        view.repintarCasillasTablero();
     }
 
     public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador) {
@@ -92,14 +101,6 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
     @Override
     public JPanel obtenerView() {
         return this.view;
-    }
-
-    @Override
-    public void onListaFichasDominoUsuarioChange() { // Escucha cuando la lista de fichas del jugador local cambia
-//        crearMVCFichasJugadorLocal();
-//        repintarFichasJugadorLocal();
-//        
-
     }
 
     private void crearMVCFichasJugadorLocal() {
@@ -127,6 +128,14 @@ public class PartidaDominoController implements IContenidoController, IPartidaDo
     private void repintarFichasJugadorLocal() {
         view.repintarContenedorFichasJugadorLocal();
         view.repintarFichasJugadorLocal();
+    }
+
+    public PartidaDominoModel getModel() {
+        return model;
+    }
+
+    public PartidaDominoView getView() {
+        return view;
     }
 
     private float getEscala() {

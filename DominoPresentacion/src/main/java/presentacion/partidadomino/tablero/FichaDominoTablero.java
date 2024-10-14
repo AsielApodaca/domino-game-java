@@ -1,4 +1,4 @@
-package presentacion.partidadomino.fichadominotablero;
+package presentacion.partidadomino.tablero;
 
 import dominodto.FichaDominoDTO;
 import javax.swing.*;

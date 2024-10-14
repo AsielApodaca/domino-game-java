@@ -76,6 +76,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
 
     private void mostrarPresentacionPartida() {
         fachadaPartidaDomino.iniciarPantalla();
+        fachadaPartidaDomino.escucharFichaSeleccionada(this);
     }
     
     private void prepararTableroDeFichas() {
@@ -136,8 +137,18 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
 
     @Override
     public void onFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
-        this.tableroDominoEntity.setFichaSeleccionada(this.adapterFichaDomino.adaptToEntity(fichaSeleccionada));
-        mostrarPosiblesMovimientos();
+        if(fichaSeleccionada == null) {
+            this.tableroDominoEntity.setFichaSeleccionada(null);
+            ocultarPosiblesMovimientos();
+        } else {
+            this.tableroDominoEntity.setFichaSeleccionada(this.adapterFichaDomino.adaptToEntity(fichaSeleccionada));
+            mostrarPosiblesMovimientos();
+        }
+        
+    }
+    
+    private void ocultarPosiblesMovimientos() {
+        
     }
 
     private void mostrarPosiblesMovimientos() {
@@ -149,16 +160,19 @@ public class TableroDominoLogica implements ITableroDominoLogica, ITableroDomino
         if (tableroDominoEntity.getValorExtremo1() == -1
                 && tableroDominoEntity.getValorExtremo2() == -1) {
             CasillaDTO casillaMula = mapeadorDTO.casillaEntityADTO(tableroDominoEntity.obtenerPosibleCasillaMula());
+            casillaMula.setExtremo(casillaMula.MULA);
             posiblesCasillasColocables.add(casillaMula);
         } else {
             // Verificar si la ficha se puede colocar en el extremo 1
             if (puedeColocarEnExtremo(fichaSeleccionada, tableroDominoEntity.getValorExtremo2())) {
                 CasillaDTO casillaExtremo1 = mapeadorDTO.casillaEntityADTO(tableroDominoEntity.obtenerPosibleCasillaExtremo1());
+                casillaExtremo1.setExtremo(casillaExtremo1.EXTREMO1);
                 posiblesCasillasColocables.add(casillaExtremo1);
             }
             // Verificar si la ficha se puede colocar en el extremo 2
             if (puedeColocarEnExtremo(fichaSeleccionada, tableroDominoEntity.getValorExtremo2())) {
                 CasillaDTO casillaExtremo2 = mapeadorDTO.casillaEntityADTO(tableroDominoEntity.obtenerPosiblePosicionExtremo2());
+                casillaExtremo2.setExtremo(casillaExtremo2.EXTREMO2);
                 posiblesCasillasColocables.add(casillaExtremo2);
             }
         }

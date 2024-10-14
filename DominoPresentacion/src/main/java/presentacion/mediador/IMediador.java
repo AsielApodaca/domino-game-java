@@ -5,6 +5,8 @@
 package presentacion.mediador;
 
 import dominodto.FichaDominoDTO;
+import presentacion.partidadomino.PartidaDominoController;
+import presentacion.partidadomino.fichadominojugador.FichaDominoController;
 
 /**
  *
@@ -18,6 +20,9 @@ public interface IMediador {
     void redimencionarFichasJugadorLocal(float escala);
     void notificarFichaSeleccionada(FichaDominoDTO fichaSeleccionada) ;
     void notificarColocarFicha() ;
+    void deseleccionarRestoDeFichas(FichaDominoController fichaSeleccionada);
+    void notificarFichaDeseleccionada();
+    void setPartidaDominoController(PartidaDominoController partidaDominoController);
 
 }
 

@@ -27,7 +27,7 @@ public class FichaDominoController {
 
     private FichaDominoModel model;
     private FichaDominoView view;
-    private Mediador mediador;
+    private final Mediador mediador = Mediador.getInstance();
 
     public FichaDominoController(FichaDominoModel model, FichaDominoView view) {
         this.model = model;
@@ -53,8 +53,11 @@ public class FichaDominoController {
                     model.setSeleccionada(!model.isSeleccionada());
                     if (model.isSeleccionada()) {
                         model.setFondoFicha(model.getFondoSeleccionado());
+                        mediador.deseleccionarRestoDeFichas(obtenerInstancia());
+                        mediador.notificarFichaSeleccionada(model.getFichaDominoDTO());
                     } else {
                         model.setFondoFicha(model.getFondoCompatible());
+                        mediador.notificarFichaDeseleccionada();
                     }
                 } else {
                     model.setFondoFicha(model.getFondoFichaNormal());
@@ -68,6 +71,16 @@ public class FichaDominoController {
     public void actualizarEscala(float escala) {
         model.setEscala(escala);
         view.repintar();
+    }
+    
+    private FichaDominoController obtenerInstancia() {
+        return this;
+    }
+    
+    public void deseleccionarFicha() {
+        model.setSeleccionada(false);
+        model.setFondoFicha(model.getFondoCompatible());
+        view.actualizarFondo();
     }
 
 }

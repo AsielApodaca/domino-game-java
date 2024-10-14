@@ -9,6 +9,7 @@ import dominodto.FichaDominoDTO;
 import fichabuilder.FichaBuilderTablero;
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -19,7 +20,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
-import presentacion.partidadomino.fichadominotablero.FichaDominoTablero;
+import presentacion.partidadomino.tablero.CasillaPanel;
+import presentacion.partidadomino.tablero.FichaDominoTablero;
 
 /**
  *
@@ -207,6 +209,52 @@ public class PartidaDominoView extends JPanel {
             }
             
             fichaDominoTablero.setBounds(locacionX, locacionY, anchoFichaTablero, alturaFichaTablero);
+            
+        }
+        revalidate();
+        repaint();
+    }
+    
+    public void repintarCasillasTablero() {
+        // Remover casillas en tablero
+        for(Component comp : panelTablero.getComponents()) {
+            if(CasillaPanel.class.isInstance(comp)) {
+                panelTablero.remove(comp);
+            }
+        }
+        
+        float escala = model.getEscala();
+//        int anchoTableroDTO = model.getTableroDominoDTO().getAnchoTablero();
+//        int alturaTableroDTO = model.getTableroDominoDTO().getAltoTablero();
+        int anchoTableroDTO = 20; // temporal
+        int alturaTableroDTO = 9; // temporal
+        int anchoTablero = (int) (model.getAnchoTablero() * escala);
+        int alturaTablero = (int) (model.getAlturaTablero() * escala);
+        int anchoUsableTablero = (int) (anchoTableroDTO * model.getAnchoFichaTablero() * escala);
+        int alturaUsableTablero = (int) (alturaTableroDTO * model.getAnchoFichaTablero() * escala);
+        int margenAnchoTablero = (int) ((anchoTablero - anchoUsableTablero) / 2);
+        int margenAlturaTablero = (int) ((alturaTablero - alturaUsableTablero) / 2);
+        
+        // Repintar casillas
+        for (CasillaPanel casillaPanel : model.getListaPanelesCasillasParaColocarFichas()) {
+            panelTablero.add(casillaPanel);
+            int locacionX = (int) (casillaPanel.getLocacionX() * model.getAnchoFichaTablero() * escala);
+            int locacionY = (int) (casillaPanel.getLocacionY() * model.getAnchoFichaTablero() * escala);
+            locacionX += margenAnchoTablero;
+            locacionY += margenAlturaTablero;
+            
+            int anchoCasillaTablero;
+            int alturaCasillaTablero;
+
+            if (casillaPanel.getEsHorizontal()) {
+                anchoCasillaTablero = (int) (escala * model.getLargoFichaTablero()); // Horizontal
+                alturaCasillaTablero = (int) (escala * model.getAnchoFichaTablero());
+            } else {
+                anchoCasillaTablero = (int) (escala * model.getAnchoFichaTablero()); // Vertical
+                alturaCasillaTablero = (int) (escala * model.getLargoFichaTablero());
+            }
+            
+            casillaPanel.setBounds(locacionX, locacionY, anchoCasillaTablero, alturaCasillaTablero);
             
         }
         revalidate();

@@ -8,6 +8,8 @@ import contenedorpantallas.SingletonContenedorContenido;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import java.util.List;
+import logica.tableroDominoLogica.TableroDominoLogica;
+import presentacion.mediador.Mediador;
 import presentacion.partidadomino.PartidaDominoController;
 import presentacion.partidadomino.PartidaDominoModel;
 import presentacion.partidadomino.PartidaDominoView;
@@ -26,6 +28,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     private PartidaDominoController partidaDominoController;
     private PartidaDominoModel partidaDominoModel;
     private PartidaDominoView partidaDominoView;
+    private final Mediador mediador = Mediador.getInstance();
 
     public FachadaPartidaDomino() {
     }
@@ -39,6 +42,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
         this.partidaDominoModel = new PartidaDominoModel();
         this.partidaDominoView = new PartidaDominoView(partidaDominoModel);
         this.partidaDominoController = new PartidaDominoController(partidaDominoModel, partidaDominoView);
+        this.mediador.setPartidaDominoController(partidaDominoController);
         sgContenedorContenido.setContenidoController(partidaDominoController);
         sgContenedorContenido.mostrarPantalla();
         this.partidaDominoController.showView();
@@ -58,5 +62,10 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     @Override
     public void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO) {
         partidaDominoController.mostrarCasillasParaColocarFicha(casillasDTO);
+    }
+
+    @Override
+    public void escucharFichaSeleccionada(TableroDominoLogica tableroDominoLogica) {
+        partidaDominoModel.setListenerTableroDominoLogica(tableroDominoLogica);
     }
 }

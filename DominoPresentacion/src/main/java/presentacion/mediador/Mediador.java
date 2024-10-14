@@ -69,10 +69,11 @@ public class Mediador implements IMediador {
         }
     }
     
+    
 
     @Override
     public void notificarFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
-        partidaDominoModel.setFichaSeleccionada(fichaSeleccionada);
+        partidaDominoController.getModel().setFichaSeleccionada(fichaSeleccionada);
     }
 
     @Override
@@ -94,6 +95,22 @@ public class Mediador implements IMediador {
 
     public void setListaFichasJugadorLocal(List<FichaDominoController> listaFichasJugadorLocal) {
         this.listaFichasJugadorLocal = listaFichasJugadorLocal;
+    }
+
+    @Override
+    public void deseleccionarRestoDeFichas(FichaDominoController fichaSeleccionada) {
+        for(FichaDominoController fichaControl : listaFichasJugadorLocal) {
+            if(fichaControl != fichaSeleccionada && fichaControl.getFichaDominoModel().isSeleccionada()) {
+                fichaControl.deseleccionarFicha();
+            }
+        }
+        
+        notificarFichaDeseleccionada();
+    }
+
+    @Override
+    public void notificarFichaDeseleccionada() {
+        partidaDominoController.getModel().setFichaSeleccionada(null);
     }
     
     

@@ -7,6 +7,7 @@ package presentacion.partidadomino.fachada;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import java.util.List;
+import logica.tableroDominoLogica.TableroDominoLogica;
 
 /**
  *
@@ -24,4 +25,6 @@ public interface IFachadaPartidaDomino {
     public void colocarFichaTablero(CasillaDTO casillaDTO);
 
     void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO);
+    
+    void escucharFichaSeleccionada(TableroDominoLogica tableroDominoLogica);
 }
