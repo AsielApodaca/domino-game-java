@@ -42,7 +42,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
         this.partidaDominoView = new PartidaDominoView(partidaDominoModel);
         this.partidaDominoController = new PartidaDominoController(partidaDominoModel, partidaDominoView);
         this.mediador.setPartidaDominoController(partidaDominoController);
-        sgContenedorContenido.setContenidoController(partidaDominoController);
+        sgContenedorContenido.setContenedorEscalaListener(partidaDominoController);
         sgContenedorContenido.mostrarPantalla();
         this.partidaDominoController.showView();
 

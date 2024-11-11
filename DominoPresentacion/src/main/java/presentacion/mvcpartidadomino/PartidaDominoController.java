@@ -4,7 +4,6 @@
  */
 package presentacion.mvcpartidadomino;
 
-import contenedorpantallas.IContenidoController;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import fichabuilder.CasillaBuilder;
@@ -28,6 +27,7 @@ import presentacion.partidadomino.fichadominojugador.FichaDominoController;
 import presentacion.partidadomino.fichadominojugador.FichaDominoView;
 import presentacion.partidadomino.tablero.CasillaPanel;
 import presentacion.partidadomino.tablero.FichaDominoTablero;
+import contenedorpantallas.IContenedorEscalaListener;
 
 /**
  *
@@ -36,7 +36,7 @@ import presentacion.partidadomino.tablero.FichaDominoTablero;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoController implements IContenidoController{
+public class PartidaDominoController implements IContenedorEscalaListener{
 
     private PartidaDominoModel model;
     private PartidaDominoView view;

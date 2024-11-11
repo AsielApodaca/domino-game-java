@@ -2,30 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package contenedorpantallas;
+package mediadorsingleton;
 
 import javax.swing.JPanel;
+import listeners.IContenedorListener;
+import mvc.FormContenedorController;
 
 /**
  *
  * @author asielapodaca
  */
-public class SingletonContenedorContenido {
-    private static SingletonContenedorContenido instance;
+public class MediadorSingletonContenedorContenido {
+    private static MediadorSingletonContenedorContenido instance;
     private FormContenedorController contenedorController;
-    private IContenedorEscalaListener contenedorEscalaListener;
+    private IContenedorListener contenedorListener;
     private JPanel contenedorPanel;
 
-    private SingletonContenedorContenido() {
+    private MediadorSingletonContenedorContenido() {
     }
 
     /**
      * Obtiene instancia estática del Singleton entre Contenedor y Conenido
      * @return instancia estática de si mismo
      */
-    public static SingletonContenedorContenido getInstance() {
+    public static MediadorSingletonContenedorContenido getInstance() {
         if (instance == null) {
-            instance = new SingletonContenedorContenido();
+            instance = new MediadorSingletonContenedorContenido();
         }
         return instance;
     }
@@ -48,16 +50,16 @@ public class SingletonContenedorContenido {
     }
     
     /**
-     * Suscribe un oyente de la escala del panel del contenedor.
+     * Suscribe un oyente del panel del contenedor.
      * La escala hace referencia a que tan grande es el panel a comparación
      * de su tamaño original.
      * 
      * El oyente que se suscribe es el panel que será el contenido del contenedor,
      * es decir, la pantalla que se mostrará.
-     * @param contenedorEscalaListener Pantalla mostrada a suscribir como oyente de la escala.
+     * @param contenedorListener Pantalla mostrada a suscribir como oyente del contenedor.
      */
-    public void setContenedorEscalaListener(IContenedorEscalaListener contenedorEscalaListener) {
-        this.contenedorEscalaListener = contenedorEscalaListener;
+    public void setContenedorListener(IContenedorListener contenedorListener) {
+        this.contenedorListener = contenedorListener;
         notificarEscalaAContenedorListener();
     }
     
@@ -66,8 +68,8 @@ public class SingletonContenedorContenido {
      * esté actualmente suscrita como oyente de la escala del contenedor.
      */
     public void notificarEscalaAContenedorListener() {
-        if(contenedorController != null && contenedorEscalaListener != null) {
-            this.contenedorEscalaListener.actualizarEscala(contenedorController.getEscala());
+        if(contenedorController != null && contenedorListener != null) {
+            this.contenedorListener.onEscalaChange(contenedorController.getEscala());
         }
     }
     
@@ -80,10 +82,9 @@ public class SingletonContenedorContenido {
     public void mostrarPantalla() {
         if (contenedorPanel != null) {
             contenedorPanel.removeAll();
-            contenedorPanel.add(contenedorEscalaListener.obtenerView());
+            contenedorPanel.add(contenedorListener.obtenerView());
             contenedorPanel.revalidate();
             contenedorPanel.repaint();
         }
     }
-    
 }

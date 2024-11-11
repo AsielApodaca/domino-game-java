@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package contenedorpantallas;
+package mvc;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JPanel;
+import mediadorsingleton.MediadorSingletonContenedorContenido;
 
 /**
  *
@@ -14,7 +15,7 @@ import javax.swing.JPanel;
  */
 public class FormContenedorController {
     
-    private final SingletonContenedorContenido singletonEscala = SingletonContenedorContenido.getInstance();
+    private final MediadorSingletonContenedorContenido mdSgContenedorContenido = MediadorSingletonContenedorContenido.getInstance();
     private FormContenedorModel model; // Modelo FormContenedorModel
     private FormContenedorView view; // JFrame FormContenedorView
 
@@ -68,7 +69,7 @@ public class FormContenedorController {
         updateScale();
         
         // Notifica el cambio de escala al contenido del contenedor
-        singletonEscala.notificarEscalaAContenedorListener();
+        mdSgContenedorContenido.notificarEscalaAContenedorListener();
     }
     
     private void updateFrameContainerValues() {
