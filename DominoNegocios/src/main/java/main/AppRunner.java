@@ -5,6 +5,7 @@ import dominio.JugadorDominoEntity;
 import dominio.SalaEntity;
 import java.util.ArrayList;
 import java.util.List;
+import listeners.IContenedorListener;
 import logica.contenedorpantallas.ContenedorPantallasLogica;
 import logica.contenedorpantallas.IContenedorPantallasLogica;
 import logica.tableroDominoLogica.ITableroDominoLogica;
@@ -36,7 +37,10 @@ public class AppRunner {
         
         // Inicia los procesos del tablero de domino
         ITableroDominoLogica tableroDominoLogica = new TableroDominoLogica(salaEntity);
-        tableroDominoLogica.iniciar();
+        IContenedorListener pantalla =
+                tableroDominoLogica.iniciar();
+        
+        contenedorPantallasLogica.abrirPantalla(pantalla);
         
 //        // Paso 1: Crear el pozo y el controlador de fichas
 //        PozoEntity pozo = new PozoEntity();

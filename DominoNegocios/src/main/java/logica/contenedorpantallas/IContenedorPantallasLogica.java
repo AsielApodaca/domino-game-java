@@ -4,10 +4,13 @@
  */
 package logica.contenedorpantallas;
 
+import listeners.IContenedorListener;
+
 /**
  *
  * @author asielapodaca
  */
 public interface IContenedorPantallasLogica {
     public void iniciarContenedorDePantallas();
+    public void abrirPantalla(IContenedorListener pantalla);
 }

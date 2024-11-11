@@ -4,8 +4,11 @@
  */
 package logica.contenedorpantallas;
 
-import contenedorpantallas.fachada.FachadaContenedorPantallas;
-import contenedorpantallas.fachada.IFachadaContenedorPantallas;
+import fachada.FachadaContenedorPantallas;
+import fachada.IFachadaContenedorPantallas;
+import listeners.IContenedorListener;
+//import contenedorpantallas.fachada.FachadaContenedorPantallas;
+//import contenedorpantallas.fachada.IFachadaContenedorPantallas;
 
 /**
  *
@@ -22,6 +25,11 @@ public class ContenedorPantallasLogica implements IContenedorPantallasLogica{
     @Override
     public void iniciarContenedorDePantallas() {
         fachadaContenedorPantallas.iniciarContenedorDePantallas();
+    }
+
+    @Override
+    public void abrirPantalla(IContenedorListener pantalla) {
+        fachadaContenedorPantallas.establecerPantalla(pantalla);
     }
     
 }

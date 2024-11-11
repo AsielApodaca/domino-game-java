@@ -20,23 +20,22 @@ import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
 import estrategiacomparador.EstrategiaComparadorEntidades;
 import estrategiacomparador.IEstrategiaComparadorEntidades;
+import fachada.FachadaPartidaDomino;
+import fachada.IFachadaPartidaDomino;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import listeners.IPresentacionListener;
+import listeners.IContenedorListener;
+import listeners.IPresentacionPartidaDominoListener;
 import logica.controladorFichas.ControladorFichasLogica;
 import logica.controladorFichas.IControladorFichasLogica;
 import logica.controladorTurno.ControladorTurno;
 import logica.controladorTurno.IControladorTurno;
 import mapeodto.MapeadorDTO;
-import notificaciones.IPresentacionNotificacionesManager;
-import notificaciones.PresentacionNotificacionesManager;
-import notificaciones.eventos.CasillaSeleccionadaEvento;
-import notificaciones.eventos.Evento;
-import notificaciones.eventos.FichaSeleccionadaEvento;
-import presentacion.partidadomino.fachada.FachadaPartidaDomino;
-import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
+import notificador.eventos.CasillaSeleccionadaEvento;
+import notificador.eventos.FichaSeleccionadaEvento;
+
 
 /**
  *
@@ -45,7 +44,7 @@ import presentacion.partidadomino.fachada.IFachadaPartidaDomino;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionListener {
+public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionPartidaDominoListener {
 
     private static final Logger LOG = Logger.getLogger(TableroDominoLogica.class.getName());
     private IFachadaPartidaDomino fachadaPartidaDomino;
@@ -58,7 +57,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
     private IAdapterJugadorDomino adapterJugadorDomino;
     private MapeadorDTO mapeadorDTO;
     private List<JugadorDominoDTO> jugadoresDTO = new ArrayList<>();
-    private IPresentacionNotificacionesManager presentacionNotificacionesManager;
+    private IContenedorListener contenedorListener;
 
     public TableroDominoLogica(SalaEntity salaEntity) {
         this.salaEntity = salaEntity;
@@ -69,12 +68,11 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
         this.controladorFichas = new ControladorFichasLogica();
         this.controladorTurno = new ControladorTurno();
         this.mapeadorDTO = new MapeadorDTO();
-        this.presentacionNotificacionesManager = new PresentacionNotificacionesManager();
 
     }
 
     @Override
-    public void iniciar() {
+    public IContenedorListener iniciar() {
         mostrarPresentacionPartida();
         escucharEventosPartidaDomino();
         crearPozoDeFichas();
@@ -83,49 +81,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
         asignarTurnosAJugadores();
         mostrarFichasJugadorLocal();
 
-        // Se colocará este metodo cuando el mvc ya tenga listeners
-    }
-    
-    @Override
-    public void onPresentacionCambio(Evento evento) {
-        String tipoEvento = evento.getNombreEvento();
-        switch(tipoEvento) {
-            case "FichaSeleccionadaEvento":
-                fichaSeleccionadaEvento((FichaSeleccionadaEvento) evento);
-                break;
-            case "CasillaSeleccionadaEvento":
-                casillaSeleccionadaEvento((CasillaSeleccionadaEvento) evento);
-                break;
-                
-        }
-    }
-    
-    private void fichaSeleccionadaEvento(FichaSeleccionadaEvento evento) {
-        FichaDominoDTO fichaSeleccionadaDTO = evento.getFichaSeleccionada();
-        if(fichaSeleccionadaDTO == null) {
-            this.tableroDominoEntity.setFichaSeleccionada(null);
-            ocultarPosiblesMovimientos();
-        } else {
-            List<FichaDominoEntity> listaFichasJugador = salaEntity.getJugadorLocal().getListaFichasJugador();
-            FichaDominoEntity fichaSeleccionadaEntity =  // compara la fichaDTO con las fichas del jugadorLocal
-                    estrategiaComparadorEntidades.comparar(
-                            fichaSeleccionadaDTO, listaFichasJugador
-                    );
-            this.tableroDominoEntity.setFichaSeleccionada(fichaSeleccionadaEntity);
-            System.out.println(tableroDominoEntity.getFichaSeleccionada() == null);
-            mostrarPosiblesMovimientos();
-        }
-        
-    }
-    
-    private void casillaSeleccionadaEvento(CasillaSeleccionadaEvento evento) {
-        CasillaDTO casillaSeleccionada = evento.getCasilla();
-        CasillaEntity casilla = colocarFichaSeleccionadaEnTableroEntity(casillaSeleccionada.getExtremo());
-        removerFichaAJugador(casilla.getFichaDomino());
-        mostrarFichasJugadorLocal();
-        ocultarPosiblesMovimientos();
-        mostrarFichaEnTablero(casilla);
-        
+        return this.contenedorListener;
     }
     
     private void mostrarFichaEnTablero(CasillaEntity casillaEntity) {
@@ -161,12 +117,11 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
     
     
     private void escucharEventosPartidaDomino() {
-        presentacionNotificacionesManager.setPresentacionListener(this);
-        fachadaPartidaDomino.establecerComunicacionConListener((PresentacionNotificacionesManager) presentacionNotificacionesManager);
+        fachadaPartidaDomino.suscribirPresentacionListener((IPresentacionPartidaDominoListener) this);
     }
 
     private void mostrarPresentacionPartida() {
-        fachadaPartidaDomino.iniciarPantalla();
+        this.contenedorListener = fachadaPartidaDomino.iniciarPantalla();
     }
     
     private void prepararTableroDeFichas() {
@@ -245,6 +200,34 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionL
 
     private boolean puedeColocarEnExtremo(FichaDominoEntity ficha, int valorExtremo) {
         return ficha.getExtremo1() == valorExtremo || ficha.getExtremo2() == valorExtremo;
+    }
+
+    @Override
+    public void onFichaSeleccionadaEvento(FichaSeleccionadaEvento evento) {
+        FichaDominoDTO fichaSeleccionadaDTO = evento.getFichaDominoDTO();
+        if(fichaSeleccionadaDTO == null) {
+            this.tableroDominoEntity.setFichaSeleccionada(null);
+            ocultarPosiblesMovimientos();
+        } else {
+            List<FichaDominoEntity> listaFichasJugador = salaEntity.getJugadorLocal().getListaFichasJugador();
+            FichaDominoEntity fichaSeleccionadaEntity =  // compara la fichaDTO con las fichas del jugadorLocal
+                    estrategiaComparadorEntidades.comparar(
+                            fichaSeleccionadaDTO, listaFichasJugador
+                    );
+            this.tableroDominoEntity.setFichaSeleccionada(fichaSeleccionadaEntity);
+            System.out.println(tableroDominoEntity.getFichaSeleccionada() == null);
+            mostrarPosiblesMovimientos();
+        }
+    }
+
+    @Override
+    public void onCasillaSeleccionada(CasillaSeleccionadaEvento evento) {
+        CasillaDTO casillaSeleccionada = evento.getCasillaDTO();
+        CasillaEntity casilla = colocarFichaSeleccionadaEnTableroEntity(casillaSeleccionada.getExtremo());
+        removerFichaAJugador(casilla.getFichaDomino());
+        mostrarFichasJugadorLocal();
+        ocultarPosiblesMovimientos();
+        mostrarFichaEnTablero(casilla);
     }
 
 

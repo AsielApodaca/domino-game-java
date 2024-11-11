@@ -4,6 +4,8 @@
  */
 package logica.tableroDominoLogica;
 
+import listeners.IContenedorListener;
+
 /**
  *
  * @author Hisamy Cinco Cota
@@ -13,5 +15,5 @@ package logica.tableroDominoLogica;
  */
 public interface ITableroDominoLogica {
 
-    public void iniciar();
+    public IContenedorListener iniciar();
 }
