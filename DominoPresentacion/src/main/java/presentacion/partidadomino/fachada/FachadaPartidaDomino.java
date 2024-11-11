@@ -10,9 +10,9 @@ import dominodto.FichaDominoDTO;
 import java.util.List;
 import notificaciones.PresentacionNotificacionesManager;
 import presentacion.mediador.Mediador;
-import presentacion.partidadomino.PartidaDominoController;
-import presentacion.partidadomino.PartidaDominoModel;
-import presentacion.partidadomino.PartidaDominoView;
+import presentacion.mvcpartidadomino.PartidaDominoController;
+import presentacion.mvcpartidadomino.PartidaDominoModel;
+import presentacion.mvcpartidadomino.PartidaDominoView;
 
 /**
  *

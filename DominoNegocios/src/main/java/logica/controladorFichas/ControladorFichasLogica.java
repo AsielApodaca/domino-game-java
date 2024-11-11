@@ -213,16 +213,16 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
     public CasillaEntity colocarFichaExtremo1() {
         FichaDominoEntity ficha = tableroDominoEntity.getFichaSeleccionada();
         tableroDominoEntity.colocarFichaExtremo1(ficha);
-        CasillaEntity casillaMula = tableroDominoEntity.getCasillaExtremo1();
-        return casillaMula;
+        CasillaEntity casillaExtremo = tableroDominoEntity.getCasillaExtremo1();
+        return casillaExtremo;
     }
     
     @Override
     public CasillaEntity colocarFichaExtremo2() {
         FichaDominoEntity ficha = tableroDominoEntity.getFichaSeleccionada();
         tableroDominoEntity.colocarFichaExtremo2(ficha);
-        CasillaEntity casillaMula = tableroDominoEntity.getCasillaExtremo2();
-        return casillaMula;
+        CasillaEntity casillaExtremo = tableroDominoEntity.getCasillaExtremo2();
+        return casillaExtremo;
     }
     
     @Override

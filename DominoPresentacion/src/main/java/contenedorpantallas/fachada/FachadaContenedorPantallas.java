@@ -8,7 +8,7 @@ import contenedorpantallas.SingletonContenedorContenido;
 import contenedorpantallas.FormContenedorModel;
 import contenedorpantallas.FormContenedorView;
 import contenedorpantallas.FormContenedorController;
-import presentacion.partidadomino.PartidaDominoModel;
+import presentacion.mvcpartidadomino.PartidaDominoModel;
 
 /**
  *

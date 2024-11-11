@@ -5,7 +5,7 @@
 package presentacion.mediador;
 
 import dominodto.FichaDominoDTO;
-import presentacion.partidadomino.PartidaDominoController;
+import presentacion.mvcpartidadomino.PartidaDominoController;
 import presentacion.partidadomino.fichadominojugador.FichaDominoController;
 
 /**

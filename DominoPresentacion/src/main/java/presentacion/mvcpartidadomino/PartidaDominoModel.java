@@ -1,4 +1,4 @@
-package presentacion.partidadomino;
+package presentacion.mvcpartidadomino;
 
 import dominodto.FichaDominoDTO;
 import dominodto.TableroDominoDTO;
