@@ -1,4 +1,4 @@
-package presentacion.partidadomino.fichadominojugador;
+package partidadomino.fichadominojugadormvc;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package presentacion.mvcpartidadomino;
+package mvc;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -13,12 +9,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import presentacion.partidadomino.fichadominojugador.FichaDominoView;
-import presentacion.partidadomino.tablero.CasillaPanel;
-import presentacion.partidadomino.tablero.FichaDominoTablero;
+import partidadomino.elementostablero.CasillaPanel;
+import partidadomino.elementostablero.FichaDominoTableroPanel;
+import partidadomino.fichadominojugadormvc.FichaDominoView;
 
 /**
  *
@@ -35,7 +30,6 @@ public class PartidaDominoView extends JPanel {
 
     private JPanel panelContenedorFichasJugadorLocal; // Panel que contendrá las fichas del jugador local
     private JPanel panelTablero; // Panel de tablero donde se colocarán las fichas
-    private List<FichaDominoTablero> listaPanelesFichasSobreTablero;
 
     public PartidaDominoView(PartidaDominoModel model) {
         this.model = model;
@@ -170,7 +164,7 @@ public class PartidaDominoView extends JPanel {
         repaint();
     }
 
-    public void colocarFichaTablero(FichaDominoTablero fichaDominoTablero) {
+    public void colocarFichaTablero(FichaDominoTableroPanel fichaDominoTablero) {
         panelTablero.add(fichaDominoTablero);
 
     }
@@ -188,7 +182,7 @@ public class PartidaDominoView extends JPanel {
         int margenAnchoTablero = (int) ((anchoTablero - anchoUsableTablero) / 2);
         int margenAlturaTablero = (int) ((alturaTablero - alturaUsableTablero) / 2);
 
-        for (FichaDominoTablero fichaDominoTablero : model.getListaPanelesFichasSobreTablero()) {
+        for (FichaDominoTableroPanel fichaDominoTablero : model.getListaPanelesFichasSobreTablero()) {
             int locacionX = (int) (fichaDominoTablero.getLocacionX() * model.getAnchoFichaTablero() * escala);
             int locacionY = (int) (fichaDominoTablero.getLocacionY() * model.getAnchoFichaTablero() * escala);
             locacionX += margenAnchoTablero;
@@ -267,7 +261,4 @@ public class PartidaDominoView extends JPanel {
         }
     }
 
-//    private void asignarListeners() {
-//        this.model.agregarListenerView(this);
-//    }
 }
