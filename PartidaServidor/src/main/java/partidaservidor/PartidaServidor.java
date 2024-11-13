@@ -6,6 +6,7 @@ package partidaservidor;
 
 import controlSolicitudes.ServidorSolicitudCasillaSeleccionada;
 import domino.respuestas.EventoRespuesta;
+import domino.servidorproxylogica.ServidorProxy;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
 
@@ -17,6 +18,7 @@ import domino.solicitudes.SolicitudCasillaSeleccionada;
  * @author Asiel Apodaca Monge
  */
 public class PartidaServidor {
+    ServidorProxy serverProxy;
 
     /**
      * Procesa una solicitud recibida y ejecuta la acción correspondiente según
@@ -46,6 +48,6 @@ public class PartidaServidor {
      * procesar la solicitud.
      */
     public void sendResponse(EventoRespuesta eventoRespuesta) {
-
+        serverProxy.procesarRespuesta();
     }
 }
