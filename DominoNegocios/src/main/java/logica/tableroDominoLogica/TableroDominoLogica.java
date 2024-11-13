@@ -94,26 +94,6 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
         controladorFichas.removerFichaLista(listaFichasJugadorLocal, fichaDominoEntity);
     }
 
-    private CasillaEntity colocarFichaSeleccionadaEnTableroEntity(int extremoTablero) {
-        CasillaEntity casilla;
-        switch (extremoTablero) {
-            case CasillaDTO.MULA:
-                casilla = controladorFichas.colocarMula();
-                break;
-            case CasillaDTO.EXTREMO1:
-                casilla = controladorFichas.colocarFichaExtremo1();
-                break;
-            case CasillaDTO.EXTREMO2:
-                casilla = controladorFichas.colocarFichaExtremo2();
-                break;
-            default:
-                casilla = null;
-                LOG.log(Level.SEVERE, "La casilla seleccionada no pertenece a ningun extremo");
-        }
-        tableroDominoEntity.setFichaSeleccionada(null);
-        return casilla;
-    }
-
     private void escucharEventosPartidaDomino() {
         fachadaPartidaDomino.suscribirPresentacionListener((IPresentacionPartidaDominoListener) this);
     }
@@ -219,19 +199,15 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
     }
 
     @Override
-    public void onCasillaSeleccionada(CasillaSeleccionadaEvento evento) {
+    public void onCasillaSeleccionada(CasillaSeleccionadaEvento casillaSeleccionadaEvento) {
         try {
-            CasillaDTO casillaSeleccionada = evento.getCasillaDTO();
-            CasillaEntity casilla = colocarFichaSeleccionadaEnTableroEntity(casillaSeleccionada.getExtremo());
-            removerFichaAJugador(casilla.getFichaDomino());
+            CasillaDTO casillaSeleccionada = casillaSeleccionadaEvento.getCasillaDTO();
             mostrarFichasJugadorLocal();
             ocultarPosiblesMovimientos();
-            mostrarFichaEnTablero(casilla);
-
-            CasillaDTO casillaDTO = mapeadorDTO.casillaEntityADTO(casilla);
-
-            SolicitudCasillaSeleccionada solicitud = new SolicitudCasillaSeleccionada(casillaDTO);
-            fachadaClienteProxy.enviarSolicitud(solicitud);
+            SolicitudCasillaSeleccionada solicitud = new SolicitudCasillaSeleccionada(
+                    casillaSeleccionada);
+            fachadaClienteProxy.enviarSolicitud(
+                    solicitud);
 
         } catch (Exception e) {
             System.out.println("Error al procesar la seleccion de casilla");
