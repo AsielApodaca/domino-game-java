@@ -4,8 +4,7 @@
  */
 package logica.tableroDominoLogica;
 
-import adapterEntidades.AdapterJugadorDomino;
-import adapterEntidades.IAdapterJugadorDomino;
+
 import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
@@ -51,7 +50,6 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
     private SalaEntity salaEntity;
     private TableroDominoEntity tableroDominoEntity;
     private IEstrategiaComparadorEntidades estrategiaComparadorEntidades;
-    private IAdapterJugadorDomino adapterJugadorDomino;
     private MapeadorDTO mapeadorDTO;
     private List<JugadorDominoDTO> jugadoresDTO = new ArrayList<>();
     private IContenedorListener contenedorListener;
@@ -61,7 +59,6 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.tableroDominoEntity = new TableroDominoEntity();
         this.estrategiaComparadorEntidades = new EstrategiaComparadorEntidades();
-        this.adapterJugadorDomino = new AdapterJugadorDomino();
         this.controladorFichas = new ControladorFichasLogica();
         this.controladorTurno = new ControladorTurno();
         this.mapeadorDTO = new MapeadorDTO();

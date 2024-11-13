@@ -11,4 +11,16 @@
         <exec.mainClass>hisamy.cinco.servidorpartida.ServidorPartida</exec.mainClass>
     </properties>
     <name>PartidaServidor</name>
+    <dependencies>
+        <dependency>
+            <groupId>dev.itson</groupId>
+            <artifactId>DominoDominio</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mycompany</groupId>
+            <artifactId>DominoDTO</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
