@@ -62,6 +62,8 @@ public class ClienteProxy {
 
             System.out.println("Conexion ClienteProxy exitosa con Broker");
             this.running = true;
+            
+            new Thread(()-> enviarSolicitud(clientType)).start();
 
         } catch (Exception e) {
             System.out.println("Error al conectar con el Broker: " + e.getMessage());
@@ -69,25 +71,25 @@ public class ClienteProxy {
     }
 
     /**
-     * Convierte y envía una solicitud de evento al broker en formato JSON.
+     * Convierte una solicitud de evento al broker en formato JSON.
      *
      * @param solicitudEvento el evento a enviar al broker
      */
-    public void enviarSolicitud(EventoSolicitud solicitudEvento) {
+    public void conversorEventoASolicitud(EventoSolicitud eventoSolicitud) {
         try {
-            JsonObject jsonSolicitud = serializador.convertirEventoAGSON(solicitudEvento);
-            redirigirSolicitud(jsonSolicitud);
+            JsonObject jsonSolicitud = serializador.convertirEventoAJSON(eventoSolicitud);
+            enviarSolicitud(jsonSolicitud);
         } catch (Exception e) {
             System.out.println("Error al enviar solicitud");
         }
     }
 
     /**
-     * Redirige la solicitud serializada al broker
+     * Envia la solicitud serializada al broker
      *
      * @param jsonSolicitud El JSON a enviar
      */
-    private void redirigirSolicitud(JsonObject jsonSolicitud) {
+    private void enviarSolicitud(JsonObject jsonSolicitud) {
         try {
             if (out != null && !socket.isClosed()) {
                 // Enviamos el JSON como string al broker

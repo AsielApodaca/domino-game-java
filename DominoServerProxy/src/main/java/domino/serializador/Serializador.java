@@ -22,7 +22,7 @@ public class Serializador {
         this.gson = new Gson();
     }
 
-    public JsonObject convertirEventoAGSON(EventoSolicitud solicitud) {
+    public JsonObject convertirEventoAJSON(EventoSolicitud solicitud) {
         JsonObject jsonRequest = new JsonObject();
 
         if (solicitud instanceof SolicitudCasillaSeleccionada) {
@@ -32,8 +32,8 @@ public class Serializador {
             jsonRequest.addProperty("tipo", "COLOCAR_FICHA");
 
             JsonObject fichaJson = new JsonObject();
-            fichaJson.addProperty("x", casilla.getLocacionX());
-            fichaJson.addProperty("y", casilla.getLocacionY());
+            fichaJson.addProperty("locacionx", casilla.getLocacionX());
+            fichaJson.addProperty("locaciony", casilla.getLocacionY());
             fichaJson.addProperty("rotacion", casilla.getRotacion());
 
             if (casilla.getFichaDominoDTO() != null) {

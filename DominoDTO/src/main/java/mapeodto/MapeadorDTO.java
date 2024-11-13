@@ -12,8 +12,6 @@ import dominodto.FichaDominoDTO;
 import dominodto.CasillaDTO;
 import dominodto.JugadorDominoDTO;
 import dominodto.TableroDominoDTO;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Clase MapeadorDTO. Esta clase se encarga de mapear las entidades del dominio

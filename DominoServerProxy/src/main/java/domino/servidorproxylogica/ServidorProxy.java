@@ -6,7 +6,10 @@ package domino.servidorproxylogica;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import domino.respuestas.EventoRespuesta;
+import domino.serializador.Deserializador;
 import domino.serializador.Serializador;
+import domino.solicitudes.EventoSolicitud;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -24,10 +27,12 @@ public class ServidorProxy {
     private boolean running;
     private final Gson gson;
     private final Serializador serializador;
+    private final Deserializador deserializador;
 
     public ServidorProxy(String host, int PORT) {
         this.gson = new Gson();
         this.serializador = new Serializador();
+        this.deserializador = new Deserializador();
         run(host, PORT);
     }
 
@@ -56,5 +61,20 @@ public class ServidorProxy {
         } catch (Exception e) {
             System.out.println("Error al conectar con el Broker: " + e.getMessage());
         }
+    }
+
+    public void procesarSolicitud(JsonObject jsonSolicitud) {
+        try {
+//            EventoSolicitud eventoSolicitud = deserializador.convertirJSONAEvento(jsonSolicitud);
+        } catch (Exception e) {
+        }
+    }
+
+    public void procesarRespuesta() {
+
+    }
+
+    public void notificarSolicitudEvento(EventoRespuesta eventoRespuesta) {
+
     }
 }

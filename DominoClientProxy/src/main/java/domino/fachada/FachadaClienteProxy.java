@@ -24,7 +24,7 @@ public class FachadaClienteProxy implements IFachadaClienteProxy {
 
     @Override
     public void enviarSolicitud(EventoSolicitud solicitud) {
-        clienteProxy.enviarSolicitud(solicitud);
+        clienteProxy.conversorEventoASolicitud(solicitud);
     }
 
 }

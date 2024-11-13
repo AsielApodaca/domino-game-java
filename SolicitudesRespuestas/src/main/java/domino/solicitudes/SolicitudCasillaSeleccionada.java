@@ -5,6 +5,7 @@
 package domino.solicitudes;
 
 import dominodto.CasillaDTO;
+import dominodto.JugadorDominoDTO;
 
 /**
  *
@@ -16,9 +17,12 @@ import dominodto.CasillaDTO;
 public class SolicitudCasillaSeleccionada extends EventoSolicitud {
 
     private CasillaDTO casillaDTO;
+    private JugadorDominoDTO jugadorDominoDTO;
 
-    public SolicitudCasillaSeleccionada(CasillaDTO casillaDTO) {
+
+    public SolicitudCasillaSeleccionada(CasillaDTO casillaDTO, JugadorDominoDTO jugadorDominoDTO) {
         this.casillaDTO = casillaDTO;
+        this.jugadorDominoDTO = jugadorDominoDTO;
     }
 
     public CasillaDTO getCasillaDTO() {

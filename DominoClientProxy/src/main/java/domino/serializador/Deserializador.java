@@ -20,7 +20,7 @@ public class Deserializador {
         this.gson = new Gson();
     }
 
-    public EventoRespuesta convertirGSONAEvento(JsonObject jsonObject) {
+    public EventoRespuesta convertirJSONAEvento(JsonObject jsonObject) {
 
         return null;
 

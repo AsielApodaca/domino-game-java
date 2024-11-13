@@ -4,7 +4,6 @@
  */
 package logica.tableroDominoLogica;
 
-
 import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
@@ -205,10 +204,10 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
             mostrarFichasJugadorLocal();
             ocultarPosiblesMovimientos();
             SolicitudCasillaSeleccionada solicitud = new SolicitudCasillaSeleccionada(
-                    casillaSeleccionada);
-            fachadaClienteProxy.enviarSolicitud(
-                    solicitud);
-
+                    casillaSeleccionada,
+                    jugadorLocalDTO
+            );
+            fachadaClienteProxy.enviarSolicitud(solicitud);
         } catch (Exception e) {
             System.out.println("Error al procesar la seleccion de casilla");
         }

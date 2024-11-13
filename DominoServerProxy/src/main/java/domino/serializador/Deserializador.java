@@ -7,6 +7,7 @@ package domino.serializador;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import domino.respuestas.EventoRespuesta;
+import domino.solicitudes.EventoSolicitud;
 
 /**
  *
@@ -20,10 +21,8 @@ public class Deserializador {
         this.gson = new Gson();
     }
 
-    public EventoRespuesta convertirGSONAEvento(JsonObject jsonObject) {
-
-        return null;
-
+    public EventoSolicitud convertirJSONAEvento(JsonObject jsonObject) {
+        
     }
 
 }
