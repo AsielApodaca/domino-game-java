@@ -4,12 +4,13 @@
  */
 package partidaservidor;
 
+import adapterEntidades.AdapterCasilla;
+import adapterEntidades.AdapterFichaDomino;
 import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.TableroDominoEntity;
 import domino.respuestas.RespuestaQuitarFichaUsuario;
 import dominodto.CasillaDTO;
-import java.util.List;
 
 /**
  *
@@ -22,14 +23,21 @@ public class PartidaServidorSolicitudCasillaSeleccionada {
 
     private TableroDominoEntity tableroEntity;
     private PartidaServidor partidaServidor;
+    private AdapterCasilla adpaterCasilla;
+    private AdapterFichaDomino adapterFichaDomino;
     
     public PartidaServidorSolicitudCasillaSeleccionada() {
         tableroEntity = new TableroDominoEntity();
         partidaServidor = new PartidaServidor();
+        adapterFichaDomino = new AdapterFichaDomino();
+        adpaterCasilla = new AdapterCasilla(adapterFichaDomino);
     }
     
      public void colocarFichaSeleccionadaEnTableroEntity(CasillaDTO casillaDTO) {
         CasillaEntity casilla;
+        RespuestaQuitarFichaUsuario quitarFichaUsuario;
+        CasillaDTO casillaDTRespuesta;
+        
         switch(casillaDTO.getExtremo()) {
             case CasillaDTO.MULA:
                 casilla = colocarMula();
@@ -44,12 +52,18 @@ public class PartidaServidorSolicitudCasillaSeleccionada {
                 casilla = null;
                 System.out.println("La casilla seleccionada no pertenece a ningun extremo");
         }
-        tableroEntity.setFichaSeleccionada(null);
-        RespuestaQuitarFichaUsuario quitarFichaUsuario = new RespuestaQuitarFichaUsuario();
+        tableroEntity.setFichaSeleccionada(
+                null);
+        casillaDTRespuesta = adpaterCasilla.adaptToDTO(
+                casilla);
+        quitarFichaUsuario = new RespuestaQuitarFichaUsuario(
+                casillaDTRespuesta.getFichaDominoDTO());
+        
+        
         partidaServidor.sendResponse(quitarFichaUsuario);
-
-        partidaServidor.sendResponse();
+        
     }
+     
     private CasillaEntity colocarMula() {
         FichaDominoEntity mula = tableroEntity.getFichaSeleccionada();
         tableroEntity.colocarMula(mula);
