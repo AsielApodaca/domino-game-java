@@ -3,7 +3,7 @@ package mediador;
 
 import dominodto.FichaDominoDTO;
 import java.util.List;
-import mvc.PartidaDominoController;
+import mvcpartidadomino.PartidaDominoController;
 import partidadomino.fichadominojugadormvc.FichaDominoController;
 
 /**

@@ -42,7 +42,7 @@ public class AdapterCasilla implements IAdapterCasilla {
     }
 
     @Override
-    public CasillaEntity adaptToEntity(CasillaDTO dto) {
+    public CasillaEntity adaptToEntity(CasillaDTO dto) { // No usar si se requiere una casilla ya existente en tableroDominoEntity
         if (dto == null) {
             throw new IllegalArgumentException("El DTO no puede ser nulo");
         }

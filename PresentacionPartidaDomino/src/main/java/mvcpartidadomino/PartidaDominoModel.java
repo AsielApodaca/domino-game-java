@@ -1,11 +1,10 @@
 
-package mvc;
+package mvcpartidadomino;
 
 import dominodto.FichaDominoDTO;
 import dominodto.TableroDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
-import listeners.IPartidaDominoModelListener;
 import notificador.IPresentacionNotificadorManager;
 import notificador.eventos.FichaSeleccionadaEvento;
 import partidadomino.elementostablero.CasillaPanel;
@@ -59,7 +58,6 @@ public class PartidaDominoModel{
     private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
     //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
 
-    private List<IPartidaDominoModelListener> listeners ;
     private IPresentacionNotificadorManager  presentacionNotificadorManager;
     private FichaDominoDTO fichaSeleccionada ;
     
@@ -85,7 +83,6 @@ public class PartidaDominoModel{
         this.listaFichasJugadorLocal = new ArrayList<>();
         this.listaFichasJugadorLocal = new ArrayList<>();
         this.listaPanelesFichasSobreTablero = new ArrayList<>();
-        listeners = new ArrayList() ;
     }
 
     public void setPresentacionNotificacionesManager(IPresentacionNotificadorManager presentacionNotificadorManager) {
@@ -94,12 +91,6 @@ public class PartidaDominoModel{
 
     public IPresentacionNotificadorManager getPresentacionNotificadorsManager() {
         return presentacionNotificadorManager;
-    }
-    
-    public void notificarFichasJugadorChange (){
-        listeners.forEach(listener -> {
-            listener.onListaFichasDominoUsuarioChange();
-        });
     }
     
     public void notificarFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
@@ -133,7 +124,6 @@ public class PartidaDominoModel{
 
     public void setListaFichasJugadorLocal(List<FichaDominoDTO> listaFichasJugadorLocal) {
         this.listaFichasJugadorLocal = listaFichasJugadorLocal;
-        notificarFichasJugadorChange();
     }
 
     public int getAlturaMinimaContenedorFichasJugadorLocal() {
@@ -214,18 +204,6 @@ public class PartidaDominoModel{
 
     public List<FichaDominoDTO> getListaFichasJugadorLocal() {
         return listaFichasJugadorLocal;
-    }
-
-    public List<IPartidaDominoModelListener> getListenersView() {
-        return listeners;
-    }
-
-    public void setListenersView(List<IPartidaDominoModelListener> listenersFichasUsuario) {
-        this.listeners= listenersFichasUsuario;
-    }
-    
-    public void agregarListener(IPartidaDominoModelListener listener) {
-        this.listeners.add(listener) ;
     }
 
     public FichaDominoDTO getFichaSeleccionada() {

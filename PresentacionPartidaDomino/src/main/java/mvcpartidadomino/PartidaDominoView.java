@@ -1,4 +1,4 @@
-package mvc;
+package mvcpartidadomino;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

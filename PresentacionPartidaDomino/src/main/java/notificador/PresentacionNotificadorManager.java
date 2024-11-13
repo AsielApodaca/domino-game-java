@@ -49,6 +49,6 @@ public class PresentacionNotificadorManager implements IPresentacionNotificadorM
      */
     @Override
     public void notificarFichaSeleccionada(FichaSeleccionadaEvento evento) {
-        presentacionPartidaDominoListener.onFichaSeleccionadaEvento(evento);
+        presentacionPartidaDominoListener.onFichaSeleccionada(evento);
     }
 }
