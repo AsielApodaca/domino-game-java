@@ -89,25 +89,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
         controladorFichas.removerFichaLista(listaFichasJugadorLocal, fichaDominoEntity);
     }
     
-    private CasillaEntity colocarFichaSeleccionadaEnTableroEntity(int extremoTablero) {
-        CasillaEntity casilla;
-        switch(extremoTablero) {
-            case CasillaDTO.MULA:
-                casilla = controladorFichas.colocarMula();
-                break;
-            case CasillaDTO.EXTREMO1:
-                casilla = controladorFichas.colocarFichaExtremo1();
-                break;
-            case CasillaDTO.EXTREMO2:
-                casilla = controladorFichas.colocarFichaExtremo2();
-                break;
-            default:
-                casilla = null;
-                LOG.log(Level.SEVERE, "La casilla seleccionada no pertenece a ningun extremo");
-        }
-        tableroDominoEntity.setFichaSeleccionada(null);
-        return casilla;
-    }
+   
     
     
     private void escucharEventosPartidaDomino() {
@@ -216,12 +198,8 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
 
     @Override
     public void onCasillaSeleccionada(CasillaSeleccionadaEvento evento) {
-        CasillaDTO casillaSeleccionada = evento.getCasillaDTO();
-        CasillaEntity casilla = colocarFichaSeleccionadaEnTableroEntity(casillaSeleccionada.getExtremo());
-        removerFichaAJugador(casilla.getFichaDomino());
         mostrarFichasJugadorLocal();
         ocultarPosiblesMovimientos();
-        mostrarFichaEnTablero(casilla);
     }
 
 

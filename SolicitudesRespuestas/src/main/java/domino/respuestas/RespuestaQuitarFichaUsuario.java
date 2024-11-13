@@ -4,10 +4,21 @@
  */
 package domino.respuestas;
 
+import dominodto.FichaDominoDTO;
+
 /**
  *
  * @author castr
  */
 public class RespuestaQuitarFichaUsuario extends EventoRespuesta {
+    private FichaDominoDTO fichaDominoDTO;
+
+    public RespuestaQuitarFichaUsuario(FichaDominoDTO fichaDominoDTO) {
+        this.fichaDominoDTO = fichaDominoDTO;
+    }
+
+    public FichaDominoDTO getFichaDominoDTO() {
+        return fichaDominoDTO;
+    }
     
 }
