@@ -11,6 +11,9 @@ import com.google.gson.JsonSyntaxException;
 import domino.enums.Status;
 import domino.manejadores.ManejadorCliente;
 import domino.manejadores.ManejadorServidor;
+import domino.solicitudes.SolicitudColocarFicha;
+import domino.solicitudes.SolicitudCrearSala;
+import domino.solicitudes.SolicitudUnirseSala;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -123,23 +126,19 @@ public class Broker {
             while((solicitud = cliente.getReader().readLine()) != null) {
                 JsonObject solicitudJSON = JsonParser.parseString(solicitud).getAsJsonObject() ;
                 solicitudJSON.addProperty("id_cliente", cliente.getId());
-                
-                String tipoSolicitud = solicitudJSON.get("tipo").getAsString() ;
-                
-                switch (tipoSolicitud) {
-                    case "CREAR_SALA":
-                        crearSala(cliente, solicitudJSON) ;
-                        
-                        break ;
-                    case "UNIRSE_SALA":
-                        unirseSala(cliente, solicitudJSON) ;
-                        break ;
-                    case "COLOCAR_FICHA":
-                        colocarFicha(cliente, solicitudJSON) ;
-                        break ;
-                    default:
-                        throw new AssertionError();
+          
+                String tipoSolicitud = solicitudJSON.get("tipo").getAsString();
+
+                if (isJsonInstanceOf(solicitud, SolicitudCrearSala.class)) {
+                    crearSala(cliente, solicitudJSON);
+                } else if (isJsonInstanceOf(solicitud, SolicitudUnirseSala.class)) {
+                    unirseSala(cliente, solicitudJSON);
+                } else if (isJsonInstanceOf(solicitud, SolicitudColocarFicha.class)) {
+                    colocarFicha(cliente, solicitudJSON);
+                } else {
+                    throw new AssertionError("Tipo de solicitud desconocido: " + tipoSolicitud);
                 }
+                
             }
         } catch (Exception e) {
         }
@@ -199,7 +198,7 @@ public class Broker {
         }
     }
 
-    public static <T> boolean isJsonInstanceOf(String json, Class<T> clase, Gson gson) {
+    public <T> boolean isJsonInstanceOf(String json, Class<T> clase) {
         try {
             gson.fromJson(json, clase);
             return true;
