@@ -1,5 +1,5 @@
 
-package mvc;
+package mvcpartidadomino;
 
 import builders.CasillaBuilder;
 import builders.FichaTableroBuilder;

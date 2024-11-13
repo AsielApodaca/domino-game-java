@@ -11,6 +11,6 @@ import notificador.eventos.FichaSeleccionadaEvento;
  * PresentacionPartidaDomino.
  */
 public interface IPresentacionPartidaDominoListener {
-    public void onFichaSeleccionadaEvento(FichaSeleccionadaEvento evento);
+    public void onFichaSeleccionada(FichaSeleccionadaEvento evento);
     public void onCasillaSeleccionada(CasillaSeleccionadaEvento evento);
 }

@@ -8,9 +8,9 @@ import listeners.IContenedorListener;
 import listeners.IPresentacionPartidaDominoListener;
 import mediador.MediadorSingletonPantallaFichasJugador;
 import mediadorsingleton.MediadorSingletonContenedorContenido;
-import mvc.PartidaDominoController;
-import mvc.PartidaDominoModel;
-import mvc.PartidaDominoView;
+import mvcpartidadomino.PartidaDominoController;
+import mvcpartidadomino.PartidaDominoModel;
+import mvcpartidadomino.PartidaDominoView;
 import notificador.IPresentacionNotificadorManager;
 import notificador.PresentacionNotificadorManager;
 
