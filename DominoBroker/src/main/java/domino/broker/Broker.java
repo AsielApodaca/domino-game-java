@@ -11,6 +11,9 @@ import com.google.gson.JsonSyntaxException;
 import domino.enums.Status;
 import domino.manejadores.ManejadorCliente;
 import domino.manejadores.ManejadorServidor;
+import domino.solicitudes.SolicitudColocarFicha;
+import domino.solicitudes.SolicitudCrearSala;
+import domino.solicitudes.SolicitudUnirseSala;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,10 +52,6 @@ public class Broker {
         runBroker() ;
     }
     
-    /**
-     * Corre el ServerSocket del Broker y empieza un Hilo que esta atento a
-     * cualquier socket que vaya a conectarse al Broker ServerSocket
-     */
     public void runBroker() {
         try(ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Servidor corriendo en puerto: " + PORT);
@@ -66,16 +65,6 @@ public class Broker {
         }
     }
     
-    /**
-     * Metodo que ejecuta el Hilo del metodo runBroker. Este esta atento a las conexiones
-     * de sockets, y las filtra en los 2 Map de las conexiones (clientes y servidores).
-     * Ademas, crea un hilo por cada conexion de socket que llega, que esta atento a 
-     * tanto cuando lleguen peticiones de los clientes, como a cuando lleguen respuestas
-     * de los servidores, asignando un metodo distinto a cada hilo dependiendo de el socket
-     * que vaya llegando (si es un CLIENT, crea un Hilo del metodo handleClientsRequests, si
-     * es un SERVER, crea un Hilo del metodo handleServersResponses.
-     * @param socket 
-     */
     private void manejarConexiones(Socket socket) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -123,23 +112,19 @@ public class Broker {
             while((solicitud = cliente.getReader().readLine()) != null) {
                 JsonObject solicitudJSON = JsonParser.parseString(solicitud).getAsJsonObject() ;
                 solicitudJSON.addProperty("id_cliente", cliente.getId());
-                
-                String tipoSolicitud = solicitudJSON.get("tipo").getAsString() ;
-                
-                switch (tipoSolicitud) {
-                    case "CREAR_SALA":
-                        crearSala(cliente, solicitudJSON) ;
-                        
-                        break ;
-                    case "UNIRSE_SALA":
-                        unirseSala(cliente, solicitudJSON) ;
-                        break ;
-                    case "COLOCAR_FICHA":
-                        colocarFicha(cliente, solicitudJSON) ;
-                        break ;
-                    default:
-                        throw new AssertionError();
+          
+                String tipoSolicitud = solicitudJSON.get("tipo").getAsString();
+
+                if (isJsonInstanceOf(solicitud, SolicitudCrearSala.class)) {
+                    crearSala(cliente, solicitudJSON);
+                } else if (isJsonInstanceOf(solicitud, SolicitudUnirseSala.class)) {
+                    unirseSala(cliente, solicitudJSON);
+                } else if (isJsonInstanceOf(solicitud, SolicitudColocarFicha.class)) {
+                    colocarFicha(cliente, solicitudJSON);
+                } else {
+                    throw new AssertionError("Tipo de solicitud desconocido: " + tipoSolicitud);
                 }
+                
             }
         } catch (Exception e) {
         }
@@ -199,7 +184,7 @@ public class Broker {
         }
     }
 
-    public static <T> boolean isJsonInstanceOf(String json, Class<T> clase, Gson gson) {
+    public <T> boolean isJsonInstanceOf(String json, Class<T> clase) {
         try {
             gson.fromJson(json, clase);
             return true;
