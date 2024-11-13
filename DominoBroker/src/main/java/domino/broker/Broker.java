@@ -52,10 +52,6 @@ public class Broker {
         runBroker() ;
     }
     
-    /**
-     * Corre el ServerSocket del Broker y empieza un Hilo que esta atento a
-     * cualquier socket que vaya a conectarse al Broker ServerSocket
-     */
     public void runBroker() {
         try(ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Servidor corriendo en puerto: " + PORT);
@@ -69,16 +65,6 @@ public class Broker {
         }
     }
     
-    /**
-     * Metodo que ejecuta el Hilo del metodo runBroker. Este esta atento a las conexiones
-     * de sockets, y las filtra en los 2 Map de las conexiones (clientes y servidores).
-     * Ademas, crea un hilo por cada conexion de socket que llega, que esta atento a 
-     * tanto cuando lleguen peticiones de los clientes, como a cuando lleguen respuestas
-     * de los servidores, asignando un metodo distinto a cada hilo dependiendo de el socket
-     * que vaya llegando (si es un CLIENT, crea un Hilo del metodo handleClientsRequests, si
-     * es un SERVER, crea un Hilo del metodo handleServersResponses.
-     * @param socket 
-     */
     private void manejarConexiones(Socket socket) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
