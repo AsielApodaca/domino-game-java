@@ -15,6 +15,7 @@ import dominodto.CasillaDTO;
  */
 public class SolicitudCasillaSeleccionada extends EventoSolicitud {
 
+    private CasillaDTO casillaDTO;
 
     public SolicitudCasillaSeleccionada(CasillaDTO casillaDTO) {
         this.casillaDTO = casillaDTO;
