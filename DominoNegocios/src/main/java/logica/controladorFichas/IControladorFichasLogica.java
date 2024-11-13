@@ -20,9 +20,6 @@ public interface IControladorFichasLogica {
       void setTableroDomino(TableroDominoEntity tableroDominoEntity);
       List<FichaDominoEntity> obtenerFichasCompatibles(List<FichaDominoEntity> listaFichas);
       List<FichaDominoEntity> obtenerFichasNoCompatibles(List<FichaDominoEntity> listaFichas);
-      CasillaEntity colocarMula();
-      CasillaEntity colocarFichaExtremo1();
-      CasillaEntity colocarFichaExtremo2();
       void removerFichaLista(List<FichaDominoEntity> listaFichas, FichaDominoEntity ficha);
 }
       

@@ -201,29 +201,7 @@ public class ControladorFichasLogica implements IControladorFichasLogica{
         return listaFichasNoCompatibles;
     }
     
-    @Override
-    public CasillaEntity colocarMula() {
-        FichaDominoEntity mula = tableroDominoEntity.getFichaSeleccionada();
-        tableroDominoEntity.colocarMula(mula);
-        CasillaEntity casillaMula = tableroDominoEntity.getCasillaMula();
-        return casillaMula;
-    }
-    
-    @Override
-    public CasillaEntity colocarFichaExtremo1() {
-        FichaDominoEntity ficha = tableroDominoEntity.getFichaSeleccionada();
-        tableroDominoEntity.colocarFichaExtremo1(ficha);
-        CasillaEntity casillaExtremo = tableroDominoEntity.getCasillaExtremo1();
-        return casillaExtremo;
-    }
-    
-    @Override
-    public CasillaEntity colocarFichaExtremo2() {
-        FichaDominoEntity ficha = tableroDominoEntity.getFichaSeleccionada();
-        tableroDominoEntity.colocarFichaExtremo2(ficha);
-        CasillaEntity casillaExtremo = tableroDominoEntity.getCasillaExtremo2();
-        return casillaExtremo;
-    }
+
     
     @Override
     public void removerFichaLista(List<FichaDominoEntity> listaFichas, FichaDominoEntity ficha) {
