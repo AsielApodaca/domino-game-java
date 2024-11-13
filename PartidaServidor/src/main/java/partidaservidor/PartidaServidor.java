@@ -4,6 +4,7 @@
  */
 package partidaservidor;
 
+import controlSolicitudes.ServidorSolicitudCasillaSeleccionada;
 import domino.respuestas.EventoRespuesta;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
@@ -19,8 +20,8 @@ public class PartidaServidor {
 
     public void runRequest(EventoSolicitud eventoSolicitud) {
         if (eventoSolicitud instanceof SolicitudCasillaSeleccionada solicitudCasillaSeleccionada) {
-            PartidaServidorSolicitudCasillaSeleccionada partidaServidorSolicitudCasillaSeleccionada
-                    = new PartidaServidorSolicitudCasillaSeleccionada();
+            ServidorSolicitudCasillaSeleccionada partidaServidorSolicitudCasillaSeleccionada
+                    = new ServidorSolicitudCasillaSeleccionada();
 
             partidaServidorSolicitudCasillaSeleccionada.colocarFichaSeleccionadaEnTableroEntity(
                     solicitudCasillaSeleccionada
