@@ -4,12 +4,9 @@
  */
 package logica.tableroDominoLogica;
 
-import adapterEntidades.AdapterFichaDomino;
 import adapterEntidades.AdapterJugadorDomino;
-import adapterEntidades.IAdapterFichaDomino;
 import adapterEntidades.IAdapterJugadorDomino;
 import dominio.CasillaEntity;
-import dominio.ConfiguracionJuegoEntity;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
 import dominio.PozoEntity;
