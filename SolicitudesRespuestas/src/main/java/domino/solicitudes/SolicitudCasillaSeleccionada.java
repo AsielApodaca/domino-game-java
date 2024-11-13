@@ -14,7 +14,6 @@ import dominodto.CasillaDTO;
  * @author Asiel Apodaca Monge
  */
 public class SolicitudCasillaSeleccionada extends EventoSolicitud {
-    private CasillaDTO casillaDTO;
 
     private CasillaDTO casillaDTO;
 

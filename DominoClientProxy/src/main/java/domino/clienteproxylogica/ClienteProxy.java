@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import domino.listeners.IProxyListener;
 import domino.respuestas.EventoRespuesta;
+import domino.serializador.Serializador;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
 import dominodto.CasillaDTO;
@@ -31,13 +32,23 @@ public class ClienteProxy {
     private boolean running;
     private final Gson gson;
     private final List<IProxyListener> listeners;
+    private final Serializador serializador;
 
     public ClienteProxy(String host, int PORT) {
         this.gson = new Gson();
         this.listeners = new ArrayList<>();
+        this.serializador = new Serializador();
         run(host, PORT);
     }
 
+    /**
+     * Establece una conexión de socket con el broker en el host y puerto
+     * especificados. Identifica la conexión como cliente y configura los flujos
+     * de entrada y salida.
+     *
+     * @param host la dirección del broker
+     * @param PORT el puerto del broker
+     */
     public void run(String host, int PORT) {
         try {
             this.socket = new Socket(host, PORT);
@@ -58,47 +69,48 @@ public class ClienteProxy {
     }
 
     /**
-     * Metodo para mandar una solicitud al broker en formato JSON, en este caso,
-     * al ser una aplicacion de mensajes sencilla la request es el mismo mensaje
-     * que se envia, y para antes de mandarlo, lo convierte a formato JSON.
+     * Convierte y envía una solicitud de evento al broker en formato JSON.
      *
-     * @param message
+     * @param solicitudEvento el evento a enviar al broker
      */
     public void enviarSolicitud(EventoSolicitud solicitudEvento) {
         try {
-            JsonObject jsonRequest = new JsonObject();
-
-            if (solicitudEvento instanceof SolicitudCasillaSeleccionada) {
-                SolicitudCasillaSeleccionada solicitud = (SolicitudCasillaSeleccionada) solicitudEvento;
-                CasillaDTO casilla = solicitud.getCasillaDTO();
-
-            }
-
+            JsonObject jsonSolicitud = serializador.convertirEventoAGSON(solicitudEvento);
+            redirigirSolicitud(jsonSolicitud);
         } catch (Exception e) {
+            System.out.println("Error al enviar solicitud");
         }
     }
 
     /**
-     * Metodo que funciona conjunto a un Hilo creado en el constructor para
-     * estar atento a las respuesta que vayan llegando del Broker. Este le
-     * comunica al cliente cuando le llegan los mensajes para que el cliente lo
-     * maneje. Metodo de redireccionamiento.
+     * Redirige la solicitud serializada al broker
+     *
+     * @param jsonSolicitud El JSON a enviar
      */
-    private void forwardResponses() {
-
-    }
-
-   
-
-    public void notificarRespuestaEvento(EventoRespuesta eventoRespuesta) {
-        for (IProxyListener listener : listeners) {
-            listener.onRecibirRespuesta(eventoRespuesta);
+    private void redirigirSolicitud(JsonObject jsonSolicitud) {
+        try {
+            if (out != null && !socket.isClosed()) {
+                // Enviamos el JSON como string al broker
+                out.println(jsonSolicitud.toString());
+                out.flush();
+                System.out.println("Solicitud enviada al broker: " + jsonSolicitud.toString());
+            } else {
+                System.out.println("No hay conexión con el broker");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al redirigir solicitud: " + e.getMessage());
         }
     }
 
-    public void agregarListener(IProxyListener listener) {
-        if (!listeners.contains(listener)) {
-            listeners.add(listener);
-        }
-    }
+//    public void notificarRespuestaEvento(EventoRespuesta eventoRespuesta) {
+//        for (IProxyListener listener : listeners) {
+//            listener.onRecibirRespuesta(eventoRespuesta);
+//        }
+//    }
+//
+//    public void agregarListener(IProxyListener listener) {
+//        if (!listeners.contains(listener)) {
+//            listeners.add(listener);
+//        }
+//    }
 }
