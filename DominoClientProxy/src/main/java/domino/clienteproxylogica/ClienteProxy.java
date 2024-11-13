@@ -63,7 +63,7 @@ public class ClienteProxy {
             System.out.println("Conexion ClienteProxy exitosa con Broker");
             this.running = true;
             
-            new Thread(()-> enviarSolicitud(clientType)).start();
+            new Thread(()-> enviarSolicitud(clientType.getAsString())).start();
 
         } catch (Exception e) {
             System.out.println("Error al conectar con el Broker: " + e.getMessage());
@@ -77,7 +77,7 @@ public class ClienteProxy {
      */
     public void conversorEventoASolicitud(EventoSolicitud eventoSolicitud) {
         try {
-            JsonObject jsonSolicitud = serializador.convertirEventoAJSON(eventoSolicitud);
+            String jsonSolicitud = serializador.convertirEventoAJSON(eventoSolicitud);
             enviarSolicitud(jsonSolicitud);
         } catch (Exception e) {
             System.out.println("Error al enviar solicitud");
@@ -89,13 +89,13 @@ public class ClienteProxy {
      *
      * @param jsonSolicitud El JSON a enviar
      */
-    private void enviarSolicitud(JsonObject jsonSolicitud) {
+    private void enviarSolicitud(String jsonSolicitud) {
         try {
             if (out != null && !socket.isClosed()) {
                 // Enviamos el JSON como string al broker
-                out.println(jsonSolicitud.toString());
+                out.println(jsonSolicitud);
                 out.flush();
-                System.out.println("Solicitud enviada al broker: " + jsonSolicitud.toString());
+                System.out.println("Solicitud enviada al broker: " + jsonSolicitud);
             } else {
                 System.out.println("No hay conexión con el broker");
             }

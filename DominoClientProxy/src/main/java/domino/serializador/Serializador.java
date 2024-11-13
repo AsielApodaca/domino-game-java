@@ -22,28 +22,28 @@ public class Serializador {
         this.gson = new Gson();
     }
 
-    public JsonObject convertirEventoAJSON(EventoSolicitud solicitud) {
-        JsonObject jsonRequest = new JsonObject();
+    public String convertirEventoAJSON(EventoSolicitud solicitud) {
+//        JsonObject jsonRequest = new JsonObject();
+//
+//        if (solicitud instanceof SolicitudCasillaSeleccionada) {
+//            SolicitudCasillaSeleccionada solicitudCasilla = (SolicitudCasillaSeleccionada) solicitud;
+//            CasillaDTO casilla = solicitudCasilla.getCasillaDTO();
+//
+//            JsonObject fichaJson = new JsonObject();
+//            fichaJson.addProperty("locacionx", casilla.getLocacionX());
+//            fichaJson.addProperty("locaciony", casilla.getLocacionY());
+//            fichaJson.addProperty("rotacion", casilla.getRotacion());
+//
+//            if (casilla.getFichaDominoDTO() != null) {
+//                JsonObject domino = new JsonObject();
+//                domino.addProperty("extremo1", casilla.getFichaDominoDTO().getValorExtremo1());
+//                domino.addProperty("extremo2", casilla.getFichaDominoDTO().getValorExtremo2());
+//                fichaJson.add("ficha", domino);
+//            }
+//
+//            jsonRequest.add("datos", fichaJson);
+//        }
 
-        if (solicitud instanceof SolicitudCasillaSeleccionada) {
-            SolicitudCasillaSeleccionada solicitudCasilla = (SolicitudCasillaSeleccionada) solicitud;
-            CasillaDTO casilla = solicitudCasilla.getCasillaDTO();
-
-            JsonObject fichaJson = new JsonObject();
-            fichaJson.addProperty("locacionx", casilla.getLocacionX());
-            fichaJson.addProperty("locaciony", casilla.getLocacionY());
-            fichaJson.addProperty("rotacion", casilla.getRotacion());
-
-            if (casilla.getFichaDominoDTO() != null) {
-                JsonObject domino = new JsonObject();
-                domino.addProperty("extremo1", casilla.getFichaDominoDTO().getValorExtremo1());
-                domino.addProperty("extremo2", casilla.getFichaDominoDTO().getValorExtremo2());
-                fichaJson.add("ficha", domino);
-            }
-
-            jsonRequest.add("datos", fichaJson);
-        }
-
-        return jsonRequest;
+        return gson.toJson(solicitud);
     }
 }
