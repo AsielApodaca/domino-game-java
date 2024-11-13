@@ -6,6 +6,8 @@ package logica.tableroDominoLogica;
 
 import domino.listeners.IProxyListener;
 import domino.respuestas.EventoRespuesta;
+import domino.respuestas.RespuestaActualizarCantidadFichas;
+import domino.respuestas.RespuestaAgregarFichaTablero;
 
 /**
  *
@@ -15,7 +17,19 @@ public class GestorRespuestaASolicitud implements IProxyListener {
 
     @Override
     public void onRecibirRespuesta(EventoRespuesta eventoRespuesta) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (eventoRespuesta instanceof RespuestaAgregarFichaTablero) {
+
+        } else if (eventoRespuesta instanceof RespuestaActualizarCantidadFichas) {
+
+        } else if (eventoRespuesta instanceof RespuestaAgregarFichaTablero) {
+
+        } else {
+            System.out.println("Respuesta no reconocida.");
+        }
+    }
+
+    private void procesarRespuestaCasillaSeleccionada(EventoRespuesta eventoRespuesta) {
+
     }
 
 }

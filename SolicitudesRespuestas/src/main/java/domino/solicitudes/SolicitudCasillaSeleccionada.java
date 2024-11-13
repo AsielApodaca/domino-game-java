@@ -4,10 +4,22 @@
  */
 package domino.solicitudes;
 
+import dominodto.CasillaDTO;
+
 /**
  *
  * @author castr
  */
 public class SolicitudCasillaSeleccionada extends EventoSolicitud {
+
+    private CasillaDTO casillaDTO;
+
+    public SolicitudCasillaSeleccionada(CasillaDTO casillaDTO) {
+        this.casillaDTO = casillaDTO;
+    }
+
+    public CasillaDTO getCasillaDTO() {
+        return casillaDTO;
+    }
 
 }

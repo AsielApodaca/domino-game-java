@@ -15,6 +15,10 @@ import dominio.JugadorDominoEntity;
 import dominio.PozoEntity;
 import dominio.SalaEntity;
 import dominio.TableroDominoEntity;
+import domino.fachada.FachadaClienteProxy;
+import domino.fachada.IFachadaClienteProxy;
+import domino.solicitudes.EventoSolicitud;
+import domino.solicitudes.SolicitudCasillaSeleccionada;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
@@ -35,7 +39,6 @@ import logica.controladorTurno.IControladorTurno;
 import mapeodto.MapeadorDTO;
 import notificador.eventos.CasillaSeleccionadaEvento;
 import notificador.eventos.FichaSeleccionadaEvento;
-
 
 /**
  *
@@ -58,6 +61,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
     private MapeadorDTO mapeadorDTO;
     private List<JugadorDominoDTO> jugadoresDTO = new ArrayList<>();
     private IContenedorListener contenedorListener;
+    private IFachadaClienteProxy fachadaClienteProxy;
 
     public TableroDominoLogica(SalaEntity salaEntity) {
         this.salaEntity = salaEntity;
@@ -68,6 +72,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
         this.controladorFichas = new ControladorFichasLogica();
         this.controladorTurno = new ControladorTurno();
         this.mapeadorDTO = new MapeadorDTO();
+        this.fachadaClienteProxy = new FachadaClienteProxy();
 
     }
 
@@ -83,21 +88,21 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
 
         return this.contenedorListener;
     }
-    
+
     private void mostrarFichaEnTablero(CasillaEntity casillaEntity) {
         CasillaDTO fichaAColocar = mapeadorDTO.casillaEntityADTO(casillaEntity);
         fachadaPartidaDomino.colocarFichaTablero(fichaAColocar);
         System.out.println(tableroDominoEntity.getValorExtremo1() + " " + tableroDominoEntity.getValorExtremo2());
     }
-    
+
     private void removerFichaAJugador(FichaDominoEntity fichaDominoEntity) {
         List<FichaDominoEntity> listaFichasJugadorLocal = salaEntity.getJugadorLocal().getListaFichasJugador();
         controladorFichas.removerFichaLista(listaFichasJugadorLocal, fichaDominoEntity);
     }
-    
+
     private CasillaEntity colocarFichaSeleccionadaEnTableroEntity(int extremoTablero) {
         CasillaEntity casilla;
-        switch(extremoTablero) {
+        switch (extremoTablero) {
             case CasillaDTO.MULA:
                 casilla = controladorFichas.colocarMula();
                 break;
@@ -114,8 +119,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
         tableroDominoEntity.setFichaSeleccionada(null);
         return casilla;
     }
-    
-    
+
     private void escucharEventosPartidaDomino() {
         fachadaPartidaDomino.suscribirPresentacionListener((IPresentacionPartidaDominoListener) this);
     }
@@ -123,7 +127,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
     private void mostrarPresentacionPartida() {
         this.contenedorListener = fachadaPartidaDomino.iniciarPantalla();
     }
-    
+
     private void prepararTableroDeFichas() {
         controladorFichas.setTableroDomino(tableroDominoEntity);
     }
@@ -146,14 +150,13 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
         List<FichaDominoEntity> fichasCompatibles = controladorFichas.obtenerFichasCompatibles(fichasJugadorLocal);
         List<FichaDominoEntity> fichasNoCompatibles = controladorFichas.obtenerFichasNoCompatibles(fichasJugadorLocal);
         List<FichaDominoDTO> fichasJugadorLocalDTO = new ArrayList<>();
-        
-        
-        for(FichaDominoEntity ficha : fichasCompatibles) {
+
+        for (FichaDominoEntity ficha : fichasCompatibles) {
             FichaDominoDTO fichaDTO = new FichaDominoDTO(ficha.getExtremo1(), ficha.getExtremo2());
             fichaDTO.setCompatible(true);
             fichasJugadorLocalDTO.add(fichaDTO);
         }
-        for(FichaDominoEntity ficha : fichasNoCompatibles) {
+        for (FichaDominoEntity ficha : fichasNoCompatibles) {
             FichaDominoDTO fichaDTO = new FichaDominoDTO(ficha.getExtremo1(), ficha.getExtremo2());
             fichaDTO.setCompatible(false);
             fichasJugadorLocalDTO.add(fichaDTO);
@@ -165,7 +168,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
         PozoEntity pozo = new PozoEntity();
         controladorFichas.setPozo(pozo);
     }
-    
+
     private void ocultarPosiblesMovimientos() {
         fachadaPartidaDomino.ocultarCasillasParaColocarFicha();
     }
@@ -205,12 +208,13 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
     @Override
     public void onFichaSeleccionadaEvento(FichaSeleccionadaEvento evento) {
         FichaDominoDTO fichaSeleccionadaDTO = evento.getFichaDominoDTO();
-        if(fichaSeleccionadaDTO == null) {
+        if (fichaSeleccionadaDTO == null) {
             this.tableroDominoEntity.setFichaSeleccionada(null);
             ocultarPosiblesMovimientos();
         } else {
             List<FichaDominoEntity> listaFichasJugador = salaEntity.getJugadorLocal().getListaFichasJugador();
-            FichaDominoEntity fichaSeleccionadaEntity =  // compara la fichaDTO con las fichas del jugadorLocal
+            FichaDominoEntity fichaSeleccionadaEntity
+                    = // compara la fichaDTO con las fichas del jugadorLocal
                     estrategiaComparadorEntidades.comparar(
                             fichaSeleccionadaDTO, listaFichasJugador
                     );
@@ -222,13 +226,22 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
 
     @Override
     public void onCasillaSeleccionada(CasillaSeleccionadaEvento evento) {
-        CasillaDTO casillaSeleccionada = evento.getCasillaDTO();
-        CasillaEntity casilla = colocarFichaSeleccionadaEnTableroEntity(casillaSeleccionada.getExtremo());
-        removerFichaAJugador(casilla.getFichaDomino());
-        mostrarFichasJugadorLocal();
-        ocultarPosiblesMovimientos();
-        mostrarFichaEnTablero(casilla);
-    }
+        try {
+            CasillaDTO casillaSeleccionada = evento.getCasillaDTO();
+            CasillaEntity casilla = colocarFichaSeleccionadaEnTableroEntity(casillaSeleccionada.getExtremo());
+            removerFichaAJugador(casilla.getFichaDomino());
+            mostrarFichasJugadorLocal();
+            ocultarPosiblesMovimientos();
+            mostrarFichaEnTablero(casilla);
 
+            CasillaDTO casillaDTO = mapeadorDTO.casillaEntityADTO(casilla);
+
+            SolicitudCasillaSeleccionada solicitud = new SolicitudCasillaSeleccionada(casillaDTO);
+            fachadaClienteProxy.enviarSolicitud(solicitud);
+
+        } catch (Exception e) {
+            System.out.println("Error al procesar la seleccion de casilla");
+        }
+    }
 
 }

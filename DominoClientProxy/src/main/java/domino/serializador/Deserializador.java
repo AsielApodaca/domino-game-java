@@ -4,10 +4,26 @@
  */
 package domino.serializador;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import domino.respuestas.EventoRespuesta;
+
 /**
  *
  * @author castr
  */
 public class Deserializador {
-    
+
+    private final Gson gson;
+
+    public Deserializador() {
+        this.gson = new Gson();
+    }
+
+    public EventoRespuesta convertirGSONAEvento(JsonObject jsonObject) {
+
+        return null;
+
+    }
+
 }

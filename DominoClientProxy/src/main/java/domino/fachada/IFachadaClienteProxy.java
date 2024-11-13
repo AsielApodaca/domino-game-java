@@ -4,11 +4,13 @@
  */
 package domino.fachada;
 
+import domino.solicitudes.EventoSolicitud;
+
 /**
  *
  * @author castr
  */
 public interface IFachadaClienteProxy {
 
-  
+    public void enviarSolicitud(EventoSolicitud eventoSolicitud);
 }
