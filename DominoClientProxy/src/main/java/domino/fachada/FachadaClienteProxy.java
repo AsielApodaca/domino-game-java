@@ -16,18 +16,15 @@ import domino.solicitudes.EventoSolicitud;
 public class FachadaClienteProxy implements IFachadaClienteProxy {
 
     private final ClienteProxy clienteProxy;
-    private final Serializador serializador;
 
     public FachadaClienteProxy() {
         this.clienteProxy = new ClienteProxy("localhost", 3000);
-        this.serializador = new Serializador();
+
     }
 
     @Override
     public void enviarSolicitud(EventoSolicitud solicitud) {
-         JsonObject jsonSolicitud = serializador.convertirEventoAGSON(solicitud);
-    
-        clienteProxy.enviarSolicitud(jsonSolicitud);
+        clienteProxy.enviarSolicitud(solicitud);
     }
 
 }
