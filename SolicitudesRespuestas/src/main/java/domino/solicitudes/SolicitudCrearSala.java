@@ -8,6 +8,6 @@ package domino.solicitudes;
  *
  * @author castr
  */
-public class SolicitudCrearSala {
+public class SolicitudCrearSala extends EventoSolicitud{
     //config partida
 }
