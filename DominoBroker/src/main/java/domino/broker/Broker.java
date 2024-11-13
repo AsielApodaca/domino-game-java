@@ -27,8 +27,10 @@ import java.util.Optional;
 import sala.Sala;
 
 /**
- *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class Broker {
 
