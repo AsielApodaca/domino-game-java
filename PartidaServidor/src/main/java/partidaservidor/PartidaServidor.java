@@ -18,19 +18,34 @@ import domino.solicitudes.SolicitudCasillaSeleccionada;
  */
 public class PartidaServidor {
 
+    /**
+     * Procesa una solicitud recibida y ejecuta la acción correspondiente según
+     * el tipo de solicitud.
+     *
+     * @param eventoSolicitud El evento de solicitud que se va a procesar, puede
+     * ser de cualquier tipo que extienda de EventoSolicitud.
+     */
     public void runRequest(EventoSolicitud eventoSolicitud) {
+        // Verifica de que instancia fue recibido el evento
         if (eventoSolicitud instanceof SolicitudCasillaSeleccionada solicitudCasillaSeleccionada) {
             ServidorSolicitudCasillaSeleccionada partidaServidorSolicitudCasillaSeleccionada
                     = new ServidorSolicitudCasillaSeleccionada();
 
+            // Llama al método para colocar la ficha seleccionada en el tablero
             partidaServidorSolicitudCasillaSeleccionada.colocarFichaSeleccionadaEnTableroEntity(
                     solicitudCasillaSeleccionada
-                    .getCasillaDTO());
-        } 
+                            .getCasillaDTO());
+        }
 
     }
 
-    public void sendResponse(EventoRespuesta eventorespuesta) {
-        
+    /**
+     * Método para enviar una respuesta al proxy.
+     *
+     * @param eventoRespuesta El evento de respuesta que se enviará después de
+     * procesar la solicitud.
+     */
+    public void sendResponse(EventoRespuesta eventoRespuesta) {
+
     }
 }
