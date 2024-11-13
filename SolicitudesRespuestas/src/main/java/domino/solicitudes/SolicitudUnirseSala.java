@@ -8,6 +8,6 @@ package domino.solicitudes;
  *
  * @author castr
  */
-public class SolicitudUnirseSala {
+public class SolicitudUnirseSala extends EventoSolicitud {
     //id sala
 }

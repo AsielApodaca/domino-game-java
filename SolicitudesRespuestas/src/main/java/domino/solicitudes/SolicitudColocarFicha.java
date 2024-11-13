@@ -8,6 +8,6 @@ package domino.solicitudes;
  *
  * @author castr
  */
-public class SolicitudColocarFicha {
+public class SolicitudColocarFicha extends EventoSolicitud{
     //datos ficha
 }
