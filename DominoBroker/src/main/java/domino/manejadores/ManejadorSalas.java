@@ -74,6 +74,19 @@ public class ManejadorSalas {
         }
     }
     
+    public Sala obtenerSalaDeServidor(String id) {
+        Sala salaDelServidor = salas.values().stream()
+                .filter(sala -> sala.getServidor().getId() == id) 
+                .findFirst() 
+                .orElse(null); 
+        
+        if(salaDelServidor != null) {
+            return salaDelServidor ;
+        } else {
+            return null ;
+        }
+    }
+    
     public void unirClienteASala(ConexionCliente cliente, JsonObject jsonObject) {
         Sala salaBuscada = obtenerSala(jsonObject.get("id_sala").getAsString()) ;
         
@@ -83,15 +96,38 @@ public class ManejadorSalas {
     }
     
     public void enviarSolicitudAServidor(ConexionCliente cliente, JsonObject solicitud) {
-        Sala salaDelCliente = salas.values().stream()
-                .filter(sala -> sala.obtenerClientes().containsKey(cliente.getId())) 
-                .findFirst() 
-                .orElse(null); 
-
+        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
+        
         if (salaDelCliente != null) {
+            solicitud.addProperty("id_cliente", cliente.getId());
             salaDelCliente.getServidor().mandarSolicitudServidor(solicitud);
         } else {
             System.out.println("El cliente no esta conectado a una sala");
+        }
+    }
+    
+    public void enviarRespuestaACliente(ConexionServidor servidor, JsonObject solicitud) {
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        
+        if(salaDelServidor != null) {
+            String idCliente = solicitud.get("id_cliente").getAsString() ;
+            
+            ConexionCliente cliente = salaDelServidor.obtenerCliente(idCliente) ;
+            cliente.mandarRespuestaCliente(solicitud);
+        } else {
+            System.out.println("El Servidor no esta conectado a una sala");
+        }
+    }
+    
+    public void enviarRespuestaATodosLosClientes(ConexionServidor servidor, JsonObject solicitud) {
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        
+        if(salaDelServidor != null) {
+            salaDelServidor.obtenerClientes().forEach((id, cliente) -> {
+                cliente.mandarRespuestaCliente(solicitud);
+            });
+        } else {
+            System.out.println("El Servidor no esta conectado a una sala");
         }
     }
     

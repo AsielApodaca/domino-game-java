@@ -4,6 +4,7 @@
  */
 package domino.conexiones;
 
+import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -32,8 +33,8 @@ public class ConexionCliente {
         }
     }
     
-    public void mandarRespuestaCliente(String respuesta) {
-        
+    public void mandarRespuestaCliente(JsonObject respuestaJSON) {
+        writer.println(respuestaJSON.getAsString());
     }
 
     public BufferedReader getReader() {

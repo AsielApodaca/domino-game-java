@@ -44,6 +44,10 @@ public class Sala {
         return clientes ;
     }
     
+    public ConexionCliente obtenerCliente(String id) {
+        return clientes.get(id) ;
+    }
+    
     public String getId() {
         return this.id ;
     }

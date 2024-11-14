@@ -15,6 +15,10 @@ import domino.conexiones.ConexionServidor;
 import domino.manejadores.ManejadorClientes;
 import domino.manejadores.ManejadorSalas;
 import domino.manejadores.ManejadorServidores;
+import domino.respuestas.RespuestaActualizarCantidadFichas;
+import domino.respuestas.RespuestaAgregarFichaTablero;
+import domino.respuestas.RespuestaCambioTurno;
+import domino.respuestas.RespuestaQuitarFichaUsuario;
 import domino.solicitudes.SolicitudColocarFicha;
 import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudUnirseSala;
@@ -29,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import domino.sala.Sala;
+import domino.solicitudes.SolicitudCasillaSeleccionada;
 
 /**
  * @author Hisamy Cinco Cota
@@ -111,7 +116,7 @@ public class Broker {
                     manejadorSalas.crearSala(cliente, manejadorServidores.buscarServidorLibre(), solicitudJSON);
                 } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudUnirseSala.class)) {
                     manejadorSalas.unirClienteASala(cliente, solicitudJSON);
-                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudColocarFicha.class)) {
+                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudColocarFicha.class) || Deserializador.esJsonInstanciaDe(solicitud, SolicitudCasillaSeleccionada.class)) {
                     manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 } else {
                     throw new AssertionError("Tipo de solicitud desconocido: " + tipoSolicitud);
@@ -123,7 +128,28 @@ public class Broker {
     }
     
     private void redirigirRespuestas(ConexionServidor servidor) {
-        
+        try {
+            String solicitud ;
+            
+            while((solicitud = servidor.getReader().readLine()) != null) {
+                JsonObject solicitudJSON = JsonParser.parseString(solicitud).getAsJsonObject() ;
+          
+                String tipoSolicitud = solicitudJSON.get("tipo").getAsString();
+
+                if (Deserializador.esJsonInstanciaDe(solicitud, RespuestaQuitarFichaUsuario.class)) {
+                    manejadorSalas.enviarRespuestaACliente(servidor, solicitudJSON);
+                } else if (Deserializador.esJsonInstanciaDe(solicitud, RespuestaAgregarFichaTablero.class)
+                        || Deserializador.esJsonInstanciaDe(solicitud, RespuestaCambioTurno.class)
+                        || Deserializador.esJsonInstanciaDe(solicitud, RespuestaActualizarCantidadFichas.class)
+                        ) {
+                    manejadorSalas.enviarRespuestaATodosLosClientes(servidor, solicitudJSON);
+                } else {
+                    throw new AssertionError("Tipo de solicitud desconocido: " + tipoSolicitud);
+                }
+                
+            }
+        } catch (Exception e) {
+        }
     }
     
 }

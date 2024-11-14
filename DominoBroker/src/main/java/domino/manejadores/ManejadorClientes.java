@@ -33,4 +33,8 @@ public class ManejadorClientes {
         ConexionCliente cliente = new ConexionCliente(id, socket) ;
         return this.clientes.put(id, cliente) ;
     }
+    
+    public ConexionCliente obtenerClientePorId(String id) {
+        return clientes.get(id) ;
+    }
 }

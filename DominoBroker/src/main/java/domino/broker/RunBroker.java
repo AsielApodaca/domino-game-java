@@ -13,6 +13,6 @@ package domino.broker;
 public class RunBroker {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Broker broker = new Broker() ;
     }
 }
