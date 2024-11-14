@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package domino.manejadores;
+package domino.conexiones;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -15,14 +15,14 @@ import java.net.Socket;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class ManejadorCliente {
+public class ConexionCliente {
     
     private Socket socket ;
     private BufferedReader reader;
     private PrintWriter writer;
     private String id ;
     
-    public ManejadorCliente(String id, Socket socket) {
+    public ConexionCliente(String id, Socket socket) {
         this.id = id ;
         this.socket = socket ;
         try {

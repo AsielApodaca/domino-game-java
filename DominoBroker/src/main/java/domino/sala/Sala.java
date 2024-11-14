@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package sala;
+package domino.sala;
 
-import domino.manejadores.ManejadorCliente;
-import domino.manejadores.ManejadorServidor;
+import domino.conexiones.ConexionCliente;
+import domino.conexiones.ConexionServidor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,30 +17,30 @@ import java.util.Map;
  */
 public class Sala {
     
-    private Map<String, ManejadorCliente> clientes ;
-    private ManejadorServidor servidor ;
+    private Map<String, ConexionCliente> clientes ;
+    private ConexionServidor servidor ;
     private String id ;
     private int size ;
     
-    public Sala(String id, ManejadorServidor servidor, int size) {
+    public Sala(String id, ConexionServidor servidor, int size) {
         clientes = new HashMap() ;
         this.servidor = servidor ;
         this.size = size ;
     }
     
-    public void asignarServidor(ManejadorServidor servidor) {
+    public void asignarServidor(ConexionServidor servidor) {
         this.servidor = servidor ;
     }
     
-    public ManejadorServidor getServidor() {
+    public ConexionServidor getServidor() {
         return servidor ;
     }
     
-    public void agregarCliente(String id, ManejadorCliente cliente) {
+    public void agregarCliente(String id, ConexionCliente cliente) {
         this.clientes.put(id, cliente) ;
     }
     
-    public Map<String, ManejadorCliente> obtenerClientes() {
+    public Map<String, ConexionCliente> obtenerClientes() {
         return clientes ;
     }
     

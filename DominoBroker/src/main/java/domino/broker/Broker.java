@@ -8,9 +8,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import deserializador.Deserializador;
 import domino.enums.Status;
-import domino.manejadores.ManejadorCliente;
-import domino.manejadores.ManejadorServidor;
+import domino.conexiones.ConexionCliente;
+import domino.conexiones.ConexionServidor;
+import domino.manejadores.ManejadorClientes;
+import domino.manejadores.ManejadorSalas;
+import domino.manejadores.ManejadorServidores;
 import domino.solicitudes.SolicitudColocarFicha;
 import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudUnirseSala;
@@ -24,7 +28,7 @@ import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import sala.Sala;
+import domino.sala.Sala;
 
 /**
  * @author Hisamy Cinco Cota
@@ -35,22 +39,16 @@ import sala.Sala;
 public class Broker {
 
     private final int PORT = 3000 ;
-    private final Map<String, ManejadorCliente> clientes ;
-    private final Map<String, ManejadorServidor> servers ;
-    private final Map<String, Sala> salas ;
-    private Long contadorIdClientes ;
-    private Long contadorIdServers ;
-    private Long contadorIdSalas ;
+    private final ManejadorClientes manejadorClientes ;
+    private final ManejadorServidores manejadorServidores ;
+    private final ManejadorSalas manejadorSalas ;
     private Gson gson ;
     
     public Broker() {
-        this.clientes = new HashMap() ;
-        this.servers = new HashMap() ;
-        this.salas = new HashMap() ;
+        this.manejadorClientes = new ManejadorClientes() ;
+        this.manejadorServidores = new ManejadorServidores() ;
+        this.manejadorSalas = new ManejadorSalas() ;
         this.gson = new Gson() ;
-        this.contadorIdClientes = 0L ;
-        this.contadorIdServers = 0L ;
-        this.contadorIdSalas = 0L ;
         runBroker() ;
     }
     
@@ -77,23 +75,15 @@ public class Broker {
             String id ;
             
             if(type.equals("CLIENT")) {
-                contadorIdClientes += 1L ;
-                id = "CLI" + contadorIdClientes ;
+                ConexionCliente cliente = manejadorClientes.agregarCliente(socket) ;
                 
-                ManejadorCliente cliente = new ManejadorCliente(id, socket) ;
-                clientes.put(id, cliente) ;
-                
-                System.out.println("Se ha conectado un nuevo Cliente con el id: " + id) ;
+                System.out.println("Se ha conectado un nuevo Cliente con el id: " + cliente.getId()) ;
                 
                 new Thread(() -> redirigirSolicitudes(cliente)).start(); ;
             } else if (type.equals("SERVER")) {
-                contadorIdServers += 1L ;
-                id = "SER" + contadorIdServers ;
+                ConexionServidor servidor = manejadorServidores.agregarServidor(socket) ;
                 
-                ManejadorServidor servidor = new ManejadorServidor(id, socket) ;
-                servers.put(id, servidor) ;
-                
-                System.out.println("Se ha conectado un nuevo Server con el id: " + id) ;
+                System.out.println("Se ha conectado un nuevo Server con el id: " + servidor.getId()) ;
                 
                 new Thread(() -> redirigirRespuestas(servidor)).start();
             } else {
@@ -107,7 +97,7 @@ public class Broker {
         }
     }
     
-    private void redirigirSolicitudes(ManejadorCliente cliente) {
+    private void redirigirSolicitudes(ConexionCliente cliente) {
         try {
             String solicitud ;
             
@@ -117,12 +107,12 @@ public class Broker {
           
                 String tipoSolicitud = solicitudJSON.get("tipo").getAsString();
 
-                if (isJsonInstanceOf(solicitud, SolicitudCrearSala.class)) {
-                    crearSala(cliente, solicitudJSON);
-                } else if (isJsonInstanceOf(solicitud, SolicitudUnirseSala.class)) {
-                    unirseSala(cliente, solicitudJSON);
-                } else if (isJsonInstanceOf(solicitud, SolicitudColocarFicha.class)) {
-                    colocarFicha(cliente, solicitudJSON);
+                if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudCrearSala.class)) {
+                    manejadorSalas.crearSala(cliente, manejadorServidores.buscarServidorLibre(), solicitudJSON);
+                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudUnirseSala.class)) {
+                    manejadorSalas.unirClienteASala(cliente, solicitudJSON);
+                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudColocarFicha.class)) {
+                    manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 } else {
                     throw new AssertionError("Tipo de solicitud desconocido: " + tipoSolicitud);
                 }
@@ -132,67 +122,8 @@ public class Broker {
         }
     }
     
-    private void redirigirRespuestas(ManejadorServidor servidor) {
+    private void redirigirRespuestas(ConexionServidor servidor) {
         
-    }
-
-    private void crearSala(ManejadorCliente cliente, JsonObject solicitud) {
-        ManejadorServidor servidorLibre = servers.values().stream()
-                .filter(servidor -> servidor.getStatus() == Status.LIBRE)
-                .findFirst()
-                .orElse(null);
-
-        if (servidorLibre != null) {
-
-            contadorIdSalas += 1L;
-            String id = "SAL" + contadorIdSalas;
-            
-            servidorLibre.mandarSolicitudServidor(solicitud);
-            
-            Sala salaNueva = new Sala(id, servidorLibre, solicitud.get("size").getAsInt());
-            salaNueva.agregarCliente(cliente.getId(), cliente);
-            
-            salas.put(id, salaNueva);
-            System.out.println("Sala Creada con el ID: " + id);
-            System.out.println("Se unio el cliente: " + cliente.getId() + " a la Sala: " + id);
-
-        } else {
-            System.out.println("No hay servidores libres.");
-        }
-    }
-    
-    private void unirseSala(ManejadorCliente cliente, JsonObject solicitud) {
-        String idSala = solicitud.get("id_sala").getAsString() ;
-        Sala salaBuscada = salas.values().stream()
-                .filter(sala -> sala.getId().equals(idSala))
-                .findFirst()
-                .orElse(null);
-        
-        salaBuscada.agregarCliente(cliente.getId(), cliente);
-        
-        System.out.println("Se unio el cliente: " + cliente.getId() + " a la Sala: " + idSala);
-    }
-    
-    private void colocarFicha(ManejadorCliente cliente, JsonObject solicitud) {
-        Sala salaDelCliente = salas.values().stream()
-                .filter(sala -> sala.obtenerClientes().containsKey(cliente.getId())) 
-                .findFirst() 
-                .orElse(null); 
-
-        if (salaDelCliente != null) {
-            salaDelCliente.getServidor().mandarSolicitudServidor(solicitud);
-        } else {
-            System.out.println("El cliente no esta conectado a una sala");
-        }
-    }
-
-    public <T> boolean isJsonInstanceOf(String json, Class<T> clase) {
-        try {
-            gson.fromJson(json, clase);
-            return true;
-        } catch (JsonSyntaxException | NullPointerException e) {
-            return false;
-        }
     }
     
 }

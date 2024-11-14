@@ -47,6 +47,7 @@ public class ServidorSolicitudCasillaSeleccionada {
         CasillaEntity casilla;
         CasillaDTO casillaDTORespuesta;
 
+        //CONVERTIR SWITCH A METODO
         // Determina el extremo del tablero en el que se colocará la ficha según la información de casillaDTO
         switch (casillaDTO.getExtremo()) {
             case CasillaDTO.MULA:
