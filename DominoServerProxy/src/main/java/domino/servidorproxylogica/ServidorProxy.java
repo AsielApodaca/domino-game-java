@@ -22,7 +22,7 @@ import java.util.List;
  * @author castr
  */
 public class ServidorProxy {
-
+    
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
@@ -31,7 +31,7 @@ public class ServidorProxy {
     private final Serializador serializador;
     private final Deserializador deserializador;
     private List<IProxyListener> listeners;
-
+    
     public ServidorProxy(String host, int PORT) {
         this.gson = new Gson();
         this.serializador = new Serializador();
@@ -57,12 +57,11 @@ public class ServidorProxy {
             JsonObject clientType = new JsonObject();
             clientType.addProperty("type", "SERVER");
             out.println(gson.toJson(clientType));
-
+            
             System.out.println("Conexion ServidorProxy exitosa con Broker");
             this.running = true;
 
-//            new Thread(()-> procesarSolicitud());
-
+//            new Thread(()-> enviarRespuestas());
         } catch (Exception e) {
             System.out.println("Error al conectar con el Broker: " + e.getMessage());
         }
@@ -89,13 +88,13 @@ public class ServidorProxy {
      * @param eventoRespuesta El objeto EventoRespuesta que se convertirá a JSON
      * y se enviará al broker.
      */
-    public void enviarRespuestas(EventoRespuesta eventoRespuesta) {
-//        try {
-//            String jsonRespuesta = conversorEventoARespuesta(eventoRespuesta);
-//           
-//        } catch (Exception e) {
-//            System.out.println("Error al redirigir respuesta: " + e.getMessage());
-//        }
+    public void enviarRespuestas(EventoRespuesta eventoRespuesta) { //INCOMPLETOOO!!
+        try {
+            String jsonRespuesta = conversorEventoARespuesta(eventoRespuesta);
+            
+        } catch (Exception e) {
+            System.out.println("Error al redirigir respuesta: " + e.getMessage());
+        }
     }
 
     /**
@@ -108,6 +107,17 @@ public class ServidorProxy {
     public void notificarSolicitudEvento(EventoSolicitud eventoSolicitud) {
         for (IProxyListener listener : listeners) {
             listener.onRecibirSolicitud(eventoSolicitud);
+        }
+    }
+
+    /**
+     * Agrega un listener a la lista de listeners si no está ya registrado.
+     *
+     * @param listener El listener a agregar.
+     */
+    public void agregarListener(IProxyListener listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
         }
     }
 

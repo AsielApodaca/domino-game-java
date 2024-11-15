@@ -66,30 +66,17 @@ public class ClienteProxy {
             System.out.println("Conexion ClienteProxy exitosa con Broker");
             this.running = true;
 
-//            new Thread(() -> procesarRespuesta())
+//            new Thread(() -> procesarRespuesta());
         } catch (Exception e) {
             System.out.println("Error al conectar con el Broker: " + e.getMessage());
         }
     }
 
     /**
-     * Convierte una solicitud de evento al broker en formato JSON.
+     * Envía la solicitud serializada al broker. Convierte el objeto
+     * EventoSolicitud a JSON y lo envía al broker si la conexión está activa.
      *
-     * @param eventoSolicitud el evento a enviar al broker
-     */
-    private String conversorEventoASolicitud(EventoSolicitud eventoSolicitud) {
-        try {
-            String jsonSolicitud = serializador.convertirEventoAJSON(eventoSolicitud);
-            return jsonSolicitud;
-        } catch (Exception e) {
-            System.out.println("Error al convertir el EventoSolicitud a JSON: " + e.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * Envia la solicitud serializada al broker
-     *
+     * @param solicitud El objeto EventoSolicitud a enviar.
      */
     public void enviarSolicitud(EventoSolicitud solicitud) {
         try {
@@ -107,31 +94,68 @@ public class ClienteProxy {
         }
     }
 
-    public EventoRespuesta conversorSolicitudAEvento(String respuesta) {
-        try {
-            EventoRespuesta eventoRespuesta = deserializador.convertirJSONAEvento(respuesta);
-            return eventoRespuesta;
-        } catch (Exception e) {
-            System.out.println("Error al convertir el JSON a EventoRespuesta: " + e.getMessage());
-            return null;
-        }
-
-    }
-
+    /**
+     * Procesa la respuesta recibida del broker. Convierte el JSON a un objeto
+     * EventoRespuesta y notifica el evento.
+     *
+     * @param jsonRespuesta La respuesta en formato JSON.
+     */
     public void procesarRespuesta(String jsonRespuesta) {
         EventoRespuesta eventoRespuesta = conversorSolicitudAEvento(jsonRespuesta);
         notificarRespuestaEvento(eventoRespuesta);
     }
 
+    /**
+     * Notifica la respuesta del evento a todos los listeners registrados.
+     *
+     * @param eventoRespuesta El objeto EventoRespuesta que se va a notificar.
+     */
     public void notificarRespuestaEvento(EventoRespuesta eventoRespuesta) {
         for (IProxyListener listener : listeners) {
             listener.onRecibirRespuesta(eventoRespuesta);
         }
     }
 
+    /**
+     * Agrega un listener a la lista de listeners si no está ya registrado.
+     *
+     * @param listener El listener a agregar.
+     */
     public void agregarListener(IProxyListener listener) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
+        }
+    }
+
+    /**
+     * Convierte una solicitud de evento al broker en formato JSON.
+     *
+     * @param eventoSolicitud el evento a enviar al broker
+     * @return El JSON como String
+     */
+    private String conversorEventoASolicitud(EventoSolicitud eventoSolicitud) {
+        try {
+            String jsonSolicitud = serializador.convertirEventoAJSON(eventoSolicitud);
+            return jsonSolicitud;
+        } catch (Exception e) {
+            System.out.println("Error al convertir el EventoSolicitud a JSON: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Convierte un JSON de respuesta a un objeto {@link EventoRespuesta}.
+     *
+     * @param respuesta La respuesta en formato JSON.
+     * @return El objeto EventoRespuesta deserializado.
+     */
+    private EventoRespuesta conversorSolicitudAEvento(String respuesta) {
+        try {
+            EventoRespuesta eventoRespuesta = deserializador.convertirJSONAEvento(respuesta);
+            return eventoRespuesta;
+        } catch (Exception e) {
+            System.out.println("Error al convertir el JSON a EventoRespuesta: " + e.getMessage());
+            return null;
         }
     }
 }
