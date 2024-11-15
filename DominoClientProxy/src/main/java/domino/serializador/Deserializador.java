@@ -23,12 +23,12 @@ public class Deserializador {
     }
 
     public EventoRespuesta convertirJSONAEvento(String jsonObject) {
-        if(isJsonInstanceOf(jsonObject, RespuestaQuitarFichaUsuario.class)) {
-            return gson.fromJson(jsonObject, RespuestaQuitarFichaUsuario.class) ;
+        if (isJsonInstanceOf(jsonObject, RespuestaQuitarFichaUsuario.class)) {
+            return gson.fromJson(jsonObject, RespuestaQuitarFichaUsuario.class);
         }
-        return null ;
+        return null;
     }
-    
+
     public <T> boolean isJsonInstanceOf(String json, Class<T> clase) {
         try {
             gson.fromJson(json, clase);

@@ -15,16 +15,11 @@ import domino.solicitudes.EventoSolicitud;
  */
 public class FachadaClienteProxy implements IFachadaClienteProxy {
 
-    private final ClienteProxy clienteProxy;
-
-    public FachadaClienteProxy() {
-        this.clienteProxy = new ClienteProxy("localhost", 3000);
-
-    }
+    private ClienteProxy clienteProxy;
 
     @Override
     public void enviarSolicitud(EventoSolicitud solicitud) {
-        clienteProxy.conversorEventoASolicitud(solicitud);
+        clienteProxy.enviarSolicitud(solicitud);
     }
 
 }

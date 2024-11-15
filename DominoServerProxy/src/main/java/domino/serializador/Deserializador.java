@@ -5,9 +5,11 @@
 package domino.serializador;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import domino.respuestas.EventoRespuesta;
+import domino.respuestas.RespuestaQuitarFichaUsuario;
 import domino.solicitudes.EventoSolicitud;
+import domino.solicitudes.SolicitudColocarFicha;
 
 /**
  *
@@ -21,8 +23,20 @@ public class Deserializador {
         this.gson = new Gson();
     }
 
-    public EventoSolicitud convertirJSONAEvento(JsonObject jsonObject) {
-        
+    public EventoSolicitud convertirJSONAEvento(String jsonObject) {
+        if (isJsonInstanceOf(jsonObject, SolicitudColocarFicha.class)) {
+            return gson.fromJson(jsonObject, SolicitudColocarFicha.class);
+        }
+        return null;
+    }
+
+    public <T> boolean isJsonInstanceOf(String json, Class<T> clase) {
+        try {
+            gson.fromJson(json, clase);
+            return true;
+        } catch (JsonSyntaxException | NullPointerException e) {
+            return false;
+        }
     }
 
 }

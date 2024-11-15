@@ -4,7 +4,8 @@
  */
 package domino.fachada;
 
-import domino.solicitudes.EventoSolicitud;
+import domino.respuestas.EventoRespuesta;
+import domino.servidorproxylogica.ServidorProxy;
 
 /**
  *
@@ -12,9 +13,11 @@ import domino.solicitudes.EventoSolicitud;
  */
 public class FachadaServidorProxy implements IFachadaServidorProxy {
 
+    private ServidorProxy servidorProxy;
+    
     @Override
-    public void enviarSolicitud(EventoSolicitud eventoSolicitud) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void enviarRespuestas(EventoRespuesta eventoRespuesta) {
+       servidorProxy.enviarRespuestas(eventoRespuesta);
     }
 
 }

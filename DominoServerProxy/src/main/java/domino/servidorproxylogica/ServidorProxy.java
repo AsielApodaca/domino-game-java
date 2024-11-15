@@ -6,6 +6,7 @@ package domino.servidorproxylogica;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import domino.listeners.IProxyListener;
 import domino.respuestas.EventoRespuesta;
 import domino.serializador.Deserializador;
 import domino.serializador.Serializador;
@@ -14,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
 
 /**
  *
@@ -28,6 +30,7 @@ public class ServidorProxy {
     private final Gson gson;
     private final Serializador serializador;
     private final Deserializador deserializador;
+    private List<IProxyListener> listeners;
 
     public ServidorProxy(String host, int PORT) {
         this.gson = new Gson();
@@ -58,23 +61,70 @@ public class ServidorProxy {
             System.out.println("Conexion ServidorProxy exitosa con Broker");
             this.running = true;
 
+//            new Thread(()-> procesarSolicitud());
+
         } catch (Exception e) {
             System.out.println("Error al conectar con el Broker: " + e.getMessage());
         }
     }
 
-    public void procesarSolicitud(JsonObject jsonSolicitud) {
+    /**
+     * Procesa una solicitud en formato JSON, convirtiéndola en un objeto de
+     * tipo EventoSolicitud y notificando a los listeners sobre la recepción de
+     * la solicitud.
+     *
+     * @param jsonSolicitud El contenido de la solicitud en formato JSON.
+     */
+    public void procesarSolicitud(String jsonSolicitud) {
         try {
-//            EventoSolicitud eventoSolicitud = deserializador.convertirJSONAEvento(jsonSolicitud);
+            EventoSolicitud eventoSolicitud = deserializador.convertirJSONAEvento(jsonSolicitud);
+            notificarSolicitudEvento(eventoSolicitud);
         } catch (Exception e) {
         }
     }
 
-    public void procesarRespuesta() {
-
+    /**
+     * Envia una respuesta en formato JSON al broker si hay una conexión activa.
+     *
+     * @param eventoRespuesta El objeto EventoRespuesta que se convertirá a JSON
+     * y se enviará al broker.
+     */
+    public void enviarRespuestas(EventoRespuesta eventoRespuesta) {
+//        try {
+//            String jsonRespuesta = conversorEventoARespuesta(eventoRespuesta);
+//           
+//        } catch (Exception e) {
+//            System.out.println("Error al redirigir respuesta: " + e.getMessage());
+//        }
     }
 
-    public void notificarSolicitudEvento(EventoRespuesta eventoRespuesta) {
+    /**
+     * Notifica a todos los listeners registrados sobre la recepción de un
+     * EventoSolicitud.
+     *
+     * @param eventoSolicitud El objeto EventoSolicitud que se notificará a los
+     * listeners.
+     */
+    public void notificarSolicitudEvento(EventoSolicitud eventoSolicitud) {
+        for (IProxyListener listener : listeners) {
+            listener.onRecibirSolicitud(eventoSolicitud);
+        }
+    }
 
+    /**
+     * Convierte un objeto EventoRespuesta en su representación JSON.
+     *
+     * @param eventoRespuesta El objeto EventoRespuesta a convertir a JSON.
+     * @return El JSON generado a partir del EventoRespuesta o null si ocurrió
+     * un error.
+     */
+    private String conversorEventoARespuesta(EventoRespuesta eventoRespuesta) {
+        try {
+            String jsonRespuesta = serializador.convertirEventoAJSON(eventoRespuesta);
+            return jsonRespuesta;
+        } catch (Exception e) {
+            System.out.println("Error al convertir el EventoRespuesta a JSON: " + e.getMessage());
+            return null;
+        }
     }
 }

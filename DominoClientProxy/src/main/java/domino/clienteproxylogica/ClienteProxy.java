@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import domino.listeners.IProxyListener;
 import domino.respuestas.EventoRespuesta;
+import domino.serializador.Deserializador;
 import domino.serializador.Serializador;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
@@ -33,11 +34,13 @@ public class ClienteProxy {
     private final Gson gson;
     private final List<IProxyListener> listeners;
     private final Serializador serializador;
+    private final Deserializador deserializador;
 
     public ClienteProxy(String host, int PORT) {
         this.gson = new Gson();
         this.listeners = new ArrayList<>();
         this.serializador = new Serializador();
+        this.deserializador = new Deserializador();
         run(host, PORT);
     }
 
@@ -62,9 +65,8 @@ public class ClienteProxy {
 
             System.out.println("Conexion ClienteProxy exitosa con Broker");
             this.running = true;
-            
-            new Thread(()-> enviarSolicitud(clientType.getAsString())).start();
 
+//            new Thread(() -> procesarRespuesta())
         } catch (Exception e) {
             System.out.println("Error al conectar con el Broker: " + e.getMessage());
         }
@@ -73,24 +75,25 @@ public class ClienteProxy {
     /**
      * Convierte una solicitud de evento al broker en formato JSON.
      *
-     * @param solicitudEvento el evento a enviar al broker
+     * @param eventoSolicitud el evento a enviar al broker
      */
-    public void conversorEventoASolicitud(EventoSolicitud eventoSolicitud) {
+    private String conversorEventoASolicitud(EventoSolicitud eventoSolicitud) {
         try {
             String jsonSolicitud = serializador.convertirEventoAJSON(eventoSolicitud);
-            enviarSolicitud(jsonSolicitud);
+            return jsonSolicitud;
         } catch (Exception e) {
-            System.out.println("Error al enviar solicitud");
+            System.out.println("Error al convertir el EventoSolicitud a JSON: " + e.getMessage());
+            return null;
         }
     }
 
     /**
      * Envia la solicitud serializada al broker
      *
-     * @param jsonSolicitud El JSON a enviar
      */
-    private void enviarSolicitud(String jsonSolicitud) {
+    public void enviarSolicitud(EventoSolicitud solicitud) {
         try {
+            String jsonSolicitud = conversorEventoASolicitud(solicitud);
             if (out != null && !socket.isClosed()) {
                 // Enviamos el JSON como string al broker
                 out.println(jsonSolicitud);
@@ -104,15 +107,31 @@ public class ClienteProxy {
         }
     }
 
-//    public void notificarRespuestaEvento(EventoRespuesta eventoRespuesta) {
-//        for (IProxyListener listener : listeners) {
-//            listener.onRecibirRespuesta(eventoRespuesta);
-//        }
-//    }
-//
-//    public void agregarListener(IProxyListener listener) {
-//        if (!listeners.contains(listener)) {
-//            listeners.add(listener);
-//        }
-//    }
+    public EventoRespuesta conversorSolicitudAEvento(String respuesta) {
+        try {
+            EventoRespuesta eventoRespuesta = deserializador.convertirJSONAEvento(respuesta);
+            return eventoRespuesta;
+        } catch (Exception e) {
+            System.out.println("Error al convertir el JSON a EventoRespuesta: " + e.getMessage());
+            return null;
+        }
+
+    }
+
+    public void procesarRespuesta(String jsonRespuesta) {
+        EventoRespuesta eventoRespuesta = conversorSolicitudAEvento(jsonRespuesta);
+        notificarRespuestaEvento(eventoRespuesta);
+    }
+
+    public void notificarRespuestaEvento(EventoRespuesta eventoRespuesta) {
+        for (IProxyListener listener : listeners) {
+            listener.onRecibirRespuesta(eventoRespuesta);
+        }
+    }
+
+    public void agregarListener(IProxyListener listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
+    }
 }
