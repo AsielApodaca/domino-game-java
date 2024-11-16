@@ -4,13 +4,13 @@
  */
 package domino.listeners;
 
-import domino.solicitudes.EventoSolicitud;
+import domino.respuestas.EventoRespuesta;
 
 /**
  *
  * @author castr
  */
-public interface IProxyListener {
+public interface IClienteProxyListener {
 
-    public void onRecibirSolicitud(EventoSolicitud eventoSolicitud);
+    public void onRecibirRespuesta(EventoRespuesta eventoRespuesta);
 }

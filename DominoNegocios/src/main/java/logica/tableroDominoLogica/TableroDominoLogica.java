@@ -179,7 +179,7 @@ public class TableroDominoLogica implements ITableroDominoLogica, IPresentacionP
     }
 
     @Override
-    public void onFichaSeleccionadaEvento(FichaSeleccionadaEvento evento) {
+    public void onFichaSeleccionada(FichaSeleccionadaEvento evento) {
         FichaDominoDTO fichaSeleccionadaDTO = evento.getFichaDominoDTO();
         if (fichaSeleccionadaDTO == null) {
             this.tableroDominoEntity.setFichaSeleccionada(null);

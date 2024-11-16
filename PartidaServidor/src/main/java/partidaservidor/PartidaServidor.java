@@ -5,11 +5,12 @@
 package partidaservidor;
 
 import controlSolicitudes.ServidorSolicitudCasillaSeleccionada;
-import domino.listeners.IProxyListener;
+import domino.fachada.IFachadaServidorProxy;
 import domino.respuestas.EventoRespuesta;
 import domino.servidorproxylogica.ServidorProxy;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
+import domino.listeners.IServidorProxyListener;
 
 /**
  *
@@ -18,9 +19,9 @@ import domino.solicitudes.SolicitudCasillaSeleccionada;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaServidor implements IProxyListener {
+public class PartidaServidor implements IServidorProxyListener {
 
-    private ServidorProxy serverProxy;
+    private IFachadaServidorProxy fachadaServidorProxy;
 
     /**
      * Procesa una solicitud recibida y ejecuta la acción correspondiente según
@@ -50,7 +51,7 @@ public class PartidaServidor implements IProxyListener {
      * procesar la solicitud.
      */
     public void sendResponse(EventoRespuesta eventoRespuesta) {
-        serverProxy.procesarRespuesta();
+        fachadaServidorProxy.enviarRespuestas(eventoRespuesta);
     }
 
     @Override
