@@ -7,7 +7,6 @@ package domino.clienteproxylogica;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import domino.listeners.IProxyListener;
 import domino.respuestas.EventoRespuesta;
 import domino.serializador.Deserializador;
 import domino.serializador.Serializador;
@@ -20,6 +19,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import domino.listeners.IClienteProxyListener;
 
 /**
  *
@@ -32,7 +32,7 @@ public class ClienteProxy {
     private BufferedReader in;
     private boolean running;
     private final Gson gson;
-    private final List<IProxyListener> listeners;
+    private final List<IClienteProxyListener> listeners;
     private final Serializador serializador;
     private final Deserializador deserializador;
 
@@ -66,7 +66,7 @@ public class ClienteProxy {
             System.out.println("Conexion ClienteProxy exitosa con Broker");
             this.running = true;
 
-//            new Thread(() -> procesarRespuesta());
+            new Thread(() -> procesarRespuesta()).start();
         } catch (Exception e) {
             System.out.println("Error al conectar con el Broker: " + e.getMessage());
         }
@@ -80,7 +80,7 @@ public class ClienteProxy {
      */
     public void enviarSolicitud(EventoSolicitud solicitud) {
         try {
-            String jsonSolicitud = conversorEventoASolicitud(solicitud);
+            String jsonSolicitud = serializador.convertirEventoAJSON(solicitud);
             if (out != null && !socket.isClosed()) {
                 // Enviamos el JSON como string al broker
                 out.println(jsonSolicitud);
@@ -100,9 +100,17 @@ public class ClienteProxy {
      *
      * @param jsonRespuesta La respuesta en formato JSON.
      */
-    public void procesarRespuesta(String jsonRespuesta) {
-        EventoRespuesta eventoRespuesta = conversorSolicitudAEvento(jsonRespuesta);
-        notificarRespuestaEvento(eventoRespuesta);
+    private void procesarRespuesta() {
+        try {
+            String jsonString;
+
+            while ((jsonString = in.readLine()) != null) {
+                EventoRespuesta eventoRespuesta = deserializador.convertirJSONAEvento(jsonString);
+                notificarRespuestaEvento(eventoRespuesta);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al procesar la solicitud" + e.getMessage());
+        }
     }
 
     /**
@@ -110,8 +118,8 @@ public class ClienteProxy {
      *
      * @param eventoRespuesta El objeto EventoRespuesta que se va a notificar.
      */
-    public void notificarRespuestaEvento(EventoRespuesta eventoRespuesta) {
-        for (IProxyListener listener : listeners) {
+    private void notificarRespuestaEvento(EventoRespuesta eventoRespuesta) {
+        for (IClienteProxyListener listener : listeners) {
             listener.onRecibirRespuesta(eventoRespuesta);
         }
     }
@@ -121,41 +129,10 @@ public class ClienteProxy {
      *
      * @param listener El listener a agregar.
      */
-    public void agregarListener(IProxyListener listener) {
+    public void agregarListener(IClienteProxyListener listener) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
         }
     }
 
-    /**
-     * Convierte una solicitud de evento al broker en formato JSON.
-     *
-     * @param eventoSolicitud el evento a enviar al broker
-     * @return El JSON como String
-     */
-    private String conversorEventoASolicitud(EventoSolicitud eventoSolicitud) {
-        try {
-            String jsonSolicitud = serializador.convertirEventoAJSON(eventoSolicitud);
-            return jsonSolicitud;
-        } catch (Exception e) {
-            System.out.println("Error al convertir el EventoSolicitud a JSON: " + e.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * Convierte un JSON de respuesta a un objeto {@link EventoRespuesta}.
-     *
-     * @param respuesta La respuesta en formato JSON.
-     * @return El objeto EventoRespuesta deserializado.
-     */
-    private EventoRespuesta conversorSolicitudAEvento(String respuesta) {
-        try {
-            EventoRespuesta eventoRespuesta = deserializador.convertirJSONAEvento(respuesta);
-            return eventoRespuesta;
-        } catch (Exception e) {
-            System.out.println("Error al convertir el JSON a EventoRespuesta: " + e.getMessage());
-            return null;
-        }
-    }
 }

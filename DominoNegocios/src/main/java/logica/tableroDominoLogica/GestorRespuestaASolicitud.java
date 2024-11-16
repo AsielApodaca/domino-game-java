@@ -4,16 +4,16 @@
  */
 package logica.tableroDominoLogica;
 
-import domino.listeners.IProxyListener;
 import domino.respuestas.EventoRespuesta;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
 import domino.respuestas.RespuestaAgregarFichaTablero;
+import domino.listeners.IClienteProxyListener;
 
 /**
  *
  * @author castr
  */
-public class GestorRespuestaASolicitud implements IProxyListener {
+public class GestorRespuestaASolicitud implements IClienteProxyListener {
 
     @Override
     public void onRecibirRespuesta(EventoRespuesta eventoRespuesta) {
@@ -29,7 +29,7 @@ public class GestorRespuestaASolicitud implements IProxyListener {
     }
 
     private void procesarRespuestaCasillaSeleccionada(EventoRespuesta eventoRespuesta) {
-
+        
     }
 
 }
