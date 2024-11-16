@@ -106,25 +106,25 @@ public class ManejadorSalas {
         }
     }
     
-    public void enviarRespuestaACliente(ConexionServidor servidor, JsonObject solicitud) {
+    public void enviarRespuestaACliente(ConexionServidor servidor, JsonObject respuesta) {
         Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
         
         if(salaDelServidor != null) {
-            String idCliente = solicitud.get("id_cliente").getAsString() ;
+            String idCliente = respuesta.get("id_cliente").getAsString() ;
             
             ConexionCliente cliente = salaDelServidor.obtenerCliente(idCliente) ;
-            cliente.mandarRespuestaCliente(solicitud);
+            cliente.mandarRespuestaCliente(respuesta);
         } else {
             System.out.println("El Servidor no esta conectado a una sala");
         }
     }
     
-    public void enviarRespuestaATodosLosClientes(ConexionServidor servidor, JsonObject solicitud) {
+    public void enviarRespuestaATodosLosClientes(ConexionServidor servidor, JsonObject respuesta) {
         Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
         
         if(salaDelServidor != null) {
             salaDelServidor.obtenerClientes().forEach((id, cliente) -> {
-                cliente.mandarRespuestaCliente(solicitud);
+                cliente.mandarRespuestaCliente(respuesta);
             });
         } else {
             System.out.println("El Servidor no esta conectado a una sala");
