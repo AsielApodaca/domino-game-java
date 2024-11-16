@@ -129,22 +129,22 @@ public class Broker {
     
     private void redirigirRespuestas(ConexionServidor servidor) {
         try {
-            String solicitud ;
+            String respuesta ;
             
-            while((solicitud = servidor.getReader().readLine()) != null) {
-                JsonObject solicitudJSON = JsonParser.parseString(solicitud).getAsJsonObject() ;
+            while((respuesta = servidor.getReader().readLine()) != null) {
+                JsonObject respuestaJSON = JsonParser.parseString(respuesta).getAsJsonObject() ;
           
-                String tipoSolicitud = solicitudJSON.get("tipo").getAsString();
+                String tipoRespuesta = respuestaJSON.get("tipo").getAsString();
 
-                if (Deserializador.esJsonInstanciaDe(solicitud, RespuestaQuitarFichaUsuario.class)) {
-                    manejadorSalas.enviarRespuestaACliente(servidor, solicitudJSON);
-                } else if (Deserializador.esJsonInstanciaDe(solicitud, RespuestaAgregarFichaTablero.class)
-                        || Deserializador.esJsonInstanciaDe(solicitud, RespuestaCambioTurno.class)
-                        || Deserializador.esJsonInstanciaDe(solicitud, RespuestaActualizarCantidadFichas.class)
+                if (Deserializador.esJsonInstanciaDe(respuesta, RespuestaQuitarFichaUsuario.class)) {
+                    manejadorSalas.enviarRespuestaACliente(servidor, respuestaJSON);
+                } else if (Deserializador.esJsonInstanciaDe(respuesta, RespuestaAgregarFichaTablero.class)
+                        || Deserializador.esJsonInstanciaDe(respuesta, RespuestaCambioTurno.class)
+                        || Deserializador.esJsonInstanciaDe(respuesta, RespuestaActualizarCantidadFichas.class)
                         ) {
-                    manejadorSalas.enviarRespuestaATodosLosClientes(servidor, solicitudJSON);
+                    manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
                 } else {
-                    throw new AssertionError("Tipo de solicitud desconocido: " + tipoSolicitud);
+                    throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
                 }
                 
             }
