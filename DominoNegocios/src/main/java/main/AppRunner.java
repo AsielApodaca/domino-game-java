@@ -6,8 +6,8 @@ import dominio.SalaEntity;
 import java.util.ArrayList;
 import java.util.List;
 import listeners.IContenedorListener;
-import logica.contenedorpantallas.ContenedorPantallasLogica;
-import logica.contenedorpantallas.IContenedorPantallasLogica;
+import logica.contenedorpantallaslogica.ContenedorPantallasLogica;
+import logica.contenedorpantallaslogica.IContenedorPantallasLogica;
 import logica.tableroDominoLogica.ITableroDominoLogica;
 import logica.tableroDominoLogica.TableroDominoLogica;
 

@@ -8,6 +8,6 @@ package domino.respuestas;
  *
  * @author castr
  */
-public class RespuestaCambioTurno extends EventoRespuesta {
+public class RespuestaCambiarTurno extends EventoRespuesta {
     
 }

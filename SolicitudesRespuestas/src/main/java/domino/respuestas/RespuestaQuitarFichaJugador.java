@@ -10,10 +10,10 @@ import dominodto.FichaDominoDTO;
  *
  * @author castr
  */
-public class RespuestaQuitarFichaUsuario extends EventoRespuesta {
+public class RespuestaQuitarFichaJugador extends EventoRespuesta {
     private FichaDominoDTO fichaDominoDTO;
 
-    public RespuestaQuitarFichaUsuario(FichaDominoDTO fichaDominoDTO) {
+    public RespuestaQuitarFichaJugador(FichaDominoDTO fichaDominoDTO) {
         this.fichaDominoDTO = fichaDominoDTO;
     }
 

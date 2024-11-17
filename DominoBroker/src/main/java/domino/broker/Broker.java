@@ -17,8 +17,8 @@ import domino.manejadores.ManejadorSalas;
 import domino.manejadores.ManejadorServidores;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
 import domino.respuestas.RespuestaAgregarFichaTablero;
-import domino.respuestas.RespuestaCambioTurno;
-import domino.respuestas.RespuestaQuitarFichaUsuario;
+import domino.respuestas.RespuestaCambiarTurno;
+import domino.respuestas.RespuestaQuitarFichaJugador;
 import domino.solicitudes.SolicitudColocarFicha;
 import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudUnirseSala;
@@ -136,10 +136,10 @@ public class Broker {
           
                 String tipoRespuesta = respuestaJSON.get("tipo").getAsString();
 
-                if (Deserializador.esJsonInstanciaDe(respuesta, RespuestaQuitarFichaUsuario.class)) {
+                if (Deserializador.esJsonInstanciaDe(respuesta, RespuestaQuitarFichaJugador.class)) {
                     manejadorSalas.enviarRespuestaACliente(servidor, respuestaJSON);
                 } else if (Deserializador.esJsonInstanciaDe(respuesta, RespuestaAgregarFichaTablero.class)
-                        || Deserializador.esJsonInstanciaDe(respuesta, RespuestaCambioTurno.class)
+                        || Deserializador.esJsonInstanciaDe(respuesta, RespuestaCambiarTurno.class)
                         || Deserializador.esJsonInstanciaDe(respuesta, RespuestaActualizarCantidadFichas.class)
                         ) {
                     manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);

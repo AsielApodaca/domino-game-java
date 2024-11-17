@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import domino.respuestas.EventoRespuesta;
-import domino.respuestas.RespuestaQuitarFichaUsuario;
+import domino.respuestas.RespuestaQuitarFichaJugador;
 
 /**
  *
@@ -23,8 +23,8 @@ public class Deserializador {
     }
 
     public EventoRespuesta convertirJSONAEvento(String jsonObject) {
-        if (isJsonInstanceOf(jsonObject, RespuestaQuitarFichaUsuario.class)) {
-            return gson.fromJson(jsonObject, RespuestaQuitarFichaUsuario.class);
+        if (isJsonInstanceOf(jsonObject, RespuestaQuitarFichaJugador.class)) {
+            return gson.fromJson(jsonObject, RespuestaQuitarFichaJugador.class);
         }
         return null;
     }

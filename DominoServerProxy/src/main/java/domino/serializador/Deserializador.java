@@ -7,7 +7,7 @@ package domino.serializador;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import domino.respuestas.EventoRespuesta;
-import domino.respuestas.RespuestaQuitarFichaUsuario;
+import domino.respuestas.RespuestaQuitarFichaJugador;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudColocarFicha;
 
