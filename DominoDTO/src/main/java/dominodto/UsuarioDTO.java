@@ -2,29 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dominio;
+package dominodto;
 
 import javax.swing.Icon;
 
 /**
  *
- * @author Hisamy Cinco Cota
- * @author Gael Rafael Castro Molina
- * @author Oliver Inzunza Valle
- * @author Asiel Apodaca Monge
+ * @author asielapodaca
  */
-public class UsuarioEntity {
-
+public class UsuarioDTO {
+    
     private String idCliente;
     private String nombre;
     private Icon icon;
 
-    public UsuarioEntity(String nombre, Icon icon) {
-        this.nombre = nombre;
-        this.icon = icon;
+    public UsuarioDTO() {
     }
-    
-    public UsuarioEntity(String nombre) {
+
+    //provisional
+    public UsuarioDTO(String nombre) {
         this.nombre = nombre;
     }
 
@@ -51,5 +47,4 @@ public class UsuarioEntity {
     public void setIcon(Icon icon) {
         this.icon = icon;
     }
-
 }

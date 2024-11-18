@@ -7,8 +7,6 @@ package logica.contenedorpantallaslogica;
 import fachada.FachadaContenedorPantallas;
 import fachada.IFachadaContenedorPantallas;
 import listeners.IContenedorListener;
-//import contenedorpantallas.fachada.FachadaContenedorPantallas;
-//import contenedorpantallas.fachada.IFachadaContenedorPantallas;
 
 /**
  *

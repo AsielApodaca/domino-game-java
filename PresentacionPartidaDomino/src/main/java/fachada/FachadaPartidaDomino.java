@@ -53,6 +53,16 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador) {
         partidaDominoController.mostrarFichasJugadorLocal(fichasJugador);
     }
+    
+    @Override
+    public void quitarFichaJugadorLocal(FichaDominoDTO fichaDominoDTO) {
+        partidaDominoController.removerFichaJugadorLocal(fichaDominoDTO);
+    }
+
+    @Override
+    public void agregarFichaJugadorLocal(FichaDominoDTO fichaDominoDTO) {
+        partidaDominoController.agregarFichaJugadorLocal(fichaDominoDTO);
+    }
 
     @Override
     public void colocarFichaTablero(CasillaDTO casillaDTO) {
@@ -76,4 +86,6 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
         presentacionNotificadorManager.suscribirPresentacionListener(listener);
         partidaDominoModel.setPresentacionNotificacionesManager(presentacionNotificadorManager);
     }
+
+    
 }

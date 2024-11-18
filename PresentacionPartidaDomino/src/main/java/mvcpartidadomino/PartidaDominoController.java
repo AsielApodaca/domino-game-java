@@ -92,6 +92,14 @@ public class PartidaDominoController implements IContenedorListener{
         crearMVCFichasJugadorLocal();
         repintarFichasJugadorLocal();
     }
+    
+    public void removerFichaJugadorLocal(FichaDominoDTO fichaDominoDTO) {
+        model.removerFichaDeFichasJugadorLocal(fichaDominoDTO);
+    }
+    
+    public void agregarFichaJugadorLocal(FichaDominoDTO fichaDominoDTO) {
+        model.agregarFichaAJugadorLocal(fichaDominoDTO);
+    }
 
     public void showView() {
         view.setVisible(true);

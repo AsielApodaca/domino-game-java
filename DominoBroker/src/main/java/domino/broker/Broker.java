@@ -19,7 +19,7 @@ import domino.respuestas.RespuestaActualizarCantidadFichas;
 import domino.respuestas.RespuestaAgregarFichaTablero;
 import domino.respuestas.RespuestaCambiarTurno;
 import domino.respuestas.RespuestaQuitarFichaJugador;
-import domino.solicitudes.SolicitudColocarFicha;
+import domino.solicitudes.SolicitudFichaSeleccionada;
 import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudUnirseSala;
 import java.io.BufferedReader;
@@ -116,7 +116,7 @@ public class Broker {
                     manejadorSalas.crearSala(cliente, manejadorServidores.buscarServidorLibre(), solicitudJSON);
                 } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudUnirseSala.class)) {
                     manejadorSalas.unirClienteASala(cliente, solicitudJSON);
-                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudColocarFicha.class) || Deserializador.esJsonInstanciaDe(solicitud, SolicitudCasillaSeleccionada.class)) {
+                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudFichaSeleccionada.class) || Deserializador.esJsonInstanciaDe(solicitud, SolicitudCasillaSeleccionada.class)) {
                     manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 } else {
                     throw new AssertionError("Tipo de solicitud desconocido: " + tipoSolicitud);

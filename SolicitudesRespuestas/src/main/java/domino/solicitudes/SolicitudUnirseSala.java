@@ -4,10 +4,17 @@
  */
 package domino.solicitudes;
 
+import dominodto.UsuarioDTO;
+
 /**
  *
  * @author castr
  */
 public class SolicitudUnirseSala extends EventoSolicitud {
+    //id sala
+
+    public SolicitudUnirseSala(UsuarioDTO usuarioDTO) {
+        super(usuarioDTO);
+    }
     //id sala
 }

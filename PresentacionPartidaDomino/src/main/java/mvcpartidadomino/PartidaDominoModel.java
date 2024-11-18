@@ -125,6 +125,14 @@ public class PartidaDominoModel{
     public void setListaFichasJugadorLocal(List<FichaDominoDTO> listaFichasJugadorLocal) {
         this.listaFichasJugadorLocal = listaFichasJugadorLocal;
     }
+    
+    public void removerFichaDeFichasJugadorLocal(FichaDominoDTO fichaDominoDTO) {
+        listaFichasJugadorLocal.remove(fichaDominoDTO);
+    }
+    
+    public void agregarFichaAJugadorLocal(FichaDominoDTO fichaDominoDTO) {
+        listaFichasJugadorLocal.add(fichaDominoDTO);
+    }
 
     public int getAlturaMinimaContenedorFichasJugadorLocal() {
         return alturaMinimaContenedorFichasJugadorLocal;

@@ -41,6 +41,24 @@ public class FichaDominoDTO {
         this.compatible = compatible;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FichaDominoDTO other = (FichaDominoDTO) obj;
+        if (this.valorExtremo1 != other.valorExtremo1) {
+            return false;
+        }
+        return this.valorExtremo2 == other.valorExtremo2;
+    }
+
     
     
 }

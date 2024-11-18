@@ -4,10 +4,17 @@
  */
 package domino.solicitudes;
 
+import dominodto.UsuarioDTO;
+
 /**
  *
  * @author castr
  */
 public class SolicitudCrearSala extends EventoSolicitud{
+    //config partida
+
+    public SolicitudCrearSala(UsuarioDTO usuarioDTO) {
+        super(usuarioDTO);
+    }
     //config partida
 }
