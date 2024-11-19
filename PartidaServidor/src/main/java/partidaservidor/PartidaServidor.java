@@ -5,6 +5,7 @@
 package partidaservidor;
 
 import controlSolicitudes.ServidorSolicitudCasillaSeleccionada;
+import domino.fachada.FachadaServidorProxy;
 import domino.fachada.IFachadaServidorProxy;
 import domino.respuestas.EventoRespuesta;
 import domino.servidorproxylogica.ServidorProxy;
@@ -22,6 +23,10 @@ import domino.listeners.IServidorProxyListener;
 public class PartidaServidor implements IServidorProxyListener {
 
     private IFachadaServidorProxy fachadaServidorProxy;
+    
+    public PartidaServidor() {
+        this.fachadaServidorProxy = new FachadaServidorProxy() ;
+    }
 
     /**
      * Procesa una solicitud recibida y ejecuta la acción correspondiente según

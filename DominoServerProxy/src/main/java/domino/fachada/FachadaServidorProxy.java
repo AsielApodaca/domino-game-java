@@ -15,6 +15,10 @@ public class FachadaServidorProxy implements IFachadaServidorProxy {
 
     private ServidorProxy servidorProxy;
     
+    public FachadaServidorProxy() {
+        this.servidorProxy = new ServidorProxy("localhost", 3000) ;
+    }
+    
     @Override
     public void enviarRespuestas(EventoRespuesta eventoRespuesta) {
        servidorProxy.enviarRespuestas(eventoRespuesta);

@@ -76,7 +76,7 @@ public class Broker {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             String jsonString = reader.readLine() ;
             
-            String type = gson.fromJson(jsonString, String.class) ;
+            String type = JsonParser.parseString(jsonString).getAsJsonObject().get("type").getAsString() ;
             String id ;
             
             if(type.equals("CLIENT")) {

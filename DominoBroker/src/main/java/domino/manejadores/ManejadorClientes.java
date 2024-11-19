@@ -31,7 +31,8 @@ public class ManejadorClientes {
         contadorIdClientes += 1L ;
         String id = "CLI" + contadorIdClientes ;
         ConexionCliente cliente = new ConexionCliente(id, socket) ;
-        return this.clientes.put(id, cliente) ;
+        this.clientes.put(id, cliente) ;
+        return cliente ;
     }
     
     public ConexionCliente obtenerClientePorId(String id) {

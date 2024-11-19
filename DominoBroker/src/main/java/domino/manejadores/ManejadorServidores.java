@@ -32,7 +32,8 @@ public class ManejadorServidores {
         contadorIdServers += 1L ;
         String id = "SER" + contadorIdServers ;
         ConexionServidor servidor = new ConexionServidor(id, socket) ;
-        return this.servidores.put(id, servidor) ;
+        this.servidores.put(id, servidor) ;
+        return servidor ;
     }
     
     public ConexionServidor buscarServidorLibre() {

@@ -2,23 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package main;
-
-import dominodto.FichaDominoDTO;
-import logica.partidadominologica.IPartidaDominoLogica;
-import logica.partidadominologica.PartidaDominoLogica;
+package partidaservidor;
 
 /**
  *
- * @author asielapodaca
+ * @author olive
  */
-public class AppRunner {
+public class RunServer {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        IPartidaDominoLogica partida = new PartidaDominoLogica() ;
+        PartidaServidor servidor = new PartidaServidor() ;
     }
     
 }

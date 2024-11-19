@@ -6,7 +6,7 @@ import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.TableroDominoEntity;
 import domino.respuestas.RespuestaAgregarFichaTablero;
-import domino.respuestas.RespuestaQuitarFichaUsuario;
+import domino.respuestas.RespuestaQuitarFichaJugador;
 import dominodto.CasillaDTO;
 import partidaservidor.PartidaServidor;
 
@@ -71,7 +71,7 @@ public class ServidorSolicitudCasillaSeleccionada {
                 casilla);
 
         // Envía respuestas para actualizar el estado de las fichas en el tablero y en la interfaz del usuario
-        enviarRespuestaQuitarFichaUsuario(new RespuestaQuitarFichaUsuario(
+        enviarRespuestaQuitarFichaJugador(new RespuestaQuitarFichaJugador(
                 casillaDTORespuesta.getFichaDominoDTO()));
         enviarRespuestaAgregarFichaTablero(new RespuestaAgregarFichaTablero(casillaDTORespuesta));
 
@@ -122,7 +122,7 @@ public class ServidorSolicitudCasillaSeleccionada {
      * @param respuesta Objeto RespuestaQuitarFichaUsuario con la información de
      * la ficha que se quita.
      */
-    private void enviarRespuestaQuitarFichaUsuario(RespuestaQuitarFichaUsuario respuesta) {
+    private void enviarRespuestaQuitarFichaJugador(RespuestaQuitarFichaJugador respuesta) {
         partidaServidor.sendResponse(respuesta);
     }
 

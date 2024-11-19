@@ -17,6 +17,10 @@ public class FachadaClienteProxy implements IFachadaClienteProxy {
 
     private ClienteProxy clienteProxy;
 
+    public FachadaClienteProxy() {
+        this.clienteProxy = new ClienteProxy("localhost", 3000) ;
+    }
+    
     @Override
     public void enviarSolicitud(EventoSolicitud solicitud) {
         clienteProxy.enviarSolicitud(solicitud);
