@@ -22,6 +22,7 @@ import listeners.IPresentacionPartidaDominoListener;
 import mapeodto.MapeadorDTO;
 import notificador.eventos.CasillaSeleccionadaEvento;
 import notificador.eventos.FichaSeleccionadaEvento;
+import setup.Setup;
 
 /**
  *
@@ -30,14 +31,16 @@ import notificador.eventos.FichaSeleccionadaEvento;
 public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionPartidaDominoListener {
 
     private static final Logger LOG = Logger.getLogger(PartidaDominoLogica.class.getName());
+    private Setup setup;
     private IFachadaPartidaDomino fachadaPartidaDomino;
     private IFachadaClienteProxy fachadaClienteProxy;
     private IContenedorListener contenedorListener;
     private UsuarioEntity usuarioEntity; // Usuario local
 
-    public PartidaDominoLogica() {
+    public PartidaDominoLogica(Setup setup) {
+        this.setup = setup;
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
-        this.fachadaClienteProxy = new FachadaClienteProxy();
+        this.fachadaClienteProxy = setup.getFachadaClienteProxy();
     }
 
     @Override
