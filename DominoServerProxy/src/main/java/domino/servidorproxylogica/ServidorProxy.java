@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 import domino.listeners.IServidorProxyListener;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,6 +37,7 @@ public class ServidorProxy {
         this.gson = new Gson();
         this.serializador = new Serializador();
         this.deserializador = new Deserializador();
+        this.listeners = new ArrayList() ;
         run(host, PORT);
     }
 

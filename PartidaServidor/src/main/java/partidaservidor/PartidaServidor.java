@@ -26,6 +26,7 @@ public class PartidaServidor implements IServidorProxyListener {
     
     public PartidaServidor() {
         this.fachadaServidorProxy = new FachadaServidorProxy() ;
+        fachadaServidorProxy.agregarListener(this);
     }
 
     /**

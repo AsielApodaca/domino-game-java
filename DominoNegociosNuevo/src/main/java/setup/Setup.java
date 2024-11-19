@@ -43,9 +43,9 @@ public class Setup implements ISetup {
     @Override
     public void iniciar() {
         iniciarUsuario();
+        iniciarConexionProxy();
         iniciarLogicaDeNegocio();
         iniciarManejadorRespuestasClienteProxy();
-        iniciarConexionProxy();
         iniciarMediadorDeNegocio();
         correrJuego();
     }
@@ -55,15 +55,15 @@ public class Setup implements ISetup {
      */
     private void iniciarUsuario() {
         String nombre = "Chapo Guzman";
-        usuarioLocal = new UsuarioEntity(nombre);
+        this.usuarioLocal = new UsuarioEntity(nombre);
     }
 
     /**
      * Configura la lógica de negocio necesaria para manejar las pantallas y la partida de dominó.
      */
     private void iniciarLogicaDeNegocio() {
-        contenedorPantallasLogica = new ContenedorPantallasLogica();
-        partidaDominoLogica = new PartidaDominoLogica(this);
+        this.contenedorPantallasLogica = new ContenedorPantallasLogica();
+        this.partidaDominoLogica = new PartidaDominoLogica(this);
     }
 
     /**
@@ -78,7 +78,7 @@ public class Setup implements ISetup {
      * Establece la conexión con el proxy cliente y suscribe los manejadores necesarios.
      */
     private void iniciarConexionProxy() {
-        fachadaClienteProxy = new FachadaClienteProxy();
+        this.fachadaClienteProxy = new FachadaClienteProxy();
         // Aqui hay que agregar un método a fachadaClienteProxy para susbribir
         // el ManejadorRespuestaClienteProxy como IClienteProxyListener
     }
@@ -87,14 +87,14 @@ public class Setup implements ISetup {
      * Inicializa el mediador de negocio, encargado de coordinar las acciones entre componentes.
      */
     private void iniciarMediadorDeNegocio() {
-        mediadorNegocio = new MediadorNegocio(this);
+        this.mediadorNegocio = new MediadorNegocio(this);
     }
 
     /**
      * Ejecuta el flujo principal del juego, llevando al usuario a la interfaz de la partida.
      */
     private void correrJuego() {
-        mediadorNegocio.irAPartidaDomino();
+        this.mediadorNegocio.irAPartidaDomino();
     }
 
     // Getters
@@ -105,7 +105,7 @@ public class Setup implements ISetup {
      * @return el usuario local como {@link UsuarioEntity}.
      */
     public UsuarioEntity getUsuarioLocal() {
-        return usuarioLocal;
+        return this.usuarioLocal;
     }
 
     /**
@@ -114,7 +114,7 @@ public class Setup implements ISetup {
      * @return la fachada cliente como {@link IFachadaClienteProxy}.
      */
     public IFachadaClienteProxy getFachadaClienteProxy() {
-        return fachadaClienteProxy;
+        return this.fachadaClienteProxy;
     }
 
     /**
@@ -123,7 +123,7 @@ public class Setup implements ISetup {
      * @return la lógica del contenedor como {@link IContenedorPantallasLogica}.
      */
     public IContenedorPantallasLogica getContenedorPantallasLogica() {
-        return contenedorPantallasLogica;
+        return this.contenedorPantallasLogica;
     }
 
     /**
@@ -132,6 +132,6 @@ public class Setup implements ISetup {
      * @return la lógica de la partida como {@link IPartidaDominoLogica}.
      */
     public IPartidaDominoLogica getPartidaDominoLogica() {
-        return partidaDominoLogica;
+        return this.partidaDominoLogica;
     }
 }

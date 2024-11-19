@@ -4,6 +4,7 @@
  */
 package domino.fachada;
 
+import domino.listeners.IServidorProxyListener;
 import domino.respuestas.EventoRespuesta;
 import domino.servidorproxylogica.ServidorProxy;
 
@@ -22,6 +23,11 @@ public class FachadaServidorProxy implements IFachadaServidorProxy {
     @Override
     public void enviarRespuestas(EventoRespuesta eventoRespuesta) {
        servidorProxy.enviarRespuestas(eventoRespuesta);
+    }
+
+    @Override
+    public void agregarListener(IServidorProxyListener listener) {
+        servidorProxy.agregarListener(listener);
     }
 
 }

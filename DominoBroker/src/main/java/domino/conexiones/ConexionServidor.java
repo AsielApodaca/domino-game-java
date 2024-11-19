@@ -37,7 +37,7 @@ public class ConexionServidor {
     }
     
     public void mandarSolicitudServidor(JsonObject solicitud) {
-        writer.println(solicitud.getAsString());
+        writer.println(solicitud.toString());
     }
     
     public Status getStatus() {
@@ -54,5 +54,9 @@ public class ConexionServidor {
 
     public PrintWriter getWriter() {
         return writer;
+    }
+    
+    public void setStatus(Status status) {
+        this.status = status ;
     }
 }

@@ -34,7 +34,7 @@ public class ConexionCliente {
     }
     
     public void mandarRespuestaCliente(JsonObject respuestaJSON) {
-        writer.println(respuestaJSON.getAsString());
+        writer.println(respuestaJSON.toString());
     }
 
     public BufferedReader getReader() {

@@ -4,6 +4,7 @@
  */
 package domino.fachada;
 
+import domino.listeners.IServidorProxyListener;
 import domino.respuestas.EventoRespuesta;
 
 /**
@@ -13,4 +14,6 @@ import domino.respuestas.EventoRespuesta;
 public interface IFachadaServidorProxy {
 
     public void enviarRespuestas(EventoRespuesta eventoRespuesta);
+    
+    public void agregarListener(IServidorProxyListener listener);
 }

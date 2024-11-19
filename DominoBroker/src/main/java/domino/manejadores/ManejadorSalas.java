@@ -7,6 +7,7 @@ package domino.manejadores;
 import com.google.gson.JsonObject;
 import domino.conexiones.ConexionCliente;
 import domino.conexiones.ConexionServidor;
+import domino.enums.Status;
 import domino.sala.Sala;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class ManejadorSalas {
             String id = "SAL" + contadorIdSalas;
             
             enviarConfiguracionDePartida(servidor, solicitudJSON);
+            servidor.setStatus(Status.OCUPADO);
             
             Sala salaNueva = new Sala(id, servidor, solicitudJSON.get("size").getAsInt());
             salaNueva.agregarCliente(cliente.getId(), cliente);
@@ -110,7 +112,7 @@ public class ManejadorSalas {
         Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
         
         if(salaDelServidor != null) {
-            String idCliente = respuesta.get("id_cliente").getAsString() ;
+            String idCliente = respuesta.get("idCliente").getAsString() ;
             
             ConexionCliente cliente = salaDelServidor.obtenerCliente(idCliente) ;
             cliente.mandarRespuestaCliente(respuesta);

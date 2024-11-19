@@ -9,6 +9,7 @@ import domino.fachada.IFachadaClienteProxy;
 import dominio.UsuarioEntity;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
+import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudFichaSeleccionada;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
@@ -35,12 +36,13 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     private IFachadaPartidaDomino fachadaPartidaDomino;
     private IFachadaClienteProxy fachadaClienteProxy;
     private IContenedorListener contenedorListener;
-    private UsuarioEntity usuarioEntity; // Usuario local
+    private UsuarioEntity usuarioEntity = new UsuarioEntity("Oliver"); // Usuario local
 
     public PartidaDominoLogica(Setup setup) {
         this.setup = setup;
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.fachadaClienteProxy = setup.getFachadaClienteProxy();
+        fachadaClienteProxy.enviarSolicitud(new SolicitudCrearSala(MapeadorDTO.UsuarioEntityADTO(usuarioEntity)));
     }
 
     @Override

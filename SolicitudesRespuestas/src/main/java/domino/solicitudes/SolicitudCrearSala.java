@@ -13,8 +13,11 @@ import dominodto.UsuarioDTO;
 public class SolicitudCrearSala extends EventoSolicitud{
     //config partida
 
+    int size ;
+    
     public SolicitudCrearSala(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
+        this.size = 3 ; //TEMPORAL PARA PRUEBA
     }
     //config partida
 }

@@ -108,10 +108,11 @@ public class Broker {
             
             while((solicitud = cliente.getReader().readLine()) != null) {
                 JsonObject solicitudJSON = JsonParser.parseString(solicitud).getAsJsonObject() ;
-                solicitudJSON.addProperty("id_cliente", cliente.getId());
-          
-                String tipoSolicitud = solicitudJSON.get("tipo").getAsString();
+                solicitudJSON.addProperty("idCliente", cliente.getId());
 
+                System.out.println(solicitud);
+                System.out.println(solicitudJSON.toString());
+                
                 if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudCrearSala.class)) {
                     manejadorSalas.crearSala(cliente, manejadorServidores.buscarServidorLibre(), solicitudJSON);
                 } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudUnirseSala.class)) {
@@ -119,11 +120,12 @@ public class Broker {
                 } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudFichaSeleccionada.class) || Deserializador.esJsonInstanciaDe(solicitud, SolicitudCasillaSeleccionada.class)) {
                     manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 } else {
-                    throw new AssertionError("Tipo de solicitud desconocido: " + tipoSolicitud);
+                    throw new AssertionError("Tipo de solicitud desconocido");
                 }
                 
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
     
