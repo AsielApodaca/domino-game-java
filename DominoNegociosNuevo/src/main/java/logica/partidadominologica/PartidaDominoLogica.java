@@ -4,7 +4,6 @@
  */
 package logica.partidadominologica;
 
-import domino.fachada.FachadaClienteProxy;
 import domino.fachada.IFachadaClienteProxy;
 import dominio.UsuarioEntity;
 import domino.solicitudes.EventoSolicitud;

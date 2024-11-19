@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import domino.listeners.IClienteProxyListener;
+import domino.listeners.IClientProxyListener;
 
 /**
  *
@@ -32,7 +32,7 @@ public class ClienteProxy {
     private BufferedReader in;
     private boolean running;
     private final Gson gson;
-    private final List<IClienteProxyListener> listeners;
+    private final List<IClientProxyListener> listeners;
     private final Serializador serializador;
     private final Deserializador deserializador;
 
@@ -119,7 +119,7 @@ public class ClienteProxy {
      * @param eventoRespuesta El objeto EventoRespuesta que se va a notificar.
      */
     private void notificarRespuestaEvento(EventoRespuesta eventoRespuesta) {
-        for (IClienteProxyListener listener : listeners) {
+        for (IClientProxyListener listener : listeners) {
             listener.onRecibirRespuesta(eventoRespuesta);
         }
     }
@@ -129,7 +129,7 @@ public class ClienteProxy {
      *
      * @param listener El listener a agregar.
      */
-    public void agregarListener(IClienteProxyListener listener) {
+    public void agregarListener(IClientProxyListener listener) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
         }

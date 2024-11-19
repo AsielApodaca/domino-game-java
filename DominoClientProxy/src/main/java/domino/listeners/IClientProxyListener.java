@@ -10,7 +10,7 @@ import domino.respuestas.EventoRespuesta;
  *
  * @author castr
  */
-public interface IClienteProxyListener {
+public interface IClientProxyListener {
 
     public void onRecibirRespuesta(EventoRespuesta eventoRespuesta);
 }
