@@ -7,6 +7,9 @@ import dominio.FichaDominoEntity;
 import dominio.TableroDominoEntity;
 import domino.respuestas.RespuestaAgregarFichaTablero;
 import domino.respuestas.RespuestaQuitarFichaJugador;
+import domino.solicitudes.EventoSolicitud;
+import domino.solicitudes.SolicitudCasillaSeleccionada;
+import domino.solicitudes.SolicitudFichaSeleccionada;
 import dominodto.CasillaDTO;
 import partidaservidor.PartidaServidor;
 
@@ -17,13 +20,31 @@ import partidaservidor.PartidaServidor;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class ServidorSolicitudCasillaSeleccionada {
+public class ServidorSolicitudCasillaSeleccionada extends SolicitudManejador {
 
     private TableroDominoEntity tableroEntity;
     private PartidaServidor partidaServidor;
     private AdapterCasilla adpaterCasilla;
     private AdapterFichaDomino adapterFichaDomino;
 
+    /**
+     * Procesa una solicitud de tipo SolicitudCasillaSeleccionada o la
+     * delega al siguiente manejador en la cadena.
+     *
+     * @param solicitud la solicitud a procesar, una instancia de
+     */
+    @Override
+    public void manejarSolicitud(EventoSolicitud solicitud) {
+        // Procesa la solicitud de tipo SolicitudCasillaSeleccionada
+        if (solicitud instanceof SolicitudCasillaSeleccionada solicitudCasillaSeleccionada) {
+            colocarFichaSeleccionadaEnTableroEntity(
+                    solicitudCasillaSeleccionada.getCasillaDTO());
+
+        } else if (siguiente != null) {
+            siguiente.manejarSolicitud(solicitud);
+        }
+    }
+    
     /**
      * Constructor de ServidorSolicitudCasillaSeleccionada. Inicializa los
      * adaptadores y el tablero de dominó necesario para procesar las
@@ -47,22 +68,8 @@ public class ServidorSolicitudCasillaSeleccionada {
         CasillaEntity casilla;
         CasillaDTO casillaDTORespuesta;
 
-        //CONVERTIR SWITCH A METODO
         // Determina el extremo del tablero en el que se colocará la ficha según la información de casillaDTO
-        switch (casillaDTO.getExtremo()) {
-            case CasillaDTO.MULA:
-                casilla = colocarMula();
-                break;
-            case CasillaDTO.EXTREMO1:
-                casilla = colocarFichaExtremo1();
-                break;
-            case CasillaDTO.EXTREMO2:
-                casilla = colocarFichaExtremo2();
-                break;
-            default:
-                casilla = null;
-                System.out.println("La casilla seleccionada no pertenece a ningun extremo");
-        }
+        casilla = determinarExtremoTablero(casillaDTO.getExtremo());
 
         // Actualiza la ficha seleccionada en el tablero y adapta la entidad a DTO para enviar una respuesta
         tableroEntity.setFichaSeleccionada(
@@ -74,6 +81,29 @@ public class ServidorSolicitudCasillaSeleccionada {
         enviarRespuestaQuitarFichaJugador(new RespuestaQuitarFichaJugador(
                 casillaDTORespuesta.getFichaDominoDTO()));
         enviarRespuestaAgregarFichaTablero(new RespuestaAgregarFichaTablero(casillaDTORespuesta));
+
+    }
+
+    /**
+     * Determina el extremo del tablero en el que se colocará la ficha según la
+     * información de casilla
+     *
+     * @param extremo estremo de la ficha
+     * @return regresa el extremo donde se colocará.
+     */
+    private CasillaEntity determinarExtremoTablero(Integer extremo) {
+        switch (extremo) {
+            case CasillaDTO.MULA:
+                return colocarMula();
+            case CasillaDTO.EXTREMO1:
+                return colocarFichaExtremo1();
+            case CasillaDTO.EXTREMO2:
+                return colocarFichaExtremo2();
+            default:
+                System.out.println("La casilla seleccionada no pertenece a ningun extremo");
+                return null;
+
+        }
 
     }
 
@@ -136,5 +166,7 @@ public class ServidorSolicitudCasillaSeleccionada {
     private void enviarRespuestaAgregarFichaTablero(RespuestaAgregarFichaTablero respuesta) {
         partidaServidor.sendResponse(respuesta);
     }
+
+    
 
 }

@@ -5,6 +5,8 @@
 package partidaservidor;
 
 import controlSolicitudes.ServidorSolicitudCasillaSeleccionada;
+import controlSolicitudes.ServidorSolicitudFichaSeleccionada;
+import controlSolicitudes.SolicitudManejador;
 import domino.fachada.FachadaServidorProxy;
 import domino.fachada.IFachadaServidorProxy;
 import domino.respuestas.EventoRespuesta;
@@ -37,16 +39,8 @@ public class PartidaServidor implements IServidorProxyListener {
      * ser de cualquier tipo que extienda de EventoSolicitud.
      */
     public void runRequest(EventoSolicitud eventoSolicitud) {
-        // Verifica de que instancia fue recibido el evento
-        if (eventoSolicitud instanceof SolicitudCasillaSeleccionada solicitudCasillaSeleccionada) {
-            ServidorSolicitudCasillaSeleccionada partidaServidorSolicitudCasillaSeleccionada
-                    = new ServidorSolicitudCasillaSeleccionada();
-
-            // Llama al método para colocar la ficha seleccionada en el tablero
-            partidaServidorSolicitudCasillaSeleccionada.colocarFichaSeleccionadaEnTableroEntity(
-                    solicitudCasillaSeleccionada
-                            .getCasillaDTO());
-        }
+        SolicitudManejador manejadorFichaSeleccionada = new ServidorSolicitudFichaSeleccionada();
+        manejadorFichaSeleccionada.manejarSolicitud(eventoSolicitud);
 
     }
 
