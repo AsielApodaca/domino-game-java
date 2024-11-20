@@ -4,6 +4,7 @@
  */
 package domino.fachada;
 
+import domino.listeners.IClientProxyListener;
 import domino.solicitudes.EventoSolicitud;
 
 /**
@@ -13,4 +14,5 @@ import domino.solicitudes.EventoSolicitud;
 public interface IFachadaClienteProxy {
 
     public void enviarSolicitud(EventoSolicitud eventoSolicitud);
+    public void suscribirClientProxyListener(IClientProxyListener clientProxyListener);
 }

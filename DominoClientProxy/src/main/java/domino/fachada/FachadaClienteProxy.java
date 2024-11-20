@@ -6,6 +6,7 @@ package domino.fachada;
 
 import com.google.gson.JsonObject;
 import domino.clienteproxylogica.ClienteProxy;
+import domino.listeners.IClientProxyListener;
 import domino.serializador.Serializador;
 import domino.solicitudes.EventoSolicitud;
 
@@ -24,6 +25,11 @@ public class FachadaClienteProxy implements IFachadaClienteProxy {
     @Override
     public void enviarSolicitud(EventoSolicitud solicitud) {
         clienteProxy.enviarSolicitud(solicitud);
+    }
+
+    @Override
+    public void suscribirClientProxyListener(IClientProxyListener clientProxyListener) {
+        clienteProxy.agregarListener(clientProxyListener);
     }
 
 }

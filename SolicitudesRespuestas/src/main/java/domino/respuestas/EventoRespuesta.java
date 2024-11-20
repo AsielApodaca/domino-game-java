@@ -8,6 +8,23 @@ package domino.respuestas;
  *
  * @author castr
  */
-public class EventoRespuesta {
+public abstract class EventoRespuesta {
+    private String idCliente;
+
+    public EventoRespuesta(String idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public EventoRespuesta() {
+    }
+    
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getIdCliente() {
+        return idCliente;
+    }
+    
     
 }
