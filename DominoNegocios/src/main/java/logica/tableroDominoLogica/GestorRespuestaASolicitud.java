@@ -7,13 +7,13 @@ package logica.tableroDominoLogica;
 import domino.respuestas.EventoRespuesta;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
 import domino.respuestas.RespuestaAgregarFichaTablero;
-import domino.listeners.IClienteProxyListener;
+import domino.listeners.IClientProxyListener;
 
 /**
  *
  * @author castr
  */
-public class GestorRespuestaASolicitud implements IClienteProxyListener {
+public class GestorRespuestaASolicitud implements IClientProxyListener {
 
     @Override
     public void onRecibirRespuesta(EventoRespuesta eventoRespuesta) {

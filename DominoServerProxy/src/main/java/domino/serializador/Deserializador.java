@@ -9,7 +9,10 @@ import com.google.gson.JsonSyntaxException;
 import domino.respuestas.EventoRespuesta;
 import domino.respuestas.RespuestaQuitarFichaJugador;
 import domino.solicitudes.EventoSolicitud;
+import domino.solicitudes.SolicitudCasillaSeleccionada;
+import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudFichaSeleccionada;
+import domino.solicitudes.SolicitudUnirseSala;
 
 /**
  *
@@ -26,8 +29,15 @@ public class Deserializador {
     public EventoSolicitud convertirJSONAEvento(String jsonObject) {
         if (isJsonInstanceOf(jsonObject, SolicitudFichaSeleccionada.class)) {
             return gson.fromJson(jsonObject, SolicitudFichaSeleccionada.class);
+        } else if (isJsonInstanceOf(jsonObject, SolicitudCasillaSeleccionada.class)) {
+            return gson.fromJson(jsonObject, SolicitudCasillaSeleccionada.class);
+        } else if (isJsonInstanceOf(jsonObject, SolicitudCrearSala.class)) {
+            return gson.fromJson(jsonObject, SolicitudCrearSala.class);
+        } else if (isJsonInstanceOf(jsonObject, SolicitudUnirseSala.class)) {
+            return gson.fromJson(jsonObject, SolicitudUnirseSala.class);
+        } else {
+            return null;
         }
-        return null;
     }
 
     public <T> boolean isJsonInstanceOf(String json, Class<T> clase) {
