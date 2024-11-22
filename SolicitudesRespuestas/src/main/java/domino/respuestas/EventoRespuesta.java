@@ -14,9 +14,6 @@ public abstract class EventoRespuesta {
     public EventoRespuesta(String idCliente) {
         this.idCliente = idCliente;
     }
-
-    public EventoRespuesta() {
-    }
     
     public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;

@@ -6,7 +6,7 @@ package logica.tableroDominoLogica;
 
 import domino.respuestas.EventoRespuesta;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
-import domino.respuestas.RespuestaAgregarFichaTablero;
+import domino.respuestas.RespuestaColocarFichaTablero;
 import domino.listeners.IClientProxyListener;
 
 /**
@@ -17,11 +17,11 @@ public class GestorRespuestaASolicitud implements IClientProxyListener {
 
     @Override
     public void onRecibirRespuesta(EventoRespuesta eventoRespuesta) {
-        if (eventoRespuesta instanceof RespuestaAgregarFichaTablero) {
+        if (eventoRespuesta instanceof RespuestaColocarFichaTablero) {
 
         } else if (eventoRespuesta instanceof RespuestaActualizarCantidadFichas) {
 
-        } else if (eventoRespuesta instanceof RespuestaAgregarFichaTablero) {
+        } else if (eventoRespuesta instanceof RespuestaColocarFichaTablero) {
 
         } else {
             System.out.println("Respuesta no reconocida.");

@@ -5,7 +5,7 @@ import adapterEntidades.AdapterFichaDomino;
 import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.TableroDominoEntity;
-import domino.respuestas.RespuestaAgregarFichaTablero;
+import domino.respuestas.RespuestaColocarFichaTablero;
 import domino.respuestas.RespuestaQuitarFichaJugador;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
@@ -80,7 +80,7 @@ public class ServidorSolicitudCasillaSeleccionada extends SolicitudManejador {
         // Envía respuestas para actualizar el estado de las fichas en el tablero y en la interfaz del usuario
         enviarRespuestaQuitarFichaJugador(new RespuestaQuitarFichaJugador(
                 casillaDTORespuesta.getFichaDominoDTO()));
-        enviarRespuestaAgregarFichaTablero(new RespuestaAgregarFichaTablero(casillaDTORespuesta));
+        enviarRespuestaAgregarFichaTablero(new RespuestaColocarFichaTablero(casillaDTORespuesta));
 
     }
 
@@ -160,10 +160,10 @@ public class ServidorSolicitudCasillaSeleccionada extends SolicitudManejador {
      * Envía una respuesta para notificar la colocación de una ficha en el
      * tablero.
      *
-     * @param respuesta Objeto RespuestaAgregarFichaTablero con la información
-     * de la casilla donde se coloca la ficha.
+     * @param respuesta Objeto RespuestaColocarFichaTablero con la información
+ de la casilla donde se coloca la ficha.
      */
-    private void enviarRespuestaAgregarFichaTablero(RespuestaAgregarFichaTablero respuesta) {
+    private void enviarRespuestaAgregarFichaTablero(RespuestaColocarFichaTablero respuesta) {
         partidaServidor.sendResponse(respuesta);
     }
 

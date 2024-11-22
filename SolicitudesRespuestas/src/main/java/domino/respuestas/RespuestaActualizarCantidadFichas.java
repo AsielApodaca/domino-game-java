@@ -15,6 +15,7 @@ public class RespuestaActualizarCantidadFichas extends EventoRespuesta {
     private int cantidadFichas; // Cantidad de fichas que tiene ahora el jugador
 
     public RespuestaActualizarCantidadFichas(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
+        super(null);
         this.jugadorDominoDTO = jugadorDominoDTO;
         this.cantidadFichas = cantidadFichas;
     }

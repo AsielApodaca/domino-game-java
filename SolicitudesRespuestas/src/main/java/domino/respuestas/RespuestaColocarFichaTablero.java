@@ -13,10 +13,11 @@ import dominodto.CasillaDTO;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class RespuestaAgregarFichaTablero extends EventoRespuesta {
+public class RespuestaColocarFichaTablero extends EventoRespuesta {
     private CasillaDTO casillaDTO;
 
-    public RespuestaAgregarFichaTablero(CasillaDTO casillaDTO) {
+    public RespuestaColocarFichaTablero(CasillaDTO casillaDTO) {
+        super(null);
         this.casillaDTO = casillaDTO;
     }
 
