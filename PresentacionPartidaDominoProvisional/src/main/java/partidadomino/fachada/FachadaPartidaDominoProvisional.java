@@ -12,8 +12,9 @@ import partidadomino.mvc.PartidaDominoView;
  *
  * @author castr
  */
-public class PartidaDominoFachadaSalaEspera {
+public class FachadaPartidaDominoProvisional implements IFachadaPartidaDominoProvisional {
 
+    @Override
     public IContenedorListener iniciar() {
         PartidaDominoView view = new PartidaDominoView();
         PartidaDominoController controller = new PartidaDominoController(view);
