@@ -10,6 +10,7 @@ import generadorrespuestas.GeneradorRespuestas;
 import logica.IPartidaServerLogica;
 import logica.PartidaServerLogica;
 import manejadorsolicitudserverproxy.GestorSolicitudServerProxy;
+import manejadorsolicitudserverproxy.ManejadorSolicitudIniciarPartida;
 
 /**
  *
@@ -35,8 +36,10 @@ public class Setup implements ISetup{
     }
     
     private void iniciarManejadorSolicitudesServerProxy() {
-        // Aqui falta la cadena de manejadores
-        //gestorSolicitudServerProxy = new GestorSolicitudServerProxy(manejadorCabeza);
+        // Todavia faltan más manejadores
+        ManejadorSolicitudIniciarPartida manejadorSolicitudIniciarPartida =
+                new ManejadorSolicitudIniciarPartida(partidaServerLogica);
+        gestorSolicitudServerProxy = new GestorSolicitudServerProxy(manejadorSolicitudIniciarPartida);
     }
     
     private void iniciarGeneradorDeRespuestasServerProxy() {

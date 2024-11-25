@@ -31,34 +31,12 @@ public class AdapterCasilla implements IAdapterCasilla {
         dto.setLocacionX(entity.getLocacionX());
         dto.setLocacionY(entity.getLocacionY());
         dto.setRotacion(entity.getRotacion());
-//        dto.setAnchoCasilla(entity.getAnchoCasilla());
-//        dto.setAlturaCasilla(entity.getAlturaCasilla());
 
         if (entity.getFichaDomino() != null) {
             dto.setFichaDominoDTO(adapterFichaDomino.adaptToDTO(entity.getFichaDomino()));
         }
 
         return dto;
-    }
-
-    @Override
-    public CasillaEntity adaptToEntity(CasillaDTO dto) { // No usar si se requiere una casilla ya existente en tableroDominoEntity
-        if (dto == null) {
-            throw new IllegalArgumentException("El DTO no puede ser nulo");
-        }
-
-        CasillaEntity entity = new CasillaEntity();
-        entity.setLocacionX(dto.getLocacionX());
-        entity.setLocacionY(dto.getLocacionY());
-        entity.setRotacion(dto.getRotacion());
-//        entity.setAnchoCasilla(dto.getAnchoCasilla());
-//        entity.setAlturaCasilla(dto.getAlturaCasilla());
-
-        if (dto.getFichaDominoDTO() != null) {
-            entity.setFichaDomino(adapterFichaDomino.adaptToEntity(dto.getFichaDominoDTO()));
-        }
-
-        return entity;
     }
 
 }

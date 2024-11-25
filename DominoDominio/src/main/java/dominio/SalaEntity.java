@@ -21,20 +21,8 @@ public class SalaEntity {
 
     public SalaEntity() {
         this.listaJugadores = new ArrayList<>();
-        agregarJugadoresProvicional();
     }
 
-    private void agregarJugadoresProvicional() {
-        JugadorDominoEntity jugador1 = new JugadorDominoEntity("Juan");
-        JugadorDominoEntity jugador2 = new JugadorDominoEntity("Francis");
-        JugadorDominoEntity jugador3 = new JugadorDominoEntity("Minerva");
-        JugadorDominoEntity jugador4 = new JugadorDominoEntity("Hermione");
-        listaJugadores.add(jugador1);
-        listaJugadores.add(jugador2);
-        listaJugadores.add(jugador3);
-        listaJugadores.add(jugador4);
-        jugadorLocal = jugador1;
-    }
 
     public ConfiguracionJuegoEntity getConfiguracionPartida() {
         return configuracionPartida;

@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import domino.respuestas.EventoRespuesta;
-import domino.respuestas.RespuestaQuitarFichaJugador;
 
 /**
  *

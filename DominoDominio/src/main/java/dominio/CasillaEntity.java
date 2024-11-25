@@ -10,6 +10,10 @@ package dominio;
  */
 public class CasillaEntity {
     
+    public static final int MULA = 0;
+    public static final int EXTREMO1 = 1;
+    public static final int EXTREMO2 = 2;
+    
     private int locacionX; // posición sobre el tablero en el eje X
     private int locacionY; // posición sobre el tablero en el eje Y
     private int rotacion; // angulo de la ficha; 0, 90, 180, 270; rota en sentido contrario del reloj

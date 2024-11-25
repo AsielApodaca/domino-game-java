@@ -17,7 +17,7 @@ public abstract class ManejadorSolicitudServerProxy {
     
     private static final Logger LOG = Logger.getLogger(ManejadorSolicitudServerProxy.class.getName());
     private ManejadorSolicitudServerProxy siguienteManejador;
-    private IPartidaServerLogica partidaServerLogica;
+    protected IPartidaServerLogica partidaServerLogica;
     
     
 
@@ -40,7 +40,7 @@ public abstract class ManejadorSolicitudServerProxy {
         }
     }
     
-    public abstract boolean puedeManejar(EventoSolicitud evento);
+    protected abstract boolean puedeManejar(EventoSolicitud evento);
     
-    public abstract void procesar(EventoSolicitud evento);
+    protected abstract void procesar(EventoSolicitud evento);
 }

@@ -4,6 +4,7 @@
  */
 package domino.solicitudes;
 
+import dominodto.ConfiguracionJuegoDTO;
 import dominodto.UsuarioDTO;
 import java.util.List;
 
@@ -13,17 +14,21 @@ import java.util.List;
  */
 public class SolicitudIniciarPartida extends EventoSolicitud{
     private List<UsuarioDTO> usuarios; // jugadores de la partida
+    private ConfiguracionJuegoDTO configuracionJuegoDTO; // Configuracion de la partida
     
-    public SolicitudIniciarPartida(UsuarioDTO usuarioDTO) {
+    public SolicitudIniciarPartida(UsuarioDTO usuarioDTO, List<UsuarioDTO> usuarios, ConfiguracionJuegoDTO configuracionJuegoDTO) {
         super(usuarioDTO);
-    }
-
-    public void setUsuarios(List<UsuarioDTO> usuarios) {
         this.usuarios = usuarios;
+        this.configuracionJuegoDTO = configuracionJuegoDTO;
     }
 
     public List<UsuarioDTO> getUsuarios() {
         return usuarios;
     }
+
+    public ConfiguracionJuegoDTO getConfiguracionJuegoDTO() {
+        return configuracionJuegoDTO;
+    }
+    
     
 }

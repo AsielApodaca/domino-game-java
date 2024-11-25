@@ -4,6 +4,7 @@
  */
 package dominio;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Icon;
 
@@ -17,24 +18,15 @@ import javax.swing.Icon;
 public class JugadorDominoEntity extends UsuarioEntity {
 
     private List<FichaDominoEntity> listaFichasJugador;
-    
-    public JugadorDominoEntity(String nombre, Icon icon) {
-        super(nombre, icon);
+
+    public JugadorDominoEntity(String idCliente, String nombre, Icon icon) {
+        super(idCliente, nombre, icon);
+        this.listaFichasJugador  = new ArrayList<>();
     }
 
-    //provisional
-    public JugadorDominoEntity(String nombre) {
-        super(nombre);
+    public JugadorDominoEntity(String idCliente, String nombre) {
+        super(idCliente, nombre);
     }
-
-    
-    
-    public JugadorDominoEntity(String nombre, Icon icon, List<FichaDominoEntity> listaFichasJugador) {
-        super(nombre, icon);
-        this.listaFichasJugador = listaFichasJugador;
-    }
-    
-    
 
     public List<FichaDominoEntity> getListaFichasJugador() {
         return listaFichasJugador;
@@ -44,4 +36,11 @@ public class JugadorDominoEntity extends UsuarioEntity {
         this.listaFichasJugador = listaFichasJugador;
     }
 
+    public void agregarFichas(List<FichaDominoEntity> fichas) {
+        listaFichasJugador.addAll(fichas);
+    }
+    
+    public void quitarFicha(FichaDominoEntity ficha) {
+        listaFichasJugador.add(ficha);
+    }
 }

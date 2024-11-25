@@ -19,9 +19,15 @@ public class UsuarioEntity {
     private String nombre;
     private Icon icon;
 
-    public UsuarioEntity(String nombre, Icon icon) {
+    public UsuarioEntity(String idCliente, String nombre, Icon icon) {
+        this.idCliente = idCliente;
         this.nombre = nombre;
         this.icon = icon;
+    }
+
+    public UsuarioEntity(String idCliente, String nombre) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
     }
     
     public UsuarioEntity(String nombre) {

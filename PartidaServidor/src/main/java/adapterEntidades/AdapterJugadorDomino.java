@@ -6,8 +6,7 @@ package adapterEntidades;
 
 import dominio.JugadorDominoEntity;
 import dominodto.JugadorDominoDTO;
-import java.util.ArrayList;
-import java.util.List;
+import dominodto.UsuarioDTO;
 
 /**
  *
@@ -18,46 +17,20 @@ import java.util.List;
  */
 public class AdapterJugadorDomino implements IAdapterJugadorDomino {
     
-    private IAdapterFichaDomino adapterFichaDomino ;
     
     public AdapterJugadorDomino() {
-        this.adapterFichaDomino = new AdapterFichaDomino() ;
     }
 
     @Override
-    public JugadorDominoEntity adaptToEntity(JugadorDominoDTO jugadorDTO) {
-        JugadorDominoEntity jugadorEntity = new JugadorDominoEntity(jugadorDTO.getNombre(), jugadorDTO.getIcono()) ;
-        jugadorEntity.getListaFichasJugador().addAll(adapterFichaDomino.adaptListToEntity(jugadorDTO.getListaFichasJugador())) ;
+    public JugadorDominoEntity adaptToEntity(UsuarioDTO usuario) {
+        JugadorDominoEntity jugadorEntity = new JugadorDominoEntity(usuario.getIdCliente(), usuario.getNombre(), usuario.getIcon()) ;
         return jugadorEntity ;
     }
 
     @Override
     public JugadorDominoDTO adaptToDTO(JugadorDominoEntity jugadorEntity) {
-        JugadorDominoDTO jugadorDTO = new JugadorDominoDTO(jugadorEntity.getNombre(), jugadorEntity.getIcon()) ;
-        jugadorDTO.getListaFichasJugador().addAll(adapterFichaDomino.adaptListToDTO(jugadorEntity.getListaFichasJugador())) ;
+        JugadorDominoDTO jugadorDTO = new JugadorDominoDTO(jugadorEntity.getIdCliente(), jugadorEntity.getNombre(), jugadorEntity.getIcon()) ;
         return jugadorDTO ;
-    }
-
-    @Override
-    public List<JugadorDominoEntity> adaptListToEntity(List<JugadorDominoDTO> listaJugadoresDTO) {
-        List<JugadorDominoEntity> listaJugadoresEntity = new ArrayList<>() ;
-        
-        listaJugadoresDTO.forEach(jugador -> {
-            listaJugadoresEntity.add(adaptToEntity(jugador)) ;
-        });
-        
-        return listaJugadoresEntity ;
-    }
-
-    @Override
-    public List<JugadorDominoDTO> adaptListToDTO(List<JugadorDominoEntity> listaJugadoresEntity) {
-        List<JugadorDominoDTO> listaJugadoresDTO = new ArrayList<>() ;
-        
-        listaJugadoresEntity.forEach(jugador -> {
-            listaJugadoresDTO.add(adaptToDTO(jugador)) ;
-        });
-        
-        return listaJugadoresDTO ;
     }
     
 }

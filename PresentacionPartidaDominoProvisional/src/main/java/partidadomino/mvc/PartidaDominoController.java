@@ -26,10 +26,7 @@ public class PartidaDominoController implements IContenedorListener {
 
     @Override
     public JPanel obtenerView() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return view;
     }
 
-    public PartidaDominoView getView() {
-        return this.view;
-    }
 }

@@ -14,6 +14,4 @@ import dominodto.CasillaDTO;
 public interface IAdapterCasilla {
 
     CasillaDTO adaptToDTO(CasillaEntity entity);
-
-    CasillaEntity adaptToEntity(CasillaDTO dto);
 }

@@ -6,6 +6,7 @@ package adapterEntidades;
 
 import dominio.JugadorDominoEntity;
 import dominodto.JugadorDominoDTO;
+import dominodto.UsuarioDTO;
 import java.util.List;
 
 /**
@@ -17,12 +18,8 @@ import java.util.List;
  */
 public interface IAdapterJugadorDomino {
     
-    JugadorDominoEntity adaptToEntity(JugadorDominoDTO jugadorDTO) ;
+    JugadorDominoEntity adaptToEntity(UsuarioDTO usuario) ;
     
     JugadorDominoDTO adaptToDTO(JugadorDominoEntity jugadorEntity) ;
-    
-    List<JugadorDominoEntity> adaptListToEntity(List<JugadorDominoDTO> listaJugadoesDTO) ;
-    
-    List<JugadorDominoDTO> adaptListToDTO(List<JugadorDominoEntity> listaJugadoresEntity) ;
     
 }

@@ -11,7 +11,7 @@ import manejadorrespuestaclienteproxy.GestorRespuestaClienteProxy;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaActualizarCantidadFichas;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaAgregarFichaJugador;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaAgregarFichaTablero;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaCambiarTurno;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaOtorgarTurno;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaQuitarFichaJugador;
 import mediador.IMediadorNegocio;
 import mediador.MediadorNegocio;
@@ -96,8 +96,8 @@ public class Setup implements ISetup {
         ManejadorRespuestaQuitarFichaJugador manejadorRespuestaQuitarFichaJugador
                 = new ManejadorRespuestaQuitarFichaJugador(partidaDominoLogica, manejadorRespuestaAgregarFichaJugador);
 
-        ManejadorRespuestaCambiarTurno manejadorRespuestaCambiarTurno
-                = new ManejadorRespuestaCambiarTurno(partidaDominoLogica, manejadorRespuestaQuitarFichaJugador);
+        ManejadorRespuestaOtorgarTurno manejadorRespuestaCambiarTurno
+                = new ManejadorRespuestaOtorgarTurno(partidaDominoLogica, manejadorRespuestaQuitarFichaJugador);
 
         ManejadorRespuestaAgregarFichaTablero manejadorRespuestaAgregarFichaTablero
                 = new ManejadorRespuestaAgregarFichaTablero(partidaDominoLogica, manejadorRespuestaCambiarTurno);

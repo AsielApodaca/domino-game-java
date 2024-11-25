@@ -6,13 +6,11 @@ package domino.serializador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import domino.respuestas.EventoRespuesta;
-import domino.respuestas.RespuestaQuitarFichaJugador;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
-import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudFichaSeleccionada;
-import domino.solicitudes.SolicitudUnirseSala;
+import domino.solicitudes.SolicitudIniciarPartida;
+import java.util.List;
 
 /**
  *
@@ -21,23 +19,24 @@ import domino.solicitudes.SolicitudUnirseSala;
 public class Deserializador {
 
     private final Gson gson;
+    private final List<Class<? extends EventoSolicitud>> clasesPermitidas = List.of(
+            SolicitudCasillaSeleccionada.class,
+            SolicitudFichaSeleccionada.class,
+            SolicitudIniciarPartida.class
+    );
+    
 
     public Deserializador() {
         this.gson = new Gson();
     }
 
     public EventoSolicitud convertirJSONAEvento(String jsonObject) {
-        if (isJsonInstanceOf(jsonObject, SolicitudFichaSeleccionada.class)) {
-            return gson.fromJson(jsonObject, SolicitudFichaSeleccionada.class);
-        } else if (isJsonInstanceOf(jsonObject, SolicitudCasillaSeleccionada.class)) {
-            return gson.fromJson(jsonObject, SolicitudCasillaSeleccionada.class);
-        } else if (isJsonInstanceOf(jsonObject, SolicitudCrearSala.class)) {
-            return gson.fromJson(jsonObject, SolicitudCrearSala.class);
-        } else if (isJsonInstanceOf(jsonObject, SolicitudUnirseSala.class)) {
-            return gson.fromJson(jsonObject, SolicitudUnirseSala.class);
-        } else {
-            return null;
+        for(Class<? extends EventoSolicitud> clase: clasesPermitidas) {
+            if(isJsonInstanceOf(jsonObject, clase)) {
+                return gson.fromJson(jsonObject, clase);
+            }
         }
+        return null; // Si no coincide con ninguna clase tipo EventoSolicitud
     }
 
     public <T> boolean isJsonInstanceOf(String json, Class<T> clase) {

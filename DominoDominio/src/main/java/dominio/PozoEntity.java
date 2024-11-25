@@ -48,4 +48,14 @@ public class PozoEntity {
         Collections.shuffle(listaFichas);
     }
     
+    public List<FichaDominoEntity> sacarFichas(int cantidadFichas) {
+        List<FichaDominoEntity> fichas = new ArrayList<>(listaFichas.subList(0, cantidadFichas));
+        listaFichas.subList(0, cantidadFichas).clear();
+        
+        return fichas;
+    }
+    
+    public boolean estaVacio() {
+        return listaFichas.isEmpty();
+    }
 }

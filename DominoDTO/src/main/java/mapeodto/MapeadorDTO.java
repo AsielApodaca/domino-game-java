@@ -1,12 +1,8 @@
 package mapeodto;
 
-import dominio.FichaDominoEntity;
-import dominio.CasillaEntity;
-import dominio.TableroDominoEntity;
+import dominio.ConfiguracionJuegoEntity;
 import dominio.UsuarioEntity;
-import dominodto.FichaDominoDTO;
-import dominodto.CasillaDTO;
-import dominodto.TableroDominoDTO;
+import dominodto.ConfiguracionJuegoDTO;
 import dominodto.UsuarioDTO;
 
 /**
@@ -23,59 +19,6 @@ import dominodto.UsuarioDTO;
 public class MapeadorDTO {
 
     /**
-     * Mapea una entidad de ficha de dominó a su correspondiente DTO.
-     *
-     * @param ficha La entidad de la ficha de dominó a mapear.
-     * @return Un objeto {@link FichaDominoDTO} que representa la ficha de dominó.
-     */
-    public static FichaDominoDTO fichaEntityADTO(FichaDominoEntity ficha) {
-        int extremo1 = ficha.getExtremo1();
-        int extremo2 = ficha.getExtremo2();
-        return new FichaDominoDTO(extremo1, extremo2);
-    }
-
-    /**
-     * Mapea una entidad de casilla a su correspondiente DTO.
-     *
-     * @param casilla La entidad de la casilla a mapear.
-     * @return Un objeto {@link CasillaDTO} que representa la casilla.
-     */
-    public static CasillaDTO casillaEntityADTO(CasillaEntity casilla) {
-        CasillaDTO casillaDTO = new CasillaDTO();
-        casillaDTO.setLocacionX(casilla.getLocacionX());
-        casillaDTO.setLocacionY(casilla.getLocacionY());
-        casillaDTO.setRotacion(casilla.getRotacion());
-
-        if (casilla.getFichaDomino() != null) {
-            FichaDominoDTO fichaDominoDTO = fichaEntityADTO(casilla.getFichaDomino());
-            casillaDTO.setFichaDominoDTO(fichaDominoDTO);
-        }
-
-        return casillaDTO;
-    }
-
-    /**
-     * Mapea una entidad de tablero de dominó a su correspondiente DTO.
-     *
-     * @param tableroDomino La entidad del tablero de dominó a mapear.
-     * @return Un objeto {@link TableroDominoDTO} que representa el tablero de dominó.
-     */
-    public static TableroDominoDTO tableroDominoEntityADTO(TableroDominoEntity tableroDomino) {
-        int anchoTablero = tableroDomino.getAnchoTablero();
-        int altoTablero = tableroDomino.getAltoTablero();
-        TableroDominoDTO tableroDominoDTO = new TableroDominoDTO(anchoTablero, altoTablero);
-
-        CasillaEntity casilla = tableroDomino.obtenerPrimerElemento();
-        if (casilla != null) { // El tablero tiene al menos una ficha
-            do { 
-                tableroDominoDTO.addPosicion(casillaEntityADTO(casilla));
-            } while ((casilla = casilla.getSiguienteCasilla()) != null);
-        }
-
-        return tableroDominoDTO;
-    }
-
-    /**
      * Mapea una entidad de usuario a su correspondiente DTO.
      *
      * @param usuarioEntity La entidad de usuario a mapear.
@@ -83,9 +26,29 @@ public class MapeadorDTO {
      */
     public static UsuarioDTO UsuarioEntityADTO(UsuarioEntity usuarioEntity) {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
+        
+        // Mapea los atributos de la entidad UsuarioEntity a UsuarioDTO
         usuarioDTO.setIcon(usuarioEntity.getIcon());
         usuarioDTO.setIdCliente(usuarioEntity.getIdCliente());
         usuarioDTO.setNombre(usuarioEntity.getNombre());
+        
         return usuarioDTO;
+    }
+    
+    /**
+     * Mapea una entidad de configuración de juego a su correspondiente DTO.
+     *
+     * @param configuracionJuegoEntity La entidad de configuración de juego a mapear.
+     * @return Un objeto {@link ConfiguracionJuegoDTO} que representa la configuración del juego.
+     */
+    public static ConfiguracionJuegoDTO configuracionJuegoEntityADTO(ConfiguracionJuegoEntity configuracionJuegoEntity) {
+        ConfiguracionJuegoDTO configuracionJuegoDTO = new ConfiguracionJuegoDTO();
+        
+        // Mapea los atributos de la entidad ConfiguracionJuegoEntity a ConfiguracionJuegoDTO
+        configuracionJuegoDTO.setFichasPorJugador(configuracionJuegoEntity.getFichasPorJugador());
+        configuracionJuegoDTO.setLimiteJugadores(configuracionJuegoEntity.getLimiteJugadores());
+        configuracionJuegoDTO.setNombreSala(configuracionJuegoEntity.getNombreSala());
+        
+        return configuracionJuegoDTO;
     }
 }

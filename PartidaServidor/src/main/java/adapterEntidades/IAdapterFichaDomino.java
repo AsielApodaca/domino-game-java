@@ -22,6 +22,4 @@ public interface IAdapterFichaDomino {
     FichaDominoEntity adaptToEntity(FichaDominoDTO dto);
     
     List<FichaDominoDTO> adaptListToDTO(List<FichaDominoEntity> listaFichasEntity);
-    
-    List<FichaDominoEntity> adaptListToEntity(List<FichaDominoDTO> listaFichasDTO);
 }

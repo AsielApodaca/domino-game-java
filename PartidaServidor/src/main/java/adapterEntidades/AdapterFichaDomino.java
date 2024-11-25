@@ -18,6 +18,12 @@ import java.util.List;
  */
 public class AdapterFichaDomino implements IAdapterFichaDomino {
 
+    private List<FichaDominoEntity> listaFichasDelJuego;
+
+    public AdapterFichaDomino(List<FichaDominoEntity> listaFichasDelJuego) {
+        this.listaFichasDelJuego = listaFichasDelJuego;
+    }
+    
     @Override
     public FichaDominoDTO adaptToDTO(FichaDominoEntity entity) {
         if (entity == null) {
@@ -34,10 +40,15 @@ public class AdapterFichaDomino implements IAdapterFichaDomino {
         if (dto == null) {
             throw new IllegalArgumentException("El DTO no puede ser nulo");
         }
-        return new FichaDominoEntity(
-                dto.getValorExtremo1(),
-                dto.getValorExtremo2()
-        );
+        int valorExtremo1DTO = dto.getValorExtremo1();
+        int valorExtremo2DTO = dto.getValorExtremo2();
+        
+        for(FichaDominoEntity ficha : listaFichasDelJuego) {
+            if(ficha.getExtremo1() == valorExtremo1DTO && ficha.getExtremo2() == valorExtremo2DTO) {
+                return ficha;
+            }
+        }
+        return null; // No encontró la ficha
     }
     
     @Override
@@ -49,14 +60,5 @@ public class AdapterFichaDomino implements IAdapterFichaDomino {
          return listaFichasDominoDTO;
     }
 
-    @Override
-    public List<FichaDominoEntity> adaptListToEntity(List<FichaDominoDTO> listaFichasDTO) {
-        List<FichaDominoEntity> listaFichasDominoEntity = new ArrayList<>() ;
-        for(FichaDominoDTO fichaDTO : listaFichasDTO) {
-            listaFichasDominoEntity.add(adaptToEntity(fichaDTO)) ;
-        }
-        
-        return listaFichasDominoEntity ;
-    }
 
 }

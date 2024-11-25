@@ -18,7 +18,7 @@ import logica.partidadominologica.IPartidaDominoLogica;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class ManejadorRespuestaCambiarTurno extends ManejadorRespuestaClienteProxy {
+public class ManejadorRespuestaOtorgarTurno extends ManejadorRespuestaClienteProxy {
 
     private IPartidaDominoLogica partidaDominoLogica;
 
@@ -27,7 +27,7 @@ public class ManejadorRespuestaCambiarTurno extends ManejadorRespuestaClientePro
      * 
      * @param partidaDominoLogica la lógica de la partida de dominó.
      */
-    public ManejadorRespuestaCambiarTurno(IPartidaDominoLogica partidaDominoLogica) {
+    public ManejadorRespuestaOtorgarTurno(IPartidaDominoLogica partidaDominoLogica) {
         this.partidaDominoLogica = partidaDominoLogica;
     }
 
@@ -37,7 +37,7 @@ public class ManejadorRespuestaCambiarTurno extends ManejadorRespuestaClientePro
      * @param partidaDominoLogica la lógica de la partida de dominó.
      * @param siguienteManejador el siguiente manejador en la cadena de responsabilidad.
      */
-    public ManejadorRespuestaCambiarTurno(IPartidaDominoLogica partidaDominoLogica, ManejadorRespuestaClienteProxy siguienteManejador) {
+    public ManejadorRespuestaOtorgarTurno(IPartidaDominoLogica partidaDominoLogica, ManejadorRespuestaClienteProxy siguienteManejador) {
         super(siguienteManejador);
         this.partidaDominoLogica = partidaDominoLogica;
     }
