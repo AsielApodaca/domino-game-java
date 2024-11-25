@@ -1,12 +1,12 @@
 package manejadorrespuestaclienteproxy;
 
 import domino.respuestas.EventoRespuesta;
-import domino.respuestas.RespuestaCambiarTurno;
+import domino.respuestas.RespuestaOtorgarTurno;
 import dominodto.JugadorDominoDTO;
 import logica.partidadominologica.IPartidaDominoLogica;
 
 /**
- * Manejador para procesar eventos de tipo {@link RespuestaCambiarTurno}.
+ * Manejador para procesar eventos de tipo {@link RespuestaOtorgarTurno}.
  * 
  * Este manejador se encarga de actualizar la lógica de la partida para reflejar 
  * el cambio de turno a un nuevo jugador cuando se recibe una respuesta del cliente proxy.
@@ -46,11 +46,11 @@ public class ManejadorRespuestaOtorgarTurno extends ManejadorRespuestaClientePro
      * Verifica si este manejador puede procesar el evento recibido.
      * 
      * @param evento el evento de respuesta a evaluar.
-     * @return {@code true} si el evento es una instancia de {@link RespuestaCambiarTurno}, {@code false} en caso contrario.
+     * @return {@code true} si el evento es una instancia de {@link RespuestaOtorgarTurno}, {@code false} en caso contrario.
      */
     @Override
     protected boolean puedeManejar(EventoRespuesta evento) {
-        return evento instanceof RespuestaCambiarTurno;
+        return evento instanceof RespuestaOtorgarTurno;
     }
 
     /**
@@ -60,7 +60,7 @@ public class ManejadorRespuestaOtorgarTurno extends ManejadorRespuestaClientePro
      */
     @Override
     protected void procesar(EventoRespuesta evento) {
-        RespuestaCambiarTurno respuesta = (RespuestaCambiarTurno) evento;
+        RespuestaOtorgarTurno respuesta = (RespuestaOtorgarTurno) evento;
         JugadorDominoDTO jugadorConNuevoTurno = respuesta.getJugadorDominoDTO();
         partidaDominoLogica.cambiarTurno(jugadorConNuevoTurno);
     }

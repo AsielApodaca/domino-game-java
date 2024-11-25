@@ -1,12 +1,12 @@
 package manejadorrespuestaclienteproxy;
 
 import domino.respuestas.EventoRespuesta;
-import domino.respuestas.RespuestaAgregarFichaTablero;
+import domino.respuestas.RespuestaColocarFichaTablero;
 import dominodto.CasillaDTO;
 import logica.partidadominologica.IPartidaDominoLogica;
 
 /**
- * Manejador para procesar eventos de tipo {@link RespuestaAgregarFichaTablero}.
+ * Manejador para procesar eventos de tipo {@link RespuestaColocarFichaTablero}.
  * 
  * Este manejador se encarga de actualizar la visualización del tablero en la lógica de la partida
  * cuando se recibe una respuesta del cliente proxy que contiene la información de una nueva ficha colocada.
@@ -18,7 +18,7 @@ import logica.partidadominologica.IPartidaDominoLogica;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class ManejadorRespuestaAgregarFichaTablero extends ManejadorRespuestaClienteProxy {
+public class ManejadorRespuestaColocarFichaTablero extends ManejadorRespuestaClienteProxy {
 
     private IPartidaDominoLogica partidaDominoLogica;
 
@@ -27,7 +27,7 @@ public class ManejadorRespuestaAgregarFichaTablero extends ManejadorRespuestaCli
      * 
      * @param partidaDominoLogica la lógica de la partida de dominó.
      */
-    public ManejadorRespuestaAgregarFichaTablero(IPartidaDominoLogica partidaDominoLogica) {
+    public ManejadorRespuestaColocarFichaTablero(IPartidaDominoLogica partidaDominoLogica) {
         this.partidaDominoLogica = partidaDominoLogica;
     }
 
@@ -37,7 +37,7 @@ public class ManejadorRespuestaAgregarFichaTablero extends ManejadorRespuestaCli
      * @param partidaDominoLogica la lógica de la partida de dominó.
      * @param siguienteManejador el siguiente manejador en la cadena de responsabilidad.
      */
-    public ManejadorRespuestaAgregarFichaTablero(IPartidaDominoLogica partidaDominoLogica, ManejadorRespuestaClienteProxy siguienteManejador) {
+    public ManejadorRespuestaColocarFichaTablero(IPartidaDominoLogica partidaDominoLogica, ManejadorRespuestaClienteProxy siguienteManejador) {
         super(siguienteManejador);
         this.partidaDominoLogica = partidaDominoLogica;
     }
@@ -46,11 +46,11 @@ public class ManejadorRespuestaAgregarFichaTablero extends ManejadorRespuestaCli
      * Verifica si este manejador puede procesar el evento recibido.
      * 
      * @param evento el evento de respuesta a evaluar.
-     * @return {@code true} si el evento es una instancia de {@link RespuestaAgregarFichaTablero}, {@code false} en caso contrario.
+     * @return {@code true} si el evento es una instancia de {@link RespuestaColocarFichaTablero}, {@code false} en caso contrario.
      */
     @Override
     protected boolean puedeManejar(EventoRespuesta evento) {
-        return evento instanceof RespuestaAgregarFichaTablero;
+        return evento instanceof RespuestaColocarFichaTablero;
     }
 
     /**
@@ -60,7 +60,7 @@ public class ManejadorRespuestaAgregarFichaTablero extends ManejadorRespuestaCli
      */
     @Override
     protected void procesar(EventoRespuesta evento) {
-        RespuestaAgregarFichaTablero respuesta = (RespuestaAgregarFichaTablero) evento;
+        RespuestaColocarFichaTablero respuesta = (RespuestaColocarFichaTablero) evento;
         CasillaDTO fichaTablero = respuesta.getCasillaDTO();
         partidaDominoLogica.mostrarFichaTablero(fichaTablero);
     }

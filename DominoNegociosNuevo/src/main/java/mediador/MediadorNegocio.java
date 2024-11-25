@@ -19,6 +19,7 @@ import setup.Setup;
 public class MediadorNegocio implements IMediadorNegocio {
 
     private Setup setup;
+    private IContenedorPantallasLogica contenedorPantallasLogica;
 
     /**
      * Constructor que inicializa el mediador con la configuración de la aplicación.
@@ -27,16 +28,25 @@ public class MediadorNegocio implements IMediadorNegocio {
      */
     public MediadorNegocio(Setup setup) {
         this.setup = setup;
+        this.contenedorPantallasLogica = setup.getContenedorPantallasLogica();
     }
     
+    @Override
+    public void irASalaEspera() {
+        
+        // Inicia la lógica de la sala de espera y obtiene la clase control
+        // que implementa IContenedorListener
+        IContenedorListener pantalla = setup.getSalaEsperaLogica().iniciar();
+        
+        // Muestra la pantalla sobre el contenedor de pantallas
+        contenedorPantallasLogica.abrirPantalla(pantalla);
+    }
     /**
      * Cambia la vista actual a la pantalla de la partida de dominó.
      * Coordina la lógica del contenedor de pantallas con la lógica de la partida.
      */
     @Override
     public void irAPartidaDomino() {
-        // Obtiene la lógica del contenedor de pantallas
-        IContenedorPantallasLogica contenedorPantallasLogica = setup.getContenedorPantallasLogica();
         
         // Inicia la lógica de la partida de dominó y obtiene la clase control
         // que implementa IContenedorListener

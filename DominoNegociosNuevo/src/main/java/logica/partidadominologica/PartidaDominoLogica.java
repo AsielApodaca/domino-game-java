@@ -16,6 +16,7 @@ import dominodto.JugadorDominoDTO;
 import dominodto.UsuarioDTO;
 import fachada.FachadaPartidaDomino;
 import fachada.IFachadaPartidaDomino;
+import java.util.List;
 import java.util.logging.Logger;
 import listeners.IContenedorListener;
 import listeners.IPresentacionPartidaDominoListener;
@@ -35,13 +36,14 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     private IFachadaPartidaDomino fachadaPartidaDomino;
     private IFachadaClienteProxy fachadaClienteProxy;
     private IContenedorListener contenedorListener;
-    private UsuarioEntity usuarioEntity = new UsuarioEntity("Oliver"); // Usuario local
+    private UsuarioEntity usuarioLocal;
 
     public PartidaDominoLogica(Setup setup) {
         this.setup = setup;
+        this.usuarioLocal = setup.getUsuarioLocal(); // Oliva incienzo valle verde
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.fachadaClienteProxy = setup.getFachadaClienteProxy();
-        fachadaClienteProxy.enviarSolicitud(new SolicitudCrearSala(MapeadorDTO.UsuarioEntityADTO(usuarioEntity)));
+        fachadaClienteProxy.enviarSolicitud(new SolicitudCrearSala(MapeadorDTO.UsuarioEntityADTO(usuarioLocal)));
     }
 
     @Override
@@ -75,7 +77,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
         FichaDominoDTO fichaDominoDTO = evento.getFichaDominoDTO();
 
         // Mapea el usuario relacionado al DTO correspondiente
-        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
 
         // Crea una nueva solicitud de ficha seleccionada
         EventoSolicitud solicitudFichaSeleccionada = new SolicitudFichaSeleccionada(fichaDominoDTO, usuarioDTO);
@@ -99,7 +101,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
         CasillaDTO casillaDTO = evento.getCasillaDTO();
 
         // Mapea el usuario relacionado al DTO correspondiente
-        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
 
         // Crea una nueva solicitud de casilla seleccionada
         EventoSolicitud solicitudCasillaSeleccionada = new SolicitudCasillaSeleccionada(casillaDTO, usuarioDTO);
@@ -117,10 +119,10 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     public void mostrarFichaTablero(CasillaDTO casilla) {
         fachadaPartidaDomino.colocarFichaTablero(casilla);
     }
-
+    
     @Override
-    public void removerFichaJugadorLocal(FichaDominoDTO ficha) {
-        fachadaPartidaDomino.quitarFichaJugadorLocal(ficha);
+    public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichas) {
+        fachadaPartidaDomino.mostrarFichasJugadorLocal(fichas);
     }
 
     @Override
@@ -131,6 +133,16 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     @Override
     public void cambiarTurno(JugadorDominoDTO jugador) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    @Override
+    public void mostrarCasillasDisponibles(List<CasillaDTO> casillasDisponibles) {
+        fachadaPartidaDomino.mostrarCasillasParaColocarFicha(casillasDisponibles);
+    }
+    
+    @Override
+    public void ocultarCasillasDisponibles() {
+        fachadaPartidaDomino.ocultarCasillasParaColocarFicha();
     }
 
 }

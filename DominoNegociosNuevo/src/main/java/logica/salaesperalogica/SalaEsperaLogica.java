@@ -22,13 +22,16 @@ public class SalaEsperaLogica implements ISalaEsperaLogica {
     public SalaEsperaLogica(ISetup setup) {
         this.setup = setup;
         this.fachadaPartidaDominoProvisional = new FachadaPartidaDominoProvisional();
-        fachadaPartidaDominoProvisional.iniciar();
     }
 
     @Override
     public IContenedorListener iniciar() {
-
+        mostrarPresentacionSalaEspera();
         return contenedorListener;
+    }
+    
+    public void mostrarPresentacionSalaEspera() {
+        this.contenedorListener = fachadaPartidaDominoProvisional.iniciar();
     }
 
 }

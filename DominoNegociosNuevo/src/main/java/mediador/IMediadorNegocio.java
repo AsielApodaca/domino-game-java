@@ -9,5 +9,6 @@ package mediador;
  * @author asielapodaca
  */
 public interface IMediadorNegocio {
+    public void irASalaEspera();
     public void irAPartidaDomino();
 }

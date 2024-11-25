@@ -7,12 +7,17 @@ import logica.contenedorpantallaslogica.ContenedorPantallasLogica;
 import logica.contenedorpantallaslogica.IContenedorPantallasLogica;
 import logica.partidadominologica.IPartidaDominoLogica;
 import logica.partidadominologica.PartidaDominoLogica;
+import logica.salaesperalogica.ISalaEsperaLogica;
+import logica.salaesperalogica.SalaEsperaLogica;
 import manejadorrespuestaclienteproxy.GestorRespuestaClienteProxy;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaActualizarCantidadFichas;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaAgregarFichaJugador;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaAgregarFichaTablero;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaColocarFichaTablero;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarCasillasDisponibles;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarFichasActualizadasDeJugador;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarPantallaPartida;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaOcultarCasillasDisponibles;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaOtorgarTurno;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaQuitarFichaJugador;
 import mediador.IMediadorNegocio;
 import mediador.MediadorNegocio;
 
@@ -33,6 +38,7 @@ public class Setup implements ISetup {
     private IFachadaClienteProxy fachadaClienteProxy;
     private GestorRespuestaClienteProxy gestorRespuestaClienteProxy;
     private IContenedorPantallasLogica contenedorPantallasLogica;
+    private ISalaEsperaLogica salaEsperaLogica;
     private IPartidaDominoLogica partidaDominoLogica;
     private IMediadorNegocio mediadorNegocio;
 
@@ -61,7 +67,7 @@ public class Setup implements ISetup {
      * Inicializa el usuario local que interactuará con el sistema.
      */
     private void iniciarUsuario() {
-        String nombre = "Chapo Guzman";
+        String nombre = "oliver";
         this.usuarioLocal = new UsuarioEntity(nombre);
     }
 
@@ -71,6 +77,8 @@ public class Setup implements ISetup {
      */
     private void iniciarLogicaDeNegocio() {
         this.contenedorPantallasLogica = new ContenedorPantallasLogica();
+        this.contenedorPantallasLogica.iniciarContenedorDePantallas();
+        this.salaEsperaLogica = new SalaEsperaLogica(this);
         this.partidaDominoLogica = new PartidaDominoLogica(this);
     }
 
@@ -90,24 +98,33 @@ public class Setup implements ISetup {
      */
     private void iniciarManejadorRespuestasClienteProxy() {
         // Instancia los manejadores de respuestas, configurando la cadena de responsabilidad
+        ManejadorRespuestaMostrarPantallaPartida manejadorRespuestaMostrarPantallaPartida
+                = new ManejadorRespuestaMostrarPantallaPartida(mediadorNegocio);
+        
         ManejadorRespuestaAgregarFichaJugador manejadorRespuestaAgregarFichaJugador
-                = new ManejadorRespuestaAgregarFichaJugador(partidaDominoLogica);
-
-        ManejadorRespuestaQuitarFichaJugador manejadorRespuestaQuitarFichaJugador
-                = new ManejadorRespuestaQuitarFichaJugador(partidaDominoLogica, manejadorRespuestaAgregarFichaJugador);
+                = new ManejadorRespuestaAgregarFichaJugador(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
 
         ManejadorRespuestaOtorgarTurno manejadorRespuestaCambiarTurno
-                = new ManejadorRespuestaOtorgarTurno(partidaDominoLogica, manejadorRespuestaQuitarFichaJugador);
+                = new ManejadorRespuestaOtorgarTurno(partidaDominoLogica, manejadorRespuestaAgregarFichaJugador);
 
-        ManejadorRespuestaAgregarFichaTablero manejadorRespuestaAgregarFichaTablero
-                = new ManejadorRespuestaAgregarFichaTablero(partidaDominoLogica, manejadorRespuestaCambiarTurno);
+        ManejadorRespuestaColocarFichaTablero manejadorRespuestaAgregarFichaTablero
+                = new ManejadorRespuestaColocarFichaTablero(partidaDominoLogica, manejadorRespuestaCambiarTurno);
+        
+        ManejadorRespuestaOcultarCasillasDisponibles manejadorRespuestaOcultarCasillasDisponibles
+                = new ManejadorRespuestaOcultarCasillasDisponibles(partidaDominoLogica, manejadorRespuestaAgregarFichaTablero);
+
+        ManejadorRespuestaMostrarCasillasDisponibles manejadorRespuestaMostrarCasillasDisponibles
+                = new ManejadorRespuestaMostrarCasillasDisponibles(partidaDominoLogica, manejadorRespuestaOcultarCasillasDisponibles);
 
         ManejadorRespuestaActualizarCantidadFichas manejadorRespuestaActualizarCantidadFichas
-                = new ManejadorRespuestaActualizarCantidadFichas(partidaDominoLogica, manejadorRespuestaAgregarFichaTablero);
+                = new ManejadorRespuestaActualizarCantidadFichas(partidaDominoLogica, manejadorRespuestaMostrarCasillasDisponibles);
+
+        ManejadorRespuestaMostrarFichasActualizadasDeJugador manejadorRespuestaMostrarFichasActualizadasDeJugador
+                = new ManejadorRespuestaMostrarFichasActualizadasDeJugador(partidaDominoLogica, manejadorRespuestaActualizarCantidadFichas);
 
         // Instancia el gestor de respuestas, quien escucha las respuestas del ClientProxy
         // y las pasa al primer manejador en la cadena.
-        gestorRespuestaClienteProxy = new GestorRespuestaClienteProxy(manejadorRespuestaActualizarCantidadFichas);
+        gestorRespuestaClienteProxy = new GestorRespuestaClienteProxy(manejadorRespuestaMostrarFichasActualizadasDeJugador);
     }
 
     /**
@@ -140,7 +157,7 @@ public class Setup implements ISetup {
      * de la partida.
      */
     private void correrJuego() {
-        this.mediadorNegocio.irAPartidaDomino();
+        this.mediadorNegocio.irASalaEspera();
     }
 
     // Getters
@@ -169,6 +186,15 @@ public class Setup implements ISetup {
      */
     public IContenedorPantallasLogica getContenedorPantallasLogica() {
         return this.contenedorPantallasLogica;
+    }
+
+    /**
+     * Obtiene la lógica de la sala de espera.
+     *
+     * @return la lógica de la sala de espera como {@link ISalaEsperaLogica}.
+     */
+    public ISalaEsperaLogica getSalaEsperaLogica() {
+        return salaEsperaLogica;
     }
 
     /**
