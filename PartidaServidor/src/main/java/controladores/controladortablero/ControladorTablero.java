@@ -249,7 +249,7 @@ public class ControladorTablero implements IControladorTablero {
      * @return La casilla disponible ajustada a las restricciones de la cadena y
      * el tablero.
      */
-    private CasillaEntity obtenerCasillaDisponible(int extremoCadena) {
+    public CasillaEntity obtenerCasillaDisponible(int extremoCadena) {
         if (extremoCadena == 0) // Retorna la casilla para la mula
         {
             return tableroDominoEntity.getCasillaMula();

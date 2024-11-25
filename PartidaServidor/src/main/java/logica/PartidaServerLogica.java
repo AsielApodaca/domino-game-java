@@ -18,6 +18,8 @@ import controladores.controladortablero.ControladorTablero;
 import controladores.controladortablero.IControladorTablero;
 import controladores.controladorturnos.ControladorTurnos;
 import controladores.controladorturnos.IControladorTurnos;
+import dominio.CasillaEntity;
+import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
 import domino.respuestas.RespuestaMostrarPantallaPartida;
 import dominodto.CasillaDTO;
@@ -65,12 +67,53 @@ public class PartidaServerLogica implements IPartidaServerLogica{
 
     @Override
     public void procesarFichaSeleccionada(FichaDominoDTO ficha, UsuarioDTO usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String idCliente = usuario.getIdCliente();
+        if(ficha == null) {
+            controladorFichas.desseleccionarFicha();
+            generadorRespuestas.enviarRespuestaOcultarCasillasDisponibles(idCliente);
+        } else {
+            FichaDominoEntity fichaDominoEntity = adapterFichaDomino.adaptToEntity(ficha);
+            controladorFichas.seleccionarFicha(fichaDominoEntity);
+            List<CasillaEntity> casillasEntity = controladorTablero.obtenerCasillasCompatibles(fichaDominoEntity);
+            List<CasillaDTO> casillasDTO = new ArrayList<>();
+            for(CasillaEntity casillaEntity : casillasEntity) {
+                CasillaDTO casillaDTO = adapterCasilla.adaptToDTO(casillaEntity);
+                casillasDTO.add(casillaDTO);
+            }
+            generadorRespuestas.enviarRespuestaMostrarCasillasDisponibles(idCliente, casillasDTO);
+        }
+        
     }
 
     @Override
     public void procesarCasillaSeleccionada(CasillaDTO casilla, UsuarioDTO usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Obtiene el idCliente del usuario y busca al jugador correspondiente
+        String idCliente = usuario.getIdCliente();
+        JugadorDominoEntity jugador = controladorJugadores.obtenerJugadorPorIdCliente(idCliente);
+        // Obtiene la ficha seleccionada y se la quita al jugador
+        FichaDominoEntity fichaSeleccionada = controladorFichas.obtenerFichaSeleccionada();
+        controladorFichas.quitarFichaAJugador(jugador, fichaSeleccionada);
+        // Coloca la ficha en el tablero y obtiene la casilla con la ficha
+        CasillaEntity casillaEntity = controladorTablero.colocarFichaEnCasilla(casilla, fichaSeleccionada);
+        CasillaDTO casillaDTO = adapterCasilla.adaptToDTO(casillaEntity);
+        // Deselecciona la ficha
+        controladorFichas.desseleccionarFicha();
+        // Obtiene las fichas del jugador y adapta las fichas a fichasDTO con
+        // estado asignado de incopatibilidad para que el jugador ya no pueda interactuar con las fichas
+        List<FichaDominoEntity> fichasJugador = jugador.getListaFichasJugador();
+        List<FichaDominoDTO> fichasJugadorDTO = adapterFichaDomino.adaptListToDTO(fichasJugador);
+        // Obtiene la cantidad de fichas del jugador
+        int cantidadFichas = fichasJugador.size();
+        // Adapta el jugador a DTO
+        JugadorDominoDTO jugadorDTO = adapterJugadorDomino.adaptToDTO(jugador);
+        // Envia al jugador la lista actualizada de fichas
+        generadorRespuestas.enviarRespuestaMostrarFichasActualizadasDeJugador(idCliente, fichasJugadorDTO);
+        // Envia al resto de jugadores la cantidad actualizada de fichas del jugador
+        generadorRespuestas.enviarRespuestaActualizarCantidadFichas(jugadorDTO, cantidadFichas);
+        // Envia a los jugadores la ficha que se mostrará sobre el tablero
+        generadorRespuestas.enviarRespuestaColocarFichaTablero(casillaDTO);
+        // Otorga el turno al siguiente jugador
+        otorgarTurnoASiguienteJugador();
     }
     
     private void iniciarControladores() {
