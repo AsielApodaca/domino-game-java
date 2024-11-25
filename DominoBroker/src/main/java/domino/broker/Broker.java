@@ -15,10 +15,15 @@ import domino.conexiones.ConexionServidor;
 import domino.manejadores.ManejadorClientes;
 import domino.manejadores.ManejadorSalas;
 import domino.manejadores.ManejadorServidores;
+import domino.respuestas.EventoRespuesta;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
+import domino.respuestas.RespuestaAgregarFichaJugador;
 import domino.respuestas.RespuestaColocarFichaTablero;
+import domino.respuestas.RespuestaMostrarCasillasDisponibles;
+import domino.respuestas.RespuestaMostrarFichasActualizadasDeJugador;
+import domino.respuestas.RespuestaMostrarPantallaPartida;
+import domino.respuestas.RespuestaOcultarCasillasDisponibles;
 import domino.respuestas.RespuestaOtorgarTurno;
-import domino.respuestas.RespuestaQuitarFichaJugador;
 import domino.solicitudes.SolicitudFichaSeleccionada;
 import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudUnirseSala;
@@ -33,7 +38,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import domino.sala.Sala;
+import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
+import domino.solicitudes.SolicitudIniciarPartida;
+import java.util.List;
 
 /**
  * @author Hisamy Cinco Cota
@@ -48,6 +56,18 @@ public class Broker {
     private final ManejadorServidores manejadorServidores ;
     private final ManejadorSalas manejadorSalas ;
     private Gson gson ;
+    private final List<Class<? extends EventoRespuesta>> respuestasParaUno = List.of(
+            RespuestaAgregarFichaJugador.class,
+            RespuestaMostrarCasillasDisponibles.class,
+            RespuestaMostrarFichasActualizadasDeJugador.class,
+            RespuestaOcultarCasillasDisponibles.class
+    );
+    private final List<Class<? extends EventoRespuesta>> respuestasParaTodos = List.of(
+            RespuestaActualizarCantidadFichas.class,
+            RespuestaColocarFichaTablero.class,
+            RespuestaMostrarPantallaPartida.class,
+            RespuestaOtorgarTurno.class
+    );
     
     public Broker() {
         this.manejadorClientes = new ManejadorClientes() ;
@@ -137,17 +157,20 @@ public class Broker {
                 JsonObject respuestaJSON = JsonParser.parseString(respuesta).getAsJsonObject() ;
           
                 String tipoRespuesta = respuestaJSON.get("tipo").getAsString();
-
-                if (Deserializador.esJsonInstanciaDe(respuesta, RespuestaQuitarFichaJugador.class)) {
-                    manejadorSalas.enviarRespuestaACliente(servidor, respuestaJSON);
-                } else if (Deserializador.esJsonInstanciaDe(respuesta, RespuestaColocarFichaTablero.class)
-                        || Deserializador.esJsonInstanciaDe(respuesta, RespuestaOtorgarTurno.class)
-                        || Deserializador.esJsonInstanciaDe(respuesta, RespuestaActualizarCantidadFichas.class)
-                        ) {
-                    manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
-                } else {
-                    throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
+                
+                for (Class<? extends EventoRespuesta> claseRespuestaParaUno : respuestasParaUno) {
+                    if (Deserializador.esJsonInstanciaDe(respuesta, claseRespuestaParaUno)) {
+                        manejadorSalas.enviarRespuestaACliente(servidor, respuestaJSON);
+                        return;
+                    }
                 }
+                for (Class<? extends EventoRespuesta> claseRespuestaParaTodos : respuestasParaTodos) {
+                    if (Deserializador.esJsonInstanciaDe(respuesta, claseRespuestaParaTodos)) {
+                        manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
+                        return;
+                    }
+                }
+                throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
                 
             }
         } catch (Exception e) {
