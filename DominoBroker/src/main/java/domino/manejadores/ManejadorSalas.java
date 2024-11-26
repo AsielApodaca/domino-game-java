@@ -38,7 +38,7 @@ public class ManejadorSalas {
             enviarConfiguracionDePartida(servidor, solicitudJSON);
             servidor.setStatus(Status.OCUPADO);
             
-            Sala salaNueva = new Sala(id, servidor, solicitudJSON.get("size").getAsInt());
+            Sala salaNueva = new Sala(id, servidor, solicitudJSON.get("limiteJugadores").getAsInt());
             salaNueva.agregarCliente(cliente.getId(), cliente);
             
             salas.put(id, salaNueva);
@@ -90,7 +90,7 @@ public class ManejadorSalas {
     }
     
     public void unirClienteASala(ConexionCliente cliente, JsonObject jsonObject) {
-        Sala salaBuscada = obtenerSala(jsonObject.get("id_sala").getAsString()) ;
+        Sala salaBuscada = obtenerSala(jsonObject.get("idSala").getAsString()) ;
         
         salaBuscada.agregarCliente(cliente.getId(), cliente);
         
@@ -101,7 +101,7 @@ public class ManejadorSalas {
         Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
         
         if (salaDelCliente != null) {
-            solicitud.addProperty("id_cliente", cliente.getId());
+            solicitud.addProperty("idCliente", cliente.getId());
             salaDelCliente.getServidor().mandarSolicitudServidor(solicitud);
         } else {
             System.out.println("El cliente no esta conectado a una sala");

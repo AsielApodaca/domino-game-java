@@ -14,19 +14,27 @@ import java.util.List;
  * @author Asiel Apodaca Monge
  */
 public interface IControladorJugadores {
+
     /**
-     * Agrega una lista de jugadores al controlador.
+     * Agrega un jugador al controlador.
      * 
-     * @param listaJugadores Lista de jugadores a agregar.
+     * @param jugador El jugador a agregar.
      */
-    public void agregarJugadores(List<JugadorDominoEntity> listaJugadores);
+    void agregarJugador(JugadorDominoEntity jugador);
+
+    /**
+     * Elimina un jugador del controlador usando su identificador de cliente.
+     * 
+     * @param idCliente El identificador del cliente asociado al jugador.
+     */
+    void eliminarJugadorPorIdCliente(String idCliente);
 
     /**
      * Obtiene la lista de todos los jugadores.
      * 
      * @return Lista de jugadores.
      */
-    public List<JugadorDominoEntity> obtenerJugadores();
+    List<JugadorDominoEntity> obtenerJugadores();
 
     /**
      * Obtiene un jugador a partir de su identificador de cliente.
@@ -34,5 +42,5 @@ public interface IControladorJugadores {
      * @param idCliente El identificador del cliente del jugador.
      * @return El jugador correspondiente al idCliente, o null si no se encuentra.
      */
-    public JugadorDominoEntity obtenerJugadorPorIdCliente(String idCliente);
+    JugadorDominoEntity obtenerJugadorPorIdCliente(String idCliente);
 }

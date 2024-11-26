@@ -7,9 +7,12 @@ package domino.serializador;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import domino.solicitudes.EventoSolicitud;
+import domino.solicitudes.SolicitudAbandonarSala;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
+import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudFichaSeleccionada;
 import domino.solicitudes.SolicitudIniciarPartida;
+import domino.solicitudes.SolicitudUnirseSala;
 import java.util.List;
 
 /**
@@ -20,9 +23,12 @@ public class Deserializador {
 
     private final Gson gson;
     private final List<Class<? extends EventoSolicitud>> clasesPermitidas = List.of(
+            SolicitudAbandonarSala.class,
             SolicitudCasillaSeleccionada.class,
+            SolicitudCrearSala.class,
             SolicitudFichaSeleccionada.class,
-            SolicitudIniciarPartida.class
+            SolicitudIniciarPartida.class,
+            SolicitudUnirseSala.class
     );
     
 
@@ -31,12 +37,18 @@ public class Deserializador {
     }
 
     public EventoSolicitud convertirJSONAEvento(String jsonObject) {
-        for(Class<? extends EventoSolicitud> clase: clasesPermitidas) {
-            if(isJsonInstanceOf(jsonObject, clase)) {
-                return gson.fromJson(jsonObject, clase);
+        for (Class<? extends EventoSolicitud> clase : clasesPermitidas) {
+            try {
+                EventoSolicitud evento = gson.fromJson(jsonObject, clase);
+                if (evento != null) {
+                    return evento;
+                }
+            } catch (JsonSyntaxException e) {
+                // Continúa con la siguiente clase si no coincide
             }
         }
-        return null; // Si no coincide con ninguna clase tipo EventoSolicitud
+        System.out.println("El JSON proporcionado no coincide con ninguna clase permitida.");
+        return null;
     }
 
     public <T> boolean isJsonInstanceOf(String json, Class<T> clase) {

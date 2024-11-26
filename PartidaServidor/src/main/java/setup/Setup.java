@@ -6,9 +6,12 @@ import generadorrespuestas.GeneradorRespuestas;
 import logica.IPartidaServerLogica;
 import logica.PartidaServerLogica;
 import manejadorsolicitudserverproxy.GestorSolicitudServerProxy;
+import manejadorsolicitudserverproxy.ManejadorSolicitudAbandonarSala;
 import manejadorsolicitudserverproxy.ManejadorSolicitudCasillaSeleccionada;
+import manejadorsolicitudserverproxy.ManejadorSolicitudCrearSala;
 import manejadorsolicitudserverproxy.ManejadorSolicitudFichaSeleccionada;
 import manejadorsolicitudserverproxy.ManejadorSolicitudIniciarPartida;
+import manejadorsolicitudserverproxy.ManejadorSolicitudUnirseSala;
 
 /**
  * Configuración inicial del servidor.
@@ -54,9 +57,18 @@ public class Setup implements ISetup {
 
         ManejadorSolicitudIniciarPartida manejadorSolicitudIniciarPartida =
                 new ManejadorSolicitudIniciarPartida(partidaServerLogica);
+        
+        ManejadorSolicitudUnirseSala manejadorSolicitudUnirseSala =
+                new ManejadorSolicitudUnirseSala(manejadorSolicitudIniciarPartida, partidaServerLogica);
+        
+        ManejadorSolicitudAbandonarSala manejadorSolicitudAbandonarSala =
+                new ManejadorSolicitudAbandonarSala(manejadorSolicitudUnirseSala, partidaServerLogica);
+        
+        ManejadorSolicitudCrearSala manejadorSolicitudCrearSala =
+                new ManejadorSolicitudCrearSala(manejadorSolicitudAbandonarSala, partidaServerLogica);
 
         ManejadorSolicitudCasillaSeleccionada manejadorSolicitudCasillaSeleccionada =
-                new ManejadorSolicitudCasillaSeleccionada(manejadorSolicitudIniciarPartida, partidaServerLogica);
+                new ManejadorSolicitudCasillaSeleccionada(manejadorSolicitudCrearSala, partidaServerLogica);
 
         ManejadorSolicitudFichaSeleccionada manejadorSolicitudFichaSeleccionada =
                 new ManejadorSolicitudFichaSeleccionada(manejadorSolicitudCasillaSeleccionada, partidaServerLogica);

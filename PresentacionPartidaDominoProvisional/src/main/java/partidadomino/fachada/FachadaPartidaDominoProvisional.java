@@ -5,6 +5,7 @@
 package partidadomino.fachada;
 
 import listeners.IContenedorListener;
+import listeners.SalaEspera.IPresentacionSalaEsperaListener;
 import partidadomino.mvc.PartidaDominoController;
 import partidadomino.mvc.PartidaDominoView;
 
@@ -15,9 +16,11 @@ import partidadomino.mvc.PartidaDominoView;
 public class FachadaPartidaDominoProvisional implements IFachadaPartidaDominoProvisional {
 
     @Override
-    public IContenedorListener iniciar() {
+    public IContenedorListener iniciar(IPresentacionSalaEsperaListener presentacionSalaEsperaListener) {
         PartidaDominoView view = new PartidaDominoView();
         PartidaDominoController controller = new PartidaDominoController(view);
+        controller.suscribirSalaEsperaListener(presentacionSalaEsperaListener);
+        view.suscribirListener(controller);
         return controller;
     }
 }

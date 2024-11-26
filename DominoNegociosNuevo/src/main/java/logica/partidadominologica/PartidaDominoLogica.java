@@ -43,7 +43,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
         this.usuarioLocal = setup.getUsuarioLocal(); // Oliva incienzo valle verde
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.fachadaClienteProxy = setup.getFachadaClienteProxy();
-        fachadaClienteProxy.enviarSolicitud(new SolicitudCrearSala(MapeadorDTO.UsuarioEntityADTO(usuarioLocal)));
+        
     }
 
     @Override

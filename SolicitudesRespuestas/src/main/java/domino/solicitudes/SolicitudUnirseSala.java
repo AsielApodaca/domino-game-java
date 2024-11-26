@@ -11,10 +11,16 @@ import dominodto.UsuarioDTO;
  * @author castr
  */
 public class SolicitudUnirseSala extends EventoSolicitud {
-    //id sala
+    
+    private String idSala;
 
-    public SolicitudUnirseSala(UsuarioDTO usuarioDTO) {
+    public SolicitudUnirseSala(UsuarioDTO usuarioDTO, String idSala) {
         super(usuarioDTO);
+        this.idSala = idSala;
     }
-    //id sala
+
+    public String getIdSala() {
+        return idSala;
+    }
+    
 }

@@ -49,9 +49,6 @@ public class ManejadorSolicitudIniciarPartida extends ManejadorSolicitudServerPr
      */
     @Override
     protected void procesar(EventoSolicitud evento) {
-        SolicitudIniciarPartida solicitud = (SolicitudIniciarPartida) evento;
-        List<UsuarioDTO> usuarios = solicitud.getUsuarios();
-        ConfiguracionJuegoDTO configuracionJuego = solicitud.getConfiguracionJuegoDTO();
-        partidaServerLogica.procesarIniciarPartida(usuarios, configuracionJuego);
+        partidaServerLogica.procesarIniciarPartida();
     }
 }

@@ -21,7 +21,6 @@ import controladores.controladorturnos.IControladorTurnos;
 import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
-import domino.respuestas.RespuestaMostrarPantallaPartida;
 import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
@@ -52,11 +51,25 @@ public class PartidaServerLogica implements IPartidaServerLogica{
     }
 
     @Override
-    public void procesarIniciarPartida(List<UsuarioDTO> usuariosDTO, ConfiguracionJuegoDTO configuracionPartida) {
-        this.configuracionJuegoDTO = configuracionPartida;
+    public void procesarCrearSala(ConfiguracionJuegoDTO configuracionJuegoDTO, UsuarioDTO anfitrion) {
+        this.configuracionJuegoDTO = configuracionJuegoDTO;
         iniciarControladores();
         iniciarAdapters();
-        registrarUsuariosComoJugadores(usuariosDTO);
+        registrarUsuarioComoJugador(anfitrion);
+    }
+    
+    @Override
+    public void procesarUnirseSala(UsuarioDTO usuarioDTO) {
+        registrarUsuarioComoJugador(usuarioDTO);
+    }
+    
+    @Override
+    public void procesarSalirSala(String idCliente) {
+        eliminarJugadorPorIdCliente(idCliente);
+    }
+    
+    @Override
+    public void procesarIniciarPartida() {
         mostrarPantallaPartidaAJugadores();
         repartirFichas();
         repartirTurnos();
@@ -130,13 +143,13 @@ public class PartidaServerLogica implements IPartidaServerLogica{
         adapterCasilla = new AdapterCasilla(adapterFichaDomino);
     }
     
-    private void registrarUsuariosComoJugadores(List<UsuarioDTO> listaUsuarios) {
-        List<JugadorDominoEntity> listaJugadores = new ArrayList<>();
-        for(UsuarioDTO usuario : listaUsuarios) {
-            JugadorDominoEntity jugador = adapterJugadorDomino.adaptToEntity(usuario);
-            listaJugadores.add(jugador);
-        }
-        controladorJugadores.agregarJugadores(listaJugadores);
+    private void registrarUsuarioComoJugador(UsuarioDTO usuarioDTO) {
+        JugadorDominoEntity jugador = adapterJugadorDomino.adaptToEntity(usuarioDTO);
+        controladorJugadores.agregarJugador(jugador);
+    }
+    
+    private void eliminarJugadorPorIdCliente(String idCliente) {
+        controladorJugadores.eliminarJugadorPorIdCliente(idCliente);
     }
     
     private void mostrarPantallaPartidaAJugadores() {

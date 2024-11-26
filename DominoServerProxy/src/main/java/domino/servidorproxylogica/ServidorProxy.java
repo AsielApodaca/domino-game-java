@@ -105,6 +105,7 @@ public class ServidorProxy {
 
             while ((jsonString = in.readLine()) != null) {
                 EventoSolicitud eventoSolicitud = deserializador.convertirJSONAEvento(jsonString);
+                System.out.println("Solicitud tipo: " + eventoSolicitud.getClass().getSimpleName());
                 notificarSolicitudEvento(eventoSolicitud);
             }
         } catch (Exception e) {

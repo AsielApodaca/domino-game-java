@@ -5,14 +5,16 @@ import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.UsuarioDTO;
-import java.util.List;
 
 /**
  *
  * @author asielapodaca
  */
 public interface IPartidaServerLogica {
-    public void procesarIniciarPartida(List<UsuarioDTO> usuariosDTO, ConfiguracionJuegoDTO configuracionPartida);
+    public void procesarCrearSala(ConfiguracionJuegoDTO configuracionJuegoDTO, UsuarioDTO anfitrion);
+    public void procesarUnirseSala(UsuarioDTO usuarioDTO);
+    public void procesarSalirSala(String idCliente);
+    public void procesarIniciarPartida();
     public void procesarFichaSeleccionada(FichaDominoDTO ficha, UsuarioDTO usuario);
     public void procesarCasillaSeleccionada(CasillaDTO casilla, UsuarioDTO usuario);
 }

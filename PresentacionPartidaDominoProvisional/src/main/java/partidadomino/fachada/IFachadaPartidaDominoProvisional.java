@@ -5,6 +5,7 @@
 package partidadomino.fachada;
 
 import listeners.IContenedorListener;
+import listeners.SalaEspera.IPresentacionSalaEsperaListener;
 
 /**
  *
@@ -12,5 +13,5 @@ import listeners.IContenedorListener;
  */
 public interface IFachadaPartidaDominoProvisional {
 
-    public IContenedorListener iniciar();
+    public IContenedorListener iniciar(IPresentacionSalaEsperaListener presentacionSalaEsperaListener);
 }

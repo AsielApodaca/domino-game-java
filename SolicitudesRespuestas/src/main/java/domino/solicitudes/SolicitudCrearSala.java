@@ -4,6 +4,7 @@
  */
 package domino.solicitudes;
 
+import dominodto.ConfiguracionJuegoDTO;
 import dominodto.UsuarioDTO;
 
 /**
@@ -11,13 +12,28 @@ import dominodto.UsuarioDTO;
  * @author castr
  */
 public class SolicitudCrearSala extends EventoSolicitud{
-    //config partida
 
-    int size ;
+    private ConfiguracionJuegoDTO configuracionJuegoDTO;
+    private int limiteJugadores;
+
+    public SolicitudCrearSala(ConfiguracionJuegoDTO configuracionJuegoDTO, UsuarioDTO usuarioDTO) {
+        super(usuarioDTO);
+        this.configuracionJuegoDTO = configuracionJuegoDTO;
+        this.limiteJugadores = configuracionJuegoDTO.getLimiteJugadores();
+    }
     
     public SolicitudCrearSala(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
-        this.size = 3 ; //TEMPORAL PARA PRUEBA
     }
-    //config partida
+
+    public ConfiguracionJuegoDTO getConfiguracionJuegoDTO() {
+        return configuracionJuegoDTO;
+    }
+
+    public int getLimiteJugadores() {
+        return limiteJugadores;
+    }
+    
+    
+    
 }

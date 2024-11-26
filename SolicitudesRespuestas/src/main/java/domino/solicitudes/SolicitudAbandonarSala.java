@@ -10,11 +10,10 @@ import dominodto.UsuarioDTO;
  *
  * @author asielapodaca
  */
-public class SolicitudIniciarPartida extends EventoSolicitud{
+public class SolicitudAbandonarSala extends EventoSolicitud{
     
-    public SolicitudIniciarPartida(UsuarioDTO usuarioDTO) {
+    public SolicitudAbandonarSala(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
     }
-    
     
 }
