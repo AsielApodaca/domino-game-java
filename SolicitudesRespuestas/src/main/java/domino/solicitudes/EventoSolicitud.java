@@ -22,6 +22,7 @@ public abstract class EventoSolicitud {
     private static final Logger LOG = Logger.getLogger(EventoSolicitud.class.getName());
     private String idCliente;
     private UsuarioDTO usuarioDTO;
+    private String nombreEvento;
 
     /**
      * Constructor que inicializa el evento con un objeto {@link UsuarioDTO}.
@@ -30,6 +31,7 @@ public abstract class EventoSolicitud {
      */
     public EventoSolicitud(UsuarioDTO usuarioDTO) {
         this.usuarioDTO = usuarioDTO;
+        this.nombreEvento = this.getClass().getSimpleName();
     }
 
     /**

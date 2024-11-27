@@ -4,12 +4,12 @@
  */
 package logica;
 
-import adapterEntidades.AdapterCasilla;
-import adapterEntidades.AdapterFichaDomino;
-import adapterEntidades.AdapterJugadorDomino;
-import adapterEntidades.IAdapterCasilla;
-import adapterEntidades.IAdapterFichaDomino;
-import adapterEntidades.IAdapterJugadorDomino;
+import adapterentidades.AdapterCasilla;
+import adapterentidades.AdapterFichaDomino;
+import adapterentidades.AdapterJugadorDomino;
+import adapterentidades.IAdapterCasilla;
+import adapterentidades.IAdapterFichaDomino;
+import adapterentidades.IAdapterJugadorDomino;
 import controladores.controladorfichas.ControladorFichas;
 import controladores.controladorfichas.IControladorFichas;
 import controladores.controladorjugadores.ControladorJugadores;
@@ -64,7 +64,7 @@ public class PartidaServerLogica implements IPartidaServerLogica{
     }
     
     @Override
-    public void procesarSalirSala(String idCliente) {
+    public void procesarAbandonarSala(String idCliente) {
         eliminarJugadorPorIdCliente(idCliente);
     }
     

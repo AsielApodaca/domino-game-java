@@ -10,9 +10,11 @@ package domino.respuestas;
  */
 public abstract class EventoRespuesta {
     private String idCliente;
+    private String nombreEvento;
 
     public EventoRespuesta(String idCliente) {
         this.idCliente = idCliente;
+        this.nombreEvento = this.getClass().getSimpleName();
     }
     
     public void setIdCliente(String idCliente) {
