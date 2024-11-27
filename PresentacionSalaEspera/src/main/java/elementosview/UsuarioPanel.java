@@ -47,6 +47,4 @@ public class UsuarioPanel {
         this.icon = icon;
     }
 
-    
-
 }
