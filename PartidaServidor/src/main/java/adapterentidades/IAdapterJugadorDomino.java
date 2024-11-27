@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package adapterEntidades;
+package adapterentidades;
 
-import dominio.FichaDominoEntity;
-import dominodto.FichaDominoDTO;
+import dominio.JugadorDominoEntity;
+import dominodto.JugadorDominoDTO;
+import dominodto.UsuarioDTO;
 import java.util.List;
 
 /**
@@ -15,11 +16,10 @@ import java.util.List;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public interface IAdapterFichaDomino {
-
-    FichaDominoDTO adaptToDTO(FichaDominoEntity entity);
+public interface IAdapterJugadorDomino {
     
-    FichaDominoEntity adaptToEntity(FichaDominoDTO dto);
+    JugadorDominoEntity adaptToEntity(UsuarioDTO usuario) ;
     
-    List<FichaDominoDTO> adaptListToDTO(List<FichaDominoEntity> listaFichasEntity);
+    JugadorDominoDTO adaptToDTO(JugadorDominoEntity jugadorEntity) ;
+    
 }

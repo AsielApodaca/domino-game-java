@@ -1,7 +1,7 @@
 
 package controladores.controladortablero;
 
-import adapterEntidades.IAdapterFichaDomino;
+import adapterentidades.IAdapterFichaDomino;
 import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.TableroDominoEntity;
