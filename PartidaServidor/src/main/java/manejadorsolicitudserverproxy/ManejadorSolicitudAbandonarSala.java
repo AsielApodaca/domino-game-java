@@ -57,6 +57,7 @@ public class ManejadorSolicitudAbandonarSala extends ManejadorSolicitudServerPro
     protected void procesar(EventoSolicitud evento) {
         SolicitudAbandonarSala solicitud = (SolicitudAbandonarSala) evento;
         UsuarioDTO usuarioDTO = solicitud.getUsuarioDTO();
+        usuarioDTO.setIdCliente(solicitud.getIdCliente());
         partidaServerLogica.procesarAbandonarSala(usuarioDTO.getIdCliente());
     }
 }

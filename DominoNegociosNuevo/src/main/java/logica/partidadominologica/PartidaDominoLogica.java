@@ -112,7 +112,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
 
     @Override
     public void actualizarCantidadFichasDeJugador(JugadorDominoDTO jugador, int cantidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Por hacer
     }
 
     @Override
@@ -132,7 +132,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
 
     @Override
     public void cambiarTurno(JugadorDominoDTO jugador) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Por hacer
     }
     
     @Override

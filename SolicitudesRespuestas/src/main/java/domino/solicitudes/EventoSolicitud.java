@@ -75,4 +75,8 @@ public abstract class EventoSolicitud {
     public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
         this.usuarioDTO = usuarioDTO;
     }
+
+    public String getNombreEvento() {
+        return nombreEvento;
+    }
 }

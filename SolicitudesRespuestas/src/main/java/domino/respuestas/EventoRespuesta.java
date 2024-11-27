@@ -24,6 +24,10 @@ public abstract class EventoRespuesta {
     public String getIdCliente() {
         return idCliente;
     }
+
+    public String getNombreEvento() {
+        return nombreEvento;
+    }
     
     
 }

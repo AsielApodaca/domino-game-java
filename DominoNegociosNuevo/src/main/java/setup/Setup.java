@@ -125,6 +125,8 @@ public class Setup implements ISetup {
         // Instancia el gestor de respuestas, quien escucha las respuestas del ClientProxy
         // y las pasa al primer manejador en la cadena.
         gestorRespuestaClienteProxy = new GestorRespuestaClienteProxy(manejadorRespuestaMostrarFichasActualizadasDeJugador);
+        // Suscribe el gestor de respuestas del proxy como oyente del ClientProxy
+        fachadaClienteProxy.suscribirClientProxyListener(gestorRespuestaClienteProxy);
     }
 
     /**
@@ -139,9 +141,6 @@ public class Setup implements ISetup {
     private void iniciarConexionProxy() {
         // Inicializa la fachada del cliente proxy
         this.fachadaClienteProxy = new FachadaClienteProxy();
-
-        // Suscribe el gestor de respuestas del proxy como oyente del ClientProxy
-        fachadaClienteProxy.suscribirClientProxyListener(gestorRespuestaClienteProxy);
     }
 
     /**

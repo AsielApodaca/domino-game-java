@@ -51,11 +51,11 @@ import java.util.List;
  */
 public class Broker {
 
-    private final int PORT = 3000 ;
-    private final ManejadorClientes manejadorClientes ;
-    private final ManejadorServidores manejadorServidores ;
-    private final ManejadorSalas manejadorSalas ;
-    private Gson gson ;
+    private final int PORT = 3000;
+    private final ManejadorClientes manejadorClientes;
+    private final ManejadorServidores manejadorServidores;
+    private final ManejadorSalas manejadorSalas;
+    private Gson gson;
     private final List<Class<? extends EventoRespuesta>> respuestasParaUno = List.of(
             RespuestaAgregarFichaJugador.class,
             RespuestaMostrarCasillasDisponibles.class,
@@ -68,71 +68,73 @@ public class Broker {
             RespuestaMostrarPantallaPartida.class,
             RespuestaOtorgarTurno.class
     );
-    
+
     public Broker() {
-        this.manejadorClientes = new ManejadorClientes() ;
-        this.manejadorServidores = new ManejadorServidores() ;
-        this.manejadorSalas = new ManejadorSalas() ;
-        this.gson = new Gson() ;
-        runBroker() ;
+        this.manejadorClientes = new ManejadorClientes();
+        this.manejadorServidores = new ManejadorServidores();
+        this.manejadorSalas = new ManejadorSalas();
+        this.gson = new Gson();
+        runBroker();
     }
-    
+
     public void runBroker() {
-        try(ServerSocket serverSocket = new ServerSocket(PORT)) {
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Servidor corriendo en puerto: " + PORT);
-            
-            while(true) {
-                Socket newConenctionSocket = serverSocket.accept() ;
-                
+
+            while (true) {
+                Socket newConenctionSocket = serverSocket.accept();
+
                 new Thread(() -> manejarConexiones(newConenctionSocket)).start();
             }
         } catch (IOException e) {
         }
     }
-    
+
     private void manejarConexiones(Socket socket) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-            String jsonString = reader.readLine() ;
-            
-            String type = JsonParser.parseString(jsonString).getAsJsonObject().get("type").getAsString() ;
-            String id ;
-            
-            if(type.equals("CLIENT")) {
-                ConexionCliente cliente = manejadorClientes.agregarCliente(socket) ;
-                
-                System.out.println("Se ha conectado un nuevo Cliente con el id: " + cliente.getId()) ;
-                
-                new Thread(() -> redirigirSolicitudes(cliente)).start(); ;
+            String jsonString = reader.readLine();
+
+            String type = JsonParser.parseString(jsonString).getAsJsonObject().get("type").getAsString();
+            String id;
+
+            if (type.equals("CLIENT")) {
+                ConexionCliente cliente = manejadorClientes.agregarCliente(socket);
+
+                System.out.println("Se ha conectado un nuevo Cliente con el id: " + cliente.getId());
+
+                new Thread(() -> redirigirSolicitudes(cliente)).start();;
             } else if (type.equals("SERVER")) {
-                ConexionServidor servidor = manejadorServidores.agregarServidor(socket) ;
-                
-                System.out.println("Se ha conectado un nuevo Server con el id: " + servidor.getId()) ;
-                
+                ConexionServidor servidor = manejadorServidores.agregarServidor(socket);
+
+                System.out.println("Se ha conectado un nuevo Server con el id: " + servidor.getId());
+
                 new Thread(() -> redirigirRespuestas(servidor)).start();
             } else {
                 System.out.println("Conexion desconocida");
                 socket.close();
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error al manejar la conexion...");
         }
     }
-    
+
     private void redirigirSolicitudes(ConexionCliente cliente) {
         try {
-            String solicitud ;
-            
-            while((solicitud = cliente.getReader().readLine()) != null) {
-                JsonObject solicitudJSON = JsonParser.parseString(solicitud).getAsJsonObject() ;
+            String solicitud;
+
+            while ((solicitud = cliente.getReader().readLine()) != null) {
+                JsonObject solicitudJSON = JsonParser.parseString(solicitud).getAsJsonObject();
                 solicitudJSON.addProperty("idCliente", cliente.getId());
+                JsonObject usuarioDTO = solicitudJSON.getAsJsonObject("usuarioDTO");
+                usuarioDTO.addProperty("idCliente", cliente.getId());
 
                 System.out.println(solicitud);
                 System.out.println(solicitudJSON.toString());
-                
+
                 if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudCrearSala.class)) {
                     manejadorSalas.crearSala(cliente, manejadorServidores.buscarServidorLibre(), solicitudJSON);
                 } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudUnirseSala.class)) {
@@ -143,39 +145,48 @@ public class Broker {
                 } else {
                     throw new AssertionError("Tipo de solicitud desconocido");
                 }
-                
+
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     private void redirigirRespuestas(ConexionServidor servidor) {
         try {
-            String respuesta ;
-            
-            while((respuesta = servidor.getReader().readLine()) != null) {
-                JsonObject respuestaJSON = JsonParser.parseString(respuesta).getAsJsonObject() ;
-          
-                String tipoRespuesta = respuestaJSON.get("tipo").getAsString();
-                
+            String respuesta;
+
+            while ((respuesta = servidor.getReader().readLine()) != null) {
+                JsonObject respuestaJSON = JsonParser.parseString(respuesta).getAsJsonObject();
+
+                String tipoRespuesta = respuestaJSON.get("nombreEvento").getAsString();
+                System.out.println("Redirigiendo respuesta en broker: " + tipoRespuesta);
+
+                boolean manejado = false; // Si la respuesta ya ha sido manejada
                 for (Class<? extends EventoRespuesta> claseRespuestaParaUno : respuestasParaUno) {
                     if (Deserializador.esJsonInstanciaDe(respuesta, claseRespuestaParaUno)) {
                         manejadorSalas.enviarRespuestaACliente(servidor, respuestaJSON);
-                        return;
+                        manejado = true;
+                        break;
                     }
                 }
-                for (Class<? extends EventoRespuesta> claseRespuestaParaTodos : respuestasParaTodos) {
-                    if (Deserializador.esJsonInstanciaDe(respuesta, claseRespuestaParaTodos)) {
-                        manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
-                        return;
+                if (!manejado) {
+                    for (Class<? extends EventoRespuesta> claseRespuestaParaTodos : respuestasParaTodos) {
+                        if (Deserializador.esJsonInstanciaDe(respuesta, claseRespuestaParaTodos)) {
+                            manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
+                            manejado = true;
+                            break;
+                        }
                     }
                 }
-                throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
-                
+                if(!manejado) {
+                    throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
+                }
             }
         } catch (Exception e) {
+            System.out.println("Error al redirigir respuesta:");
+            System.out.println(e.getMessage());
         }
     }
-    
+
 }
