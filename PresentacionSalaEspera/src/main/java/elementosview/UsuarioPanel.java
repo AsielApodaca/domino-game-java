@@ -15,7 +15,36 @@ import javax.swing.Icon;
  * @author Asiel Apodaca Monge
  */
 public class UsuarioPanel {
+
     private UsuarioDTO usuarioDTO;
     private String nombre;
     private Icon icon;
+
+    public UsuarioPanel() {
+    }
+
+    public UsuarioDTO getUsuarioDTO() {
+        return usuarioDTO;
+    }
+
+    public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+        this.usuarioDTO = usuarioDTO;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Icon getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Icon icon) {
+        this.icon = icon;
+    }
+
 }

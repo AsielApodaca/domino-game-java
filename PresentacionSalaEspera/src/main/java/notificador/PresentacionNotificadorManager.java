@@ -13,7 +13,8 @@ import listeners.IPresentacionSalaEsperaListener;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PresentacionNotificadorManager implements IPresentacionNotificadorManager{
+public class PresentacionNotificadorManager implements IPresentacionNotificadorManager {
+
     private IPresentacionSalaEsperaListener presentacionSalaEsperaListener;
 
     @Override
@@ -30,6 +31,5 @@ public class PresentacionNotificadorManager implements IPresentacionNotificadorM
     public void notificarBtnSalirPresionado() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
+
 }

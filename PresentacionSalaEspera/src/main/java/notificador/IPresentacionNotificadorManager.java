@@ -14,7 +14,10 @@ import listeners.IPresentacionSalaEsperaListener;
  * @author Asiel Apodaca Monge
  */
 public interface IPresentacionNotificadorManager {
+
     public void subscribirPresentacionListener(IPresentacionSalaEsperaListener listener);
+
     public void notificarBtnIniciarPartidaPresionado();
+
     public void notificarBtnSalirPresionado();
 }
