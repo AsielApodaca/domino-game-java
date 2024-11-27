@@ -29,11 +29,8 @@ public class ControladorTablero implements IControladorTablero {
     /**
      * Constructor de la clase ControladorTablero.
      *
-     * @param adapterFichaDomino El adaptador que se utilizará para interactuar
-     * con las fichas de dominó.
      */
-    public ControladorTablero(IAdapterFichaDomino adapterFichaDomino) {
-        this.adapterFichaDomino = adapterFichaDomino;
+    public ControladorTablero() {
     }
 
     /**
@@ -200,6 +197,19 @@ public class ControladorTablero implements IControladorTablero {
             }
         }
         return listaFichasDTO;
+    }
+    
+    /**
+     * Establece el adaptador de ficha de dominó a usar en la lógica de juego.
+     * Este método permite que la clase utilice un adaptador específico que
+     * implemente la interfaz {@link IAdapterFichaDomino} para manejar las
+     * operaciones relacionadas con las fichas de dominó.
+     *
+     * @param adapterFichaDomino el adaptador de ficha de dominó a establecer.
+     */
+    @Override
+    public void setAdapterFichaDomino(IAdapterFichaDomino adapterFichaDomino) {
+        this.adapterFichaDomino = adapterFichaDomino;
     }
 
     /**

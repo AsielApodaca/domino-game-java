@@ -58,8 +58,8 @@ public class Setup implements ISetup {
         iniciarUsuario();
         iniciarConexionProxy();
         iniciarLogicaDeNegocio();
-        iniciarManejadorRespuestasClienteProxy();
         iniciarMediadorDeNegocio();
+        iniciarManejadorRespuestasClienteProxy();
         correrJuego();
     }
 

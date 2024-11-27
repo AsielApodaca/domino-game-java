@@ -25,8 +25,7 @@ public class GeneradorRespuestas implements IGeneradorRespuestas{
 
     private IFachadaServidorProxy fachadaServidorProxy;
 
-    public GeneradorRespuestas(IFachadaServidorProxy fachadaServidorProxy) {
-        this.fachadaServidorProxy = fachadaServidorProxy;
+    public GeneradorRespuestas() {
     }
     
     @Override
@@ -69,6 +68,11 @@ public class GeneradorRespuestas implements IGeneradorRespuestas{
     public void enviarRespuestaColocarFichaTablero(CasillaDTO ficha) {
         RespuestaColocarFichaTablero respuesta = new RespuestaColocarFichaTablero(ficha);
         fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+
+    @Override
+    public void setFachadaServidorProxy(IFachadaServidorProxy fachadaServidorProxy) {
+        this.fachadaServidorProxy = fachadaServidorProxy;
     }
 
     

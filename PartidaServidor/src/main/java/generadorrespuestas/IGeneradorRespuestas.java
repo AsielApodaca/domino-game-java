@@ -4,6 +4,7 @@
  */
 package generadorrespuestas;
 
+import domino.fachada.IFachadaServidorProxy;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
@@ -27,4 +28,6 @@ public interface IGeneradorRespuestas {
     void enviarRespuestaOcultarCasillasDisponibles(String idCliente);
 
     void enviarRespuestaColocarFichaTablero(CasillaDTO ficha);
+    
+    void setFachadaServidorProxy(IFachadaServidorProxy fachadaServidorProxy);
 }

@@ -83,7 +83,7 @@ public class ServidorProxy {
                 // Enviamos el JSON como string al broker
                 out.println(jsonRespuesta);
                 out.flush();
-                System.out.println("Solicitud enviada al broker: " + jsonRespuesta);
+                System.out.println("Respuesta enviada al broker: " + jsonRespuesta);
             } else {
                 System.out.println("No hay conexión con el broker");
             }

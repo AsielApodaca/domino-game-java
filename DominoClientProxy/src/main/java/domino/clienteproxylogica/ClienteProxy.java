@@ -106,6 +106,7 @@ public class ClienteProxy {
 
             while ((jsonString = in.readLine()) != null) {
                 EventoRespuesta eventoRespuesta = deserializador.convertirJSONAEvento(jsonString);
+                System.out.println("llego una respuesta");
                 notificarRespuestaEvento(eventoRespuesta);
             }
         } catch (Exception e) {

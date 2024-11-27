@@ -5,6 +5,7 @@ import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.UsuarioDTO;
+import generadorrespuestas.IGeneradorRespuestas;
 
 /**
  *
@@ -17,4 +18,5 @@ public interface IPartidaServerLogica {
     public void procesarIniciarPartida();
     public void procesarFichaSeleccionada(FichaDominoDTO ficha, UsuarioDTO usuario);
     public void procesarCasillaSeleccionada(CasillaDTO casilla, UsuarioDTO usuario);
+    public void setGeneradorRespuestas(IGeneradorRespuestas generadorRespuestas);
 }

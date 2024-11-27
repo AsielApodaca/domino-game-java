@@ -46,8 +46,7 @@ public class PartidaServerLogica implements IPartidaServerLogica{
     private IAdapterCasilla adapterCasilla;
     private ConfiguracionJuegoDTO configuracionJuegoDTO;
 
-    public PartidaServerLogica(IGeneradorRespuestas generadorRespuestas) {
-        this.generadorRespuestas = generadorRespuestas;
+    public PartidaServerLogica() {
     }
 
     @Override
@@ -129,16 +128,22 @@ public class PartidaServerLogica implements IPartidaServerLogica{
         otorgarTurnoASiguienteJugador();
     }
     
+    public void setGeneradorRespuestas(IGeneradorRespuestas generadorRespuestas) {
+        this.generadorRespuestas = generadorRespuestas;
+    }
+    
     private void iniciarControladores() {
         controladorFichas = new ControladorFichas();
         controladorFichas.crearPozo();
         controladorJugadores = new ControladorJugadores();
-        controladorTablero = new ControladorTablero(adapterFichaDomino);
+        controladorTablero = new ControladorTablero();
+        controladorTablero.crearTablero();
         controladorTurnos = new ControladorTurnos();
     }
     
     private void iniciarAdapters() {
         adapterFichaDomino = new AdapterFichaDomino(controladorFichas.obtenerTodasLasFichasDelJuego());
+        controladorTablero.setAdapterFichaDomino(adapterFichaDomino);
         adapterJugadorDomino = new AdapterJugadorDomino();
         adapterCasilla = new AdapterCasilla(adapterFichaDomino);
     }

@@ -137,7 +137,8 @@ public class Broker {
                     manejadorSalas.crearSala(cliente, manejadorServidores.buscarServidorLibre(), solicitudJSON);
                 } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudUnirseSala.class)) {
                     manejadorSalas.unirClienteASala(cliente, solicitudJSON);
-                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudFichaSeleccionada.class) || Deserializador.esJsonInstanciaDe(solicitud, SolicitudCasillaSeleccionada.class)) {
+                } else if (true) {
+//                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudFichaSeleccionada.class) || Deserializador.esJsonInstanciaDe(solicitud, SolicitudCasillaSeleccionada.class)) {
                     manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 } else {
                     throw new AssertionError("Tipo de solicitud desconocido");

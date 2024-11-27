@@ -3,6 +3,7 @@ package setup;
 import domino.fachada.FachadaServidorProxy;
 import domino.fachada.IFachadaServidorProxy;
 import generadorrespuestas.GeneradorRespuestas;
+import generadorrespuestas.IGeneradorRespuestas;
 import logica.IPartidaServerLogica;
 import logica.PartidaServerLogica;
 import manejadorsolicitudserverproxy.GestorSolicitudServerProxy;
@@ -29,7 +30,7 @@ public class Setup implements ISetup {
 
     private IPartidaServerLogica partidaServerLogica;
     private GestorSolicitudServerProxy gestorSolicitudServerProxy;
-    private GeneradorRespuestas generadorRespuestas;
+    private IGeneradorRespuestas generadorRespuestas;
     private IFachadaServidorProxy fachadaServidorProxy;
 
     /**
@@ -47,7 +48,7 @@ public class Setup implements ISetup {
      * Inicializa la lógica de negocio del servidor de partidas.
      */
     private void iniciarLogica() {
-        partidaServerLogica = new PartidaServerLogica(generadorRespuestas);
+        partidaServerLogica = new PartidaServerLogica();
     }
 
     /**
@@ -80,7 +81,8 @@ public class Setup implements ISetup {
      * Inicializa el generador de respuestas del servidor.
      */
     private void iniciarGeneradorDeRespuestasServer() {
-        generadorRespuestas = new GeneradorRespuestas(fachadaServidorProxy);
+        generadorRespuestas = new GeneradorRespuestas();
+        partidaServerLogica.setGeneradorRespuestas(generadorRespuestas);
     }
 
     /**
@@ -88,6 +90,7 @@ public class Setup implements ISetup {
      */
     private void iniciarConexionServer() {
         fachadaServidorProxy = new FachadaServidorProxy();
+        generadorRespuestas.setFachadaServidorProxy(fachadaServidorProxy);
         fachadaServidorProxy.agregarListener(gestorSolicitudServerProxy);
     }
 }
