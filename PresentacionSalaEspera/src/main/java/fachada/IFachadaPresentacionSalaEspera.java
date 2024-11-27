@@ -15,9 +15,13 @@ import listeners.IPresentacionSalaEsperaListener;
  * @author Asiel Apodaca Monge
  */
 public interface IFachadaPresentacionSalaEspera {
+
     public void iniciarPantalla(Boolean esAnfitrion);
+
     public void agregarUsuario(UsuarioDTO usuarioDTO);
+
     public void removerUsuario(UsuarioDTO usuarioDTO);
+
     public void subscribirPresentacionListener(IPresentacionSalaEsperaListener listener);
-    
+
 }

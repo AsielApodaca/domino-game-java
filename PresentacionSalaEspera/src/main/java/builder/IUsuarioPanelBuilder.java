@@ -5,6 +5,7 @@
 package builder;
 
 import dominodto.UsuarioDTO;
+import elementosview.UsuarioPanel;
 
 /**
  *
@@ -14,5 +15,6 @@ import dominodto.UsuarioDTO;
  * @author Asiel Apodaca Monge
  */
 public interface IUsuarioPanelBuilder {
-    void UsuarioPanel(UsuarioDTO usuarioDTO);
+
+    UsuarioPanel construirUsuarioPanel(UsuarioDTO usuarioDTO);
 }

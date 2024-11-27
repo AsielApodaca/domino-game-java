@@ -5,6 +5,9 @@
 package builder;
 
 import dominodto.UsuarioDTO;
+import elementosview.UsuarioPanel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -15,9 +18,21 @@ import dominodto.UsuarioDTO;
  */
 public class UsuarioPanelBuilder implements IUsuarioPanelBuilder {
 
+    private UsuarioPanel usuarioPanel;
+    private UsuarioDTO usuarioDTO;
+
     @Override
-    public void UsuarioPanel(UsuarioDTO usuarioDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public UsuarioPanel construirUsuarioPanel(UsuarioDTO usuarioDTO) {
+        this.usuarioPanel = new UsuarioPanel();
+        this.usuarioDTO = usuarioDTO;
+        construirDatosUsuarioPanel();
+        return usuarioPanel;
     }
-    
+
+    private void construirDatosUsuarioPanel() {
+        usuarioPanel.setUsuarioDTO(usuarioDTO);
+        usuarioPanel.setNombre(usuarioDTO.getNombre());
+        Icon icon = new ImageIcon(getClass().getResource("/multimedia/Icono1.png"));
+        usuarioPanel.setIcon(icon);
+    }
 }
