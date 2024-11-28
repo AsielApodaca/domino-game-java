@@ -51,10 +51,7 @@ public class ManejadorSalas {
     }
     
     public Sala obtenerSala(String id) {
-        Sala salaBuscada = salas.values().stream()
-                .filter(sala -> sala.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        Sala salaBuscada = salas.get(id) ;
         
         if(salaBuscada != null) {
             return salaBuscada ;
@@ -69,11 +66,7 @@ public class ManejadorSalas {
                 .findFirst() 
                 .orElse(null); 
         
-        if(salaDelCliente != null) {
-            return salaDelCliente ;
-        } else {
-            return null ;
-        }
+        return salaDelCliente ;
     }
     
     public Sala obtenerSalaDeServidor(String id) {
@@ -82,19 +75,16 @@ public class ManejadorSalas {
                 .findFirst() 
                 .orElse(null); 
         
-        if(salaDelServidor != null) {
-            return salaDelServidor ;
-        } else {
-            return null ;
-        }
+        return salaDelServidor ;
     }
     
     public void unirClienteASala(ConexionCliente cliente, JsonObject jsonObject) {
-        Sala salaBuscada = obtenerSala(jsonObject.get("idSala").getAsString()) ;
+        String idSala = jsonObject.get("idSala").getAsString() ;
+        Sala salaBuscada = obtenerSala(idSala) ;
         
         salaBuscada.agregarCliente(cliente.getId(), cliente);
         
-        System.out.println("Se unio el cliente: " + cliente.getId() + " a la Sala: " + salaBuscada.getId());
+        System.out.println("Se unio el cliente: " + cliente.getId() + " a la Sala: " + idSala);
     }
     
     public void enviarSolicitudAServidor(ConexionCliente cliente, JsonObject solicitud) {
