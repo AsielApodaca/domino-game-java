@@ -31,7 +31,8 @@ public class AdapterCasilla implements IAdapterCasilla {
         dto.setLocacionX(entity.getLocacionX());
         dto.setLocacionY(entity.getLocacionY());
         dto.setRotacion(entity.getRotacion());
-
+        dto.setExtremo(entity.getExtremo());
+        
         if (entity.getFichaDomino() != null) {
             dto.setFichaDominoDTO(adapterFichaDomino.adaptToDTO(entity.getFichaDomino()));
         }

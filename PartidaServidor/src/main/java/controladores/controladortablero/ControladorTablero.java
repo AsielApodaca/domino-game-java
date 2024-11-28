@@ -1,4 +1,3 @@
-
 package controladores.controladortablero;
 
 import adapterentidades.IAdapterFichaDomino;
@@ -12,17 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase ControladorTablero que implementa la interfaz IControladorTablero.
- * Esta clase se encarga de gestionar las operaciones relacionadas con el tablero de dominó,
- * incluyendo la creación de un nuevo tablero y la manipulación de las casillas y fichas en el tablero.
- * 
+ * Clase ControladorTablero que implementa la interfaz IControladorTablero. Esta
+ * clase se encarga de gestionar las operaciones relacionadas con el tablero de
+ * dominó, incluyendo la creación de un nuevo tablero y la manipulación de las
+ * casillas y fichas en el tablero.
+ *
  * @author Hisamy Cinco Cota
  * @author Gael Rafael Castro Molina
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
 public class ControladorTablero implements IControladorTablero {
-
 
     private TableroDominoEntity tableroDominoEntity;
     private IAdapterFichaDomino adapterFichaDomino;
@@ -60,15 +59,21 @@ public class ControladorTablero implements IControladorTablero {
         List<CasillaEntity> casillasCompatibles = new ArrayList<>();
 
         if (tableroDominoEntity.estaVacia()) { // Si la tabla está vacía, retorna la casilla de la mula
-            casillasCompatibles.add(obtenerCasillaDisponible(CasillaDTO.MULA));
+            CasillaEntity casillaMula = obtenerCasillaDisponible(CasillaDTO.MULA);
+            casillaMula.setExtremo(CasillaEntity.MULA);
+            casillasCompatibles.add(casillaMula);
             return casillasCompatibles;
         }
 
         boolean[] extremosCompatibles = obtenerExtremosCompatibles(fichaDomino);
         if (extremosCompatibles[0]) { // Si la ficha es compatible con el extremo 1
-            casillasCompatibles.add(obtenerCasillaDisponible(CasillaDTO.EXTREMO1));
+            CasillaEntity casillaExtremo1 = obtenerCasillaDisponible(CasillaDTO.EXTREMO1);
+            casillaExtremo1.setExtremo(CasillaEntity.EXTREMO1);
+            casillasCompatibles.add(casillaExtremo1);
         } else if (extremosCompatibles[1]) { // Si la ficha es compatible con el extremo 2
-            casillasCompatibles.add(obtenerCasillaDisponible(CasillaDTO.EXTREMO2));
+            CasillaEntity casillaExtremo2 = obtenerCasillaDisponible(CasillaDTO.EXTREMO2);
+            casillaExtremo2.setExtremo(CasillaEntity.EXTREMO2);
+            casillasCompatibles.add(casillaExtremo2);
         }
 
         return casillasCompatibles;
@@ -191,14 +196,14 @@ public class ControladorTablero implements IControladorTablero {
     @Override
     public List<FichaDominoDTO> asignarCompatibilidadAFichas(List<FichaDominoEntity> listaFichas) {
         List<FichaDominoDTO> listaFichasDTO = adapterFichaDomino.adaptListToDTO(listaFichas); // Convierte la lista a DTO
-        if(tableroDominoEntity.estaVacia()) { // Si el tablero está vacio, busca la mula mayor del jugador
+        if (tableroDominoEntity.estaVacia()) { // Si el tablero está vacio, busca la mula mayor del jugador
             FichaDominoEntity mulaMayor = ControladorFichas.obtenerMulaMayor(listaFichas);
-            if(mulaMayor != null) { // Si el jugador tiene una mula
+            if (mulaMayor != null) { // Si el jugador tiene una mula
                 FichaDominoDTO mula = adapterFichaDomino.adaptToDTO(mulaMayor);
                 int posicionFicha = listaFichasDTO.indexOf(mula);
                 listaFichasDTO.get(posicionFicha).setCompatible(true); // Le asigna  compatibilidad a la ficha mula mayor
             } else { // Si el jugador no tiene mula, todas las fichas son compatibles
-                for(FichaDominoDTO fichaDTO : listaFichasDTO) {
+                for (FichaDominoDTO fichaDTO : listaFichasDTO) {
                     fichaDTO.setCompatible(true);
                 }
             }
@@ -213,7 +218,7 @@ public class ControladorTablero implements IControladorTablero {
         }
         return listaFichasDTO;
     }
-    
+
     /**
      * Establece el adaptador de ficha de dominó a usar en la lógica de juego.
      * Este método permite que la clase utilice un adaptador específico que

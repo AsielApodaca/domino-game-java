@@ -9,18 +9,20 @@ package dominio;
  * @author asielapodaca
  */
 public class CasillaEntity {
-    
+
     public static final int MULA = 0;
     public static final int EXTREMO1 = 1;
     public static final int EXTREMO2 = 2;
-    
+
+    private int extremo;
+
     private int locacionX; // posición sobre el tablero en el eje X
     private int locacionY; // posición sobre el tablero en el eje Y
     private int rotacion; // angulo de la ficha; 0, 90, 180, 270; rota en sentido contrario del reloj
-    
+
     private CasillaEntity siguienteCasilla; // referencia casilla siguiente de la double linked list
     private CasillaEntity anteriorCasilla; // referencia casilla anterior de la double linked list
-    
+
     private FichaDominoEntity fichaDomino; // referencia a la ficha colocada en esta posición
 
     public CasillaEntity() {
@@ -75,7 +77,14 @@ public class CasillaEntity {
         this.fichaDomino = fichaDomino;
     }
 
+    public int getExtremo() {
+        return extremo;
+    }
+
+    public void setExtremo(int extremo) {
+        this.extremo = extremo;
+    }
     
     
-    
+
 }
