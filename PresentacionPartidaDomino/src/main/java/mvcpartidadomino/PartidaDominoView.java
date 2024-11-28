@@ -101,10 +101,11 @@ public class PartidaDominoView extends JPanel {
     public void repintarVista() {
         repintarPanel();
         repintarContenedorFichasJugadorLocal();
+        repintarFichasJugadorLocal();
         repintarTablero();
+        repintarCasillasTablero();
         repintarFichasTablero();
 
-//        model.redimencionarFichasJugadorLocal();
         revalidate();
         repaint();
     }

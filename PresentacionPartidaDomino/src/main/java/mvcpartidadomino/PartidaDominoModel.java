@@ -81,8 +81,9 @@ public class PartidaDominoModel{
         this.largoFichaTablero = 30;
         this.numeroDeJugadores = 1; // temporal
         this.listaFichasJugadorLocal = new ArrayList<>();
-        this.listaFichasJugadorLocal = new ArrayList<>();
+        this.listaPanelesFichasJugadorLocal = new ArrayList<>();
         this.listaPanelesFichasSobreTablero = new ArrayList<>();
+        this.listaPanelesCasillasParaColocarFichas = new ArrayList<>();
     }
 
     public void setPresentacionNotificacionesManager(IPresentacionNotificadorManager presentacionNotificadorManager) {
