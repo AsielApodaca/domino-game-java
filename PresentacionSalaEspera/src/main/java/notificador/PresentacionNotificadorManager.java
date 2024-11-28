@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package notificador;
 
 import listeners.IPresentacionSalaEsperaListener;
@@ -19,17 +15,17 @@ public class PresentacionNotificadorManager implements IPresentacionNotificadorM
 
     @Override
     public void subscribirPresentacionListener(IPresentacionSalaEsperaListener listener) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.presentacionSalaEsperaListener = listener;
     }
 
     @Override
     public void notificarBtnIniciarPartidaPresionado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        presentacionSalaEsperaListener.onBtnIniciarPartidaPresionado();
     }
 
     @Override
     public void notificarBtnSalirPresionado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        presentacionSalaEsperaListener.onBtnSalirPresionado();
     }
 
 }
