@@ -13,16 +13,29 @@ public class PresentacionNotificadorManager implements IPresentacionNotificadorM
 
     private IPresentacionSalaEsperaListener presentacionSalaEsperaListener;
 
+    /**
+     * Método para registrar un listener que responderá a los eventos de presentación.
+     * 
+     * @param listener la instancia de IPresentacionSalaEsperaListener que será notificada.
+     */
     @Override
     public void subscribirPresentacionListener(IPresentacionSalaEsperaListener listener) {
         this.presentacionSalaEsperaListener = listener;
     }
 
+    /**
+     * Notifica al listener registrado que el botón "Iniciar Partida" fue presionado.
+     * Llama al método correspondiente en el listener.
+     */
     @Override
     public void notificarBtnIniciarPartidaPresionado() {
         presentacionSalaEsperaListener.onBtnIniciarPartidaPresionado();
     }
 
+    /**
+     * Notifica al listener registrado que el botón "Salir" fue presionado.
+     * Llama al método correspondiente en el listener.
+     */
     @Override
     public void notificarBtnSalirPresionado() {
         presentacionSalaEsperaListener.onBtnSalirPresionado();
