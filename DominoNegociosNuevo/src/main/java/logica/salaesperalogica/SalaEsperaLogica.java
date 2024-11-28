@@ -38,8 +38,8 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     @Override
     public IContenedorListener iniciar() {
         mostrarPresentacionSalaEspera();
-        crearSala();
-        //unirseSala();
+        //crearSala();
+        unirseSala();
         return contenedorListener;
     }
     
@@ -51,7 +51,7 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
         UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         ConfiguracionJuegoDTO configuracionJuegoDTO = new ConfiguracionJuegoDTO();
-        configuracionJuegoDTO.setFichasPorJugador(7);
+        configuracionJuegoDTO.setFichasPorJugador(20);
         configuracionJuegoDTO.setLimiteJugadores(4);
         configuracionJuegoDTO.setNombreSala("Pirulin");
         SolicitudCrearSala solicitud = new SolicitudCrearSala(configuracionJuegoDTO, usuarioDTO);
@@ -61,7 +61,7 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     private void unirseSala() {
         UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
-        String idSala = ""; // Aqui el id de la sala
+        String idSala = "SAL1"; // Aqui el id de la sala
         SolicitudUnirseSala solicitud = new SolicitudUnirseSala(usuarioDTO, idSala);
         fachadaClienteProxy.enviarSolicitud(solicitud);
     }

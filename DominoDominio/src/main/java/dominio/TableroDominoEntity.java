@@ -1,12 +1,14 @@
 package dominio;
 
 /**
- * Clase que representa el tablero de dominó. Gestiona el estado y las operaciones relacionadas
- * con el tablero, incluyendo la colocación de fichas y la gestión de los extremos de la cadena de fichas.
- * 
- * El tablero tiene dos extremos (izquierda y derecha) hacia los cuales se pueden colocar las fichas.
- * Inicialmente, el tablero está vacío, y la casilla de la mula ocupa ambas posiciones de los extremos.
- * 
+ * Clase que representa el tablero de dominó. Gestiona el estado y las
+ * operaciones relacionadas con el tablero, incluyendo la colocación de fichas y
+ * la gestión de los extremos de la cadena de fichas.
+ *
+ * El tablero tiene dos extremos (izquierda y derecha) hacia los cuales se
+ * pueden colocar las fichas. Inicialmente, el tablero está vacío, y la casilla
+ * de la mula ocupa ambas posiciones de los extremos.
+ *
  * @author Hisamy Cinco Cota
  * @author Gael Rafael Castro Molina
  * @author Oliver Inzunza Valle
@@ -36,7 +38,8 @@ public class TableroDominoEntity {
     private boolean estaVacia; // Estado que indica si el tablero está vacío
 
     /**
-     * Constructor de la clase que inicializa el tablero y la casilla de la mula.
+     * Constructor de la clase que inicializa el tablero y la casilla de la
+     * mula.
      */
     public TableroDominoEntity() {
         this.estaVacia = true;
@@ -51,8 +54,6 @@ public class TableroDominoEntity {
         this.casillaMula = new CasillaEntity();
         this.casillaMula.setLocacionX(casillaMulaLocacionX);
         this.casillaMula.setLocacionY(casillaMulaLocacionY);
-        this.casillaExtremo1 = casillaMula;
-        this.casillaExtremo2 = casillaMula;
     }
 
     /**
@@ -69,19 +70,20 @@ public class TableroDominoEntity {
 
     /**
      * Obtiene la casilla del primer extremo del tablero, si está disponible.
-     * 
+     *
      * @return La casilla del primer extremo o null si no está asignada.
      */
     public CasillaEntity obtenerPrimerElemento() {
         if (valorExtremo1 == -1) {
             return null;
         }
-        return casillaExtremo1 == null ? casillaMula : casillaExtremo1;
+        return casillaExtremo1;
     }
 
     /**
-     * Coloca una ficha mula en la casilla de la mula y actualiza los valores de los extremos.
-     * 
+     * Coloca una ficha mula en la casilla de la mula y actualiza los valores de
+     * los extremos.
+     *
      * @param mula La ficha mula que se va a colocar.
      */
     public void colocarMula(FichaDominoEntity mula) {
@@ -93,31 +95,37 @@ public class TableroDominoEntity {
 
     /**
      * Coloca una ficha en el extremo correspondiente de la cadena de fichas.
-     * 
+     *
      * @param ficha La casilla que representa la ficha a colocar.
      * @param extremoCadena El extremo de la cadena donde se coloca la ficha.
      */
     public void colocarFicha(CasillaEntity ficha, int extremoCadena) {
-        CasillaEntity casillaExtremo = extremoCadena == CasillaEntity.EXTREMO1 ? casillaExtremo1 : casillaExtremo2;
-
         if (extremoCadena == CasillaEntity.EXTREMO1) {
-            if (casillaExtremo == casillaMula) {
+            if (casillaExtremo1 == casillaMula) {
+                // Conectar ficha con casillaMula si extremo1 está vacío
                 casillaMula.setAnteriorCasilla(ficha);
                 ficha.setSiguienteCasilla(casillaMula);
             } else {
-                casillaExtremo.setAnteriorCasilla(ficha);
-                ficha.setSiguienteCasilla(casillaExtremo);
+                // Conectar ficha al extremo1 existente
+                casillaExtremo1.setAnteriorCasilla(ficha);
+                ficha.setSiguienteCasilla(casillaExtremo1);
             }
-            casillaExtremo = ficha;
-        } else {
-            if (casillaExtremo == casillaMula) {
+            // Actualizar el extremo1
+            casillaExtremo1 = ficha;
+        } else if (extremoCadena == CasillaEntity.EXTREMO2) {
+            if (casillaExtremo2 == casillaMula) {
+                // Conectar ficha con casillaMula si extremo2 está vacío
                 casillaMula.setSiguienteCasilla(ficha);
                 ficha.setAnteriorCasilla(casillaMula);
             } else {
-                casillaExtremo.setSiguienteCasilla(ficha);
-                ficha.setAnteriorCasilla(casillaExtremo);
+                // Conectar ficha al extremo2 existente
+                casillaExtremo2.setSiguienteCasilla(ficha);
+                ficha.setAnteriorCasilla(casillaExtremo2);
             }
-            casillaExtremo = ficha;
+            // Actualizar el extremo2
+            casillaExtremo2 = ficha;
+        } else {
+            throw new IllegalArgumentException("Extremo inválido: " + extremoCadena);
         }
     }
 

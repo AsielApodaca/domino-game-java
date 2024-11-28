@@ -70,7 +70,8 @@ public class ControladorTablero implements IControladorTablero {
             CasillaEntity casillaExtremo1 = obtenerCasillaDisponible(CasillaDTO.EXTREMO1);
             casillaExtremo1.setExtremo(CasillaEntity.EXTREMO1);
             casillasCompatibles.add(casillaExtremo1);
-        } else if (extremosCompatibles[1]) { // Si la ficha es compatible con el extremo 2
+        }
+        if (extremosCompatibles[1]) { // Si la ficha es compatible con el extremo 2
             CasillaEntity casillaExtremo2 = obtenerCasillaDisponible(CasillaDTO.EXTREMO2);
             casillaExtremo2.setExtremo(CasillaEntity.EXTREMO2);
             casillasCompatibles.add(casillaExtremo2);
@@ -149,7 +150,7 @@ public class ControladorTablero implements IControladorTablero {
                     trasladarYRotarCasilla(casillaEntity, 0, 0, 270);
                     tableroDominoEntity.setValorExtremo2(fichaValorExtremo1);
                 } else { // Si la casilla es horizontal, por defecto ya tiene 0 grados
-                    tableroDominoEntity.setValorExtremo1(fichaValorExtremo2);
+                    tableroDominoEntity.setValorExtremo2(fichaValorExtremo2);
                 }
             }
         } else { // Si la ficha es Horizontal
@@ -159,12 +160,18 @@ public class ControladorTablero implements IControladorTablero {
                     : tableroDominoEntity.getDireccionExtremo2();
 
             if (direccionExtremo == TableroDominoEntity.IZQUIERDA) {
-                if (fichaValorExtremo2 != cadenaValorExtremo) {
+                if (fichaValorExtremo2 != cadenaValorExtremo) { // Ficha alrevés
                     trasladarYRotarCasilla(casillaEntity, 0, 0, 180);
                     if (extremoCadena == CasillaEntity.EXTREMO1) {
                         tableroDominoEntity.setValorExtremo1(fichaValorExtremo2);
                     } else { // EXTREMO2
                         tableroDominoEntity.setValorExtremo2(fichaValorExtremo2);
+                    }
+                } else { // Ficha orientada correctamente
+                    if (extremoCadena == CasillaEntity.EXTREMO1) {
+                        tableroDominoEntity.setValorExtremo1(fichaValorExtremo1);
+                    } else { // EXTREMO2
+                        tableroDominoEntity.setValorExtremo2(fichaValorExtremo1);
                     }
                 }
             } else { // DERECHA
@@ -174,6 +181,12 @@ public class ControladorTablero implements IControladorTablero {
                         tableroDominoEntity.setValorExtremo1(fichaValorExtremo1);
                     } else { // EXTREMO2
                         tableroDominoEntity.setValorExtremo2(fichaValorExtremo1);
+                    }
+                } else { // Ficha orientada correctamente
+                    if (extremoCadena == CasillaEntity.EXTREMO1) {
+                        tableroDominoEntity.setValorExtremo1(fichaValorExtremo2);
+                    } else { // EXTREMO2
+                        tableroDominoEntity.setValorExtremo2(fichaValorExtremo2);
                     }
                 }
             }
