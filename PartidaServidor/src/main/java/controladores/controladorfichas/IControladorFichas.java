@@ -75,4 +75,5 @@ public interface IControladorFichas {
      * @return true si quedan fichas, false si el pozo está vacío.
      */
     public boolean quedanFichasEnPozo();
+    
 }

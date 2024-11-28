@@ -219,8 +219,10 @@ public class PartidaDominoModel{
     }
 
     public void setFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
-        notificarFichaSeleccionadaChange(fichaSeleccionada);
         this.fichaSeleccionada = fichaSeleccionada;
+        System.out.println("Clase: " + this.getClass().getSimpleName());
+        System.out.println("Ficha: " + fichaSeleccionada);
+        notificarFichaSeleccionadaChange(fichaSeleccionada);
     }
 
     

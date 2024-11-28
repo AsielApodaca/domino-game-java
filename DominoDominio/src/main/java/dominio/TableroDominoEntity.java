@@ -85,6 +85,7 @@ public class TableroDominoEntity {
      * @param mula La ficha mula que se va a colocar.
      */
     public void colocarMula(FichaDominoEntity mula) {
+        this.estaVacia = false;
         this.casillaMula.setFichaDomino(mula);
         this.valorExtremo1 = mula.getExtremo1();
         this.valorExtremo2 = mula.getExtremo2();
@@ -100,7 +101,7 @@ public class TableroDominoEntity {
         CasillaEntity casillaExtremo = extremoCadena == CasillaEntity.EXTREMO1 ? casillaExtremo1 : casillaExtremo2;
 
         if (extremoCadena == CasillaEntity.EXTREMO1) {
-            if (casillaExtremo == null) {
+            if (casillaExtremo == casillaMula) {
                 casillaMula.setAnteriorCasilla(ficha);
                 ficha.setSiguienteCasilla(casillaMula);
             } else {
@@ -109,7 +110,7 @@ public class TableroDominoEntity {
             }
             casillaExtremo = ficha;
         } else {
-            if (casillaExtremo == null) {
+            if (casillaExtremo == casillaMula) {
                 casillaMula.setSiguienteCasilla(ficha);
                 ficha.setAnteriorCasilla(casillaMula);
             } else {

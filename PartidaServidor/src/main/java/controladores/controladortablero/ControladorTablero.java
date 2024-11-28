@@ -2,6 +2,7 @@
 package controladores.controladortablero;
 
 import adapterentidades.IAdapterFichaDomino;
+import controladores.controladorfichas.ControladorFichas;
 import dominio.CasillaEntity;
 import dominio.FichaDominoEntity;
 import dominio.TableroDominoEntity;
@@ -190,6 +191,20 @@ public class ControladorTablero implements IControladorTablero {
     @Override
     public List<FichaDominoDTO> asignarCompatibilidadAFichas(List<FichaDominoEntity> listaFichas) {
         List<FichaDominoDTO> listaFichasDTO = adapterFichaDomino.adaptListToDTO(listaFichas); // Convierte la lista a DTO
+        if(tableroDominoEntity.estaVacia()) { // Si el tablero está vacio, busca la mula mayor del jugador
+            FichaDominoEntity mulaMayor = ControladorFichas.obtenerMulaMayor(listaFichas);
+            if(mulaMayor != null) { // Si el jugador tiene una mula
+                FichaDominoDTO mula = adapterFichaDomino.adaptToDTO(mulaMayor);
+                int posicionFicha = listaFichasDTO.indexOf(mula);
+                listaFichasDTO.get(posicionFicha).setCompatible(true); // Le asigna  compatibilidad a la ficha mula mayor
+            } else { // Si el jugador no tiene mula, todas las fichas son compatibles
+                for(FichaDominoDTO fichaDTO : listaFichasDTO) {
+                    fichaDTO.setCompatible(true);
+                }
+            }
+            return listaFichasDTO;
+        }
+        // Si el tablero ya tiene minimo la mula
         for (int i = 0; i < listaFichas.size(); i++) { // Recorre todas las fichas entidad
             boolean[] extremosCompatibles = obtenerExtremosCompatibles(listaFichas.get(i));
             if (extremosCompatibles[0] || extremosCompatibles[1]) { // Verifica compatibilidad

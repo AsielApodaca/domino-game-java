@@ -41,6 +41,6 @@ public class JugadorDominoEntity extends UsuarioEntity {
     }
     
     public void quitarFicha(FichaDominoEntity ficha) {
-        listaFichasJugador.add(ficha);
+        listaFichasJugador.remove(ficha);
     }
 }

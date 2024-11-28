@@ -3,6 +3,7 @@ package controladores.controladorfichas;
 import dominio.FichaDominoEntity;
 import dominio.JugadorDominoEntity;
 import dominio.PozoEntity;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class ControladorFichas implements IControladorFichas {
     @Override
     public void crearPozo() {
         this.pozo = new PozoEntity();
-        this.listaFichasDelJuego = pozo.getListaFichas();
+        this.listaFichasDelJuego = new ArrayList<>(pozo.getListaFichas());
     }
 
     /**
@@ -111,5 +112,25 @@ public class ControladorFichas implements IControladorFichas {
     @Override
     public boolean quedanFichasEnPozo() {
         return !pozo.estaVacio();
+    }
+    
+    /**
+     * Obtiene la mula mayor de una lista de fichas,
+     * si no encuntra una mula retorna null
+     * @param listaFichas lista de donde se buscará la mula mayor
+     * @return mula mayor, si no encuntra una mula retorna null
+     */
+    public static FichaDominoEntity obtenerMulaMayor(List<FichaDominoEntity> listaFichas) {
+        FichaDominoEntity mulaMayor = null;
+        for(FichaDominoEntity ficha : listaFichas) {
+            int extremo1 = ficha.getExtremo1();
+            int extremo2 = ficha.getExtremo2();
+            if(extremo1 == extremo2) { // Es mula
+                if(mulaMayor == null || extremo1 > mulaMayor.getExtremo1()) { // La mula es mayor que la anterior
+                    mulaMayor = ficha;
+                }
+            }
+        }
+        return mulaMayor;
     }
 }

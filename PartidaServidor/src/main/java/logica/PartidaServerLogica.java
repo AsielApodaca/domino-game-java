@@ -118,6 +118,8 @@ public class PartidaServerLogica implements IPartidaServerLogica{
         int cantidadFichas = fichasJugador.size();
         // Adapta el jugador a DTO
         JugadorDominoDTO jugadorDTO = adapterJugadorDomino.adaptToDTO(jugador);
+        // Envia al jugador que oculte la casilla libre
+        generadorRespuestas.enviarRespuestaOcultarCasillasDisponibles(idCliente);
         // Envia al jugador la lista actualizada de fichas
         generadorRespuestas.enviarRespuestaMostrarFichasActualizadasDeJugador(idCliente, fichasJugadorDTO);
         // Envia al resto de jugadores la cantidad actualizada de fichas del jugador
