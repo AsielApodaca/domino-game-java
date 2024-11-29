@@ -147,10 +147,8 @@ public class PartidaDominoView extends JPanel {
         panelContenedorFichasJugadorLocal.removeAll();
         for (FichaDominoView fichaPanel : model.getListaPanelesFichasJugadorLocal()) {
             panelContenedorFichasJugadorLocal.add(fichaPanel);
+            fichaPanel.repintar();
         }
-
-        revalidate();
-        repaint();
     }
 
     private void repintarTablero() {
