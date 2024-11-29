@@ -40,7 +40,7 @@ public class ControladorTurnos implements IControladorTurnos {
     @Override
     public void asignarTurnosAJugadores(List<JugadorDominoEntity> listaJugadores) {
         this.ordenJugadores = listaJugadores;
-        this.turnoActual = listaJugadores.size();
+        this.turnoActual = listaJugadores.size() - 1;
         JugadorDominoEntity jugadorConMulaMasAlta = encontrarJugadorConMulaMasAlta();
         if (jugadorConMulaMasAlta != null) {
             // Mueve al jugador con la mula más alta al inicio de la lista

@@ -57,7 +57,6 @@ public class ManejadorSolicitudUnirseSala extends ManejadorSolicitudServerProxy 
     protected void procesar(EventoSolicitud evento) {
         SolicitudUnirseSala solicitud = (SolicitudUnirseSala) evento;
         UsuarioDTO usuarioDTO = solicitud.getUsuarioDTO();
-        usuarioDTO.setIdCliente(solicitud.getIdCliente());
         partidaServerLogica.procesarUnirseSala(usuarioDTO);
     }
 }

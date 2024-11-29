@@ -51,7 +51,7 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
         UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         ConfiguracionJuegoDTO configuracionJuegoDTO = new ConfiguracionJuegoDTO();
-        configuracionJuegoDTO.setFichasPorJugador(20);
+        configuracionJuegoDTO.setFichasPorJugador(7);
         configuracionJuegoDTO.setLimiteJugadores(4);
         configuracionJuegoDTO.setNombreSala("Pirulin");
         SolicitudCrearSala solicitud = new SolicitudCrearSala(configuracionJuegoDTO, usuarioDTO);
