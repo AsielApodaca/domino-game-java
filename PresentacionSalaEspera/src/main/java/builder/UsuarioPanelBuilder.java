@@ -31,8 +31,9 @@ public class UsuarioPanelBuilder implements IUsuarioPanelBuilder {
 
     private void construirDatosUsuarioPanel() {
         usuarioPanel.setUsuarioDTO(usuarioDTO);
-        usuarioPanel.setNombre(usuarioDTO.getNombre());
-        Icon icon = new ImageIcon(getClass().getResource("/multimedia/Icono1.png"));
+        usuarioPanel.setNombre(usuarioDTO.getNombre()); // Asignar el nombre del usuario
+        Icon icon = new ImageIcon(getClass().getResource("/multimedia/Icono1.png")); // Imagen del avatar
         usuarioPanel.setIcon(icon);
+        usuarioPanel.organizarComponentes();
     }
 }
