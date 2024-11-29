@@ -3,6 +3,7 @@ package mvc;
 import builder.UsuarioPanelBuilder;
 import dominodto.UsuarioDTO;
 import elementosview.UsuarioPanel;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,11 @@ public class SalaEsperaModel {
     private List<UsuarioPanel> listaUsuariosPaneles;
     private boolean esPantallaDeAnfitrion;
 
+    public SalaEsperaModel() {
+        this.listaUsarios = new ArrayList<>();
+        this.listaUsuariosPaneles = new ArrayList<>();
+    }
+    
     public void agregarUsuarioPanel(UsuarioDTO usuario) {
         UsuarioPanelBuilder builder = new UsuarioPanelBuilder();
         UsuarioPanel panel = builder.construirUsuarioPanel(usuario);

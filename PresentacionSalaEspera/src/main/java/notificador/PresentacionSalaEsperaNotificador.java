@@ -9,9 +9,14 @@ import listeners.IPresentacionSalaEsperaListener;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PresentacionNotificadorManager implements IPresentacionNotificadorManager {
+public class PresentacionSalaEsperaNotificador implements IPresentacionSalaEsperaNotificador {
 
     private IPresentacionSalaEsperaListener presentacionSalaEsperaListener;
+
+    public PresentacionSalaEsperaNotificador() {
+    }
+    
+    
 
     /**
      * Método para registrar un listener que responderá a los eventos de presentación.

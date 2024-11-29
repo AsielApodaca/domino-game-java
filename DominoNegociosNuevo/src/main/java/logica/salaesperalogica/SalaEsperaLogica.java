@@ -6,16 +6,17 @@ package logica.salaesperalogica;
 
 import dominio.UsuarioEntity;
 import domino.fachada.IFachadaClienteProxy;
+import domino.solicitudes.SolicitudAbandonarSala;
 import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudIniciarPartida;
 import domino.solicitudes.SolicitudUnirseSala;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.UsuarioDTO;
+import fachada.FachadaPresentacionSalaEspera;
+import fachada.IFachadaPresentacionSalaEspera;
 import listeners.IContenedorListener;
-import listeners.SalaEspera.IPresentacionSalaEsperaListener;
+import listeners.IPresentacionSalaEsperaListener;
 import mapeodto.MapeadorDTO;
-import partidadomino.fachada.FachadaPartidaDominoProvisional;
-import partidadomino.fachada.IFachadaPartidaDominoProvisional;
 import setup.Setup;
 
 /**
@@ -26,13 +27,13 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
 
     private IContenedorListener contenedorListener;
     private Setup setup;
-    private IFachadaPartidaDominoProvisional fachadaPartidaDominoProvisional;
+    private IFachadaPresentacionSalaEspera fachadaPresentacionSalaEspera;
     private IFachadaClienteProxy fachadaClienteProxy;
 
     public SalaEsperaLogica(Setup setup) {
         this.setup = setup;
         this.fachadaClienteProxy = setup.getFachadaClienteProxy();
-        this.fachadaPartidaDominoProvisional = new FachadaPartidaDominoProvisional();
+        this.fachadaPresentacionSalaEspera = new FachadaPresentacionSalaEspera();
     }
 
     @Override
@@ -44,7 +45,8 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     }
     
     private void mostrarPresentacionSalaEspera() {
-        this.contenedorListener = fachadaPartidaDominoProvisional.iniciar(this);
+        this.contenedorListener = fachadaPresentacionSalaEspera.iniciarPantalla(true); // True temporal
+        fachadaPresentacionSalaEspera.subscribirPresentacionListener(this);
     }
     
     private void crearSala() {
@@ -67,10 +69,18 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     }
 
     @Override
-    public void onBtnIniciarPartidaPrecionado() {
+    public void onBtnIniciarPartidaPresionado() {
         UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         SolicitudIniciarPartida solicitud = new SolicitudIniciarPartida(usuarioDTO);
+        fachadaClienteProxy.enviarSolicitud(solicitud);
+    }
+
+    @Override
+    public void onBtnSalirPresionado() {
+        UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
+        SolicitudAbandonarSala solicitud = new SolicitudAbandonarSala(usuarioDTO);
         fachadaClienteProxy.enviarSolicitud(solicitud);
     }
     

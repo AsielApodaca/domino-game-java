@@ -2,6 +2,8 @@ package notificador;
 
 import listeners.IPresentacionSalaEsperaListener;
 
+
+
 /**
  *
  * @author Hisamy Cinco Cota
@@ -9,7 +11,7 @@ import listeners.IPresentacionSalaEsperaListener;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public interface IPresentacionNotificadorManager {
+public interface IPresentacionSalaEsperaNotificador {
 
     public void subscribirPresentacionListener(IPresentacionSalaEsperaListener listener);
 

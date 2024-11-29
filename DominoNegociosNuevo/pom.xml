@@ -38,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>org.itson</groupId>
-            <artifactId>PresentacionPartidaDominoProvisional</artifactId>
+            <artifactId>PresentacionSalaEspera</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

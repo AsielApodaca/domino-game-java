@@ -1,10 +1,10 @@
 package mvc;
 
 import dominodto.UsuarioDTO;
-import listeners.IPresentacionSalaEsperaListener;
+import javax.swing.JPanel;
+import listeners.IContenedorListener;
 import listeners.IViewListener;
-import notificador.IPresentacionNotificadorManager;
-import notificador.PresentacionNotificadorManager;
+import notificador.IPresentacionSalaEsperaNotificador;
 
 /**
  *
@@ -13,18 +13,16 @@ import notificador.PresentacionNotificadorManager;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class SalaEsperaController implements IViewListener {
+public class SalaEsperaController implements IViewListener, IContenedorListener {
 
     private SalaEsperaModel salaEsperaModel;
     private SalaEsperaView salaEsperaView;
-    private IPresentacionNotificadorManager presentacionNotificadorManager;
-    private IPresentacionSalaEsperaListener presentacionSalaEsperaListener;
+    private IPresentacionSalaEsperaNotificador presentacionNotificadorManager;
 
-    public SalaEsperaController(SalaEsperaModel salaEsperaModel, SalaEsperaView salaEsperaView) {
+    public SalaEsperaController(SalaEsperaModel salaEsperaModel, SalaEsperaView salaEsperaView, IPresentacionSalaEsperaNotificador presentacionNotificadorManager) {
+        this.presentacionNotificadorManager = presentacionNotificadorManager;
         this.salaEsperaModel = salaEsperaModel;
         this.salaEsperaView = salaEsperaView;
-        presentacionNotificadorManager = new PresentacionNotificadorManager();
-        presentacionNotificadorManager.subscribirPresentacionListener(presentacionSalaEsperaListener);
     }
 
     /**
@@ -80,5 +78,15 @@ public class SalaEsperaController implements IViewListener {
     @Override
     public void onBtnSalirPresionado() {
         presentacionNotificadorManager.notificarBtnSalirPresionado();
+    }
+
+    @Override
+    public void onEscalaChange(float escala) {
+        // por hacer
+    }
+
+    @Override
+    public JPanel obtenerView() {
+        return salaEsperaView;
     }
 }

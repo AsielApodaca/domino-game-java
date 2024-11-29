@@ -5,11 +5,13 @@
 package fachada;
 
 import dominodto.UsuarioDTO;
+import listeners.IContenedorListener;
 import listeners.IPresentacionSalaEsperaListener;
 import mvc.SalaEsperaController;
 import mvc.SalaEsperaModel;
 import mvc.SalaEsperaView;
-import notificador.PresentacionNotificadorManager;
+import notificador.PresentacionSalaEsperaNotificador;
+import notificador.IPresentacionSalaEsperaNotificador;
 
 /**
  *
@@ -23,15 +25,17 @@ public class FachadaPresentacionSalaEspera implements IFachadaPresentacionSalaEs
     private SalaEsperaController salaEsperaController;
     private SalaEsperaModel salaEsperaModel;
     private SalaEsperaView salaEsperaView;
-    private PresentacionNotificadorManager presentacionNotificadorManager;
+    private IPresentacionSalaEsperaNotificador presentacionNotificadorManager;
 
     @Override
-    public void iniciarPantalla(Boolean esAnfitrion) {
+    public IContenedorListener iniciarPantalla(Boolean esAnfitrion) {
+        this.presentacionNotificadorManager = new PresentacionSalaEsperaNotificador();
         this.salaEsperaModel = new SalaEsperaModel();
         this.salaEsperaView = new SalaEsperaView(salaEsperaModel);
-        this.salaEsperaController = new SalaEsperaController(salaEsperaModel, salaEsperaView);
-        this.presentacionNotificadorManager = new PresentacionNotificadorManager();
+        this.salaEsperaController = new SalaEsperaController(salaEsperaModel, salaEsperaView, presentacionNotificadorManager);
+        salaEsperaView.suscribirListener(salaEsperaController);
         salaEsperaController.declararPantallaDeAnfitriones(esAnfitrion);
+        return salaEsperaController;
     }
 
     @Override
@@ -46,7 +50,7 @@ public class FachadaPresentacionSalaEspera implements IFachadaPresentacionSalaEs
 
     @Override
     public void subscribirPresentacionListener(IPresentacionSalaEsperaListener listener) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        presentacionNotificadorManager.subscribirPresentacionListener(listener);
     }
 
 }

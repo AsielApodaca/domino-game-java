@@ -5,6 +5,7 @@
 package fachada;
 
 import dominodto.UsuarioDTO;
+import listeners.IContenedorListener;
 import listeners.IPresentacionSalaEsperaListener;
 
 /**
@@ -16,7 +17,7 @@ import listeners.IPresentacionSalaEsperaListener;
  */
 public interface IFachadaPresentacionSalaEspera {
 
-    public void iniciarPantalla(Boolean esAnfitrion);
+    public IContenedorListener iniciarPantalla(Boolean esAnfitrion);
 
     public void agregarUsuario(UsuarioDTO usuarioDTO);
 
