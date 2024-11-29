@@ -12,3 +12,4 @@
 /DominoNegociosNuevo/target/
 /PartidaServidor/target/
 /PresentacionPartidaDominoProvisional/target/
+*.xml
