@@ -47,10 +47,10 @@ public class SalaEsperaView {
 
     private void crearBotonEmpezarPartida() {
         btnEmpezarPartida = new JButton("Empezar Partida");
-        btnEmpezarPartida.setAlignmentX(Component.CENTER_ALIGNMENT); // Centrado
-        btnEmpezarPartida.setBackground(Color.WHITE); // Color de fondo blanco
-        btnEmpezarPartida.setForeground(new Color(0x4F0149)); // Color de texto #4F0149
-        btnEmpezarPartida.setFont(new Font("Cairo", Font.BOLD, 14)); // Tipografía Cairo
+        btnEmpezarPartida.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        btnEmpezarPartida.setBackground(Color.WHITE);
+        btnEmpezarPartida.setForeground(new Color(0x4F0149)); 
+        btnEmpezarPartida.setFont(new Font("Cairo", Font.BOLD, 14)); 
         btnEmpezarPartida.setVisible(false);
     }
 
