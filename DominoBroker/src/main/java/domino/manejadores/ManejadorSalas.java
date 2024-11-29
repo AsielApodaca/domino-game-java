@@ -5,10 +5,15 @@
 package domino.manejadores;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import deserializador.Serializador;
 import domino.conexiones.ConexionCliente;
 import domino.conexiones.ConexionServidor;
 import domino.enums.Status;
 import domino.sala.Sala;
+import domino.solicitudes.EventoSolicitud;
+import domino.solicitudes.SolicitudAbandonarSala;
+import dominodto.UsuarioDTO;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,7 +89,15 @@ public class ManejadorSalas {
         
         salaBuscada.agregarCliente(cliente.getId(), cliente);
         
-        System.out.println("Se unio el cliente: " + cliente.getId() + " a la Sala: " + idSala);
+        System.out.println("Se unio el cliente: " + cliente.getId() + " a la Sala con el ID: " + idSala);
+    }
+    
+    public void eliminarClienteDeSala(ConexionCliente cliente) {
+        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
+        
+        salaDelCliente.eliminarCliente(cliente.getId());
+        
+        System.out.println("El Cliente con el ID: " + cliente.getId() + " ha abandonado la Sala con el ID: " + salaDelCliente.getId());
     }
     
     public void enviarSolicitudAServidor(ConexionCliente cliente, JsonObject solicitud) {
@@ -121,6 +134,17 @@ public class ManejadorSalas {
         } else {
             System.out.println("El Servidor no esta conectado a una sala");
         }
+    }
+    
+    public void enviarSolicitudAbandonarSalaClientePorDesconexion(ConexionCliente cliente) {
+        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
+        UsuarioDTO clienteQueAbandona = new UsuarioDTO() ;
+        clienteQueAbandona.setIdCliente(cliente.getId());
+        EventoSolicitud eventoSolicitudAbandonarSala = new SolicitudAbandonarSala(clienteQueAbandona) ;
+        eventoSolicitudAbandonarSala.setIdCliente(cliente.getId());
+        JsonObject solicitudAbandonarSala = JsonParser.parseString(Serializador.convertirEventoSolicitudAJSON(eventoSolicitudAbandonarSala)).getAsJsonObject() ;
+        salaDelCliente.getServidor().mandarSolicitudServidor(solicitudAbandonarSala);
+        System.out.println("El Cliente con el ID: " + cliente.getId() + " se ha desconectado de la Sala con el ID: " + salaDelCliente.getId());
     }
     
     private void enviarConfiguracionDePartida(ConexionServidor servidor, JsonObject solicitudJSON) {

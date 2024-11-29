@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.Optional;
 import domino.sala.Sala;
 import domino.solicitudes.EventoSolicitud;
+import domino.solicitudes.SolicitudAbandonarSala;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
 import domino.solicitudes.SolicitudIniciarPartida;
 import java.util.List;
@@ -140,16 +141,19 @@ public class Broker {
                 } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudUnirseSala.class)) {
                     manejadorSalas.unirClienteASala(cliente, solicitudJSON);
                     manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
-                } else if (true) {
-//                } else if (Deserializador.esJsonInstanciaDe(solicitud, SolicitudFichaSeleccionada.class) || Deserializador.esJsonInstanciaDe(solicitud, SolicitudCasillaSeleccionada.class)) {
-                    manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
+                } else if(Deserializador.esJsonInstanciaDe(solicitud, SolicitudAbandonarSala.class)) {
+                    manejadorSalas.eliminarClienteDeSala(cliente);
                 } else {
-                    throw new AssertionError("Tipo de solicitud desconocido");
+                    manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 }
 
             }
         } catch (Exception e) {
+            //AQUI OCURRE UNA EXCEPCION CUANDO LOS JUGADORES SE DESCONECTAN DEL BROKER.
+            //ES DECIR, CUANDO ABANDONAN LA PARTIDA
             System.out.println(e.getMessage());
+            System.out.println("El Cliente con el ID: " + cliente.getId() + " se ha desconectado");
+            manejadorSalas.enviarSolicitudAbandonarSalaClientePorDesconexion(cliente);
         }
     }
 
@@ -185,8 +189,8 @@ public class Broker {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error al redirigir respuesta:");
             System.out.println(e.getMessage());
+            System.out.println("Se ha desconectado el Servidor con el ID: " + servidor.getId());
         }
     }
 

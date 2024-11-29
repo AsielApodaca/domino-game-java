@@ -48,6 +48,10 @@ public class Sala {
         return clientes.get(id) ;
     }
     
+    public void eliminarCliente(String id) {
+        this.clientes.remove(id) ;
+    }
+    
     public String getId() {
         return this.id ;
     }
