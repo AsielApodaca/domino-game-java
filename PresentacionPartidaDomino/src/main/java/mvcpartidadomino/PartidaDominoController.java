@@ -5,6 +5,7 @@ import builders.FichaTableroBuilder;
 import builders.FichaUsuarioBuilder;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
+import dominodto.JugadorDominoDTO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -171,9 +172,17 @@ public class PartidaDominoController implements IContenedorListener {
     public PartidaDominoView getView() {
         return view;
     }
-
-    private float getEscala() {
-        return model.getEscala();
+    
+    public void mostrarJugador(JugadorDominoDTO jugadorDominoDTO) {
+        
+    }
+    
+    public void removerJugador(JugadorDominoDTO jugadorDominoDTO) {
+        
+    }
+    
+    public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
+        
     }
 
     @Override

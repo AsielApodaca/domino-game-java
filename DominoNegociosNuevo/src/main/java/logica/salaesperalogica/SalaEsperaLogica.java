@@ -45,10 +45,11 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     }
     
     private void mostrarPresentacionSalaEspera() {
-        this.contenedorListener = fachadaPresentacionSalaEspera.iniciarPantalla(true); // True temporal
+        this.contenedorListener = fachadaPresentacionSalaEspera.iniciarPantalla();
         fachadaPresentacionSalaEspera.subscribirPresentacionListener(this);
     }
     
+    // Inicio de métodos temporales para pruebas
     private void crearSala() {
         UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
@@ -67,7 +68,8 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
         SolicitudUnirseSala solicitud = new SolicitudUnirseSala(usuarioDTO, idSala);
         fachadaClienteProxy.enviarSolicitud(solicitud);
     }
-
+    // Fin de métodos temporales para pruebas
+    
     @Override
     public void onBtnIniciarPartidaPresionado() {
         UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
@@ -82,6 +84,21 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         SolicitudAbandonarSala solicitud = new SolicitudAbandonarSala(usuarioDTO);
         fachadaClienteProxy.enviarSolicitud(solicitud);
+    }
+
+    @Override
+    public void otorgarPermisosDeAnfitrion() {
+        fachadaPresentacionSalaEspera.otorgarPermisosDeAnfitiron();
+    }
+
+    @Override
+    public void agregarUsuarioASala(UsuarioDTO usuarioDTO) {
+        fachadaPresentacionSalaEspera.agregarUsuario(usuarioDTO);
+    }
+
+    @Override
+    public void removerUsuarioDeSala(UsuarioDTO usuarioDTO) {
+        fachadaPresentacionSalaEspera.removerUsuario(usuarioDTO);
     }
     
     

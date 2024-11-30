@@ -2,6 +2,7 @@ package fachada;
 
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
+import dominodto.JugadorDominoDTO;
 import java.util.List;
 import listeners.IContenedorListener;
 import listeners.IPresentacionPartidaDominoListener;
@@ -73,8 +74,6 @@ public interface IFachadaPartidaDomino {
 
     public void ocultarPozo();
 
-    public void sacarFichaPozo();
-
     /**
      * Suscribe un listener para manejar eventos de la presentación de la
      * partida de dominó.
@@ -84,4 +83,12 @@ public interface IFachadaPartidaDomino {
      */
 
     public void suscribirPresentacionListener(IPresentacionPartidaDominoListener listener);
+    
+    public void mostrarJugador(JugadorDominoDTO jugadorDominoDTO);
+    
+    public void removerJugador(JugadorDominoDTO jugadorDominoDTO);
+    
+    public void actualizarCantidadFichasDeJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas);
+    
+    public void otorgarTurnoAJugador(JugadorDominoDTO jugadorDominoDTO);
 }

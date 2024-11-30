@@ -1,6 +1,7 @@
 package mvcpartidadomino;
 
 import dominodto.FichaDominoDTO;
+import dominodto.JugadorDominoDTO;
 import dominodto.TableroDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,24 +44,21 @@ public class PartidaDominoModel {
 
     private int anchoFichaTablero; // ancho de las fichas dentro del tablero
     private int largoFichaTablero; // alto de las fichas dentro del tablero
-
-    // Configuración de la partida
-    private int numeroDeJugadores; // Número de jugadores dentro de la partida
-
-    // Pozo
-    private int anchoPozo;
-    private int alturaPozo;
-    private int pozoLocacionX;
-    private int pozoLocacionY;
-    private boolean pozoBloqueado;
+    
+    private int anchoPozo; // ancho del panel del pozo
+    private int alturaPozo; // altura del panel del pozo
+    private int pozoLocacionX; // locacion del pozo en el eje de las X
+    private int pozoLocacionY; // locacion del pozo en el eje de las Y
 
     // Partida
+    private boolean pozoBloqueado; // Estado de disponibilidad del pozo
     private TableroDominoDTO tableroDominoDTO; // tablero con posiciones de las fichas
     private List<FichaDominoDTO> listaFichasJugadorLocal; // Lista de fichas del jugador del disposivo
     private List<FichaDominoView> listaPanelesFichasJugadorLocal; // Lista de panales de fichas del jugador del dispositivo
     private List<FichaDominoTableroPanel> listaPanelesFichasSobreTablero; // Lista de paneles de fichas sobre el tablero
     private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
-    //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
+    private List<JugadorDominoDTO>  listaJugadoresExternos; // Lista de jugadores de otros dispositivos
+    private JugadorDominoDTO jugadorLocal; // Jugador de este dispositivo
 
     private IPresentacionNotificadorManager presentacionNotificadorManager;
     private FichaDominoDTO fichaSeleccionada;
@@ -83,11 +81,11 @@ public class PartidaDominoModel {
         this.tableroLocacionY = 100;
         this.anchoFichaTablero = 15;
         this.largoFichaTablero = 30;
-        this.numeroDeJugadores = 1; // temporal
         this.listaFichasJugadorLocal = new ArrayList<>();
         this.listaPanelesFichasJugadorLocal = new ArrayList<>();
         this.listaPanelesFichasSobreTablero = new ArrayList<>();
         this.listaPanelesCasillasParaColocarFichas = new ArrayList<>();
+        this.listaJugadoresExternos = new ArrayList<>();
         this.anchoPozo = 48;
         this.alturaPozo = 51;
         this.pozoLocacionY = 17;

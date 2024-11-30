@@ -104,7 +104,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
 
     @Override
     public void actualizarCantidadFichasDeJugador(JugadorDominoDTO jugador, int cantidad) {
-        // Por hacer
+        fachadaPartidaDomino.actualizarCantidadFichasDeJugador(jugador, cantidad);
     }
 
     @Override
@@ -159,6 +159,16 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     @Override
     public void ocultarPozoDisponible() {
         fachadaPartidaDomino.ocultarPozo();
+    }
+
+    @Override
+    public void agregarJugadorAPartida(JugadorDominoDTO jugadorDominoDTO) {
+        fachadaPartidaDomino.mostrarJugador(jugadorDominoDTO);
+    }
+
+    @Override
+    public void removerJugadorDePartida(JugadorDominoDTO jugadorDominoDTO) {
+        fachadaPartidaDomino.removerJugador(jugadorDominoDTO);
     }
 
 }

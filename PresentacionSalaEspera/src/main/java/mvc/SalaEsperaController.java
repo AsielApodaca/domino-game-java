@@ -54,11 +54,9 @@ public class SalaEsperaController implements IViewListener, IContenedorListener 
     /**
      * Define si la pantalla actual pertenece al anfitrión y actualiza la vista.
      *
-     * @param esAnfitrion Indica si la pantalla corresponde al anfitrión (true)
-     * o no (false).
      */
-    public void declararPantallaDeAnfitriones(Boolean esAnfitrion) {
-        salaEsperaModel.setEsPantallaDeAnfitrion(esAnfitrion);
+    public void declararPantallaDeAnfitrion() {
+        salaEsperaModel.setEsPantallaDeAnfitrion(true);
         salaEsperaView.repintarPantalla();
     }
 

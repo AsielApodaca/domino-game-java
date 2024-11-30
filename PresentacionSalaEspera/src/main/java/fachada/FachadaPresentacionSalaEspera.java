@@ -28,16 +28,20 @@ public class FachadaPresentacionSalaEspera implements IFachadaPresentacionSalaEs
     private IPresentacionSalaEsperaNotificador presentacionNotificadorManager;
 
     @Override
-    public IContenedorListener iniciarPantalla(Boolean esAnfitrion) {
+    public IContenedorListener iniciarPantalla() {
         this.presentacionNotificadorManager = new PresentacionSalaEsperaNotificador();
         this.salaEsperaModel = new SalaEsperaModel();
         this.salaEsperaView = new SalaEsperaView(salaEsperaModel);
         this.salaEsperaController = new SalaEsperaController(salaEsperaModel, salaEsperaView, presentacionNotificadorManager);
         salaEsperaView.suscribirListener(salaEsperaController);
-        salaEsperaController.declararPantallaDeAnfitriones(esAnfitrion);
         return salaEsperaController;
     }
 
+    @Override
+    public void otorgarPermisosDeAnfitiron() {
+        salaEsperaController.declararPantallaDeAnfitrion();
+    }
+    
     @Override
     public void agregarUsuario(UsuarioDTO usuarioDTO) {
         salaEsperaController.agregarUsuario(usuarioDTO);

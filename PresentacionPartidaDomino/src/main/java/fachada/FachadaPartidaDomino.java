@@ -96,9 +96,5 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
         partidaDominoController.ocultarPozoDisponible();
     }
 
-    @Override
-    public void sacarFichaPozo() {
-        partidaDominoController.sacarFichaPozo();
-    }
 
 }

@@ -97,5 +97,9 @@ public interface IPartidaDominoLogica {
     public void mostrarPozoDisponible();
 
     public void ocultarPozoDisponible();
+    
+    public void agregarJugadorAPartida(JugadorDominoDTO jugadorDominoDTO);
+    
+    public void removerJugadorDePartida(JugadorDominoDTO jugadorDominoDTO);
 
 }

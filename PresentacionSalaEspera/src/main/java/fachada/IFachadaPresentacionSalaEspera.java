@@ -17,7 +17,9 @@ import listeners.IPresentacionSalaEsperaListener;
  */
 public interface IFachadaPresentacionSalaEspera {
 
-    public IContenedorListener iniciarPantalla(Boolean esAnfitrion);
+    public IContenedorListener iniciarPantalla();
+    
+    public void otorgarPermisosDeAnfitiron();
 
     public void agregarUsuario(UsuarioDTO usuarioDTO);
 

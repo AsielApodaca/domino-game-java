@@ -22,6 +22,7 @@ public class SalaEsperaModel {
     public SalaEsperaModel() {
         this.listaUsarios = new ArrayList<>();
         this.listaUsuariosPaneles = new ArrayList<>();
+        this.esPantallaDeAnfitrion = false; // Por default, la pantalla comienza sin configuración de anfitrión
     }
     
     public void agregarUsuarioPanel(UsuarioDTO usuario) {
