@@ -1,7 +1,8 @@
 
 package dominodto;
 
-import javax.swing.Icon;
+import java.awt.image.BufferedImage;
+
 
 /**
  *
@@ -11,9 +12,9 @@ public class JugadorDominoDTO {
 
      private String idCliente;
      private String nombre ;
-     private Icon icono ;
+     private BufferedImage icono ;
      
-    public JugadorDominoDTO(String idCliente, String nombre, Icon icono) {
+    public JugadorDominoDTO(String idCliente, String nombre, BufferedImage icono) {
         this.idCliente = idCliente;
         this.nombre = nombre ;
         this.icono = icono ;
@@ -31,7 +32,7 @@ public class JugadorDominoDTO {
         return nombre;
     }
 
-    public Icon getIcono() {
+    public BufferedImage getIcono() {
         return icono;
     }
     

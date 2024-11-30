@@ -4,7 +4,8 @@
  */
 package dominodto;
 
-import javax.swing.Icon;
+import java.awt.image.BufferedImage;
+
 
 /**
  *
@@ -14,7 +15,7 @@ public class UsuarioDTO {
     
     private String idCliente;
     private String nombre;
-    private Icon icon;
+    private BufferedImage icono;
 
     public UsuarioDTO() {
     }
@@ -40,11 +41,13 @@ public class UsuarioDTO {
         this.nombre = nombre;
     }
 
-    public Icon getIcon() {
-        return icon;
+    public BufferedImage getIcono() {
+        return icono;
     }
 
-    public void setIcon(Icon icon) {
-        this.icon = icon;
+    public void setIcono(BufferedImage icono) {
+        this.icono = icono;
     }
+
+    
 }

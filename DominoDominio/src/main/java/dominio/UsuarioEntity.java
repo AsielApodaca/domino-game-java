@@ -4,7 +4,8 @@
  */
 package dominio;
 
-import javax.swing.Icon;
+import java.awt.image.BufferedImage;
+
 
 /**
  *
@@ -17,12 +18,12 @@ public class UsuarioEntity {
 
     private String idCliente;
     private String nombre;
-    private Icon icon;
+    private BufferedImage icono;
 
-    public UsuarioEntity(String idCliente, String nombre, Icon icon) {
+    public UsuarioEntity(String idCliente, String nombre, BufferedImage icono) {
         this.idCliente = idCliente;
         this.nombre = nombre;
-        this.icon = icon;
+        this.icono = icono;
     }
 
     public UsuarioEntity(String idCliente, String nombre) {
@@ -50,12 +51,14 @@ public class UsuarioEntity {
         this.nombre = nombre;
     }
 
-    public Icon getIcon() {
-        return icon;
+    public BufferedImage getIcono() {
+        return icono;
     }
 
-    public void setIcon(Icon icon) {
-        this.icon = icon;
+    public void setIcono(BufferedImage icono) {
+        this.icono = icono;
     }
+
+    
 
 }

@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package dominio;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Icon;
 
 /**
  *
@@ -19,8 +16,8 @@ public class JugadorDominoEntity extends UsuarioEntity {
 
     private List<FichaDominoEntity> listaFichasJugador;
 
-    public JugadorDominoEntity(String idCliente, String nombre, Icon icon) {
-        super(idCliente, nombre, icon);
+    public JugadorDominoEntity(String idCliente, String nombre, BufferedImage icono) {
+        super(idCliente, nombre, icono);
         this.listaFichasJugador  = new ArrayList<>();
     }
 

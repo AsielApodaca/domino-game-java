@@ -4,10 +4,9 @@
  */
 package notificador;
 
+import dominodto.CasillaDTO;
+import dominodto.FichaDominoDTO;
 import listeners.IPresentacionPartidaDominoListener;
-import notificador.eventos.CasillaSeleccionadaEvento;
-import notificador.eventos.FichaSeleccionadaEvento;
-import notificador.eventos.PozoSeleccionadoEvento;
 
 /**
  *
@@ -16,10 +15,6 @@ import notificador.eventos.PozoSeleccionadoEvento;
 public interface IPresentacionNotificadorManager {
 
     public void suscribirPresentacionListener(IPresentacionPartidaDominoListener listener);
-
-    public void notificarCasillaSeleccionada(CasillaSeleccionadaEvento evento);
-
-    public void notificarFichaSeleccionada(FichaSeleccionadaEvento evento);
-    
-    public void notificarPozoSeleccionado(PozoSeleccionadoEvento evento);
+    public void notificarCasillaSeleccionada(CasillaDTO casillaSeleccionada);
+    public void notificarFichaSeleccionada(FichaDominoDTO fichaSelecccionada);
 }
