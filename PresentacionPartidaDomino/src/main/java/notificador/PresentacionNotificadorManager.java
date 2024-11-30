@@ -3,6 +3,7 @@ package notificador;
 import listeners.IPresentacionPartidaDominoListener;
 import notificador.eventos.CasillaSeleccionadaEvento;
 import notificador.eventos.FichaSeleccionadaEvento;
+import notificador.eventos.PozoSeleccionadoEvento;
 
 /**
  * Clase que gestiona las notificaciones de eventos relacionados con la presentación de la partida de dominó.
@@ -50,5 +51,10 @@ public class PresentacionNotificadorManager implements IPresentacionNotificadorM
     @Override
     public void notificarFichaSeleccionada(FichaSeleccionadaEvento evento) {
         presentacionPartidaDominoListener.onFichaSeleccionada(evento);
+    }
+
+    @Override
+    public void notificarPozoSeleccionado(PozoSeleccionadoEvento evento) {
+        presentacionPartidaDominoListener.onPozoSeleccionado(evento);
     }
 }

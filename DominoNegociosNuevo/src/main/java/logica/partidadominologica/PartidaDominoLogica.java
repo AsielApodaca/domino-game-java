@@ -10,6 +10,7 @@ import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
 import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudFichaSeleccionada;
+import domino.solicitudes.SolicitudSacarFichaPozo;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
@@ -23,6 +24,7 @@ import listeners.IPresentacionPartidaDominoListener;
 import mapeodto.MapeadorDTO;
 import notificador.eventos.CasillaSeleccionadaEvento;
 import notificador.eventos.FichaSeleccionadaEvento;
+import notificador.eventos.PozoSeleccionadoEvento;
 import setup.Setup;
 
 /**
@@ -43,7 +45,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
         this.usuarioLocal = setup.getUsuarioLocal(); // Oliva incienzo valle verde
         this.fachadaPartidaDomino = new FachadaPartidaDomino();
         this.fachadaClienteProxy = setup.getFachadaClienteProxy();
-        
+
     }
 
     @Override
@@ -119,7 +121,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     public void mostrarFichaTablero(CasillaDTO casilla) {
         fachadaPartidaDomino.colocarFichaTablero(casilla);
     }
-    
+
     @Override
     public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichas) {
         fachadaPartidaDomino.mostrarFichasJugadorLocal(fichas);
@@ -134,15 +136,39 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     public void cambiarTurno(JugadorDominoDTO jugador) {
         // Por hacer
     }
-    
+
     @Override
     public void mostrarCasillasDisponibles(List<CasillaDTO> casillasDisponibles) {
         fachadaPartidaDomino.mostrarCasillasParaColocarFicha(casillasDisponibles);
     }
-    
+
     @Override
     public void ocultarCasillasDisponibles() {
         fachadaPartidaDomino.ocultarCasillasParaColocarFicha();
+    }
+
+    @Override
+    public void onPozoSeleccionado(PozoSeleccionadoEvento evento) {
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
+
+        // Crear una nueva solicitud de pozo seleccionado
+        EventoSolicitud solicitudPozoSeleccionado = new SolicitudSacarFichaPozo(usuarioDTO);
+
+        // Envia la solicitud a través de la fachada cliente
+        fachadaClienteProxy.enviarSolicitud(solicitudPozoSeleccionado);
+        
+        //incompleto
+
+    }
+
+    @Override
+    public void mostrarPozoDisponible() {
+        fachadaPartidaDomino.mostrarPozo();
+    }
+
+    @Override
+    public void ocultarPozoDisponible() {
+        fachadaPartidaDomino.ocultarPozo();
     }
 
 }

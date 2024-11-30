@@ -1,4 +1,3 @@
-
 package mvcpartidadomino;
 
 import dominodto.FichaDominoDTO;
@@ -11,7 +10,6 @@ import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
 
-
 /**
  *
  * @author Hisamy Cinco Cota
@@ -19,7 +17,7 @@ import partidadomino.fichadominojugadormvc.FichaDominoView;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoModel{
+public class PartidaDominoModel {
 
     private float escala; // Escala de view, afecta el tamaño de todos los componentes para adaptarse al Frame
     // media
@@ -50,6 +48,13 @@ public class PartidaDominoModel{
     // Configuración de la partida
     private int numeroDeJugadores; // Número de jugadores dentro de la partida
 
+    // Pozo
+    private int anchoPozo;
+    private int alturaPozo;
+    private int pozoLocacionX;
+    private int pozoLocacionY;
+    private boolean pozoBloqueado;
+
     // Partida
     private TableroDominoDTO tableroDominoDTO; // tablero con posiciones de las fichas
     private List<FichaDominoDTO> listaFichasJugadorLocal; // Lista de fichas del jugador del disposivo
@@ -58,9 +63,9 @@ public class PartidaDominoModel{
     private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
     //private List<FichaDominoDTO>[] listasFichasJugadoresExternos; // Listas de fichas de los jugadores externos (Temporal, posiblemente se cambie por lista jugadores externos)
 
-    private IPresentacionNotificadorManager  presentacionNotificadorManager;
-    private FichaDominoDTO fichaSeleccionada ;
-    
+    private IPresentacionNotificadorManager presentacionNotificadorManager;
+    private FichaDominoDTO fichaSeleccionada;
+
     public PartidaDominoModel() {
         this.fondoDePantalla = "/multimedia/FondoPartida.jpg";
         this.escala = 1.0f;
@@ -84,6 +89,11 @@ public class PartidaDominoModel{
         this.listaPanelesFichasJugadorLocal = new ArrayList<>();
         this.listaPanelesFichasSobreTablero = new ArrayList<>();
         this.listaPanelesCasillasParaColocarFichas = new ArrayList<>();
+        this.anchoPozo = 48;
+        this.alturaPozo = 51;
+        this.pozoLocacionY = 17;
+        this.pozoLocacionX = 55;
+        this.pozoBloqueado = true;
     }
 
     public void setPresentacionNotificacionesManager(IPresentacionNotificadorManager presentacionNotificadorManager) {
@@ -93,7 +103,7 @@ public class PartidaDominoModel{
     public IPresentacionNotificadorManager getPresentacionNotificadorsManager() {
         return presentacionNotificadorManager;
     }
-    
+
     public void notificarFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
         FichaSeleccionadaEvento evento = new FichaSeleccionadaEvento(fichaSeleccionada);
         presentacionNotificadorManager.notificarFichaSeleccionada(evento);
@@ -114,7 +124,7 @@ public class PartidaDominoModel{
     public void agregarPanelFichaSobreTablero(FichaDominoTableroPanel fichaDominoTablero) {
         listaPanelesFichasSobreTablero.add(fichaDominoTablero);
     }
-    
+
     public List<FichaDominoView> getListaPanelesFichasJugadorLocal() {
         return listaPanelesFichasJugadorLocal;
     }
@@ -126,11 +136,11 @@ public class PartidaDominoModel{
     public void setListaFichasJugadorLocal(List<FichaDominoDTO> listaFichasJugadorLocal) {
         this.listaFichasJugadorLocal = listaFichasJugadorLocal;
     }
-    
+
     public void removerFichaDeFichasJugadorLocal(FichaDominoDTO fichaDominoDTO) {
         listaFichasJugadorLocal.remove(fichaDominoDTO);
     }
-    
+
     public void agregarFichaAJugadorLocal(FichaDominoDTO fichaDominoDTO) {
         listaFichasJugadorLocal.add(fichaDominoDTO);
     }
@@ -226,6 +236,28 @@ public class PartidaDominoModel{
         notificarFichaSeleccionadaChange(fichaSeleccionada);
     }
 
-    
-}
+    public int getAnchoPozo() {
+        return anchoPozo;
+    }
 
+    public int getAlturaPozo() {
+        return alturaPozo;
+    }
+
+    public int getPozoLocacionX() {
+        return pozoLocacionX;
+    }
+
+    public int getPozoLocacionY() {
+        return pozoLocacionY;
+    }
+
+    public boolean isPozoBloqueado() {
+        return pozoBloqueado;
+    }
+
+    public void setPozoBloqueado(boolean pozoBloqueado) {
+        this.pozoBloqueado = pozoBloqueado;
+    }
+
+}

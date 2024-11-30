@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
+import partidadomino.elementostablero.PozoPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
 
 /**
@@ -30,6 +31,7 @@ public class PartidaDominoView extends JPanel {
 
     private JPanel panelContenedorFichasJugadorLocal; // Panel que contendrá las fichas del jugador local
     private JPanel panelTablero; // Panel de tablero donde se colocarán las fichas
+    private PozoPanel pozoPanel;
 
     public PartidaDominoView(PartidaDominoModel model) {
         this.model = model;
@@ -47,6 +49,7 @@ public class PartidaDominoView extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        pozoPanel = new PozoPanel();
 
         // Pintar contenedor de fichas
         panelContenedorFichasJugadorLocal = new JPanel() { // Panel transparente
@@ -94,6 +97,7 @@ public class PartidaDominoView extends JPanel {
 
         add(panelContenedorFichasJugadorLocal);
         add(panelTablero);
+        add(pozoPanel);
 
         repintarVista();
     }
@@ -105,7 +109,7 @@ public class PartidaDominoView extends JPanel {
         repintarTablero();
         repintarCasillasTablero();
         repintarFichasTablero();
-
+        repintarPozo();
         revalidate();
         repaint();
     }
@@ -163,6 +167,18 @@ public class PartidaDominoView extends JPanel {
         repaint();
     }
 
+    public void repintarPozo() {
+        // Redimensionar y posicionar panel del pozo
+        int pozoAncho = (int) (model.getAnchoPozo() * model.getEscala());
+        int pozoAltura = (int) (model.getAlturaPozo() * model.getEscala());
+        int pozoX = (int) (model.getPozoLocacionX() * model.getEscala());
+        int pozoY = (int) (model.getPozoLocacionY() * model.getEscala());
+        pozoPanel.setBounds(pozoX, pozoY, pozoAncho, pozoAltura);
+
+        revalidate();
+        repaint();
+    }
+
     public void colocarFichaTablero(FichaDominoTableroPanel fichaDominoTablero) {
         panelTablero.add(fichaDominoTablero);
 
@@ -186,7 +202,7 @@ public class PartidaDominoView extends JPanel {
             int locacionY = (int) (fichaDominoTablero.getLocacionY() * model.getAnchoFichaTablero() * escala);
             locacionX += margenAnchoTablero;
             locacionY += margenAlturaTablero;
-            
+
             int anchoFichaTablero;
             int alturaFichaTablero;
 
@@ -197,22 +213,22 @@ public class PartidaDominoView extends JPanel {
                 anchoFichaTablero = (int) (escala * model.getAnchoFichaTablero()); // Vertical
                 alturaFichaTablero = (int) (escala * model.getLargoFichaTablero());
             }
-            
+
             fichaDominoTablero.setBounds(locacionX, locacionY, anchoFichaTablero, alturaFichaTablero);
-            
+
         }
         revalidate();
         repaint();
     }
-    
+
     public void repintarCasillasTablero() {
         // Remover casillas en tablero
-        for(Component comp : panelTablero.getComponents()) {
-            if(CasillaPanel.class.isInstance(comp)) {
+        for (Component comp : panelTablero.getComponents()) {
+            if (CasillaPanel.class.isInstance(comp)) {
                 panelTablero.remove(comp);
             }
         }
-        
+
         float escala = model.getEscala();
 //        int anchoTableroDTO = model.getTableroDominoDTO().getAnchoTablero();
 //        int alturaTableroDTO = model.getTableroDominoDTO().getAltoTablero();
@@ -224,7 +240,7 @@ public class PartidaDominoView extends JPanel {
         int alturaUsableTablero = (int) (alturaTableroDTO * model.getAnchoFichaTablero() * escala);
         int margenAnchoTablero = (int) ((anchoTablero - anchoUsableTablero) / 2);
         int margenAlturaTablero = (int) ((alturaTablero - alturaUsableTablero) / 2);
-        
+
         // Repintar casillas
         for (CasillaPanel casillaPanel : model.getListaPanelesCasillasParaColocarFichas()) {
             panelTablero.add(casillaPanel);
@@ -232,7 +248,7 @@ public class PartidaDominoView extends JPanel {
             int locacionY = (int) (casillaPanel.getLocacionY() * model.getAnchoFichaTablero() * escala);
             locacionX += margenAnchoTablero;
             locacionY += margenAlturaTablero;
-            
+
             int anchoCasillaTablero;
             int alturaCasillaTablero;
 
@@ -243,9 +259,9 @@ public class PartidaDominoView extends JPanel {
                 anchoCasillaTablero = (int) (escala * model.getAnchoFichaTablero()); // Vertical
                 alturaCasillaTablero = (int) (escala * model.getLargoFichaTablero());
             }
-            
+
             casillaPanel.setBounds(locacionX, locacionY, anchoCasillaTablero, alturaCasillaTablero);
-            
+
         }
         revalidate();
         repaint();
@@ -258,6 +274,10 @@ public class PartidaDominoView extends JPanel {
         if (fondoPantalla != null) {
             g.drawImage(fondoPantalla, 0, 0, getWidth(), getHeight(), this);
         }
+    }
+
+    public PozoPanel getPozoPanel() {
+        return pozoPanel;
     }
 
 }

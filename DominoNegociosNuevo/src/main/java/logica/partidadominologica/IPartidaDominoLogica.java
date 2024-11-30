@@ -94,4 +94,8 @@ public interface IPartidaDominoLogica {
      */
     public void ocultarCasillasDisponibles();
 
+    public void mostrarPozoDisponible();
+
+    public void ocultarPozoDisponible();
+
 }

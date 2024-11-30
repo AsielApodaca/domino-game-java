@@ -12,7 +12,9 @@ import logica.salaesperalogica.SalaEsperaLogica;
 import manejadorrespuestaclienteproxy.GestorRespuestaClienteProxy;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaActualizarCantidadFichas;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaAgregarFichaJugador;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaBloquearPozo;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaColocarFichaTablero;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaDesbloquearPozo;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarCasillasDisponibles;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarFichasActualizadasDeJugador;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarPantallaPartida;
@@ -100,16 +102,22 @@ public class Setup implements ISetup {
         // Instancia los manejadores de respuestas, configurando la cadena de responsabilidad
         ManejadorRespuestaMostrarPantallaPartida manejadorRespuestaMostrarPantallaPartida
                 = new ManejadorRespuestaMostrarPantallaPartida(mediadorNegocio);
-        
+
+        ManejadorRespuestaBloquearPozo manejadorRespuestaBloquearPozo
+                = new ManejadorRespuestaBloquearPozo(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
+
+        ManejadorRespuestaDesbloquearPozo manejadorRespuestaDesbloquearPozo
+                = new ManejadorRespuestaDesbloquearPozo(partidaDominoLogica, manejadorRespuestaBloquearPozo);
+
         ManejadorRespuestaAgregarFichaJugador manejadorRespuestaAgregarFichaJugador
-                = new ManejadorRespuestaAgregarFichaJugador(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
+                = new ManejadorRespuestaAgregarFichaJugador(partidaDominoLogica, manejadorRespuestaDesbloquearPozo);
 
         ManejadorRespuestaOtorgarTurno manejadorRespuestaCambiarTurno
                 = new ManejadorRespuestaOtorgarTurno(partidaDominoLogica, manejadorRespuestaAgregarFichaJugador);
 
         ManejadorRespuestaColocarFichaTablero manejadorRespuestaAgregarFichaTablero
                 = new ManejadorRespuestaColocarFichaTablero(partidaDominoLogica, manejadorRespuestaCambiarTurno);
-        
+
         ManejadorRespuestaOcultarCasillasDisponibles manejadorRespuestaOcultarCasillasDisponibles
                 = new ManejadorRespuestaOcultarCasillasDisponibles(partidaDominoLogica, manejadorRespuestaAgregarFichaTablero);
 

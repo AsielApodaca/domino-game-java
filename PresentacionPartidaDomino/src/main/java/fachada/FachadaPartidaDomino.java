@@ -1,4 +1,3 @@
-
 package fachada;
 
 import dominodto.CasillaDTO;
@@ -45,7 +44,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
         mdSgContenedorContenido.setContenedorListener(partidaDominoController);
         mdSgContenedorContenido.mostrarPantalla();
         this.partidaDominoController.showView();
-        
+
         return (IContenedorListener) this.partidaDominoController;
     }
 
@@ -53,7 +52,7 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     public void mostrarFichasJugadorLocal(List<FichaDominoDTO> fichasJugador) {
         partidaDominoController.mostrarFichasJugadorLocal(fichasJugador);
     }
-    
+
     @Override
     public void quitarFichaJugadorLocal(FichaDominoDTO fichaDominoDTO) {
         partidaDominoController.removerFichaJugadorLocal(fichaDominoDTO);
@@ -81,11 +80,25 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
 
     @Override
     public void suscribirPresentacionListener(IPresentacionPartidaDominoListener listener) {
-        IPresentacionNotificadorManager presentacionNotificadorManager =
-                new PresentacionNotificadorManager();
+        IPresentacionNotificadorManager presentacionNotificadorManager
+                = new PresentacionNotificadorManager();
         presentacionNotificadorManager.suscribirPresentacionListener(listener);
         partidaDominoModel.setPresentacionNotificacionesManager(presentacionNotificadorManager);
     }
 
-    
+    @Override
+    public void mostrarPozo() {
+        partidaDominoController.mostrarPozoDisponible();
+    }
+
+    @Override
+    public void ocultarPozo() {
+        partidaDominoController.ocultarPozoDisponible();
+    }
+
+    @Override
+    public void sacarFichaPozo() {
+        partidaDominoController.sacarFichaPozo();
+    }
+
 }

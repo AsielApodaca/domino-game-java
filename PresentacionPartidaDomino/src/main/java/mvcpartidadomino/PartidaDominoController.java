@@ -1,4 +1,3 @@
-
 package mvcpartidadomino;
 
 import builders.CasillaBuilder;
@@ -19,6 +18,7 @@ import mediador.MediadorSingletonPantallaFichasJugador;
 import notificador.IPresentacionNotificadorManager;
 import notificador.PresentacionNotificadorManager;
 import notificador.eventos.CasillaSeleccionadaEvento;
+import notificador.eventos.PozoSeleccionadoEvento;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoController;
@@ -31,7 +31,7 @@ import partidadomino.fichadominojugadormvc.FichaDominoView;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PartidaDominoController implements IContenedorListener{
+public class PartidaDominoController implements IContenedorListener {
 
     private PartidaDominoModel model;
     private PartidaDominoView view;
@@ -42,7 +42,7 @@ public class PartidaDominoController implements IContenedorListener{
     public PartidaDominoController(PartidaDominoModel model, PartidaDominoView view) {
         this.model = model;
         this.view = view;
-
+        addMouseListenerToPozo();
         view.repintarVista();
     }
 
@@ -55,32 +55,32 @@ public class PartidaDominoController implements IContenedorListener{
     }
 
     public void mostrarCasillasParaColocarFicha(List<CasillaDTO> casillasDTO) {
-        
+
         List<CasillaPanel> listaCasillas = new ArrayList<>();
-        for(CasillaDTO casillaDTO : casillasDTO) {
+        for (CasillaDTO casillaDTO : casillasDTO) {
             listaCasillas.add(casillaBuilder.construirCasilla(casillaDTO));
         }
         model.setListaPanelesCasillasParaColocarFichas(listaCasillas);
         agregarMouseListenersACasillas();
         view.repintarCasillasTablero();
     }
-    
+
     private void agregarMouseListenersACasillas() {
-        for(CasillaPanel casilla : model.getListaPanelesCasillasParaColocarFichas()) {
+        for (CasillaPanel casilla : model.getListaPanelesCasillasParaColocarFichas()) {
             casilla.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                CasillaSeleccionadaEvento evento = new CasillaSeleccionadaEvento(casilla.getCasillaDTO());
-                
-                IPresentacionNotificadorManager presentacionNotificacionesManager = 
-                        model.getPresentacionNotificadorsManager();
-                
-                presentacionNotificacionesManager.notificarCasillaSeleccionada(evento);
-            }
-        });
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    CasillaSeleccionadaEvento evento = new CasillaSeleccionadaEvento(casilla.getCasillaDTO());
+
+                    IPresentacionNotificadorManager presentacionNotificacionesManager
+                            = model.getPresentacionNotificadorsManager();
+
+                    presentacionNotificacionesManager.notificarCasillaSeleccionada(evento);
+                }
+            });
         }
     }
-    
+
     public void ocultarCasillasParaColocarFicha() {
         // Settea una lista vacia
         model.setListaPanelesCasillasParaColocarFichas(new ArrayList<>());
@@ -92,11 +92,11 @@ public class PartidaDominoController implements IContenedorListener{
         crearMVCFichasJugadorLocal();
         repintarFichasJugadorLocal();
     }
-    
+
     public void removerFichaJugadorLocal(FichaDominoDTO fichaDominoDTO) {
         model.removerFichaDeFichasJugadorLocal(fichaDominoDTO);
     }
-    
+
     public void agregarFichaJugadorLocal(FichaDominoDTO fichaDominoDTO) {
         model.agregarFichaAJugadorLocal(fichaDominoDTO);
     }
@@ -135,6 +135,36 @@ public class PartidaDominoController implements IContenedorListener{
     private void repintarFichasJugadorLocal() {
         view.repintarContenedorFichasJugadorLocal();
         view.repintarFichasJugadorLocal();
+    }
+
+    public void mostrarPozoDisponible() {
+        model.setPozoBloqueado(false);
+        view.repintarPozo();
+    }
+
+    public void ocultarPozoDisponible() {
+        model.setPozoBloqueado(true);
+        view.repintarPozo();
+    }
+
+    public void sacarFichaPozo() {
+        if (!model.isPozoBloqueado()) {
+            IPresentacionNotificadorManager presentacionNotificadorManager
+                    = model.getPresentacionNotificadorsManager();
+            PozoSeleccionadoEvento evento = new PozoSeleccionadoEvento();
+            presentacionNotificadorManager.notificarPozoSeleccionado(evento);
+            ocultarPozoDisponible();
+        }
+    }
+
+    public void addMouseListenerToPozo() {
+        this.view.getPozoPanel().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                sacarFichaPozo(); // Reutilizamos el método existente
+                view.repintarPozo();
+            }
+        });
     }
 
     public PartidaDominoModel getModel() {
