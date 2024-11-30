@@ -8,9 +8,13 @@ import dominodto.JugadorDominoDTO;
 
 /**
  *
- * @author castr
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class RespuestaActualizarCantidadFichas extends EventoRespuesta {
+
     private JugadorDominoDTO jugadorDominoDTO; // Jugador que se le verá el cambio de fichas a todos, debe portar el id de este jugador
     private int cantidadFichas; // Cantidad de fichas que tiene ahora el jugador
 
@@ -27,6 +31,5 @@ public class RespuestaActualizarCantidadFichas extends EventoRespuesta {
     public int getCantidadFichas() {
         return cantidadFichas;
     }
-    
-    
+
 }

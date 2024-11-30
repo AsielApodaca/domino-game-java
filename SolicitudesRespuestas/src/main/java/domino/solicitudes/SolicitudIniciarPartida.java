@@ -8,13 +8,15 @@ import dominodto.UsuarioDTO;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
-public class SolicitudIniciarPartida extends EventoSolicitud{
-    
+public class SolicitudIniciarPartida extends EventoSolicitud {
+
     public SolicitudIniciarPartida(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
     }
-    
-    
+
 }

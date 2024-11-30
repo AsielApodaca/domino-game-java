@@ -32,10 +32,13 @@ import java.util.List;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
-public class PartidaServerLogica implements IPartidaServerLogica{
-    
+public class PartidaServerLogica implements IPartidaServerLogica {
+
     private IGeneradorRespuestas generadorRespuestas;
     private IControladorFichas controladorFichas;
     private IControladorJugadores controladorJugadores;
@@ -56,17 +59,17 @@ public class PartidaServerLogica implements IPartidaServerLogica{
         iniciarAdapters();
         registrarUsuarioComoJugador(anfitrion);
     }
-    
+
     @Override
     public void procesarUnirseSala(UsuarioDTO usuarioDTO) {
         registrarUsuarioComoJugador(usuarioDTO);
     }
-    
+
     @Override
     public void procesarAbandonarSala(String idCliente) {
         eliminarJugadorPorIdCliente(idCliente);
     }
-    
+
     @Override
     public void procesarIniciarPartida() {
         mostrarPantallaPartidaAJugadores();
@@ -74,13 +77,13 @@ public class PartidaServerLogica implements IPartidaServerLogica{
         repartirTurnos();
         mostrarFichasAJugadores();
         iniciarPartida();
-        
+
     }
 
     @Override
     public void procesarFichaSeleccionada(FichaDominoDTO ficha, UsuarioDTO usuario) {
         String idCliente = usuario.getIdCliente();
-        if(ficha == null) {
+        if (ficha == null) {
             controladorFichas.desseleccionarFicha();
             generadorRespuestas.enviarRespuestaOcultarCasillasDisponibles(idCliente);
         } else {
@@ -88,13 +91,13 @@ public class PartidaServerLogica implements IPartidaServerLogica{
             controladorFichas.seleccionarFicha(fichaDominoEntity);
             List<CasillaEntity> casillasEntity = controladorTablero.obtenerCasillasCompatibles(fichaDominoEntity);
             List<CasillaDTO> casillasDTO = new ArrayList<>();
-            for(CasillaEntity casillaEntity : casillasEntity) {
+            for (CasillaEntity casillaEntity : casillasEntity) {
                 CasillaDTO casillaDTO = adapterCasilla.adaptToDTO(casillaEntity);
                 casillasDTO.add(casillaDTO);
             }
             generadorRespuestas.enviarRespuestaMostrarCasillasDisponibles(idCliente, casillasDTO);
         }
-        
+
     }
 
     @Override
@@ -129,11 +132,11 @@ public class PartidaServerLogica implements IPartidaServerLogica{
         // Otorga el turno al siguiente jugador
         otorgarTurnoASiguienteJugador();
     }
-    
+
     public void setGeneradorRespuestas(IGeneradorRespuestas generadorRespuestas) {
         this.generadorRespuestas = generadorRespuestas;
     }
-    
+
     private void iniciarControladores() {
         controladorFichas = new ControladorFichas();
         controladorFichas.crearPozo();
@@ -142,49 +145,49 @@ public class PartidaServerLogica implements IPartidaServerLogica{
         controladorTablero.crearTablero();
         controladorTurnos = new ControladorTurnos();
     }
-    
+
     private void iniciarAdapters() {
         adapterFichaDomino = new AdapterFichaDomino(controladorFichas.obtenerTodasLasFichasDelJuego());
         controladorTablero.setAdapterFichaDomino(adapterFichaDomino);
         adapterJugadorDomino = new AdapterJugadorDomino();
         adapterCasilla = new AdapterCasilla(adapterFichaDomino);
     }
-    
+
     private void registrarUsuarioComoJugador(UsuarioDTO usuarioDTO) {
         JugadorDominoEntity jugador = adapterJugadorDomino.adaptToEntity(usuarioDTO);
         controladorJugadores.agregarJugador(jugador);
     }
-    
+
     private void eliminarJugadorPorIdCliente(String idCliente) {
         controladorJugadores.eliminarJugadorPorIdCliente(idCliente);
     }
-    
+
     private void mostrarPantallaPartidaAJugadores() {
         List<JugadorDominoEntity> listaJugadoresEntity = controladorJugadores.obtenerJugadores();
         List<JugadorDominoDTO> listaJugadoresDTO = new ArrayList<>();
-        for(JugadorDominoEntity jugadorEntity : listaJugadoresEntity) {
+        for (JugadorDominoEntity jugadorEntity : listaJugadoresEntity) {
             JugadorDominoDTO jugadorDTO = adapterJugadorDomino.adaptToDTO(jugadorEntity);
             listaJugadoresDTO.add(jugadorDTO);
         }
-        
+
         // Envia la respuesta
         generadorRespuestas.enviarRespuestaMostrarPantallaPartida(listaJugadoresDTO);
     }
-    
+
     private void repartirFichas() {
         List<JugadorDominoEntity> jugadores = controladorJugadores.obtenerJugadores();
         int fichasPorJugador = configuracionJuegoDTO.getFichasPorJugador();
         controladorFichas.repartirFichasAJugadores(jugadores, fichasPorJugador);
     }
-    
+
     private void repartirTurnos() {
         List<JugadorDominoEntity> jugadores = controladorJugadores.obtenerJugadores();
         controladorTurnos.asignarTurnosAJugadores(jugadores);
     }
-    
+
     private void mostrarFichasAJugadores() {
         List<JugadorDominoEntity> jugadores = controladorJugadores.obtenerJugadores();
-        for(JugadorDominoEntity jugador : jugadores) {
+        for (JugadorDominoEntity jugador : jugadores) {
             // Obtiene las fichas del jugador
             List<FichaDominoDTO> listaFichas = adapterFichaDomino.adaptListToDTO(jugador.getListaFichasJugador());
             // Obtiene el idCliente del jugaador
@@ -193,18 +196,18 @@ public class PartidaServerLogica implements IPartidaServerLogica{
             JugadorDominoDTO jugadorDTO = adapterJugadorDomino.adaptToDTO(jugador);
             // Obtiene cantidad de fichas del jugador
             int cantidadFichas = listaFichas.size();
-            
+
             // Muestra al jugador sus fichas
             generadorRespuestas.enviarRespuestaMostrarFichasActualizadasDeJugador(idCliente, listaFichas);
             // Muestra su cantidad de fichas al resto de jugadores
             generadorRespuestas.enviarRespuestaActualizarCantidadFichas(jugadorDTO, cantidadFichas);
         }
     }
-    
+
     private void iniciarPartida() {
         otorgarTurnoASiguienteJugador();
     }
-    
+
     private void otorgarTurnoASiguienteJugador() {
         // Otorga el turno a un jugador
         JugadorDominoEntity jugadorConTurno = controladorTurnos.obtenerSiguienteTurno();
@@ -214,12 +217,49 @@ public class PartidaServerLogica implements IPartidaServerLogica{
         String idCliente = jugadorConTurno.getIdCliente();
         // Obtiene las fichas del jugador con compatibilidad del tablero asignada
         List<FichaDominoDTO> fichasDTO = controladorTablero.asignarCompatibilidadAFichas(jugadorConTurno.getListaFichasJugador());
-        
-        
+
         // Envia a los jugadores de quien es el turno actual
         generadorRespuestas.enviarRespuestaOtorgarTurno(jugadorConTurnoDTO);
         // Envia al jugador con el turno las fichas con compatibilidad del tablero asignada
         generadorRespuestas.enviarRespuestaMostrarFichasActualizadasDeJugador(idCliente, fichasDTO);
-        
+
+    }
+
+    @Override
+    public void procesarSacarFichaPozo(String idCliente) {
+        // Obtiene el jugador actual con turno
+        JugadorDominoEntity jugadorConTurno = controladorJugadores.obtenerJugadorPorIdCliente(idCliente);
+
+        // Si no hay fichas en el pozo, lo bloquea y termina
+        if (!controladorFichas.quedanFichasEnPozo()) {
+            generadorRespuestas.enviarRespuestaBloquearPozo(idCliente);
+            return;
+        }
+
+        // Agrega una ficha al jugador desde el pozo
+        controladorFichas.agregarFichaAJugador(jugadorConTurno);
+
+        // Obtiene las fichas actualizadas del jugador
+        List<FichaDominoEntity> fichasJugador = jugadorConTurno.getListaFichasJugador();
+        List<FichaDominoDTO> fichasJugadorDTO = controladorTablero.asignarCompatibilidadAFichas(fichasJugador);
+
+        // Verifica si tiene fichas compatibles
+        boolean tieneFichasCompatibles = false;
+        for (FichaDominoDTO fichaDTO : fichasJugadorDTO) {
+            if (fichaDTO.isCompatible()) {
+                tieneFichasCompatibles = true;
+                break;
+            }
+        }
+
+        // Maneja el estado del pozo basado en compatibilidad
+        if (tieneFichasCompatibles) {
+            generadorRespuestas.enviarRespuestaBloquearPozo(idCliente);
+        } else {
+            generadorRespuestas.enviarRespuestaDesbloquearPozo(idCliente);
+        }
+
+        // Actualiza las fichas del jugador
+        generadorRespuestas.enviarRespuestaMostrarFichasActualizadasDeJugador(idCliente, fichasJugadorDTO);
     }
 }

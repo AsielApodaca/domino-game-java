@@ -12,15 +12,17 @@ import manejadorsolicitudserverproxy.ManejadorSolicitudCasillaSeleccionada;
 import manejadorsolicitudserverproxy.ManejadorSolicitudCrearSala;
 import manejadorsolicitudserverproxy.ManejadorSolicitudFichaSeleccionada;
 import manejadorsolicitudserverproxy.ManejadorSolicitudIniciarPartida;
+import manejadorsolicitudserverproxy.ManejadorSolicitudSacarFichaPozo;
 import manejadorsolicitudserverproxy.ManejadorSolicitudUnirseSala;
 
 /**
  * Configuración inicial del servidor.
- * 
- * Esta clase implementa el proceso de configuración necesario para inicializar los componentes
- * del servidor, incluyendo lógica de negocio, manejadores de solicitudes, generadores de
- * respuestas y conexión con la fachada del servidor.
- * 
+ *
+ * Esta clase implementa el proceso de configuración necesario para inicializar
+ * los componentes del servidor, incluyendo lógica de negocio, manejadores de
+ * solicitudes, generadores de respuestas y conexión con la fachada del
+ * servidor.
+ *
  * @author Hisamy Cinco Cota
  * @author Gael Rafael Castro Molina
  * @author Oliver Inzunza Valle
@@ -56,23 +58,26 @@ public class Setup implements ISetup {
      */
     private void iniciarManejadorSolicitudesServer() {
 
-        ManejadorSolicitudIniciarPartida manejadorSolicitudIniciarPartida =
-                new ManejadorSolicitudIniciarPartida(partidaServerLogica);
-        
-        ManejadorSolicitudUnirseSala manejadorSolicitudUnirseSala =
-                new ManejadorSolicitudUnirseSala(manejadorSolicitudIniciarPartida, partidaServerLogica);
-        
-        ManejadorSolicitudAbandonarSala manejadorSolicitudAbandonarSala =
-                new ManejadorSolicitudAbandonarSala(manejadorSolicitudUnirseSala, partidaServerLogica);
-        
-        ManejadorSolicitudCrearSala manejadorSolicitudCrearSala =
-                new ManejadorSolicitudCrearSala(manejadorSolicitudAbandonarSala, partidaServerLogica);
+        ManejadorSolicitudSacarFichaPozo manejadorSolicitudSacarFichaPozo
+                = new ManejadorSolicitudSacarFichaPozo(partidaServerLogica);
 
-        ManejadorSolicitudCasillaSeleccionada manejadorSolicitudCasillaSeleccionada =
-                new ManejadorSolicitudCasillaSeleccionada(manejadorSolicitudCrearSala, partidaServerLogica);
+        ManejadorSolicitudIniciarPartida manejadorSolicitudIniciarPartida
+                = new ManejadorSolicitudIniciarPartida(manejadorSolicitudSacarFichaPozo, partidaServerLogica);
 
-        ManejadorSolicitudFichaSeleccionada manejadorSolicitudFichaSeleccionada =
-                new ManejadorSolicitudFichaSeleccionada(manejadorSolicitudCasillaSeleccionada, partidaServerLogica);
+        ManejadorSolicitudUnirseSala manejadorSolicitudUnirseSala
+                = new ManejadorSolicitudUnirseSala(manejadorSolicitudIniciarPartida, partidaServerLogica);
+
+        ManejadorSolicitudAbandonarSala manejadorSolicitudAbandonarSala
+                = new ManejadorSolicitudAbandonarSala(manejadorSolicitudUnirseSala, partidaServerLogica);
+
+        ManejadorSolicitudCrearSala manejadorSolicitudCrearSala
+                = new ManejadorSolicitudCrearSala(manejadorSolicitudAbandonarSala, partidaServerLogica);
+
+        ManejadorSolicitudCasillaSeleccionada manejadorSolicitudCasillaSeleccionada
+                = new ManejadorSolicitudCasillaSeleccionada(manejadorSolicitudCrearSala, partidaServerLogica);
+
+        ManejadorSolicitudFichaSeleccionada manejadorSolicitudFichaSeleccionada
+                = new ManejadorSolicitudFichaSeleccionada(manejadorSolicitudCasillaSeleccionada, partidaServerLogica);
 
         gestorSolicitudServerProxy = new GestorSolicitudServerProxy(manejadorSolicitudFichaSeleccionada);
     }

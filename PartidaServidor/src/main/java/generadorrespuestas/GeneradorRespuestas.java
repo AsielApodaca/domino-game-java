@@ -6,7 +6,9 @@ package generadorrespuestas;
 
 import domino.fachada.IFachadaServidorProxy;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
+import domino.respuestas.RespuestaBloquearPozo;
 import domino.respuestas.RespuestaColocarFichaTablero;
+import domino.respuestas.RespuestaDesbloquearPozo;
 import domino.respuestas.RespuestaMostrarCasillasDisponibles;
 import domino.respuestas.RespuestaMostrarFichasActualizadasDeJugador;
 import domino.respuestas.RespuestaMostrarPantallaPartida;
@@ -19,15 +21,18 @@ import java.util.List;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
-public class GeneradorRespuestas implements IGeneradorRespuestas{
+public class GeneradorRespuestas implements IGeneradorRespuestas {
 
     private IFachadaServidorProxy fachadaServidorProxy;
 
     public GeneradorRespuestas() {
     }
-    
+
     @Override
     public void enviarRespuestaMostrarPantallaPartida(List<JugadorDominoDTO> jugadoresDTO) {
         RespuestaMostrarPantallaPartida respuesta = new RespuestaMostrarPantallaPartida(jugadoresDTO);
@@ -75,6 +80,16 @@ public class GeneradorRespuestas implements IGeneradorRespuestas{
         this.fachadaServidorProxy = fachadaServidorProxy;
     }
 
-    
-    
+    @Override
+    public void enviarRespuestaDesbloquearPozo(String idCliente) {
+        RespuestaDesbloquearPozo respuesta = new RespuestaDesbloquearPozo(idCliente);
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+
+    @Override
+    public void enviarRespuestaBloquearPozo(String idCliente) {
+        RespuestaBloquearPozo respuesta = new RespuestaBloquearPozo(idCliente);
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+
 }

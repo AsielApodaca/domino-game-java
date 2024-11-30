@@ -9,7 +9,10 @@ import generadorrespuestas.IGeneradorRespuestas;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public interface IPartidaServerLogica {
     public void procesarCrearSala(ConfiguracionJuegoDTO configuracionJuegoDTO, UsuarioDTO anfitrion);
@@ -18,5 +21,6 @@ public interface IPartidaServerLogica {
     public void procesarIniciarPartida();
     public void procesarFichaSeleccionada(FichaDominoDTO ficha, UsuarioDTO usuario);
     public void procesarCasillaSeleccionada(CasillaDTO casilla, UsuarioDTO usuario);
+    public void procesarSacarFichaPozo(String idCliente);
     public void setGeneradorRespuestas(IGeneradorRespuestas generadorRespuestas);
 }

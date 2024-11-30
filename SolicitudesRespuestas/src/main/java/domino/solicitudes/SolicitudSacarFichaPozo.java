@@ -13,17 +13,9 @@ import dominodto.UsuarioDTO;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class SolicitudUnirseSala extends EventoSolicitud {
+public class SolicitudSacarFichaPozo extends EventoSolicitud {
 
-    private String idSala;
-
-    public SolicitudUnirseSala(UsuarioDTO usuarioDTO, String idSala) {
+    public SolicitudSacarFichaPozo(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
-        this.idSala = idSala;
     }
-
-    public String getIdSala() {
-        return idSala;
-    }
-
 }

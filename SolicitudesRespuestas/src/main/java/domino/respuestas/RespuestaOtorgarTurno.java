@@ -1,13 +1,16 @@
-
 package domino.respuestas;
 
 import dominodto.JugadorDominoDTO;
 
 /**
  *
- * @author castr
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class RespuestaOtorgarTurno extends EventoRespuesta {
+
     // Jugador que se le consederá el turno de colocar ficha, debe portar el id de este jugador
     private JugadorDominoDTO jugadorDominoDTO;
 

@@ -12,9 +12,13 @@ import java.util.List;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public interface IGeneradorRespuestas {
+
     void enviarRespuestaMostrarPantallaPartida(List<JugadorDominoDTO> jugadoresDTO);
 
     void enviarRespuestaMostrarFichasActualizadasDeJugador(String idCliente, List<FichaDominoDTO> fichasDomino);
@@ -28,6 +32,10 @@ public interface IGeneradorRespuestas {
     void enviarRespuestaOcultarCasillasDisponibles(String idCliente);
 
     void enviarRespuestaColocarFichaTablero(CasillaDTO ficha);
-    
+
+    void enviarRespuestaDesbloquearPozo(String idCliente);
+
+    void enviarRespuestaBloquearPozo(String idCliente);
+
     void setFachadaServidorProxy(IFachadaServidorProxy fachadaServidorProxy);
 }

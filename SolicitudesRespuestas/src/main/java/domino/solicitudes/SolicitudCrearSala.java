@@ -9,9 +9,12 @@ import dominodto.UsuarioDTO;
 
 /**
  *
- * @author castr
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
-public class SolicitudCrearSala extends EventoSolicitud{
+public class SolicitudCrearSala extends EventoSolicitud {
 
     private ConfiguracionJuegoDTO configuracionJuegoDTO;
     private int limiteJugadores;
@@ -21,7 +24,7 @@ public class SolicitudCrearSala extends EventoSolicitud{
         this.configuracionJuegoDTO = configuracionJuegoDTO;
         this.limiteJugadores = configuracionJuegoDTO.getLimiteJugadores();
     }
-    
+
     public SolicitudCrearSala(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
     }
@@ -33,7 +36,5 @@ public class SolicitudCrearSala extends EventoSolicitud{
     public int getLimiteJugadores() {
         return limiteJugadores;
     }
-    
-    
-    
+
 }
