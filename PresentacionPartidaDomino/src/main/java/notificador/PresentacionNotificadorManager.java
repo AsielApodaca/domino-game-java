@@ -1,8 +1,8 @@
 package notificador;
 
+import dominodto.CasillaDTO;
+import dominodto.FichaDominoDTO;
 import listeners.IPresentacionPartidaDominoListener;
-import notificador.eventos.CasillaSeleccionadaEvento;
-import notificador.eventos.FichaSeleccionadaEvento;
 
 /**
  * Clase que gestiona las notificaciones de eventos relacionados con la presentación de la partida de dominó.
@@ -35,20 +35,20 @@ public class PresentacionNotificadorManager implements IPresentacionNotificadorM
     /**
      * Notifica al listener que una casilla ha sido seleccionada.
      * 
-     * @param evento el evento que contiene la información sobre la casilla seleccionada
+     * @param casillaSeleccionada casilla que fué seleccionada
      */
     @Override
-    public void notificarCasillaSeleccionada(CasillaSeleccionadaEvento evento) {
-        presentacionPartidaDominoListener.onCasillaSeleccionada(evento);
+    public void notificarCasillaSeleccionada(CasillaDTO casillaSeleccionada) {
+        presentacionPartidaDominoListener.onCasillaSeleccionada(casillaSeleccionada);
     }
 
     /**
      * Notifica al listener que una ficha ha sido seleccionada.
      * 
-     * @param evento el evento que contiene la información sobre la ficha seleccionada
+     * @param fichaSelecccionada la ficha seleccionada
      */
     @Override
-    public void notificarFichaSeleccionada(FichaSeleccionadaEvento evento) {
-        presentacionPartidaDominoListener.onFichaSeleccionada(evento);
+    public void notificarFichaSeleccionada(FichaDominoDTO fichaSelecccionada) {
+        presentacionPartidaDominoListener.onFichaSeleccionada(fichaSelecccionada);
     }
 }

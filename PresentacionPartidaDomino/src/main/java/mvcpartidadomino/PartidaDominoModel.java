@@ -6,7 +6,6 @@ import dominodto.TableroDominoDTO;
 import java.util.ArrayList;
 import java.util.List;
 import notificador.IPresentacionNotificadorManager;
-import notificador.eventos.FichaSeleccionadaEvento;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
@@ -95,8 +94,7 @@ public class PartidaDominoModel{
     }
     
     public void notificarFichaSeleccionadaChange(FichaDominoDTO fichaSeleccionada) {
-        FichaSeleccionadaEvento evento = new FichaSeleccionadaEvento(fichaSeleccionada);
-        presentacionNotificadorManager.notificarFichaSeleccionada(evento);
+        presentacionNotificadorManager.notificarFichaSeleccionada(fichaSeleccionada);
     }
 
     public List<CasillaPanel> getListaPanelesCasillasParaColocarFichas() {

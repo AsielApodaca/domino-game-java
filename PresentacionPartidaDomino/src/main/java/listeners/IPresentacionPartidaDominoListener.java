@@ -1,7 +1,7 @@
 package listeners;
 
-import notificador.eventos.CasillaSeleccionadaEvento;
-import notificador.eventos.FichaSeleccionadaEvento;
+import dominodto.CasillaDTO;
+import dominodto.FichaDominoDTO;
 
 /**
  * 
@@ -11,6 +11,6 @@ import notificador.eventos.FichaSeleccionadaEvento;
  * PresentacionPartidaDomino.
  */
 public interface IPresentacionPartidaDominoListener {
-    public void onFichaSeleccionada(FichaSeleccionadaEvento evento);
-    public void onCasillaSeleccionada(CasillaSeleccionadaEvento evento);
+    public void onFichaSeleccionada(FichaDominoDTO fichaSeleccionada);
+    public void onCasillaSeleccionada(CasillaDTO casillaSeleccionada);
 }

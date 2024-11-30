@@ -8,7 +8,6 @@ import domino.fachada.IFachadaClienteProxy;
 import dominio.UsuarioEntity;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
-import domino.solicitudes.SolicitudCrearSala;
 import domino.solicitudes.SolicitudFichaSeleccionada;
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
@@ -21,8 +20,6 @@ import java.util.logging.Logger;
 import listeners.IContenedorListener;
 import listeners.IPresentacionPartidaDominoListener;
 import mapeodto.MapeadorDTO;
-import notificador.eventos.CasillaSeleccionadaEvento;
-import notificador.eventos.FichaSeleccionadaEvento;
 import setup.Setup;
 
 /**
@@ -68,19 +65,16 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
      * información relevante (ficha y usuario) y crea una solicitud que luego es
      * enviada a través de la fachada cliente.
      *
-     * @param evento El evento de seylección de ficha, que contiene la
-     * información de la ficha seleccionada.
+     * @param fichaSeleccionada la ficha seleccionada.
      */
     @Override
-    public void onFichaSeleccionada(FichaSeleccionadaEvento evento) {
-        // Obtiene el DTO de la ficha seleccionada desde el evento
-        FichaDominoDTO fichaDominoDTO = evento.getFichaDominoDTO();
+    public void onFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
 
         // Mapea el usuario relacionado al DTO correspondiente
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
 
         // Crea una nueva solicitud de ficha seleccionada
-        EventoSolicitud solicitudFichaSeleccionada = new SolicitudFichaSeleccionada(fichaDominoDTO, usuarioDTO);
+        EventoSolicitud solicitudFichaSeleccionada = new SolicitudFichaSeleccionada(fichaSeleccionada, usuarioDTO);
 
         // Envía la solicitud a través de la fachada de DominoClientProxy
         fachadaClienteProxy.enviarSolicitud(solicitudFichaSeleccionada);
@@ -92,19 +86,16 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
      * información relevante (casilla y usuario) y crea una solicitud que luego
      * es enviada a través de la fachada cliente.
      *
-     * @param evento El evento de selección de casilla, que contiene la
-     * información de la casilla seleccionada.
+     * @param casillaSeleccionada la casilla seleccionada.
      */
     @Override
-    public void onCasillaSeleccionada(CasillaSeleccionadaEvento evento) {
-        // Obtiene el DTO de la casilla seleccionada desde el evento
-        CasillaDTO casillaDTO = evento.getCasillaDTO();
+    public void onCasillaSeleccionada(CasillaDTO casillaSeleccionada) {
 
         // Mapea el usuario relacionado al DTO correspondiente
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
 
         // Crea una nueva solicitud de casilla seleccionada
-        EventoSolicitud solicitudCasillaSeleccionada = new SolicitudCasillaSeleccionada(casillaDTO, usuarioDTO);
+        EventoSolicitud solicitudCasillaSeleccionada = new SolicitudCasillaSeleccionada(casillaSeleccionada, usuarioDTO);
 
         // Envía la solicitud a través de la fachada cliente
         fachadaClienteProxy.enviarSolicitud(solicitudCasillaSeleccionada);

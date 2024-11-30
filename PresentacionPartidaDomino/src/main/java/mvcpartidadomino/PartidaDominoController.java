@@ -17,8 +17,6 @@ import javax.swing.JPanel;
 import listeners.IContenedorListener;
 import mediador.MediadorSingletonPantallaFichasJugador;
 import notificador.IPresentacionNotificadorManager;
-import notificador.PresentacionNotificadorManager;
-import notificador.eventos.CasillaSeleccionadaEvento;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoController;
@@ -70,12 +68,12 @@ public class PartidaDominoController implements IContenedorListener{
             casilla.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                CasillaSeleccionadaEvento evento = new CasillaSeleccionadaEvento(casilla.getCasillaDTO());
+                CasillaDTO casillaSeleccionada = casilla.getCasillaDTO();
                 
                 IPresentacionNotificadorManager presentacionNotificacionesManager = 
                         model.getPresentacionNotificadorsManager();
                 
-                presentacionNotificacionesManager.notificarCasillaSeleccionada(evento);
+                presentacionNotificacionesManager.notificarCasillaSeleccionada(casillaSeleccionada);
             }
         });
         }
