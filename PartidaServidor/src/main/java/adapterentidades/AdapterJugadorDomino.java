@@ -23,13 +23,13 @@ public class AdapterJugadorDomino implements IAdapterJugadorDomino {
 
     @Override
     public JugadorDominoEntity adaptToEntity(UsuarioDTO usuario) {
-        JugadorDominoEntity jugadorEntity = new JugadorDominoEntity(usuario.getIdCliente(), usuario.getNombre(), usuario.getIcon()) ;
+        JugadorDominoEntity jugadorEntity = new JugadorDominoEntity(usuario.getIdCliente(), usuario.getNombre(), usuario.getIcono()) ;
         return jugadorEntity ;
     }
 
     @Override
     public JugadorDominoDTO adaptToDTO(JugadorDominoEntity jugadorEntity) {
-        JugadorDominoDTO jugadorDTO = new JugadorDominoDTO(jugadorEntity.getIdCliente(), jugadorEntity.getNombre(), jugadorEntity.getIcon()) ;
+        JugadorDominoDTO jugadorDTO = new JugadorDominoDTO(jugadorEntity.getIdCliente(), jugadorEntity.getNombre(), jugadorEntity.getIcono()) ;
         return jugadorDTO ;
     }
     
