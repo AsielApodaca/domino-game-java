@@ -218,6 +218,18 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         // Obtiene las fichas del jugador con compatibilidad del tablero asignada
         List<FichaDominoDTO> fichasDTO = controladorTablero.asignarCompatibilidadAFichas(jugadorConTurno.getListaFichasJugador());
 
+        // Bloquea el pozo inicialmente para el nuevo turno
+        generadorRespuestas.enviarRespuestaBloquearPozo(idCliente);
+
+        // Verifica si tiene fichas compatibles
+        boolean tieneFichasCompatibles = fichasDTO.stream()
+                .anyMatch(FichaDominoDTO::isCompatible);
+
+        // Si no tiene fichas compatibles y hay fichas en el pozo, desbloquea el pozo
+        if (!tieneFichasCompatibles && controladorFichas.quedanFichasEnPozo()) {
+            generadorRespuestas.enviarRespuestaDesbloquearPozo(idCliente);
+        }
+
         // Envia a los jugadores de quien es el turno actual
         generadorRespuestas.enviarRespuestaOtorgarTurno(jugadorConTurnoDTO);
         // Envia al jugador con el turno las fichas con compatibilidad del tablero asignada
@@ -244,13 +256,8 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         List<FichaDominoDTO> fichasJugadorDTO = controladorTablero.asignarCompatibilidadAFichas(fichasJugador);
 
         // Verifica si tiene fichas compatibles
-        boolean tieneFichasCompatibles = false;
-        for (FichaDominoDTO fichaDTO : fichasJugadorDTO) {
-            if (fichaDTO.isCompatible()) {
-                tieneFichasCompatibles = true;
-                break;
-            }
-        }
+        boolean tieneFichasCompatibles = fichasJugadorDTO.stream()
+                .anyMatch(FichaDominoDTO::isCompatible);
 
         // Maneja el estado del pozo basado en compatibilidad
         if (tieneFichasCompatibles) {
