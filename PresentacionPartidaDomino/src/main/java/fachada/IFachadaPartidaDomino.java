@@ -73,6 +73,8 @@ public interface IFachadaPartidaDomino {
     public void mostrarPozo();
 
     public void ocultarPozo();
+    
+
 
     /**
      * Suscribe un listener para manejar eventos de la presentación de la

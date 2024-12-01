@@ -13,4 +13,6 @@ import dominodto.FichaDominoDTO;
 public interface IPresentacionPartidaDominoListener {
     public void onFichaSeleccionada(FichaDominoDTO fichaSeleccionada);
     public void onCasillaSeleccionada(CasillaDTO casillaSeleccionada);
+    public void onPozoSeleccionado();
+    
 }

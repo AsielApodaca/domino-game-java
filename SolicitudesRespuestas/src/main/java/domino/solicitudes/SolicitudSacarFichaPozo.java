@@ -14,8 +14,9 @@ import dominodto.UsuarioDTO;
  * @author Asiel Apodaca Monge
  */
 public class SolicitudSacarFichaPozo extends EventoSolicitud {
-
+    
     public SolicitudSacarFichaPozo(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
     }
+    
 }
