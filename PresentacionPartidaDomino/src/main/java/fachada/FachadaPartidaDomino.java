@@ -2,6 +2,7 @@ package fachada;
 
 import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
+import dominodto.JugadorDominoDTO;
 import java.util.List;
 import listeners.IContenedorListener;
 import listeners.IPresentacionPartidaDominoListener;
@@ -94,6 +95,26 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     @Override
     public void ocultarPozo() {
         partidaDominoController.ocultarPozoDisponible();
+    }
+
+    @Override
+    public void mostrarJugador(JugadorDominoDTO jugadorDominoDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void removerJugador(JugadorDominoDTO jugadorDominoDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void actualizarCantidadFichasDeJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void otorgarTurnoAJugador(JugadorDominoDTO jugadorDominoDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

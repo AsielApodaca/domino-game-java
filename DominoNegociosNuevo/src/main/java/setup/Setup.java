@@ -70,7 +70,9 @@ public class Setup implements ISetup {
      */
     private void iniciarUsuario() {
         String nombre = "oliver";
+        String fuenteIcono = "../DominoMultimedia/personajes/personaje07.png";
         this.usuarioLocal = new UsuarioEntity(nombre);
+        this.usuarioLocal.setFuenteIcono(fuenteIcono);
     }
 
     /**
