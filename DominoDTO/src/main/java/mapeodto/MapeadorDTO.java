@@ -28,7 +28,7 @@ public class MapeadorDTO {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         
         // Mapea los atributos de la entidad UsuarioEntity a UsuarioDTO
-        usuarioDTO.setIcono(usuarioEntity.getIcono());
+        usuarioDTO.setFuenteIcono(usuarioEntity.getFuenteIcono());
         usuarioDTO.setIdCliente(usuarioEntity.getIdCliente());
         usuarioDTO.setNombre(usuarioEntity.getNombre());
         

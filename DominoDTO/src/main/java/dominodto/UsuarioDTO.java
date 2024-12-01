@@ -15,7 +15,7 @@ public class UsuarioDTO {
     
     private String idCliente;
     private String nombre;
-    private BufferedImage icono;
+    private String fuenteIcono;
 
     public UsuarioDTO() {
     }
@@ -41,12 +41,12 @@ public class UsuarioDTO {
         this.nombre = nombre;
     }
 
-    public BufferedImage getIcono() {
-        return icono;
+    public String getFuenteIcono() {
+        return fuenteIcono;
     }
 
-    public void setIcono(BufferedImage icono) {
-        this.icono = icono;
+    public void setFuenteIcono(String fuenteIcono) {
+        this.fuenteIcono = fuenteIcono;
     }
 
     

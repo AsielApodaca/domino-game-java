@@ -1,7 +1,6 @@
 
 package dominio;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,8 @@ public class JugadorDominoEntity extends UsuarioEntity {
 
     private List<FichaDominoEntity> listaFichasJugador;
 
-    public JugadorDominoEntity(String idCliente, String nombre, BufferedImage icono) {
-        super(idCliente, nombre, icono);
+    public JugadorDominoEntity(String idCliente, String nombre, String fuenteIcono) {
+        super(idCliente, nombre, fuenteIcono);
         this.listaFichasJugador  = new ArrayList<>();
     }
 

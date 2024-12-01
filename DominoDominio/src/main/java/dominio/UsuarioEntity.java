@@ -4,7 +4,6 @@
  */
 package dominio;
 
-import java.awt.image.BufferedImage;
 
 
 /**
@@ -18,12 +17,12 @@ public class UsuarioEntity {
 
     private String idCliente;
     private String nombre;
-    private BufferedImage icono;
+    private String fuenteIcono;
 
-    public UsuarioEntity(String idCliente, String nombre, BufferedImage icono) {
+    public UsuarioEntity(String idCliente, String nombre, String fuenteIcono) {
         this.idCliente = idCliente;
         this.nombre = nombre;
-        this.icono = icono;
+        this.fuenteIcono = fuenteIcono;
     }
 
     public UsuarioEntity(String idCliente, String nombre) {
@@ -51,12 +50,12 @@ public class UsuarioEntity {
         this.nombre = nombre;
     }
 
-    public BufferedImage getIcono() {
-        return icono;
+    public String getFuenteIcono() {
+        return fuenteIcono;
     }
 
-    public void setIcono(BufferedImage icono) {
-        this.icono = icono;
+    public void setFuenteIcono(String fuenteIcono) {
+        this.fuenteIcono = fuenteIcono;
     }
 
     
