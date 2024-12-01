@@ -14,7 +14,7 @@ import dominodto.FichaDominoDTO;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaAgregarFichaJugador extends EventoRespuesta{
-    
+    public static final boolean ES_PARA_TODOS = false;
     private FichaDominoDTO fichaDominoDTO;
     
     public RespuestaAgregarFichaJugador(String idCliente, FichaDominoDTO fichaDominoDTO) {
@@ -24,5 +24,10 @@ public class RespuestaAgregarFichaJugador extends EventoRespuesta{
 
     public FichaDominoDTO getFichaDominoDTO() {
         return fichaDominoDTO;
+    }
+    
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
     }
 }

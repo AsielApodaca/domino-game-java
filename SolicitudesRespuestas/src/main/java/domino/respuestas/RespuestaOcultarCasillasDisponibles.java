@@ -12,9 +12,14 @@ package domino.respuestas;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaOcultarCasillasDisponibles extends EventoRespuesta{
+    public static final boolean ES_PARA_TODOS = false;
     
     public RespuestaOcultarCasillasDisponibles(String idCliente) {
         super(idCliente);
     }
     
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
+    }
 }

@@ -15,7 +15,7 @@ import java.util.List;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaMostrarCasillasDisponibles extends EventoRespuesta{
-    
+    public static final boolean ES_PARA_TODOS = false;
     private List<CasillaDTO> casillas;
     
     public RespuestaMostrarCasillasDisponibles(String idCliente, List<CasillaDTO> casillas) {
@@ -25,6 +25,11 @@ public class RespuestaMostrarCasillasDisponibles extends EventoRespuesta{
 
     public List<CasillaDTO> getCasillas() {
         return casillas;
+    }
+    
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
     }
     
 }

@@ -11,10 +11,11 @@ import dominodto.UsuarioDTO;
  * @author asielapodaca
  */
 public class RespuestaMostrarUsuarioSalaEspera extends EventoRespuesta{
+    public static final boolean ES_PARA_TODOS = true;
     private UsuarioDTO usuarioDTO;
 
-    public RespuestaMostrarUsuarioSalaEspera(UsuarioDTO usuarioDTO, String idCliente) {
-        super(idCliente);
+    public RespuestaMostrarUsuarioSalaEspera(UsuarioDTO usuarioDTO) {
+        super(null);
         this.usuarioDTO = usuarioDTO;
     }
 
@@ -22,5 +23,8 @@ public class RespuestaMostrarUsuarioSalaEspera extends EventoRespuesta{
         return usuarioDTO;
     }
     
-    
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
+    }
 }

@@ -14,6 +14,7 @@ import dominodto.CasillaDTO;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaColocarFichaTablero extends EventoRespuesta {
+    public static final boolean ES_PARA_TODOS = true;
     private CasillaDTO casillaDTO;
 
     public RespuestaColocarFichaTablero(CasillaDTO casillaDTO) {
@@ -25,5 +26,8 @@ public class RespuestaColocarFichaTablero extends EventoRespuesta {
         return casillaDTO;
     }
     
-    
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
+    }
 }

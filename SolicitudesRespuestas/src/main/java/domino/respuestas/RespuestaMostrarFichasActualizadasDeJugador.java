@@ -15,7 +15,7 @@ import java.util.List;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaMostrarFichasActualizadasDeJugador extends EventoRespuesta{
-    
+    public static final boolean ES_PARA_TODOS = false;
     private List<FichaDominoDTO> fichasDomino;
     
     public RespuestaMostrarFichasActualizadasDeJugador(String idCliente, List<FichaDominoDTO> fichasDomino) {
@@ -25,6 +25,11 @@ public class RespuestaMostrarFichasActualizadasDeJugador extends EventoRespuesta
 
     public List<FichaDominoDTO> getFichasDomino() {
         return fichasDomino;
+    }
+    
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
     }
     
 }

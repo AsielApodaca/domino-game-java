@@ -4,6 +4,7 @@
  */
 package domino.respuestas;
 
+
 /**
  *
  * @author Hisamy Cinco Cota
@@ -12,9 +13,14 @@ package domino.respuestas;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaBloquearPozo extends EventoRespuesta {
-
+    public static final boolean ES_PARA_TODOS = false;
     public RespuestaBloquearPozo(String idCliente) {
         super(idCliente);
+    }
+
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
     }
 
 }

@@ -14,6 +14,7 @@ import dominodto.JugadorDominoDTO;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaActualizarCantidadFichas extends EventoRespuesta {
+    public static final boolean ES_PARA_TODOS = true;
 
     private JugadorDominoDTO jugadorDominoDTO; // Jugador que se le verá el cambio de fichas a todos, debe portar el id de este jugador
     private int cantidadFichas; // Cantidad de fichas que tiene ahora el jugador
@@ -30,6 +31,11 @@ public class RespuestaActualizarCantidadFichas extends EventoRespuesta {
 
     public int getCantidadFichas() {
         return cantidadFichas;
+    }
+
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
     }
 
 }

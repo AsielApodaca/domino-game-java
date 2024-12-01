@@ -12,9 +12,13 @@ package domino.respuestas;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaDesbloquearPozo extends EventoRespuesta {
-
+    public static final boolean ES_PARA_TODOS = false;
     public RespuestaDesbloquearPozo(String idCliente) {
         super(idCliente);
     }
 
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
+    }
 }

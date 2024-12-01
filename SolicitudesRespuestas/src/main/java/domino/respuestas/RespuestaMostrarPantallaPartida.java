@@ -15,7 +15,7 @@ import java.util.List;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaMostrarPantallaPartida extends EventoRespuesta{
-    
+    public static final boolean ES_PARA_TODOS = true;
     private List<JugadorDominoDTO> jugadores;
     
     public RespuestaMostrarPantallaPartida(List<JugadorDominoDTO> jugadores) {
@@ -28,6 +28,9 @@ public class RespuestaMostrarPantallaPartida extends EventoRespuesta{
         return jugadores;
     }
     
-    
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
+    }
     
 }

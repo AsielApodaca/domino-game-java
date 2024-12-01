@@ -11,11 +11,11 @@ import dominodto.JugadorDominoDTO;
  * @author asielapodaca
  */
 public class RespuestaRemoverJugadorPartida extends EventoRespuesta{
-    
+    public static final boolean ES_PARA_TODOS = true;
     private JugadorDominoDTO jugadorDominoDTO;
 
-    public RespuestaRemoverJugadorPartida(JugadorDominoDTO jugadorDominoDTO, String idCliente) {
-        super(idCliente);
+    public RespuestaRemoverJugadorPartida(JugadorDominoDTO jugadorDominoDTO) {
+        super(null);
         this.jugadorDominoDTO = jugadorDominoDTO;
     }
 
@@ -23,6 +23,10 @@ public class RespuestaRemoverJugadorPartida extends EventoRespuesta{
         return jugadorDominoDTO;
     }
     
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
+    }
     
 }
 

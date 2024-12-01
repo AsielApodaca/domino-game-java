@@ -10,7 +10,7 @@ import dominodto.JugadorDominoDTO;
  * @author Asiel Apodaca Monge
  */
 public class RespuestaOtorgarTurno extends EventoRespuesta {
-
+    public static final boolean ES_PARA_TODOS = true;
     // Jugador que se le consederá el turno de colocar ficha, debe portar el id de este jugador
     private JugadorDominoDTO jugadorDominoDTO;
 
@@ -21,5 +21,10 @@ public class RespuestaOtorgarTurno extends EventoRespuesta {
 
     public JugadorDominoDTO getJugadorDominoDTO() {
         return jugadorDominoDTO;
+    }
+    
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
     }
 }

@@ -9,9 +9,13 @@ package domino.respuestas;
  * @author asielapodaca
  */
 public class RespuestaOtorgarAdminSalaEspera extends EventoRespuesta{
-    
+    public static final boolean ES_PARA_TODOS = false;
     public RespuestaOtorgarAdminSalaEspera(String idCliente) {
         super(idCliente);
     }
     
+    @Override
+    public boolean esParaTodos() {
+        return ES_PARA_TODOS;
+    }
 }
