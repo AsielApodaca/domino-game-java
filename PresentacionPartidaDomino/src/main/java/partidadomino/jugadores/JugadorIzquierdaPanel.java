@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import javax.swing.JPanel;
 
 public class JugadorIzquierdaPanel extends JugadorPanel {
     private static final int DIAMETRO_CIRCULO = 25;

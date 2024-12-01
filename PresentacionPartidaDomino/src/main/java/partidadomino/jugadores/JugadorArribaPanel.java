@@ -4,17 +4,12 @@
  */
 package partidadomino.jugadores;
 
-import dominodto.JugadorDominoDTO;
+
 
 /**
  *
  * @author asielapodaca
  */
-public class JugadorArribaPanel extends JugadorPanel{
-    
-    public JugadorArribaPanel(JugadorDominoDTO jugadorDominoDTO) {
-        super(jugadorDominoDTO);
-    }
-    
+public class JugadorArribaPanel {
     
 }
