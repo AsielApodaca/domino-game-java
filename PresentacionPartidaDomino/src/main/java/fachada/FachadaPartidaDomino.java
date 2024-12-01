@@ -99,22 +99,22 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
 
     @Override
     public void mostrarJugador(JugadorDominoDTO jugadorDominoDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("presentacionPartDomino: Aun no muestra jugadores");
     }
 
     @Override
     public void removerJugador(JugadorDominoDTO jugadorDominoDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("presentacionPartDomino: Aun no remueve jugadores");
     }
 
     @Override
     public void actualizarCantidadFichasDeJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("presentacionPartDomino: Aun no actualiza cantidad de fichas de jugador");
     }
 
     @Override
     public void otorgarTurnoAJugador(JugadorDominoDTO jugadorDominoDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("presentacionPartDomino: Aun no muestra la otrogacion de turnos de jugadores");
     }
 
 

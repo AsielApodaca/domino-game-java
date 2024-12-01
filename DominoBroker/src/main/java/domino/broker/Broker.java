@@ -167,25 +167,13 @@ public class Broker {
                 String tipoRespuesta = respuestaJSON.get("nombreEvento").getAsString();
                 System.out.println("Redirigiendo respuesta en broker: " + tipoRespuesta);
 
-                boolean manejado = false; // Si la respuesta ya ha sido manejada
-                for (Class<? extends EventoRespuesta> claseRespuestaParaUno : respuestasParaUno) {
-                    if (Deserializador.esJsonInstanciaDe(respuesta, claseRespuestaParaUno)) {
-                        manejadorSalas.enviarRespuestaACliente(servidor, respuestaJSON);
-                        manejado = true;
-                        break;
-                    }
-                }
-                if (!manejado) {
-                    for (Class<? extends EventoRespuesta> claseRespuestaParaTodos : respuestasParaTodos) {
-                        if (Deserializador.esJsonInstanciaDe(respuesta, claseRespuestaParaTodos)) {
-                            manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
-                            manejado = true;
-                            break;
-                        }
-                    }
-                }
-                if(!manejado) {
+                EventoRespuesta eventoRespuesta = Deserializador.convertirJSONAEvento(respuesta);
+                if(eventoRespuesta == null) {
                     throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
+                } else if(eventoRespuesta.esParaTodos()){
+                    manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
+                } else {
+                    manejadorSalas.enviarRespuestaACliente(servidor, respuestaJSON);
                 }
             }
         } catch (Exception e) {

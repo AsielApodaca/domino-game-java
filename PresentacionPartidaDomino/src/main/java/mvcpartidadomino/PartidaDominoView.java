@@ -1,5 +1,6 @@
 package mvcpartidadomino;
 
+import dominodto.JugadorDominoDTO;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
@@ -15,6 +16,7 @@ import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.elementostablero.PozoPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
+import partidadomino.jugadores.JugadorIzquierdaPanel;
 
 /**
  *
@@ -33,10 +35,12 @@ public class PartidaDominoView extends JPanel {
     private JPanel panelTablero; // Panel de tablero donde se colocarán las fichas
     private PozoPanel pozoPanel;
 
+    // Prueba
+    private JugadorIzquierdaPanel jugadorIzquierdaPanel;
+
     public PartidaDominoView(PartidaDominoModel model) {
         this.model = model;
         cargarComponentes();
-//        asignarListeners();
         revalidate();
         repaint();
     }
@@ -95,6 +99,12 @@ public class PartidaDominoView extends JPanel {
         panelTablero.setOpaque(false);
         panelTablero.setLayout(null);
 
+        // Prueba
+        JugadorDominoDTO jugadorDominoDTO = new JugadorDominoDTO("", "gibran", "/personajes/personaje07.png");
+        jugadorIzquierdaPanel = new JugadorIzquierdaPanel(jugadorDominoDTO);
+        jugadorIzquierdaPanel.actualizarCantidadFichas(7);
+        add(jugadorIzquierdaPanel);
+
         add(panelContenedorFichasJugadorLocal);
         add(panelTablero);
         add(pozoPanel);
@@ -110,6 +120,19 @@ public class PartidaDominoView extends JPanel {
         repintarCasillasTablero();
         repintarFichasTablero();
         repintarPozo();
+        repintarJugadorIzquierda();
+        revalidate();
+        repaint();
+    }
+
+    private void repintarJugadorIzquierda() {
+        jugadorIzquierdaPanel.reescalar(model.getEscala());
+        Dimension tamanioPreferido = jugadorIzquierdaPanel.getPreferredSize();
+        jugadorIzquierdaPanel.setBounds(10, 250,
+                tamanioPreferido.width, // Ancho definido en el panel
+                tamanioPreferido.height // Altura definida en el panel
+        );
+        
         revalidate();
         repaint();
     }

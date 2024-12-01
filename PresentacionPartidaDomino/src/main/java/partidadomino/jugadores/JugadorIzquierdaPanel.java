@@ -30,6 +30,7 @@ public class JugadorIzquierdaPanel extends JugadorPanel {
         super(jugadorDominoDTO);
         this.nombreJugador = jugadorDominoDTO.getNombre();
 
+        setOpaque(false);
         try {
             this.imagenJugador = cargarImagen(jugadorDominoDTO.getFuenteIcono());
             this.imagenRectangulo = cargarImagen(RUTA_IMAGEN_RECTANGULO);
@@ -42,30 +43,27 @@ public class JugadorIzquierdaPanel extends JugadorPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
 
         // Pintar Sección 1
         int x1 = 0;
         int y1 = 0;
         int ancho1 = (int) (ANCHO_SECCION1 * escala);
         int altura1 = (int) (Math.max(ALTURA_MINIMA_SECCION1 * escala, getHeight() - ALTURA_SECCION3 * escala));
-        g.setColor(Color.WHITE);
-        g.fillRect(x1, y1, ancho1, altura1);
 
         // Pintar círculo en Sección 1
         int xCirculo = x1 + (ancho1 - (int) (DIAMETRO_CIRCULO * escala)) / 2;
         int yCirculo = y1 + (altura1 - (int) (DIAMETRO_CIRCULO * escala)) / 2;
+        int xPersonaje = x1 + (ancho1 - (int) (DIAMETRO_CIRCULO * escala - 4 * escala)) / 2;
+        int yPersonaje = y1 + (altura1 - (int) (DIAMETRO_CIRCULO * escala - 4 * escala)) / 2;
         g.setColor(turnoDeColocar ? Color.GREEN : Color.RED);
         g.drawOval(xCirculo, yCirculo, (int) (DIAMETRO_CIRCULO * escala), (int) (DIAMETRO_CIRCULO * escala));
-        g.drawImage(imagenJugador, xCirculo, yCirculo, (int) (DIAMETRO_CIRCULO * escala), (int) (DIAMETRO_CIRCULO * escala), null);
+        g.drawImage(imagenJugador, xPersonaje, yPersonaje, (int) (DIAMETRO_CIRCULO * escala - 4 * escala), (int) (DIAMETRO_CIRCULO * escala - 4 * escala), null);
 
         // Pintar Sección 2
         int x2 = x1 + ancho1;
         int y2 = 0;
         int ancho2 = (int) (ANCHO_SECCION2 * escala);
         int altura2 = (int) (Math.max(ALTURA_MINIMA_SECCION2 * escala, getHeight() - ALTURA_SECCION3 * escala));
-        g.setColor(Color.WHITE);
-        g.fillRect(x2, y2, ancho2, altura2);
 
         // Pintar iconos de jugador en Sección 2
         int xIcono = x2 + (ancho2 - (int) (ANCHO_RECTANGULO * escala)) / 2;
@@ -80,11 +78,9 @@ public class JugadorIzquierdaPanel extends JugadorPanel {
         int y3 = altura1;
         int ancho3 = (int) (ANCHO_SECCION3 * escala);
         int altura3 = (int) (ALTURA_SECCION3 * escala);
-        g.setColor(Color.WHITE);
-        g.fillRect(x3, y3, ancho3, altura3);
 
         // Pintar nombre de jugador en Sección 3
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         int anchoNombre = g.getFontMetrics().stringWidth(nombreJugador);
         int xNombre = x3 + (ancho3 - anchoNombre) / 2;
         int yNombre = y3 + (altura3 + g.getFontMetrics().getHeight()) / 2;
