@@ -58,8 +58,6 @@ public class PartidaDominoModel {
     private List<FichaDominoTableroPanel> listaPanelesFichasSobreTablero; // Lista de paneles de fichas sobre el tablero
     private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
     private List<JugadorDominoDTO>  listaJugadoresExternos; // Lista de jugadores de otros dispositivos
-    private JugadorDominoDTO jugadorLocal; // Jugador de este dispositivo
-
     private IPresentacionNotificadorManager presentacionNotificadorManager;
     private FichaDominoDTO fichaSeleccionada;
 

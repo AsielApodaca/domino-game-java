@@ -12,6 +12,7 @@ package mvc;
  * @author Asiel Apodaca Monge
  */
 public class MenuDominoController {
+
     private MenuDominoModel menuDominoModel;
     private MenuDominoView menuDominoView;
 
@@ -19,6 +20,12 @@ public class MenuDominoController {
         this.menuDominoModel = menuDominoModel;
         this.menuDominoView = menuDominoView;
     }
-    
-    
+
+    public void addMouseListenerToCrearPartida() {
+
+    }
+
+    public void addMouseListenerToUnirsePartida() {
+
+    }
 }
