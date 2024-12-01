@@ -12,5 +12,13 @@ package mvc;
  * @author Asiel Apodaca Monge
  */
 public class MenuDominoController {
+    private MenuDominoModel menuDominoModel;
+    private MenuDominoView menuDominoView;
+
+    public MenuDominoController(MenuDominoModel menuDominoModel, MenuDominoView menuDominoView) {
+        this.menuDominoModel = menuDominoModel;
+        this.menuDominoView = menuDominoView;
+    }
+    
     
 }

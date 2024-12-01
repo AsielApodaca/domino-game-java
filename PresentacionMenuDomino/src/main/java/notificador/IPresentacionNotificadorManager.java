@@ -4,10 +4,7 @@
  */
 package notificador;
 
-import dominodto.CasillaDTO;
-import dominodto.FichaDominoDTO;
-import listeners.IPresentacionPartidaDominoListener;
-
+import listeners.IPresentacionMenuDominoListener;
 
 /**
  *
@@ -17,11 +14,11 @@ import listeners.IPresentacionPartidaDominoListener;
  * @author Asiel Apodaca Monge
  */
 public interface IPresentacionNotificadorManager {
-    public void suscribirPresentacionListener(IPresentacionPartidaDominoListener listener);
 
-    public void notificarCasillaSeleccionada(CasillaDTO casillaSeleccionada);
+    public void suscribirPresentacionListener(IPresentacionMenuDominoListener listener);
 
-    public void notificarFichaSeleccionada(FichaDominoDTO fichaSelecccionada);
+    public void notificarCrearSala();
 
-    public void notificarPozoSeleccionado();
+    public void notificarUnirseSala();
+
 }

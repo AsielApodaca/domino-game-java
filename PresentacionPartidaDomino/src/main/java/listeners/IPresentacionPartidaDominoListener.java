@@ -4,8 +4,10 @@ import dominodto.CasillaDTO;
 import dominodto.FichaDominoDTO;
 
 /**
- *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  *
  * Interfaz de listener que estará escuchando los eventos de este componente
  * PresentacionPartidaDomino.
