@@ -138,7 +138,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     }
 
     @Override
-    public void onPozoSeleccionado(PozoSeleccionadoEvento evento) {
+    public void onPozoSeleccionado() {
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
 
         // Crear una nueva solicitud de pozo seleccionado
@@ -146,8 +146,6 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
 
         // Envia la solicitud a través de la fachada cliente
         fachadaClienteProxy.enviarSolicitud(solicitudPozoSeleccionado);
-        
-        //incompleto
 
     }
 

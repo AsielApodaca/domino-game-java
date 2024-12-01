@@ -17,4 +17,5 @@ public interface IPresentacionNotificadorManager {
     public void suscribirPresentacionListener(IPresentacionPartidaDominoListener listener);
     public void notificarCasillaSeleccionada(CasillaDTO casillaSeleccionada);
     public void notificarFichaSeleccionada(FichaDominoDTO fichaSelecccionada);
+    public void notificarPozoSeleccionado();
 }

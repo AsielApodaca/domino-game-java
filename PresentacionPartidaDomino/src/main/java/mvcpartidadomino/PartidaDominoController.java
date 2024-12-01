@@ -149,8 +149,8 @@ public class PartidaDominoController implements IContenedorListener {
         if (!model.isPozoBloqueado()) {
             IPresentacionNotificadorManager presentacionNotificadorManager
                     = model.getPresentacionNotificadorsManager();
-            PozoSeleccionadoEvento evento = new PozoSeleccionadoEvento();
-            presentacionNotificadorManager.notificarPozoSeleccionado(evento);
+            
+            presentacionNotificadorManager.notificarPozoSeleccionado();
             ocultarPozoDisponible();
         }
     }
