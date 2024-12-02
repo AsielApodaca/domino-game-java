@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,10 @@ import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoController;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
+import partidadomino.jugadores.JugadorArribaPanel;
+import partidadomino.jugadores.JugadorDerechaPanel;
+import partidadomino.jugadores.JugadorIzquierdaPanel;
+import partidadomino.jugadores.JugadorPanel;
 
 /**
  *
@@ -175,16 +180,70 @@ public class PartidaDominoController implements IContenedorListener {
         return view;
     }
 
-    public void mostrarJugador(JugadorDominoDTO jugadorDominoDTO) {
-
+    public void mostrarJugadores(List<JugadorDominoDTO> jugadoresEnOrden) {
+        crearJugadoresPaneles(jugadoresEnOrden);
+        view.cargarJugadoresPaneles();
+    }
+    
+    private void crearJugadoresPaneles(List<JugadorDominoDTO> jugadoresEnOrden) {
+        int cantidadJugadores = jugadoresEnOrden.size();
+        switch(cantidadJugadores) {
+            case 3 -> {
+                JugadorDominoDTO jugadorIzquierda = jugadoresEnOrden.get(0);
+                JugadorIzquierdaPanel panelIzquierda = new JugadorIzquierdaPanel(jugadorIzquierda);
+                JugadorDominoDTO jugadorArriba = jugadoresEnOrden.get(1);
+                JugadorArribaPanel panelArriba = new JugadorArribaPanel(jugadorArriba);
+                JugadorDominoDTO jugadorDerecha = jugadoresEnOrden.get(2);
+                JugadorDerechaPanel panelDerecha = new JugadorDerechaPanel(jugadorDerecha);
+                model.agregarJugadorPanel(panelIzquierda);
+                model.agregarJugadorPanel(panelArriba);
+                model.agregarJugadorPanel(panelDerecha);
+            }
+            case 2 -> {
+                JugadorDominoDTO jugadorIzquierda = jugadoresEnOrden.get(0);
+                JugadorIzquierdaPanel panelIzquierda = new JugadorIzquierdaPanel(jugadorIzquierda);
+                JugadorDominoDTO jugadorDerecha = jugadoresEnOrden.get(1);
+                JugadorDerechaPanel panelDerecha = new JugadorDerechaPanel(jugadorDerecha);
+                model.agregarJugadorPanel(panelIzquierda);
+                model.agregarJugadorPanel(panelDerecha);
+            }
+            case 1 -> {
+                JugadorDominoDTO jugadorArriba = jugadoresEnOrden.get(0);
+                JugadorArribaPanel panelArriba = new JugadorArribaPanel(jugadorArriba);
+                model.agregarJugadorPanel(panelArriba);
+            }
+                
+        }
     }
 
     public void removerJugador(JugadorDominoDTO jugadorDominoDTO) {
-
+        JugadorPanel jugadorPanel = model.obtenerJugadorPanel(jugadorDominoDTO);
+        view.remove(jugadorPanel);
+        model.removerJugadorPanel(jugadorDominoDTO);
+        System.out.println(jugadorDominoDTO.getNombre() + " salió de la partida.");
     }
 
     public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
-
+        JugadorPanel jugadorPanel = model.obtenerJugadorPanel(jugadorDominoDTO);
+        jugadorPanel.actualizarCantidadFichas(cantidadFichas);
+    }
+    
+    public void otorgarTurnoAJugador(JugadorDominoDTO jugadorDominoDTO) {
+        Collection<JugadorPanel> jugadores = model.getMapaJugadoresExternos().values();
+        // Quita el turno a los jugadores
+        for(JugadorPanel jugadorPanel : jugadores) {
+            jugadorPanel.actualizarTurno(false);
+        }
+        // Falta logica para quitar turno a jugador local
+        
+        
+        // Asigna turno a un jugador
+        JugadorPanel jugadorPanel = model.obtenerJugadorPanel(jugadorDominoDTO);
+        if(jugadorPanel != null) {
+            jugadorPanel.actualizarTurno(true);
+        } else {
+            // Falta logica para otorgar turno a jugador local
+        }
     }
 
     @Override

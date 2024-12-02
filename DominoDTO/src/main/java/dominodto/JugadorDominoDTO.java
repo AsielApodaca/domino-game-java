@@ -1,6 +1,8 @@
 
 package dominodto;
 
+import java.util.Objects;
+
 
 /**
  *
@@ -32,6 +34,21 @@ public class JugadorDominoDTO {
 
     public String getFuenteIcono() {
         return fuenteIcono;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final JugadorDominoDTO other = (JugadorDominoDTO) obj;
+        return Objects.equals(this.idCliente, other.idCliente);
     }
     
     
