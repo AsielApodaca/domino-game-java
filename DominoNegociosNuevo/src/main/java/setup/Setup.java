@@ -168,7 +168,9 @@ public class Setup implements ISetup {
      */
     private void iniciarConexionProxy() {
         // Inicializa la fachada del cliente proxy
-        this.fachadaClienteProxy = new FachadaClienteProxy();
+        String host = "localhost";
+        int puerto = 3000;
+        this.fachadaClienteProxy = new FachadaClienteProxy(host, puerto);
     }
 
     /**

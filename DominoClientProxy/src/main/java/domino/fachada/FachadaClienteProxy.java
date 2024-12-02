@@ -18,8 +18,8 @@ public class FachadaClienteProxy implements IFachadaClienteProxy {
 
     private ClienteProxy clienteProxy;
 
-    public FachadaClienteProxy() {
-        this.clienteProxy = new ClienteProxy("localhost", 3000) ;
+    public FachadaClienteProxy(String host, int puerto) {
+        this.clienteProxy = new ClienteProxy(host, puerto) ;
     }
     
     @Override

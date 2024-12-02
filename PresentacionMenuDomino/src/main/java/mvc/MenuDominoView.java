@@ -2,7 +2,6 @@ package mvc;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -74,7 +73,6 @@ public class MenuDominoView extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
         if (fondoPantalla != null) {
             g.drawImage(fondoPantalla, 0, 0, getWidth(), getHeight(), this);
         }
