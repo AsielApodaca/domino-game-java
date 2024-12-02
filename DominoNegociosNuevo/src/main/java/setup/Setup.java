@@ -17,9 +17,11 @@ import manejadorrespuestaclienteproxy.ManejadorRespuestaColocarFichaTablero;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaDesbloquearPozo;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarCasillasDisponibles;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarFichasActualizadasDeJugador;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarJugadoresPartida;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarPantallaPartida;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaOcultarCasillasDisponibles;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaOtorgarTurno;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaRemoverJugadorPartida;
 import mediador.IMediadorNegocio;
 import mediador.MediadorNegocio;
 
@@ -104,9 +106,15 @@ public class Setup implements ISetup {
         // Instancia los manejadores de respuestas, configurando la cadena de responsabilidad
         ManejadorRespuestaMostrarPantallaPartida manejadorRespuestaMostrarPantallaPartida
                 = new ManejadorRespuestaMostrarPantallaPartida(mediadorNegocio);
+        
+        ManejadorRespuestaRemoverJugadorPartida manejadorRespuestaRemoverJugadorPartida
+                = new ManejadorRespuestaRemoverJugadorPartida(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
+        
+        ManejadorRespuestaMostrarJugadoresPartida manejadorRespuestaMostrarJugadoresPartida
+                = new ManejadorRespuestaMostrarJugadoresPartida(partidaDominoLogica, manejadorRespuestaRemoverJugadorPartida);
 
         ManejadorRespuestaBloquearPozo manejadorRespuestaBloquearPozo
-                = new ManejadorRespuestaBloquearPozo(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
+                = new ManejadorRespuestaBloquearPozo(partidaDominoLogica, manejadorRespuestaMostrarJugadoresPartida);
 
         ManejadorRespuestaDesbloquearPozo manejadorRespuestaDesbloquearPozo
                 = new ManejadorRespuestaDesbloquearPozo(partidaDominoLogica, manejadorRespuestaBloquearPozo);

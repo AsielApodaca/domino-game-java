@@ -134,6 +134,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         otorgarTurnoASiguienteJugador();
     }
 
+    @Override
     public void setGeneradorRespuestas(IGeneradorRespuestas generadorRespuestas) {
         this.generadorRespuestas = generadorRespuestas;
     }
