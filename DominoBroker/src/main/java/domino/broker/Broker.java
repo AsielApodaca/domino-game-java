@@ -42,6 +42,7 @@ import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudAbandonarSala;
 import domino.solicitudes.SolicitudCasillaSeleccionada;
 import domino.solicitudes.SolicitudIniciarPartida;
+import domino.solicitudes.SolicitudObtenerSalasDisponibles;
 import java.util.List;
 
 /**
@@ -143,6 +144,10 @@ public class Broker {
                     manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 } else if(Deserializador.esJsonInstanciaDe(solicitud, SolicitudAbandonarSala.class)) {
                     manejadorSalas.eliminarClienteDeSala(cliente);
+                } else if(Deserializador.esJsonInstanciaDe(solicitud, SolicitudIniciarPartida.class)) {
+                    manejadorSalas.enviarSolicitudIniciarPartida(cliente, solicitudJSON);
+                } else if(Deserializador.esJsonInstanciaDe(solicitud, SolicitudObtenerSalasDisponibles.class)) {
+                    manejadorSalas.enviarSolicitudObtenerSalasDisponibles(cliente, usuarioDTO);
                 } else {
                     manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 }

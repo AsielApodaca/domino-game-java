@@ -59,4 +59,14 @@ public class ConexionServidor {
     public void setStatus(Status status) {
         this.status = status ;
     }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+    
+    
 }

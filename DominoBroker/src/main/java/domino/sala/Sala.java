@@ -6,6 +6,7 @@ package domino.sala;
 
 import domino.conexiones.ConexionCliente;
 import domino.conexiones.ConexionServidor;
+import domino.enums.Status;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ public class Sala {
     private ConexionServidor servidor ;
     private String id ;
     private int size ;
+    private ConexionCliente anfitrion ;
+    private Status statusPartida ;
     
     public Sala(String id, ConexionServidor servidor, int size) {
         clientes = new HashMap() ;
@@ -58,6 +61,30 @@ public class Sala {
     
     public int getSize() {
         return this.size ;
+    }
+
+    public Map<String, ConexionCliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(Map<String, ConexionCliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public ConexionCliente getAnfitrion() {
+        return anfitrion;
+    }
+
+    public void setAnfitrion(ConexionCliente anfitrion) {
+        this.anfitrion = anfitrion;
+    }
+
+    public Status getStatusPartida() {
+        return statusPartida;
+    }
+
+    public void setStatusPartida(Status statusPartida) {
+        this.statusPartida = statusPartida;
     }
     
 }
