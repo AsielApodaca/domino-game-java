@@ -3,9 +3,11 @@ package partidadomino.jugadores;
 import dominodto.JugadorDominoDTO;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import javax.swing.JPanel;
 
 public class JugadorIzquierdaPanel extends JugadorPanel {
     private static final int DIAMETRO_CIRCULO = 25;
@@ -19,6 +21,8 @@ public class JugadorIzquierdaPanel extends JugadorPanel {
 
     private static final int ANCHO_SECCION3 = ANCHO_SECCION1 + ANCHO_SECCION2;
     private static final int ALTURA_SECCION3 = 20;
+    
+    private static final int LOCACION_X = 10;
 
     private static final String RUTA_IMAGEN_RECTANGULO = "/multimedia/FichaVaciaHorizontal.png";
 
@@ -29,7 +33,6 @@ public class JugadorIzquierdaPanel extends JugadorPanel {
     public JugadorIzquierdaPanel(JugadorDominoDTO jugadorDominoDTO) {
         super(jugadorDominoDTO);
         this.nombreJugador = jugadorDominoDTO.getNombre();
-
         setOpaque(false);
         try {
             this.imagenJugador = cargarImagen(jugadorDominoDTO.getFuenteIcono());
@@ -81,6 +84,8 @@ public class JugadorIzquierdaPanel extends JugadorPanel {
 
         // Pintar nombre de jugador en Sección 3
         g.setColor(Color.WHITE);
+        int letterSize = (int) (tamanioLetra * escala);
+        g.setFont(new Font("Tahoma", Font.PLAIN,letterSize));
         int anchoNombre = g.getFontMetrics().stringWidth(nombreJugador);
         int xNombre = x3 + (ancho3 - anchoNombre) / 2;
         int yNombre = y3 + (altura3 + g.getFontMetrics().getHeight()) / 2;
@@ -111,6 +116,15 @@ public class JugadorIzquierdaPanel extends JugadorPanel {
         setPreferredSize(new Dimension(ancho, altura));
         setMinimumSize(new Dimension(ancho, altura));
         setMaximumSize(new Dimension(ancho, altura));
+        
+        JPanel contenedorPadre = (JPanel) this.getParent();
+        if(contenedorPadre != null) {
+            int alturaPantalla = (int) (alturaContenedorPantalla * escala);
+            int locacionX = (int) (LOCACION_X * escala);
+            int locacionY = (int) (alturaPantalla - altura) / 2;
+            setBounds(locacionX, locacionY, ancho, altura);
+        }
+        
     }
 
     @Override

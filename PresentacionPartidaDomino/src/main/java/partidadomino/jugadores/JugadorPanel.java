@@ -22,6 +22,9 @@ public abstract class JugadorPanel extends JPanel{
     
     // Medidas originales
     protected float escala = 1;
+    protected int tamanioLetra = 10;
+    protected final int anchoContenedorPantalla = 600;
+    protected final int alturaContenedorPantalla = 400;
 
     public JugadorPanel(JugadorDominoDTO jugadorDominoDTO) {
         this.jugadorDominoDTO = jugadorDominoDTO;
