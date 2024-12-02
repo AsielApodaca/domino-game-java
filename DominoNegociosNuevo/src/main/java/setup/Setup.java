@@ -71,8 +71,14 @@ public class Setup implements ISetup {
      * Inicializa el usuario local que interactuará con el sistema.
      */
     private void iniciarUsuario() {
-        String nombre = "oliver";
-        String fuenteIcono = "../DominoMultimedia/personajes/personaje07.png";
+        String nombre = "ElMencho";
+
+        // Generar un número al azar entre 0 y 7
+        int numeroAleatorio = (int) (Math.random() * 8);  // 8 es el rango exclusivo superior (0 a 7)
+
+        // Construir la ruta de la fuente de icono con el número aleatorio
+        String fuenteIcono = "/personajes/personaje" + String.format("%02d", numeroAleatorio) + ".png";
+
         this.usuarioLocal = new UsuarioEntity(nombre);
         this.usuarioLocal.setFuenteIcono(fuenteIcono);
     }
@@ -106,10 +112,10 @@ public class Setup implements ISetup {
         // Instancia los manejadores de respuestas, configurando la cadena de responsabilidad
         ManejadorRespuestaMostrarPantallaPartida manejadorRespuestaMostrarPantallaPartida
                 = new ManejadorRespuestaMostrarPantallaPartida(mediadorNegocio);
-        
+
         ManejadorRespuestaRemoverJugadorPartida manejadorRespuestaRemoverJugadorPartida
                 = new ManejadorRespuestaRemoverJugadorPartida(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
-        
+
         ManejadorRespuestaMostrarJugadoresPartida manejadorRespuestaMostrarJugadoresPartida
                 = new ManejadorRespuestaMostrarJugadoresPartida(partidaDominoLogica, manejadorRespuestaRemoverJugadorPartida);
 

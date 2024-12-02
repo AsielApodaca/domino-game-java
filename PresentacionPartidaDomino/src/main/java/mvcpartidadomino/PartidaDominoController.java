@@ -181,6 +181,7 @@ public class PartidaDominoController implements IContenedorListener {
     }
 
     public void mostrarJugadores(List<JugadorDominoDTO> jugadoresEnOrden) {
+        System.out.println("Metodo mostrarJugadores");
         crearJugadoresPaneles(jugadoresEnOrden);
         view.cargarJugadoresPaneles();
     }
@@ -224,8 +225,11 @@ public class PartidaDominoController implements IContenedorListener {
     }
 
     public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
+        System.out.println("metodoActualizarCantidadFichasJugador");
         JugadorPanel jugadorPanel = model.obtenerJugadorPanel(jugadorDominoDTO);
-        jugadorPanel.actualizarCantidadFichas(cantidadFichas);
+        if(jugadorPanel != null) {
+            jugadorPanel.actualizarCantidadFichas(cantidadFichas);
+        }
     }
     
     public void otorgarTurnoAJugador(JugadorDominoDTO jugadorDominoDTO) {

@@ -59,7 +59,7 @@ public class PartidaDominoModel {
     private List<FichaDominoView> listaPanelesFichasJugadorLocal; // Lista de panales de fichas del jugador del dispositivo
     private List<FichaDominoTableroPanel> listaPanelesFichasSobreTablero; // Lista de paneles de fichas sobre el tablero
     private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
-    private HashMap<JugadorDominoDTO, JugadorPanel>  mapaJugadoresExternos; // mapa de jugadores de otros dispositivos
+    private HashMap<String, JugadorPanel>  mapaJugadoresExternos; // mapa de jugadores de otros dispositivos
     private IPresentacionNotificadorManager presentacionNotificadorManager;
     private FichaDominoDTO fichaSeleccionada;
 
@@ -95,19 +95,23 @@ public class PartidaDominoModel {
     
     public void agregarJugadorPanel(JugadorPanel jugadorPanel) {
         JugadorDominoDTO jugadorDominoDTO = jugadorPanel.getJugadorDominoDTO();
-        mapaJugadoresExternos.put(jugadorDominoDTO, jugadorPanel);
+        String idCliente = jugadorDominoDTO.getIdCliente();
+        System.out.println("Cliente agregado a mapa: " + idCliente);
+        mapaJugadoresExternos.put(idCliente, jugadorPanel);
     }
     
     public void removerJugadorPanel(JugadorDominoDTO jugadorDominoDTO) {
-        mapaJugadoresExternos.remove(jugadorDominoDTO);
+        String idCliente = jugadorDominoDTO.getIdCliente();
+        mapaJugadoresExternos.remove(idCliente);
     }
 
-    public HashMap<JugadorDominoDTO, JugadorPanel> getMapaJugadoresExternos() {
+    public HashMap<String, JugadorPanel> getMapaJugadoresExternos() {
         return mapaJugadoresExternos;
     }
     
     public JugadorPanel obtenerJugadorPanel(JugadorDominoDTO jugadorDominoDTO) {
-        return mapaJugadoresExternos.get(jugadorDominoDTO);
+        String idCliente = jugadorDominoDTO.getIdCliente();
+        return mapaJugadoresExternos.get(idCliente);
     }
 
     public void setPresentacionNotificacionesManager(IPresentacionNotificadorManager presentacionNotificadorManager) {

@@ -39,8 +39,8 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     @Override
     public IContenedorListener iniciar() {
         mostrarPresentacionSalaEspera();
-        crearSala();
-        //unirseSala();
+        //crearSala();
+        unirseSala();
         return contenedorListener;
     }
     
