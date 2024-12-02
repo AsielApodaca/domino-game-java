@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import listeners.IViewListener;
 
 /**
  *
@@ -31,6 +32,8 @@ public class MenuDominoView extends JPanel {
     private BufferedImage fondoBtnUnirseSala;
     private BufferedImage fondoBtnCrearSala;
     private BufferedImage dotMino;
+    
+    private IViewListener viewListener;
 
     public MenuDominoView(MenuDominoModel menuDominoModel) {
         this.menuDominoModel = menuDominoModel;
@@ -121,4 +124,15 @@ public class MenuDominoView extends JPanel {
         return label;
     }
 
+    public JPanel getPanelBtnCrearSala() {
+        return panelBtnCrearSala;
+    }
+
+    public JPanel getPanelBtnUnirseSala() {
+        return panelBtnUnirseSala;
+    }
+
+    public void suscribirListener(IViewListener viewListener) {
+        this.viewListener = viewListener;
+    }
 }

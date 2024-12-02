@@ -1,6 +1,5 @@
 package mvcpartidadomino;
 
-import dominodto.JugadorDominoDTO;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,18 +9,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.elementostablero.PozoPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
-import partidadomino.jugadores.JugadorArribaPanel;
-import partidadomino.jugadores.JugadorDerechaPanel;
-import partidadomino.jugadores.JugadorIzquierdaPanel;
 import partidadomino.jugadores.JugadorPanel;
 
 /**
