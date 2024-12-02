@@ -123,8 +123,8 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     }
 
     @Override
-    public void cambiarTurno(JugadorDominoDTO jugador) {
-        // Por hacer
+    public void otorgarTurnoAJugador(JugadorDominoDTO jugador) {
+        fachadaPartidaDomino.otorgarTurnoAJugador(jugador);
     }
 
     @Override
@@ -160,13 +160,18 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     }
 
     @Override
-    public void agregarJugadorAPartida(JugadorDominoDTO jugadorDominoDTO) {
-        fachadaPartidaDomino.mostrarJugador(jugadorDominoDTO);
+    public void mostrarJugadoresDePartida(List<JugadorDominoDTO> jugadoresEnOrden) {
+        fachadaPartidaDomino.mostrarJugadores(jugadoresEnOrden);
     }
 
     @Override
     public void removerJugadorDePartida(JugadorDominoDTO jugadorDominoDTO) {
         fachadaPartidaDomino.removerJugador(jugadorDominoDTO);
+    }
+    
+    @Override
+    public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
+        fachadaPartidaDomino.actualizarCantidadFichasDeJugador(jugadorDominoDTO, cantidadFichas);
     }
 
 }

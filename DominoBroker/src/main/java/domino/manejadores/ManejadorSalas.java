@@ -6,6 +6,7 @@ package domino.manejadores;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import deserializador.Deserializador;
 import deserializador.Serializador;
 import domino.conexiones.ConexionCliente;
 import domino.conexiones.ConexionServidor;
@@ -13,8 +14,12 @@ import domino.enums.Status;
 import domino.sala.Sala;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudAbandonarSala;
+import domino.solicitudes.SolicitudObtenerSalasDisponibles;
+import dominodto.SalaDTO;
 import dominodto.UsuarioDTO;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,6 +50,8 @@ public class ManejadorSalas {
             
             Sala salaNueva = new Sala(id, servidor, solicitudJSON.get("limiteJugadores").getAsInt());
             salaNueva.agregarCliente(cliente.getId(), cliente);
+            salaNueva.setAnfitrion(cliente);
+            salaNueva.setStatusPartida(Status.LIBRE);
             
             salas.put(id, salaNueva);
             System.out.println("Sala Creada con el ID: " + id);
@@ -53,6 +60,18 @@ public class ManejadorSalas {
         } else {
             System.out.println("No hay servidores libres.");
         }
+    }
+    
+    public void enviarSolicitudObtenerSalasDisponibles(ConexionCliente cliente, JsonObject jsonObject) {
+        
+        salas.forEach((id, sala) -> {
+            if(sala.getClientes().size() < sala.getSize() && sala.getStatusPartida() != Status.EN_PARTIDA) {
+                SolicitudObtenerSalasDisponibles solicitud = Deserializador.convertirJSONAEvento(jsonObject.toString()) ;
+                solicitud.setSala(new SalaDTO(id, sala.getSize()));
+                enviarSolicitudAServidor(cliente, JsonParser.parseString(Serializador.convertirEventoSolicitudAJSON(solicitud)).getAsJsonObject());
+            }
+        });
+        
     }
     
     public Sala obtenerSala(String id) {
@@ -145,6 +164,12 @@ public class ManejadorSalas {
         JsonObject solicitudAbandonarSala = JsonParser.parseString(Serializador.convertirEventoSolicitudAJSON(eventoSolicitudAbandonarSala)).getAsJsonObject() ;
         salaDelCliente.getServidor().mandarSolicitudServidor(solicitudAbandonarSala);
         System.out.println("El Cliente con el ID: " + cliente.getId() + " se ha desconectado de la Sala con el ID: " + salaDelCliente.getId());
+    }
+    
+    public void enviarSolicitudIniciarPartida(ConexionCliente cliente, JsonObject solicitud) {
+        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
+        salaDelCliente.setStatusPartida(Status.EN_PARTIDA);
+        enviarSolicitudAServidor(cliente, solicitud);
     }
     
     private void enviarConfiguracionDePartida(ConexionServidor servidor, JsonObject solicitudJSON) {

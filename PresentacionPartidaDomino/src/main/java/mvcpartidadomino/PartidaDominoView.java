@@ -1,6 +1,5 @@
 package mvcpartidadomino;
 
-import dominodto.JugadorDominoDTO;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,13 +9,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Collection;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.elementostablero.PozoPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
-import partidadomino.jugadores.JugadorIzquierdaPanel;
+import partidadomino.jugadores.JugadorPanel;
 
 /**
  *
@@ -35,8 +35,6 @@ public class PartidaDominoView extends JPanel {
     private JPanel panelTablero; // Panel de tablero donde se colocarán las fichas
     private PozoPanel pozoPanel;
 
-    // Prueba
-    private JugadorIzquierdaPanel jugadorIzquierdaPanel;
 
     public PartidaDominoView(PartidaDominoModel model) {
         this.model = model;
@@ -99,17 +97,19 @@ public class PartidaDominoView extends JPanel {
         panelTablero.setOpaque(false);
         panelTablero.setLayout(null);
 
-        // Prueba
-        JugadorDominoDTO jugadorDominoDTO = new JugadorDominoDTO("", "gibran", "/personajes/personaje07.png");
-        jugadorIzquierdaPanel = new JugadorIzquierdaPanel(jugadorDominoDTO);
-        jugadorIzquierdaPanel.actualizarCantidadFichas(7);
-        add(jugadorIzquierdaPanel);
-
         add(panelContenedorFichasJugadorLocal);
         add(panelTablero);
         add(pozoPanel);
 
         repintarVista();
+    }
+    
+    public void cargarJugadoresPaneles() {
+        Collection<JugadorPanel> jugadores = model.getMapaJugadoresExternos().values();
+        for(JugadorPanel jugadorPanel : jugadores) {
+            jugadorPanel.reescalar(model.getEscala());
+            add(jugadorPanel);
+        }
     }
 
     public void repintarVista() {
@@ -120,21 +120,22 @@ public class PartidaDominoView extends JPanel {
         repintarCasillasTablero();
         repintarFichasTablero();
         repintarPozo();
-        repintarJugadorIzquierda();
+        repintarJugadores();
         revalidate();
         repaint();
     }
 
-    private void repintarJugadorIzquierda() {
-        jugadorIzquierdaPanel.reescalar(model.getEscala());
-        Dimension tamanioPreferido = jugadorIzquierdaPanel.getPreferredSize();
-        jugadorIzquierdaPanel.setBounds(10, 250,
-                tamanioPreferido.width, // Ancho definido en el panel
-                tamanioPreferido.height // Altura definida en el panel
-        );
-        
-        revalidate();
-        repaint();
+    public void repintarJugadores() {
+        // Obtiene los jugadores del modelo
+        Collection<JugadorPanel> jugadores = model.getMapaJugadoresExternos().values();
+        // Reescala los jugadores
+        for(JugadorPanel jugadorPanel : jugadores) {
+            jugadorPanel.reescalar(model.getEscala());
+        }
+    }
+    
+    public void removerJugadorPanel(JugadorPanel jugadorPanel) {
+        remove(jugadorPanel);
     }
 
     private void repintarPanel() {

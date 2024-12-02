@@ -19,7 +19,7 @@ import listeners.IPresentacionPartidaDominoListener;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PresentacionNotificadorManager implements IPresentacionNotificadorManager {
+public class PresentacionPartidaDominoNotificador implements IPresentacionPartidaDominoNotificador {
 
     /**
      * Listener que escucha los eventos de este componente. Normalmente, será

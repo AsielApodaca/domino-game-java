@@ -14,7 +14,7 @@ import listeners.IPresentacionMenuDominoListener;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class PresentacionNotificadorManager implements IPresentacionNotificadorManager{
+public class PresentacionMenuDominoNotificador implements IPresentacionMenuDominoNotificador{
     
      private IPresentacionMenuDominoListener presentacionPartidaDominoListener;
 

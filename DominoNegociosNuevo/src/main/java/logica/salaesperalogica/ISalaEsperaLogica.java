@@ -21,6 +21,10 @@ public interface ISalaEsperaLogica {
      * @return Un contenedor de listeners configurado para manejar eventos en la sala.
      */
     public IContenedorListener iniciar();
+    
+    public void crearSala();
+    
+    public void unirseSala();
 
     /**
      * Otorga permisos de anfitrión al usuario actual. Este método está destinado

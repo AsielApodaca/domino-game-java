@@ -69,7 +69,7 @@ public interface IPartidaDominoLogica {
      *
      * @param jugador el jugador al que se le asignará el siguiente turno.
      */
-    public void cambiarTurno(JugadorDominoDTO jugador);
+    public void otorgarTurnoAJugador(JugadorDominoDTO jugador);
 
     /**
      * Muestra las casillas disponibles en el tablero donde se pueden colocar
@@ -98,8 +98,9 @@ public interface IPartidaDominoLogica {
 
     public void ocultarPozoDisponible();
     
-    public void agregarJugadorAPartida(JugadorDominoDTO jugadorDominoDTO);
+    public void mostrarJugadoresDePartida(List<JugadorDominoDTO> jugadoresEnOrden);
     
     public void removerJugadorDePartida(JugadorDominoDTO jugadorDominoDTO);
 
+    public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas);
 }

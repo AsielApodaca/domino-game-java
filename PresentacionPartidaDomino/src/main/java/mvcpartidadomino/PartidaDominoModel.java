@@ -4,11 +4,13 @@ import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
 import dominodto.TableroDominoDTO;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import notificador.IPresentacionNotificadorManager;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
+import partidadomino.jugadores.JugadorPanel;
+import notificador.IPresentacionPartidaDominoNotificador;
 
 /**
  *
@@ -57,8 +59,8 @@ public class PartidaDominoModel {
     private List<FichaDominoView> listaPanelesFichasJugadorLocal; // Lista de panales de fichas del jugador del dispositivo
     private List<FichaDominoTableroPanel> listaPanelesFichasSobreTablero; // Lista de paneles de fichas sobre el tablero
     private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
-    private List<JugadorDominoDTO>  listaJugadoresExternos; // Lista de jugadores de otros dispositivos
-    private IPresentacionNotificadorManager presentacionNotificadorManager;
+    private HashMap<String, JugadorPanel>  mapaJugadoresExternos; // mapa de jugadores de otros dispositivos
+    private IPresentacionPartidaDominoNotificador presentacionNotificadorManager;
     private FichaDominoDTO fichaSeleccionada;
 
     public PartidaDominoModel() {
@@ -83,19 +85,40 @@ public class PartidaDominoModel {
         this.listaPanelesFichasJugadorLocal = new ArrayList<>();
         this.listaPanelesFichasSobreTablero = new ArrayList<>();
         this.listaPanelesCasillasParaColocarFichas = new ArrayList<>();
-        this.listaJugadoresExternos = new ArrayList<>();
+        this.mapaJugadoresExternos = new HashMap<>();
         this.anchoPozo = 48;
         this.alturaPozo = 51;
         this.pozoLocacionY = 17;
         this.pozoLocacionX = 55;
         this.pozoBloqueado = true;
     }
+    
+    public void agregarJugadorPanel(JugadorPanel jugadorPanel) {
+        JugadorDominoDTO jugadorDominoDTO = jugadorPanel.getJugadorDominoDTO();
+        String idCliente = jugadorDominoDTO.getIdCliente();
+        System.out.println("Cliente agregado a mapa: " + idCliente);
+        mapaJugadoresExternos.put(idCliente, jugadorPanel);
+    }
+    
+    public void removerJugadorPanel(JugadorDominoDTO jugadorDominoDTO) {
+        String idCliente = jugadorDominoDTO.getIdCliente();
+        mapaJugadoresExternos.remove(idCliente);
+    }
 
-    public void setPresentacionNotificacionesManager(IPresentacionNotificadorManager presentacionNotificadorManager) {
+    public HashMap<String, JugadorPanel> getMapaJugadoresExternos() {
+        return mapaJugadoresExternos;
+    }
+    
+    public JugadorPanel obtenerJugadorPanel(JugadorDominoDTO jugadorDominoDTO) {
+        String idCliente = jugadorDominoDTO.getIdCliente();
+        return mapaJugadoresExternos.get(idCliente);
+    }
+
+    public void setPresentacionNotificacionesManager(IPresentacionPartidaDominoNotificador presentacionNotificadorManager) {
         this.presentacionNotificadorManager = presentacionNotificadorManager;
     }
 
-    public IPresentacionNotificadorManager getPresentacionNotificadorsManager() {
+    public IPresentacionPartidaDominoNotificador getPresentacionNotificadorsManager() {
         return presentacionNotificadorManager;
     }
 

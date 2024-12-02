@@ -4,6 +4,11 @@
  */
 package mvc;
 
+import javax.swing.JPanel;
+import listeners.IContenedorListener;
+import notificador.IPresentacionMenuDominoNotificador;
+import listeners.IMenuDominoViewListener;
+
 /**
  *
  * @author Hisamy Cinco Cota
@@ -11,21 +16,34 @@ package mvc;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class MenuDominoController {
+public class MenuDominoController implements IMenuDominoViewListener, IContenedorListener{
 
-    private MenuDominoModel menuDominoModel;
-    private MenuDominoView menuDominoView;
+    private final MenuDominoModel menuDominoModel;
+    private final MenuDominoView menuDominoView;
+    private final IPresentacionMenuDominoNotificador presentacionNotificadorManager;
 
     public MenuDominoController(MenuDominoModel menuDominoModel, MenuDominoView menuDominoView) {
         this.menuDominoModel = menuDominoModel;
         this.menuDominoView = menuDominoView;
+        this.presentacionNotificadorManager = menuDominoModel.getPresentacionNotificadorManager();
     }
 
-    public void addMouseListenerToCrearPartida() {
-
+    @Override
+    public void onEscalaChange(float escala) {
     }
 
-    public void addMouseListenerToUnirsePartida() {
+    @Override
+    public JPanel obtenerView() {
+        return menuDominoView;
+    }
 
+    @Override
+    public void onBtnCrearSala() {
+        presentacionNotificadorManager.notificarCrearSala();
+    }
+
+    @Override
+    public void onBtnUnirseSala() {
+        presentacionNotificadorManager.notificarUnirseSala();
     }
 }

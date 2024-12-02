@@ -32,6 +32,17 @@ public class MediadorNegocio implements IMediadorNegocio {
     }
     
     @Override
+    public void irAMenu() {
+        // Inicia la lógica del menu y obtiene la clase control
+        // que implementa IContenedorListener
+        IContenedorListener pantalla = setup.getMenuDominoLogica().iniciar();
+        // Muestra la pantalla sobre el contenedor de pantallas
+        contenedorPantallasLogica.abrirPantalla(pantalla);
+    }
+    
+    
+    
+    @Override
     public void irASalaEspera() {
         
         // Inicia la lógica de la sala de espera y obtiene la clase control
@@ -40,6 +51,18 @@ public class MediadorNegocio implements IMediadorNegocio {
         
         // Muestra la pantalla sobre el contenedor de pantallas
         contenedorPantallasLogica.abrirPantalla(pantalla);
+    }
+    
+    @Override
+    public void crearSala() {
+        // logica de SalaEspera para crear sala
+        setup.getSalaEsperaLogica().crearSala();
+    }
+    @Override
+    public void unirseSala() {
+        // logica de SalaEspera para unirse a sala
+        setup.getSalaEsperaLogica().unirseSala();
+        
     }
     /**
      * Cambia la vista actual a la pantalla de la partida de dominó.

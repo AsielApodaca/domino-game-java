@@ -62,6 +62,6 @@ public class ManejadorRespuestaOtorgarTurno extends ManejadorRespuestaClientePro
     protected void procesar(EventoRespuesta evento) {
         RespuestaOtorgarTurno respuesta = (RespuestaOtorgarTurno) evento;
         JugadorDominoDTO jugadorConNuevoTurno = respuesta.getJugadorDominoDTO();
-        partidaDominoLogica.cambiarTurno(jugadorConNuevoTurno);
+        partidaDominoLogica.otorgarTurnoAJugador(jugadorConNuevoTurno);
     }
 }

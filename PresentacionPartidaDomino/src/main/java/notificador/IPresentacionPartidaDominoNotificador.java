@@ -16,7 +16,7 @@ import listeners.IPresentacionPartidaDominoListener;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public interface IPresentacionNotificadorManager {
+public interface IPresentacionPartidaDominoNotificador {
     public void suscribirPresentacionListener(IPresentacionPartidaDominoListener listener);
 
     public void notificarCasillaSeleccionada(CasillaDTO casillaSeleccionada);

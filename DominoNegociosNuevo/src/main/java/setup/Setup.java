@@ -5,6 +5,8 @@ import domino.fachada.FachadaClienteProxy;
 import domino.fachada.IFachadaClienteProxy;
 import logica.contenedorpantallaslogica.ContenedorPantallasLogica;
 import logica.contenedorpantallaslogica.IContenedorPantallasLogica;
+import logica.menudominologica.IMenuDominoLogica;
+import logica.menudominologica.MenuDominoLogica;
 import logica.partidadominologica.IPartidaDominoLogica;
 import logica.partidadominologica.PartidaDominoLogica;
 import logica.salaesperalogica.ISalaEsperaLogica;
@@ -17,9 +19,11 @@ import manejadorrespuestaclienteproxy.ManejadorRespuestaColocarFichaTablero;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaDesbloquearPozo;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarCasillasDisponibles;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarFichasActualizadasDeJugador;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarJugadoresPartida;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarPantallaPartida;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaOcultarCasillasDisponibles;
 import manejadorrespuestaclienteproxy.ManejadorRespuestaOtorgarTurno;
+import manejadorrespuestaclienteproxy.ManejadorRespuestaRemoverJugadorPartida;
 import mediador.IMediadorNegocio;
 import mediador.MediadorNegocio;
 
@@ -40,6 +44,7 @@ public class Setup implements ISetup {
     private IFachadaClienteProxy fachadaClienteProxy;
     private GestorRespuestaClienteProxy gestorRespuestaClienteProxy;
     private IContenedorPantallasLogica contenedorPantallasLogica;
+    private IMenuDominoLogica menuDominoLogica;
     private ISalaEsperaLogica salaEsperaLogica;
     private IPartidaDominoLogica partidaDominoLogica;
     private IMediadorNegocio mediadorNegocio;
@@ -69,8 +74,14 @@ public class Setup implements ISetup {
      * Inicializa el usuario local que interactuará con el sistema.
      */
     private void iniciarUsuario() {
-        String nombre = "oliver";
-        String fuenteIcono = "../DominoMultimedia/personajes/personaje07.png";
+        String nombre = "ElMencho";
+
+        // Generar un número al azar entre 0 y 7
+        int numeroAleatorio = (int) (Math.random() * 8);  // 8 es el rango exclusivo superior (0 a 7)
+
+        // Construir la ruta de la fuente de icono con el número aleatorio
+        String fuenteIcono = "/personajes/personaje" + String.format("%02d", numeroAleatorio) + ".png";
+
         this.usuarioLocal = new UsuarioEntity(nombre);
         this.usuarioLocal.setFuenteIcono(fuenteIcono);
     }
@@ -82,6 +93,7 @@ public class Setup implements ISetup {
     private void iniciarLogicaDeNegocio() {
         this.contenedorPantallasLogica = new ContenedorPantallasLogica();
         this.contenedorPantallasLogica.iniciarContenedorDePantallas();
+        this.menuDominoLogica = new MenuDominoLogica(this);
         this.salaEsperaLogica = new SalaEsperaLogica(this);
         this.partidaDominoLogica = new PartidaDominoLogica(this);
     }
@@ -105,8 +117,14 @@ public class Setup implements ISetup {
         ManejadorRespuestaMostrarPantallaPartida manejadorRespuestaMostrarPantallaPartida
                 = new ManejadorRespuestaMostrarPantallaPartida(mediadorNegocio);
 
+        ManejadorRespuestaRemoverJugadorPartida manejadorRespuestaRemoverJugadorPartida
+                = new ManejadorRespuestaRemoverJugadorPartida(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
+
+        ManejadorRespuestaMostrarJugadoresPartida manejadorRespuestaMostrarJugadoresPartida
+                = new ManejadorRespuestaMostrarJugadoresPartida(partidaDominoLogica, manejadorRespuestaRemoverJugadorPartida);
+
         ManejadorRespuestaBloquearPozo manejadorRespuestaBloquearPozo
-                = new ManejadorRespuestaBloquearPozo(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
+                = new ManejadorRespuestaBloquearPozo(partidaDominoLogica, manejadorRespuestaMostrarJugadoresPartida);
 
         ManejadorRespuestaDesbloquearPozo manejadorRespuestaDesbloquearPozo
                 = new ManejadorRespuestaDesbloquearPozo(partidaDominoLogica, manejadorRespuestaBloquearPozo);
@@ -166,7 +184,7 @@ public class Setup implements ISetup {
      * de la partida.
      */
     private void correrJuego() {
-        this.mediadorNegocio.irASalaEspera();
+        this.mediadorNegocio.irAMenu();
     }
 
     // Getters
@@ -197,6 +215,10 @@ public class Setup implements ISetup {
         return this.contenedorPantallasLogica;
     }
 
+    public IMenuDominoLogica getMenuDominoLogica() {
+        return menuDominoLogica;
+    }
+
     /**
      * Obtiene la lógica de la sala de espera.
      *
@@ -214,4 +236,10 @@ public class Setup implements ISetup {
     public IPartidaDominoLogica getPartidaDominoLogica() {
         return this.partidaDominoLogica;
     }
+
+    public IMediadorNegocio getMediadorNegocio() {
+        return mediadorNegocio;
+    }
+    
+    
 }

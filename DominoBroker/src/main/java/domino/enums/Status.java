@@ -12,5 +12,6 @@ package domino.enums;
  */
 public enum Status {
     OCUPADO,
-    LIBRE
+    LIBRE,
+    EN_PARTIDA
 }

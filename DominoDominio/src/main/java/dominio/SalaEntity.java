@@ -16,8 +16,6 @@ public class SalaEntity {
 
     private ConfiguracionJuegoEntity configuracionPartida; // Configuración de la partida
     private List<JugadorDominoEntity> listaJugadores; // Lista de jugadores en la sala
-    private JugadorDominoEntity jugadorLocal; // Jugador de este dispositivo
-    private PartidaEntity partida; // Partida en juego
 
     public SalaEntity() {
         this.listaJugadores = new ArrayList<>();
@@ -39,23 +37,5 @@ public class SalaEntity {
     public void setListaJugadores(List<JugadorDominoEntity> listaJugadores) {
         this.listaJugadores = listaJugadores;
     }
-
-    public JugadorDominoEntity getJugadorLocal() {
-        return jugadorLocal;
-    }
-
-    public void setJugadorLocal(JugadorDominoEntity jugadorLocal) {
-        this.jugadorLocal = jugadorLocal;
-    }
-
-    public PartidaEntity getPartida() {
-        return partida;
-    }
-
-    public void setPartida(PartidaEntity partida) {
-        this.partida = partida;
-    }
-    
-    
 
 }

@@ -3,11 +3,14 @@ package mvc;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import listeners.IMenuDominoViewListener;
 
 /**
  *
@@ -31,6 +34,8 @@ public class MenuDominoView extends JPanel {
     private BufferedImage fondoBtnUnirseSala;
     private BufferedImage fondoBtnCrearSala;
     private BufferedImage dotMino;
+    
+    private IMenuDominoViewListener viewListener;
 
     public MenuDominoView(MenuDominoModel menuDominoModel) {
         this.menuDominoModel = menuDominoModel;
@@ -53,6 +58,8 @@ public class MenuDominoView extends JPanel {
         panelBtnUnirseSala = crearPanelConImagen(fondoBtnUnirseSala, BOTON_DIMENSION);
         panelBtnCrearSala = crearPanelConImagen(fondoBtnCrearSala, BOTON_DIMENSION);
         logo = crearLabelConImagen(dotMino, LOGO_DIMENSION);
+        addMouseListenerToUnirseSala();
+        addMouseListenerToCrearSala();
     }
 
     private void configurarLayout() {
@@ -120,5 +127,33 @@ public class MenuDominoView extends JPanel {
         label.setPreferredSize(dimension);
         return label;
     }
+    
+    public void addMouseListenerToCrearSala() {
+        panelBtnCrearSala.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                notificarBtnCrearSala();
+            }
+        });
+    }
 
+    public void addMouseListenerToUnirseSala() {
+        panelBtnUnirseSala.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                notificarBtnUnirseSala();
+            }
+        });
+    }
+
+    public void suscribirListener(IMenuDominoViewListener viewListener) {
+        this.viewListener = viewListener;
+    }
+    
+    private void notificarBtnCrearSala() {
+        viewListener.onBtnCrearSala();
+    }
+    private void notificarBtnUnirseSala() {
+        viewListener.onBtnUnirseSala();
+    }
 }
