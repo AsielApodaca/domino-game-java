@@ -11,8 +11,8 @@ import mediadorsingleton.MediadorSingletonContenedorContenido;
 import mvcpartidadomino.PartidaDominoController;
 import mvcpartidadomino.PartidaDominoModel;
 import mvcpartidadomino.PartidaDominoView;
-import notificador.IPresentacionNotificadorManager;
-import notificador.PresentacionNotificadorManager;
+import notificador.PresentacionPartidaDominoNotificador;
+import notificador.IPresentacionPartidaDominoNotificador;
 
 /**
  * Fachada para la lógica de presentación de la partida de dominó. 
@@ -122,8 +122,8 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
      */
     @Override
     public void suscribirPresentacionListener(IPresentacionPartidaDominoListener listener) {
-        IPresentacionNotificadorManager presentacionNotificadorManager
-                = new PresentacionNotificadorManager();
+        IPresentacionPartidaDominoNotificador presentacionNotificadorManager
+                = new PresentacionPartidaDominoNotificador();
         presentacionNotificadorManager.suscribirPresentacionListener(listener);
         partidaDominoModel.setPresentacionNotificacionesManager(presentacionNotificadorManager);
     }

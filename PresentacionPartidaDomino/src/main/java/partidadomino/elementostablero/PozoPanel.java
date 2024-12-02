@@ -22,7 +22,7 @@ public class PozoPanel extends JPanel {
     private static final Logger LOG = Logger.getLogger(PozoPanel.class.getName());
     private BufferedImage imagenPozo;
 
-    private final String fuenteImagenPozobloqueado = "/multimedia/Pozobloqueado.png";
+    private final String fuenteImagenPozoBloqueado = "/multimedia/PozoBloqueado.png";
     private final String fuenteImagenPozoDesbloqueado = "/multimedia/PozoDesbloqueado.png";
     private int locacionX;
     private int locacionY;
@@ -39,7 +39,7 @@ public class PozoPanel extends JPanel {
         try {
             // Cargar la imagen correspondiente segun el estado de bloqueado
             if (bloqueado) {
-                imagenPozo = ImageIO.read(getClass().getResource(fuenteImagenPozobloqueado));
+                imagenPozo = ImageIO.read(getClass().getResource(fuenteImagenPozoBloqueado));
             } else {
                 imagenPozo = ImageIO.read(getClass().getResource(fuenteImagenPozoDesbloqueado));
             }

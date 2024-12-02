@@ -5,6 +5,8 @@ import domino.fachada.FachadaClienteProxy;
 import domino.fachada.IFachadaClienteProxy;
 import logica.contenedorpantallaslogica.ContenedorPantallasLogica;
 import logica.contenedorpantallaslogica.IContenedorPantallasLogica;
+import logica.menudominologica.IMenuDominoLogica;
+import logica.menudominologica.MenuDominoLogica;
 import logica.partidadominologica.IPartidaDominoLogica;
 import logica.partidadominologica.PartidaDominoLogica;
 import logica.salaesperalogica.ISalaEsperaLogica;
@@ -42,6 +44,7 @@ public class Setup implements ISetup {
     private IFachadaClienteProxy fachadaClienteProxy;
     private GestorRespuestaClienteProxy gestorRespuestaClienteProxy;
     private IContenedorPantallasLogica contenedorPantallasLogica;
+    private IMenuDominoLogica menuDominoLogica;
     private ISalaEsperaLogica salaEsperaLogica;
     private IPartidaDominoLogica partidaDominoLogica;
     private IMediadorNegocio mediadorNegocio;
@@ -90,6 +93,7 @@ public class Setup implements ISetup {
     private void iniciarLogicaDeNegocio() {
         this.contenedorPantallasLogica = new ContenedorPantallasLogica();
         this.contenedorPantallasLogica.iniciarContenedorDePantallas();
+        this.menuDominoLogica = new MenuDominoLogica(this);
         this.salaEsperaLogica = new SalaEsperaLogica(this);
         this.partidaDominoLogica = new PartidaDominoLogica(this);
     }
@@ -180,7 +184,7 @@ public class Setup implements ISetup {
      * de la partida.
      */
     private void correrJuego() {
-        this.mediadorNegocio.irASalaEspera();
+        this.mediadorNegocio.irAMenu();
     }
 
     // Getters
@@ -211,6 +215,10 @@ public class Setup implements ISetup {
         return this.contenedorPantallasLogica;
     }
 
+    public IMenuDominoLogica getMenuDominoLogica() {
+        return menuDominoLogica;
+    }
+
     /**
      * Obtiene la lógica de la sala de espera.
      *
@@ -228,4 +236,10 @@ public class Setup implements ISetup {
     public IPartidaDominoLogica getPartidaDominoLogica() {
         return this.partidaDominoLogica;
     }
+
+    public IMediadorNegocio getMediadorNegocio() {
+        return mediadorNegocio;
+    }
+    
+    
 }

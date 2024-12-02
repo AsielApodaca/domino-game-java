@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package listeners;
+package notificador;
+
+import listeners.IPresentacionMenuDominoListener;
 
 /**
  *
@@ -11,7 +13,12 @@ package listeners;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public interface IViewListener {
-    public void onBtnCrearSala();
-    public void onBtnUnirseSala();
+public interface IPresentacionMenuDominoNotificador {
+
+    public void suscribirPresentacionListener(IPresentacionMenuDominoListener listener);
+
+    public void notificarCrearSala();
+
+    public void notificarUnirseSala();
+
 }

@@ -5,7 +5,8 @@ import listeners.IPresentacionMenuDominoListener;
 import mvc.MenuDominoController;
 import mvc.MenuDominoModel;
 import mvc.MenuDominoView;
-import notificador.IPresentacionNotificadorManager;
+import notificador.PresentacionMenuDominoNotificador;
+import notificador.IPresentacionMenuDominoNotificador;
 
 /**
  *
@@ -19,16 +20,17 @@ public class FachadaMenuDomino implements IFachadaMenuDomino{
     private MenuDominoController menuDominoController;
     private MenuDominoModel menuDominoModel;
     private MenuDominoView menuDominoView;
-    private IPresentacionNotificadorManager presentacionNotificadorManager;
+    private IPresentacionMenuDominoNotificador presentacionNotificadorManager;
 
     @Override
     public IContenedorListener iniciarPantalla() {
+        this.presentacionNotificadorManager = new PresentacionMenuDominoNotificador();
         this.menuDominoModel = new MenuDominoModel();
+        menuDominoModel.setPresentacionNotificadorManager(presentacionNotificadorManager);
         this.menuDominoView = new MenuDominoView(menuDominoModel);
-        menuDominoView.suscribirListener(menuDominoController);
         this.menuDominoController = new MenuDominoController(menuDominoModel, menuDominoView);
         menuDominoView.suscribirListener(menuDominoController);
-        
+        menuDominoView.suscribirListener(menuDominoController);
         return menuDominoController;
     }
     

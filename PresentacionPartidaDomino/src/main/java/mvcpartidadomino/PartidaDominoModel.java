@@ -6,11 +6,11 @@ import dominodto.TableroDominoDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import notificador.IPresentacionNotificadorManager;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
 import partidadomino.jugadores.JugadorPanel;
+import notificador.IPresentacionPartidaDominoNotificador;
 
 /**
  *
@@ -60,7 +60,7 @@ public class PartidaDominoModel {
     private List<FichaDominoTableroPanel> listaPanelesFichasSobreTablero; // Lista de paneles de fichas sobre el tablero
     private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
     private HashMap<String, JugadorPanel>  mapaJugadoresExternos; // mapa de jugadores de otros dispositivos
-    private IPresentacionNotificadorManager presentacionNotificadorManager;
+    private IPresentacionPartidaDominoNotificador presentacionNotificadorManager;
     private FichaDominoDTO fichaSeleccionada;
 
     public PartidaDominoModel() {
@@ -114,11 +114,11 @@ public class PartidaDominoModel {
         return mapaJugadoresExternos.get(idCliente);
     }
 
-    public void setPresentacionNotificacionesManager(IPresentacionNotificadorManager presentacionNotificadorManager) {
+    public void setPresentacionNotificacionesManager(IPresentacionPartidaDominoNotificador presentacionNotificadorManager) {
         this.presentacionNotificadorManager = presentacionNotificadorManager;
     }
 
-    public IPresentacionNotificadorManager getPresentacionNotificadorsManager() {
+    public IPresentacionPartidaDominoNotificador getPresentacionNotificadorsManager() {
         return presentacionNotificadorManager;
     }
 

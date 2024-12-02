@@ -39,8 +39,6 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     @Override
     public IContenedorListener iniciar() {
         mostrarPresentacionSalaEspera();
-        crearSala();
-        //unirseSala();
         return contenedorListener;
     }
     
@@ -50,7 +48,8 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     }
     
     // Inicio de métodos temporales para pruebas
-    private void crearSala() {
+    @Override
+    public void crearSala() {
         UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         ConfiguracionJuegoDTO configuracionJuegoDTO = new ConfiguracionJuegoDTO();
@@ -61,7 +60,8 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
         fachadaClienteProxy.enviarSolicitud(solicitud);
     }
     
-    private void unirseSala() {
+    @Override
+    public void unirseSala() {
         UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         String idSala = "SAL1"; // Aqui el id de la sala

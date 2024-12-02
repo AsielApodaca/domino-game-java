@@ -1,6 +1,6 @@
 package mvc;
 
-import notificador.IPresentacionNotificadorManager;
+import notificador.IPresentacionMenuDominoNotificador;
 
 /**
  *
@@ -20,7 +20,7 @@ public class MenuDominoModel {
     // Medidas originales
     private int anchoPantalla; // ancho del panel de la pantalla
     private int alturaPantalla; // altura del panel de la pantalla
-    private IPresentacionNotificadorManager presentacionNotificadorManager;
+    private IPresentacionMenuDominoNotificador presentacionNotificadorManager;
 
 
  
@@ -34,21 +34,14 @@ public class MenuDominoModel {
         this.alturaPantalla = 400;
     }
 
-    public IPresentacionNotificadorManager getPresentacionNotificadorManager() {
+    public IPresentacionMenuDominoNotificador getPresentacionNotificadorManager() {
         return presentacionNotificadorManager;
     }
 
-    public void setPresentacionNotificadorManager(IPresentacionNotificadorManager presentacionNotificadorManager) {
+    public void setPresentacionNotificadorManager(IPresentacionMenuDominoNotificador presentacionNotificadorManager) {
         this.presentacionNotificadorManager = presentacionNotificadorManager;
     }
-
-    public void notificarCrearSala(){
-        presentacionNotificadorManager.notificarCrearSala();
-    }
     
-    public void notificarUnirseSala(){
-        presentacionNotificadorManager.notificarUnirseSala();
-    }
     public float getEscala() {
         return escala;
     }

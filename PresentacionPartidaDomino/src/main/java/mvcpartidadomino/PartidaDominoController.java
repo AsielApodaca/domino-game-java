@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import listeners.IContenedorListener;
 import mediador.MediadorSingletonPantallaFichasJugador;
-import notificador.IPresentacionNotificadorManager;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoController;
@@ -26,6 +25,7 @@ import partidadomino.jugadores.JugadorArribaPanel;
 import partidadomino.jugadores.JugadorDerechaPanel;
 import partidadomino.jugadores.JugadorIzquierdaPanel;
 import partidadomino.jugadores.JugadorPanel;
+import notificador.IPresentacionPartidaDominoNotificador;
 
 /**
  *
@@ -75,7 +75,7 @@ public class PartidaDominoController implements IContenedorListener {
                 public void mouseClicked(MouseEvent e) {
                     CasillaDTO casillaSeleccionada = casilla.getCasillaDTO();
 
-                    IPresentacionNotificadorManager presentacionNotificacionesManager
+                    IPresentacionPartidaDominoNotificador presentacionNotificacionesManager
                             = model.getPresentacionNotificadorsManager();
 
                     presentacionNotificacionesManager.notificarCasillaSeleccionada(casillaSeleccionada);
@@ -154,7 +154,7 @@ public class PartidaDominoController implements IContenedorListener {
 
     public void sacarFichaPozo() {
         if (!model.isPozoBloqueado()) {
-            IPresentacionNotificadorManager presentacionNotificadorManager
+            IPresentacionPartidaDominoNotificador presentacionNotificadorManager
                     = model.getPresentacionNotificadorsManager();
 
             presentacionNotificadorManager.notificarPozoSeleccionado();
