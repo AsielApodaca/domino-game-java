@@ -75,6 +75,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         mostrarPantallaPartidaAJugadores();
         repartirFichas();
         repartirTurnos();
+        mostrarJugadores();
         mostrarFichasAJugadores();
         iniciarPartida();
 
@@ -183,6 +184,33 @@ public class PartidaServerLogica implements IPartidaServerLogica {
     private void repartirTurnos() {
         List<JugadorDominoEntity> jugadores = controladorJugadores.obtenerJugadores();
         controladorTurnos.asignarTurnosAJugadores(jugadores);
+    }
+    
+    private void mostrarJugadores() {
+        // Envia a cada jugador lo que para el son jugadores de otros dispositivos
+        // en el orden de los turnos
+        List<JugadorDominoEntity> jugadores = controladorJugadores.obtenerJugadores();
+        for (int i = 0; i < jugadores.size(); i++) {
+            List<JugadorDominoDTO> jugadoresExternos = new ArrayList<>();
+
+            // Añadir jugadores después del jugador actual
+            for (int j = i + 1; j < jugadores.size(); j++) {
+                JugadorDominoDTO jugadorDominoDTO = adapterJugadorDomino.adaptToDTO(jugadores.get(j));
+                jugadoresExternos.add(jugadorDominoDTO);
+            }
+
+            // Añadir jugadores antes del jugador actual
+            for (int j = 0; j < i; j++) {
+                JugadorDominoDTO jugadorDominoDTO = adapterJugadorDomino.adaptToDTO(jugadores.get(j));
+                jugadoresExternos.add(jugadorDominoDTO);
+            }
+
+            JugadorDominoEntity jugadorLocal = jugadores.get(i);
+            String idCliente = jugadorLocal.getIdCliente();
+            
+            generadorRespuestas.enviarRespuestaMostrarJugadoresPartida(jugadoresExternos, idCliente);
+        }
+
     }
 
     private void mostrarFichasAJugadores() {

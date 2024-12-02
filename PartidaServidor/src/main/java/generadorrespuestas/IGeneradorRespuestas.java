@@ -36,6 +36,8 @@ public interface IGeneradorRespuestas {
     void enviarRespuestaDesbloquearPozo(String idCliente);
 
     void enviarRespuestaBloquearPozo(String idCliente);
+    
+    void enviarRespuestaMostrarJugadoresPartida(List<JugadorDominoDTO> jugadoresEnOrden, String idCliente);
 
     void setFachadaServidorProxy(IFachadaServidorProxy fachadaServidorProxy);
 }

@@ -11,6 +11,7 @@ import domino.respuestas.RespuestaColocarFichaTablero;
 import domino.respuestas.RespuestaDesbloquearPozo;
 import domino.respuestas.RespuestaMostrarCasillasDisponibles;
 import domino.respuestas.RespuestaMostrarFichasActualizadasDeJugador;
+import domino.respuestas.RespuestaMostrarJugadoresPartida;
 import domino.respuestas.RespuestaMostrarPantallaPartida;
 import domino.respuestas.RespuestaOcultarCasillasDisponibles;
 import domino.respuestas.RespuestaOtorgarTurno;
@@ -83,6 +84,12 @@ public class GeneradorRespuestas implements IGeneradorRespuestas {
     @Override
     public void enviarRespuestaDesbloquearPozo(String idCliente) {
         RespuestaDesbloquearPozo respuesta = new RespuestaDesbloquearPozo(idCliente);
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+    
+    @Override
+    public void enviarRespuestaMostrarJugadoresPartida(List<JugadorDominoDTO> jugadoresEnOrden, String idCliente) {
+        RespuestaMostrarJugadoresPartida respuesta = new RespuestaMostrarJugadoresPartida(idCliente, jugadoresEnOrden);
         fachadaServidorProxy.enviarRespuestas(respuesta);
     }
 

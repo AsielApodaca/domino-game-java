@@ -20,3 +20,5 @@ DominoNegociosNuevo/pom.xml
 PartidaServidor/pom.xml
 !/PresentacionMenuDomino/pom.xml
 PartidaServidor/pom.xml
+/PresentacionMenuDomino/target/
+PartidaServidor/pom.xml
