@@ -23,7 +23,7 @@ public class PozoPanel extends JPanel {
     private BufferedImage imagenPozo;
 
     private final String fuenteImagenPozoBloqueado = "/multimedia/PozoBloqueado.png";
-    private final String fuenteImagenPozoDesbloqueado = "/multimedia/PozoBloqueado.png";
+    private final String fuenteImagenPozoDesbloqueado = "/multimedia/PozoDesbloqueado.png";
     private int locacionX;
     private int locacionY;
     private boolean Bloqueado;

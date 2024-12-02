@@ -66,16 +66,16 @@ public class PartidaDominoController implements IContenedorListener {
     private void agregarMouseListenersACasillas() {
         for (CasillaPanel casilla : model.getListaPanelesCasillasParaColocarFichas()) {
             casilla.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                CasillaDTO casillaSeleccionada = casilla.getCasillaDTO();
-                
-                IPresentacionNotificadorManager presentacionNotificacionesManager = 
-                        model.getPresentacionNotificadorsManager();
-                
-                presentacionNotificacionesManager.notificarCasillaSeleccionada(casillaSeleccionada);
-            }
-        });
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    CasillaDTO casillaSeleccionada = casilla.getCasillaDTO();
+
+                    IPresentacionNotificadorManager presentacionNotificacionesManager
+                            = model.getPresentacionNotificadorsManager();
+
+                    presentacionNotificacionesManager.notificarCasillaSeleccionada(casillaSeleccionada);
+                }
+            });
         }
     }
 
@@ -137,11 +137,13 @@ public class PartidaDominoController implements IContenedorListener {
 
     public void mostrarPozoDisponible() {
         model.setPozoBloqueado(false);
+        view.getPozoPanel().setBloqueado(false);
         view.repintarPozo();
     }
 
     public void ocultarPozoDisponible() {
         model.setPozoBloqueado(true);
+        view.getPozoPanel().setBloqueado(true);
         view.repintarPozo();
     }
 
@@ -149,7 +151,7 @@ public class PartidaDominoController implements IContenedorListener {
         if (!model.isPozoBloqueado()) {
             IPresentacionNotificadorManager presentacionNotificadorManager
                     = model.getPresentacionNotificadorsManager();
-            
+
             presentacionNotificadorManager.notificarPozoSeleccionado();
             ocultarPozoDisponible();
         }
@@ -159,7 +161,7 @@ public class PartidaDominoController implements IContenedorListener {
         this.view.getPozoPanel().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                sacarFichaPozo(); // Reutilizamos el método existente
+                sacarFichaPozo(); 
                 view.repintarPozo();
             }
         });
@@ -172,17 +174,17 @@ public class PartidaDominoController implements IContenedorListener {
     public PartidaDominoView getView() {
         return view;
     }
-    
+
     public void mostrarJugador(JugadorDominoDTO jugadorDominoDTO) {
-        
+
     }
-    
+
     public void removerJugador(JugadorDominoDTO jugadorDominoDTO) {
-        
+
     }
-    
+
     public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
-        
+
     }
 
     @Override
