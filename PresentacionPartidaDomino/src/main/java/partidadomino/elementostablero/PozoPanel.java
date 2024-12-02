@@ -22,23 +22,24 @@ public class PozoPanel extends JPanel {
     private static final Logger LOG = Logger.getLogger(PozoPanel.class.getName());
     private BufferedImage imagenPozo;
 
-    private final String fuenteImagenPozoBloqueado = "/multimedia/PozoBloqueado.png";
+    private final String fuenteImagenPozobloqueado = "/multimedia/Pozobloqueado.png";
     private final String fuenteImagenPozoDesbloqueado = "/multimedia/PozoDesbloqueado.png";
     private int locacionX;
     private int locacionY;
-    private boolean Bloqueado;
+    private boolean bloqueado;
 
     public PozoPanel() {
         setLayout(null);
         setOpaque(false);
+        bloqueado = true;
         cargarFondo();
     }
 
     public void cargarFondo() {
         try {
-            // Cargar la imagen correspondiente segun el estado de Bloqueado
-            if (Bloqueado) {
-                imagenPozo = ImageIO.read(getClass().getResource(fuenteImagenPozoBloqueado));
+            // Cargar la imagen correspondiente segun el estado de bloqueado
+            if (bloqueado) {
+                imagenPozo = ImageIO.read(getClass().getResource(fuenteImagenPozobloqueado));
             } else {
                 imagenPozo = ImageIO.read(getClass().getResource(fuenteImagenPozoDesbloqueado));
             }
@@ -79,11 +80,11 @@ public class PozoPanel extends JPanel {
     }
 
     public boolean isBloqueado() {
-        return Bloqueado;
+        return bloqueado;
     }
 
-    public void setBloqueado(boolean Bloqueado) {
-        this.Bloqueado = Bloqueado;
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
         cargarFondo(); // Recargar la imagen cuando cambie el estado
         repaint(); // Volver a dibujar el panel con la nueva imagen
     }
