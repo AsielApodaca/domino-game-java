@@ -45,6 +45,7 @@ public class MenuDominoView extends JPanel {
 
     private void cargarComponentes() {
         setLayout(null);
+        setOpaque(false);
         cargarImagenes();
 
         configurarComponentes();
@@ -102,7 +103,6 @@ public class MenuDominoView extends JPanel {
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
                 if (imagen != null) {
                     g.drawImage(imagen, 0, 0, dimension.width, dimension.height, this);
                 }
@@ -116,7 +116,6 @@ public class MenuDominoView extends JPanel {
         JLabel label = new JLabel() {
             @Override
             protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
                 if (imagen != null) {
                     g.drawImage(imagen, 0, 0, dimension.width, dimension.height, this);
                 }
