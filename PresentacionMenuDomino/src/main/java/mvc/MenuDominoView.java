@@ -33,7 +33,7 @@ public class MenuDominoView extends JPanel {
     private BufferedImage fondoBtnUnirseSala;
     private BufferedImage fondoBtnCrearSala;
     private BufferedImage dotMino;
-    
+
     private IMenuDominoViewListener viewListener;
 
     public MenuDominoView(MenuDominoModel menuDominoModel) {
@@ -63,13 +63,42 @@ public class MenuDominoView extends JPanel {
     }
 
     private void configurarLayout() {
-        panelBtnCrearSala.setBounds(100, 100, BOTON_DIMENSION.width, BOTON_DIMENSION.height);
-        panelBtnUnirseSala.setBounds(100, 200, BOTON_DIMENSION.width, BOTON_DIMENSION.height);
-        logo.setBounds(50, 20, LOGO_DIMENSION.width, LOGO_DIMENSION.height);
+         // Agregar un listener para ajustar el layout dinámicamente
+    addComponentListener(new java.awt.event.ComponentAdapter() {
+        @Override
+        public void componentResized(java.awt.event.ComponentEvent e) {
+            int botonCrearX = (getWidth() - BOTON_DIMENSION.width) / 2;
+            int botonCrearY = getHeight() - BOTON_DIMENSION.height;
 
-        add(panelBtnCrearSala);
-        add(panelBtnUnirseSala);
-        add(logo);
+            // Posicionar el botón "Crear Sala"
+            panelBtnCrearSala.setBounds(
+                    botonCrearX,
+                    botonCrearY - 20,
+                    BOTON_DIMENSION.width,
+                    BOTON_DIMENSION.height);
+
+            // Posicionar el botón "Unirse Sala"
+            panelBtnUnirseSala.setBounds(
+                    botonCrearX,
+                    botonCrearY - 80,
+                    BOTON_DIMENSION.width,
+                    BOTON_DIMENSION.height);
+
+            // Posicionar el logo
+            int logoX = (getWidth() - LOGO_DIMENSION.width) / 2;
+            logo.setBounds(logoX, 20, LOGO_DIMENSION.width, LOGO_DIMENSION.height);
+
+            // Actualizar el layout visualmente
+            revalidate();
+            repaint();
+        }
+    });
+
+    // Agregar los componentes al contenedor
+    add(panelBtnCrearSala);
+    add(panelBtnUnirseSala);
+    add(logo);
+
     }
 
     @Override
@@ -124,7 +153,7 @@ public class MenuDominoView extends JPanel {
         label.setPreferredSize(dimension);
         return label;
     }
-    
+
     public void addMouseListenerToCrearSala() {
         panelBtnCrearSala.addMouseListener(new MouseAdapter() {
             @Override
@@ -146,10 +175,11 @@ public class MenuDominoView extends JPanel {
     public void suscribirListener(IMenuDominoViewListener viewListener) {
         this.viewListener = viewListener;
     }
-    
+
     private void notificarBtnCrearSala() {
         viewListener.onBtnCrearSala();
     }
+
     private void notificarBtnUnirseSala() {
         viewListener.onBtnUnirseSala();
     }
