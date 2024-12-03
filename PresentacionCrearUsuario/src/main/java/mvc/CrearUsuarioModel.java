@@ -68,14 +68,14 @@ public class CrearUsuarioModel {
         this.btnEmpezar = "/multimedia/btnEmpezar.png";
 
         // Rutas iconos
-        this.icono1 = "/multimedia/Icono1.png";
-        this.icono2 = "/multimedia/Icono2.png";
-        this.icono3 = "/multimedia/Icono3.png";
-        this.icono4 = "/multimedia/Icono4.png";
-        this.icono5 = "/multimedia/Icono5.png";
-        this.icono6 = "/multimedia/Icono6.png";
-        this.icono7 = "/multimedia/Icono7.png";
-        this.icono8 = "/multimedia/Icono8.png";
+        this.icono1 = "/personajes/personaje00.png";
+        this.icono2 = "/personajes/personaje01.png";
+        this.icono3 = "/personajes/personaje02.png";
+        this.icono4 = "/personajes/personaje03.png";
+        this.icono5 = "/personajes/personaje04.png";
+        this.icono6 = "/personajes/personaje05.png";
+        this.icono7 = "/personajes/personaje06.png";
+        this.icono8 = "/personajes/personaje07.png";
 
         // Medidas iniciales
         this.anchoPantalla = 600;

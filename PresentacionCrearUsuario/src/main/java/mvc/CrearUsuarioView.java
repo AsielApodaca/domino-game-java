@@ -9,6 +9,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,13 +28,6 @@ import listeners.IViewListener;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 public class CrearUsuarioView extends JPanel {
 
     private static final Dimension BOTON_DIMENSION = new Dimension(30, 30);
