@@ -5,6 +5,7 @@
 package deserializador;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import domino.respuestas.EventoRespuesta;
 import domino.solicitudes.EventoSolicitud;
 

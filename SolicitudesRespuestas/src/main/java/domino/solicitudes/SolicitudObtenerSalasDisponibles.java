@@ -17,18 +17,8 @@ import java.util.List;
  */
 public class SolicitudObtenerSalasDisponibles extends EventoSolicitud {
     
-    private SalaDTO sala ;
-    
     public SolicitudObtenerSalasDisponibles(UsuarioDTO usuarioDTO) {
         super(usuarioDTO);
-    }
-
-    public SalaDTO getSala() {
-        return sala;
-    }
-
-    public void setSala(SalaDTO salas) {
-        this.sala = salas;
     }
     
 }

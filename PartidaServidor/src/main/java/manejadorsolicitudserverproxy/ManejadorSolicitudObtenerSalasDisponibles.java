@@ -30,8 +30,7 @@ public class ManejadorSolicitudObtenerSalasDisponibles extends ManejadorSolicitu
 
     @Override
     protected void procesar(EventoSolicitud evento) {
-        SolicitudObtenerSalasDisponibles solicitud = (SolicitudObtenerSalasDisponibles) evento ;
-        partidaServerLogica.procesarUnirseSala(evento.getUsuarioDTO());
+        partidaServerLogica.procesarMostrarSalaDisponible();
     }
     
 }
