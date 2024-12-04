@@ -24,14 +24,6 @@ public class RespuestaOcultarSalaDisponible extends EventoRespuesta {
         return ES_PARA_TODOS ;
     }
 
-    public SalaDTO getSalasDisponibles() {
-        return salaDisponible;
-    }
-
-    public void setSalasDisponibles(SalaDTO salaDisponible) {
-        this.salaDisponible = salaDisponible;
-    }
-
     public SalaDTO getSalaDisponible() {
         return salaDisponible;
     }

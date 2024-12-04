@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import listeners.IContenedorListener;
 import listeners.IPresentacionPartidaDominoListener;
+import logica.padrelogica.Logica;
 import mapeodto.MapeadorDTO;
 import setup.Setup;
 
@@ -27,7 +28,7 @@ import setup.Setup;
  *
  * @author asielapodaca
  */
-public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionPartidaDominoListener {
+public class PartidaDominoLogica extends Logica implements IPartidaDominoLogica, IPresentacionPartidaDominoListener {
 
     private static final Logger LOG = Logger.getLogger(PartidaDominoLogica.class.getName());
     private IFachadaPartidaDomino fachadaPartidaDomino;
@@ -41,14 +42,27 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
 
     @Override
     public IContenedorListener iniciar() {
+        this.fachadaPartidaDomino = new FachadaPartidaDomino();
+        this.operando = true;
         mostrarPresentacionPartida();
         escucharEventosPartidaDomino();
 
-        return contenedorListener;
+        return mvcController;
     }
 
+    public void cerrar() {
+        fachadaPartidaDomino = null;
+        mvcController = null;
+        this.operando = false;
+    }
+    
+    @Override
+    public boolean estaOperando() {
+        return this.operando;
+    }
+    
     private void mostrarPresentacionPartida() {
-        this.contenedorListener = fachadaPartidaDomino.iniciarPantalla();
+        this.mvcController = fachadaPartidaDomino.iniciarPantalla();
     }
 
     private void escucharEventosPartidaDomino() {

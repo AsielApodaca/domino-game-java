@@ -23,10 +23,7 @@ import domino.listeners.IClientProxyListener;
 
 /**
  *
- * @author Hisamy Cinco Cota
- * @author Gael Rafael Castro Molina
- * @author Oliver Inzunza Valle
- * @author Asiel Apodaca Monge
+ * @author castr
  */
 public class ClienteProxy {
 

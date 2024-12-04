@@ -9,6 +9,7 @@ import fachada.FachadaCrearUsuario;
 import fachada.IFachadaCrearUsuario;
 import listeners.IContenedorListener;
 import listeners.IPresentacionCrearUsuarioListener;
+import logica.padrelogica.Logica;
 import setup.Setup;
 
 /**
@@ -18,22 +19,35 @@ import setup.Setup;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class CrearUsuarioLogica implements ICrearUsuarioLogica, IPresentacionCrearUsuarioListener {
+public class CrearUsuarioLogica extends Logica implements ICrearUsuarioLogica, IPresentacionCrearUsuarioListener {
 
     private IContenedorListener contenedorListener;
     private IFachadaClienteProxy fachadaClienteProxy;
     private IFachadaCrearUsuario fachadaCrearUsuario;
 
     public CrearUsuarioLogica(Setup setup) {
-        this.setup = setup;
+        super(setup);
         fachadaClienteProxy = setup.getFachadaClienteProxy();
-        fachadaCrearUsuario = new FachadaCrearUsuario();
+        
     }
 
     @Override
     public IContenedorListener iniciar() {
+        this.operando = true;
+        fachadaCrearUsuario = new FachadaCrearUsuario();
         mostrarPresentacionCrearUsuario();
         return contenedorListener;
+    }
+    
+    @Override
+    public void cerrar() {
+        this.operando = false;
+        this.mvcController = null;
+        this.fachadaCrearUsuario = null;
+    }    
+    @Override
+    public boolean estaOperando() {
+        return this.operando;
     }
 
     private void mostrarPresentacionCrearUsuario() {

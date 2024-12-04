@@ -12,10 +12,7 @@ import domino.solicitudes.EventoSolicitud;
 
 /**
  *
- * @author Hisamy Cinco Cota
- * @author Gael Rafael Castro Molina
- * @author Oliver Inzunza Valle
- * @author Asiel Apodaca Monge
+ * @author castr
  */
 public class FachadaClienteProxy implements IFachadaClienteProxy {
 
