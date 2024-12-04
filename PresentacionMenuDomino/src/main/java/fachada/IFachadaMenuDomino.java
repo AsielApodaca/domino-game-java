@@ -19,5 +19,6 @@ public interface IFachadaMenuDomino {
     IContenedorListener iniciarPantalla();
     
     void suscribirPresentacionListener(IPresentacionMenuDominoListener listener);
+    
 
 }
