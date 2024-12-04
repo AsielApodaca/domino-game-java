@@ -11,7 +11,10 @@ import logica.buscarsalalogica.IBuscarSalaLogica;
 
 /**
  *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class ManejadorRespuestaOcultarSalaDisponible extends ManejadorRespuestaClienteProxy {
     

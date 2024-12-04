@@ -29,13 +29,12 @@ public class BuscarSalaLogica extends Logica implements IBuscarSalaLogica, IPres
     public BuscarSalaLogica(Setup setup) {
         super(setup);
         proxy = setup.getFachadaClienteProxy() ;
-        
+        fachadaBuscarSala = new FachadaBuscarSala() ;
     }
 
     @Override
     public IContenedorListener iniciar() {
         this.operando = true ;
-        fachadaBuscarSala = new FachadaBuscarSala() ;
         mostrarPresentacionBuscarSala();
         enviarBuscarSalasDisponibles();
         return mvcController ;
@@ -50,7 +49,6 @@ public class BuscarSalaLogica extends Logica implements IBuscarSalaLogica, IPres
     public void cerrar() {
         this.operando = false ;
         this.fachadaBuscarSala = null ;
-        this.mvcController = null;
     }
 
     @Override

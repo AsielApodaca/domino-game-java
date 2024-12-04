@@ -16,7 +16,6 @@ import fachada.FachadaPresentacionSalaEspera;
 import fachada.IFachadaPresentacionSalaEspera;
 import listeners.IContenedorListener;
 import listeners.IPresentacionSalaEsperaListener;
-import logica.padrelogica.Logica;
 import mapeodto.MapeadorDTO;
 import setup.Setup;
 
@@ -27,38 +26,25 @@ import setup.Setup;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class SalaEsperaLogica extends Logica implements ISalaEsperaLogica, IPresentacionSalaEsperaListener {
+public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsperaListener {
 
     private IFachadaPresentacionSalaEspera fachadaPresentacionSalaEspera;
     private IFachadaClienteProxy fachadaClienteProxy;
 
     public SalaEsperaLogica(Setup setup) {
-        super(setup);
+        this.setup = setup;
         this.fachadaClienteProxy = setup.getFachadaClienteProxy();
+        this.fachadaPresentacionSalaEspera = new FachadaPresentacionSalaEspera();
     }
 
     @Override
     public IContenedorListener iniciar() {
-        this.operando = true;
-        this.fachadaPresentacionSalaEspera = new FachadaPresentacionSalaEspera();
         mostrarPresentacionSalaEspera();
-        return mvcController;
-    }
-    
-    @Override
-    public void cerrar() {
-        this.operando = false;
-        mvcController = null;
-        fachadaPresentacionSalaEspera = null;
-    }
-    
-    @Override
-    public boolean estaOperando() {
-        return this.operando;
+        return contenedorListener;
     }
     
     private void mostrarPresentacionSalaEspera() {
-        this.mvcController = fachadaPresentacionSalaEspera.iniciarPantalla();
+        this.contenedorListener = fachadaPresentacionSalaEspera.iniciarPantalla();
         fachadaPresentacionSalaEspera.subscribirPresentacionListener(this);
     }
     

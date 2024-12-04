@@ -8,7 +8,10 @@ import domino.solicitudes.EventoSolicitud;
 
 /**
  *
- * @author castr
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public interface IServidorProxyListener {
 

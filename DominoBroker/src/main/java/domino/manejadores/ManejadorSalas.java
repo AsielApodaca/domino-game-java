@@ -11,7 +11,6 @@ import deserializador.Serializador;
 import domino.conexiones.ConexionCliente;
 import domino.conexiones.ConexionServidor;
 import domino.enums.Status;
-import domino.respuestas.EventoRespuesta;
 import domino.respuestas.RespuestaMostrarSalaDisponible;
 import domino.respuestas.RespuestaOcultarSalaDisponible;
 import domino.sala.Sala;
@@ -26,42 +25,43 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class ManejadorSalas {
-
-    private final Map<String, Sala> salas;
-    private Long contadorIdSalas;
-
+    private final Map<String, Sala> salas ;
+    private Long contadorIdSalas ;
+    
     public ManejadorSalas() {
-        this.salas = new HashMap();
-        this.contadorIdSalas = 0L;
+        this.salas = new HashMap() ;
+        this.contadorIdSalas = 0L ;
     }
-
+    
     public Map<String, Sala> getSalas() {
-        return this.salas;
+        return this.salas ;
     }
-
+    
     public void cerrarSala(ConexionServidor servidor) {
-        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId());
-        salas.remove(salaDelServidor.getId());
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        salas.remove(salaDelServidor.getId()) ;
     }
-
+    
     public void crearSala(ConexionCliente cliente, ConexionServidor servidor, JsonObject solicitudJSON) {
         if (servidor != null) {
 
             contadorIdSalas += 1L;
             String id = "SAL" + contadorIdSalas;
-
+            
             enviarConfiguracionDePartida(servidor, solicitudJSON);
             servidor.setStatus(Status.OCUPADO);
-
+            
             Sala salaNueva = new Sala(id, servidor, solicitudJSON.get("limiteJugadores").getAsInt());
             salaNueva.agregarCliente(cliente.getId(), cliente);
             salaNueva.setAnfitrion(cliente);
             salaNueva.setStatusPartida(Status.OCUPADO);
-
+            
             salas.put(id, salaNueva);
             System.out.println("Sala Creada con el ID: " + id);
             System.out.println("Se unio el cliente: " + cliente.getId() + " a la Sala: " + id);
@@ -70,68 +70,68 @@ public class ManejadorSalas {
             System.out.println("No hay servidores libres.");
         }
     }
-
+    
     public void enviarSolicitudObtenerSalasDisponibles(ConexionCliente cliente, JsonObject jsonObject) {
-
+        
         salas.forEach((id, sala) -> {
-            if (sala.getStatusPartida() != Status.EN_PARTIDA) {
-                ConexionServidor servidorDeLaSala = sala.getServidor();
+            if(sala.getStatusPartida() != Status.EN_PARTIDA) {
+                ConexionServidor servidorDeLaSala = sala.getServidor() ;
                 servidorDeLaSala.mandarSolicitudServidor(jsonObject);
             }
         });
-
+        
     }
-
+    
     public Sala obtenerSala(String id) {
-        Sala salaBuscada = salas.get(id);
-
-        if (salaBuscada != null) {
-            return salaBuscada;
+        Sala salaBuscada = salas.get(id) ;
+        
+        if(salaBuscada != null) {
+            return salaBuscada ;
         } else {
-            return null;
+            return null ;
         }
     }
-
+    
     public Sala obtenerSalaDeCliente(String id) {
         Sala salaDelCliente = salas.values().stream()
-                .filter(sala -> sala.obtenerClientes().containsKey(id))
-                .findFirst()
-                .orElse(null);
-
-        return salaDelCliente;
+                .filter(sala -> sala.obtenerClientes().containsKey(id)) 
+                .findFirst() 
+                .orElse(null); 
+        
+        return salaDelCliente ;
     }
-
+    
     public Sala obtenerSalaDeServidor(String id) {
         Sala salaDelServidor = salas.values().stream()
-                .filter(sala -> sala.getServidor().getId() == id)
-                .findFirst()
-                .orElse(null);
-
-        return salaDelServidor;
+                .filter(sala -> sala.getServidor().getId() == id) 
+                .findFirst() 
+                .orElse(null); 
+        
+        return salaDelServidor ;
     }
-
+    
     public void unirClienteASala(ConexionCliente cliente, JsonObject jsonObject) {
-        String idSala = jsonObject.get("idSala").getAsString();
-        Sala salaBuscada = obtenerSala(idSala);
-
+        String idSala = jsonObject.get("idSala").getAsString() ;
+        Sala salaBuscada = obtenerSala(idSala) ;
+        
         salaBuscada.agregarCliente(cliente.getId(), cliente);
-
+        
         System.out.println("Se unio el cliente: " + cliente.getId() + " a la Sala con el ID: " + idSala);
     }
-
+    
     public void eliminarClienteDeSala(ConexionCliente cliente) {
-        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId());
-
+        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
+        
         salaDelCliente.eliminarCliente(cliente.getId());
-
+        
         verificarSalaVacia(salaDelCliente);
-
+        
         System.out.println("El Cliente con el ID: " + cliente.getId() + " ha abandonado la Sala con el ID: " + salaDelCliente.getId());
     }
-
+    
     public void enviarSolicitudAServidor(ConexionCliente cliente, JsonObject solicitud) {
-        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId());
-
+        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
+        
         if (salaDelCliente != null) {
             solicitud.addProperty("idCliente", cliente.getId());
             salaDelCliente.getServidor().mandarSolicitudServidor(solicitud);
@@ -139,24 +139,24 @@ public class ManejadorSalas {
             System.out.println("El cliente no esta conectado a una sala");
         }
     }
-
+    
     public void enviarRespuestaACliente(ConexionServidor servidor, JsonObject respuesta) {
-        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId());
-
-        if (salaDelServidor != null) {
-            String idCliente = respuesta.get("idCliente").getAsString();
-
-            ConexionCliente cliente = salaDelServidor.obtenerCliente(idCliente);
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        
+        if(salaDelServidor != null) {
+            String idCliente = respuesta.get("idCliente").getAsString() ;
+            
+            ConexionCliente cliente = salaDelServidor.obtenerCliente(idCliente) ;
             cliente.mandarRespuestaCliente(respuesta);
         } else {
             System.out.println("El Servidor no esta conectado a una sala");
         }
     }
-
+    
     public void enviarRespuestaATodosLosClientes(ConexionServidor servidor, JsonObject respuesta) {
-        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId());
-
-        if (salaDelServidor != null) {
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        
+        if(salaDelServidor != null) {
             salaDelServidor.obtenerClientes().forEach((id, cliente) -> {
                 cliente.mandarRespuestaCliente(respuesta);
             });
@@ -164,69 +164,61 @@ public class ManejadorSalas {
             System.out.println("El Servidor no esta conectado a una sala");
         }
     }
-
+    
     public void enviarRespuestaObtenerSalaDisponible(ConexionServidor servidor, JsonObject respuesta, ManejadorClientes manejadorClientes) {
-        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId());
-
-        if (salaDelServidor != null) {
-            RespuestaMostrarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString());
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        
+        if(salaDelServidor != null) {
+            RespuestaMostrarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString()) ;
             respuestaSala.getSalaDisponible().setIdSala(salaDelServidor.getId());
             respuestaSala.getSalaDisponible().setAnfitrion(new UsuarioDTO(salaDelServidor.getAnfitrion().getId()));
-            String respuestaString = Serializador.convertirEventoRespuestaAJSON(respuestaSala);
-            JsonObject respuestaJSON = JsonParser.parseString(respuestaString).getAsJsonObject();
+            String respuestaString = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
+            JsonObject respuestaJSON = JsonParser.parseString(respuestaString).getAsJsonObject() ;
             manejadorClientes.enviarRespuestaATodosLosClientes(respuestaJSON);
         } else {
             System.out.println("El Servidor no esta conectado a una sala");
         }
     }
-
+    
     public void enviarRespuestaOcultarSalaDisponible(ConexionServidor servidor, JsonObject respuesta, ManejadorClientes manejadorClientes) {
-        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId());
-
-        if (salaDelServidor != null) {
-            // Convertir el JSON recibido en un evento RespuestaOcultarSalaDisponible
-            RespuestaOcultarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString());
-
-            // Configurar los datos adicionales de la sala
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        
+        if(salaDelServidor != null) {
+            RespuestaOcultarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString()) ;
             respuestaSala.setSalaDisponible(new SalaDTO(salaDelServidor.getId(), salaDelServidor.getSize()));
-
-            // Convertir el evento actualizado de vuelta a JSON
-            String respuestaJSON = Serializador.convertirEventoRespuestaAJSON(respuestaSala);
-            JsonObject respuestaFinal = JsonParser.parseString(respuestaJSON).getAsJsonObject();
-
-            // Enviar la respuesta final a todos los clientes
-            manejadorClientes.enviarRespuestaATodosLosClientes(respuestaFinal);
+            String respuestaJSON = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
+            manejadorClientes.enviarRespuestaATodosLosClientes(respuesta);
         } else {
-            System.out.println("El servidor no está conectado a una sala");
+            System.out.println("El Servidor no esta conectado a una sala");
         }
     }
-
+    
     public void enviarSolicitudAbandonarSalaClientePorDesconexion(ConexionCliente cliente) {
-        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId());
-        UsuarioDTO clienteQueAbandona = new UsuarioDTO();
+        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
+        UsuarioDTO clienteQueAbandona = new UsuarioDTO() ;
         clienteQueAbandona.setIdCliente(cliente.getId());
-        EventoSolicitud eventoSolicitudAbandonarSala = new SolicitudAbandonarSala(clienteQueAbandona);
+        EventoSolicitud eventoSolicitudAbandonarSala = new SolicitudAbandonarSala(clienteQueAbandona) ;
         eventoSolicitudAbandonarSala.setIdCliente(cliente.getId());
-        JsonObject solicitudAbandonarSala = JsonParser.parseString(Serializador.convertirEventoSolicitudAJSON(eventoSolicitudAbandonarSala)).getAsJsonObject();
+        JsonObject solicitudAbandonarSala = JsonParser.parseString(Serializador.convertirEventoSolicitudAJSON(eventoSolicitudAbandonarSala)).getAsJsonObject() ;
         salaDelCliente.getServidor().mandarSolicitudServidor(solicitudAbandonarSala);
         eliminarClienteDeSala(cliente);
         System.out.println("El Cliente con el ID: " + cliente.getId() + " se ha desconectado de la Sala con el ID: " + salaDelCliente.getId());
     }
-
+    
     public void enviarSolicitudIniciarPartida(ConexionCliente cliente, JsonObject solicitud) {
-        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId());
+        Sala salaDelCliente = obtenerSalaDeCliente(cliente.getId()) ;
         salaDelCliente.setStatusPartida(Status.EN_PARTIDA);
         enviarSolicitudAServidor(cliente, solicitud);
     }
-
+    
     private void enviarConfiguracionDePartida(ConexionServidor servidor, JsonObject solicitudJSON) {
         servidor.mandarSolicitudServidor(solicitudJSON);
     }
-
+    
     private void verificarSalaVacia(Sala sala) {
-        if (sala.getClientes().isEmpty()) {
+        if(sala.getClientes().isEmpty()) {
             sala.getServidor().setStatus(Status.LIBRE);
-            salas.remove(sala.getId());
+            salas.remove(sala.getId()) ;
             System.out.println("Se ha eliminado la Sala con el ID: " + sala.getId());
         }
     }
