@@ -103,4 +103,6 @@ public interface IPartidaDominoLogica {
     public void removerJugadorDePartida(JugadorDominoDTO jugadorDominoDTO);
 
     public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas);
+    
+    public void mostrarResultadoPartida();
 }
