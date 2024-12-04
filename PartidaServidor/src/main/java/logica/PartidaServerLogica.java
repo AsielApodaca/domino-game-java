@@ -81,7 +81,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         eliminarJugadorPorIdCliente(idCliente);
         generadorRespuestas.enviarRespuestaRemoverUsuarioSalaEspera(new UsuarioDTO(idCliente));
         if(!controladorJugadores.obtenerJugadores().isEmpty() && !partidaIniciada) {
-            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
+            procesarMostrarSalaDisponible() ;
         } else {
             generadorRespuestas.enviarRespuestaOcultarSalaDisponible();
         }
@@ -367,7 +367,8 @@ public class PartidaServerLogica implements IPartidaServerLogica {
             controladorJugadores.obtenerJugadores().forEach(jugador -> {
                 usuariosDTO.add(adapterJugadorDomino.adaptToUsuarioDTO(jugador)) ;
             });
-            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
+            sala.setUsuarios(usuariosDTO);
+            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO, sala);
         }
     }
 }

@@ -10,6 +10,7 @@ import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
+import dominodto.SalaDTO;
 import dominodto.UsuarioDTO;
 import java.util.List;
 
@@ -111,8 +112,8 @@ public class GeneradorRespuestas implements IGeneradorRespuestas {
     }
     
     @Override
-    public void enviarRespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego) {
-        RespuestaMostrarSalaDisponible respuesta = new RespuestaMostrarSalaDisponible(configuracionJuego) ;
+    public void enviarRespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego, SalaDTO sala) {
+        RespuestaMostrarSalaDisponible respuesta = new RespuestaMostrarSalaDisponible(configuracionJuego, sala) ;
         fachadaServidorProxy.enviarRespuestas(respuesta);
     }
     

@@ -168,12 +168,11 @@ public class ManejadorSalas {
         
         if(salaDelServidor != null) {
             RespuestaMostrarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString()) ;
-            SalaDTO salaDisponible = new SalaDTO(salaDelServidor.getId(), salaDelServidor.getSize()) ;
-            salaDisponible.setAnfitrion(new UsuarioDTO(salaDelServidor.getAnfitrion().getId()));
-            respuestaSala.setSalaDisponible(salaDisponible);
-            String respuestaString = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
-            JsonObject respuestaJSON = JsonParser.parseString(respuestaString).getAsJsonObject() ;
-            manejadorClientes.enviarRespuestaATodosLosClientes(respuestaJSON);
+            respuestaSala.getSalaDisponible().setIdSala(salaDelServidor.getId());
+            respuestaSala.getSalaDisponible().setSize(salaDelServidor.getSize());
+            respuestaSala.getSalaDisponible().setAnfitrion(new UsuarioDTO(salaDelServidor.getAnfitrion().getId()));
+            String respuestaJSON = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
+            manejadorClientes.enviarRespuestaATodosLosClientes(respuesta);
         } else {
             System.out.println("El Servidor no esta conectado a una sala");
         }
@@ -184,9 +183,7 @@ public class ManejadorSalas {
         
         if(salaDelServidor != null) {
             RespuestaOcultarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString()) ;
-            respuestaSala.getSalaDisponible().setIdSala(salaDelServidor.getId());
-            respuestaSala.getSalaDisponible().setSize(salaDelServidor.getSize());
-            respuestaSala.getSalaDisponible().setAnfitrion(new UsuarioDTO(salaDelServidor.getAnfitrion().getId()));
+            respuestaSala.setSalaDisponible(new SalaDTO(salaDelServidor.getId(), salaDelServidor.getSize()));
             String respuestaJSON = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
             manejadorClientes.enviarRespuestaATodosLosClientes(respuesta);
         } else {

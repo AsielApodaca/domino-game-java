@@ -22,6 +22,11 @@ public class RespuestaMostrarSalaDisponible extends EventoRespuesta {
         super(null);
         this.configuracionJuego = configuracionJuego ;
     }
+    public RespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego, SalaDTO sala) {
+        super(null);
+        this.configuracionJuego = configuracionJuego ;
+        this.salaDisponible = sala ;
+    }
 
     @Override
     public boolean esParaTodos() {
