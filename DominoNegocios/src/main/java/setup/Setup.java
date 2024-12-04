@@ -17,21 +17,7 @@ import logica.partidadominologica.IPartidaDominoLogica;
 import logica.partidadominologica.PartidaDominoLogica;
 import logica.salaesperalogica.ISalaEsperaLogica;
 import logica.salaesperalogica.SalaEsperaLogica;
-import manejadorrespuestaclienteproxy.GestorRespuestaClienteProxy;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaActualizarCantidadFichas;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaAgregarFichaJugador;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaBloquearPozo;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaColocarFichaTablero;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaDesbloquearPozo;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarCasillasDisponibles;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarFichasActualizadasDeJugador;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarJugadoresPartida;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarPantallaPartida;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaMostrarSalaDisponible;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaOcultarCasillasDisponibles;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaOcultarSalaDisponible;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaOtorgarTurno;
-import manejadorrespuestaclienteproxy.ManejadorRespuestaRemoverJugadorPartida;
+import manejadorrespuestaclienteproxy.*;
 import mediador.IMediadorNegocio;
 import mediador.MediadorNegocio;
 
@@ -151,10 +137,16 @@ public class Setup implements ISetup {
 
         ManejadorRespuestaMostrarFichasActualizadasDeJugador manejadorRespuestaMostrarFichasActualizadasDeJugador
                 = new ManejadorRespuestaMostrarFichasActualizadasDeJugador(partidaDominoLogica, manejadorRespuestaActualizarCantidadFichas);
+        
+        ManejadorRespuestaRemoverUsuarioSalaEspera manejadorRespuestaRemoverUsuarioSalaEspera
+                = new ManejadorRespuestaRemoverUsuarioSalaEspera(salaEsperaLogica, manejadorRespuestaMostrarFichasActualizadasDeJugador);
 
+        ManejadorRespuestaMostrarUsuarioSalaEspera manejadorRespuestaMostrarUsuarioSalaEspera
+                = new ManejadorRespuestaMostrarUsuarioSalaEspera(salaEsperaLogica, manejadorRespuestaRemoverUsuarioSalaEspera);
+        
         // Instancia el gestor de respuestas, quien escucha las respuestas del ClientProxy
         // y las pasa al primer manejador en la cadena.
-        gestorRespuestaClienteProxy = new GestorRespuestaClienteProxy(manejadorRespuestaMostrarFichasActualizadasDeJugador);
+        gestorRespuestaClienteProxy = new GestorRespuestaClienteProxy(manejadorRespuestaMostrarUsuarioSalaEspera);
         // Suscribe el gestor de respuestas del proxy como oyente del ClientProxy
         fachadaClienteProxy.suscribirClientProxyListener(gestorRespuestaClienteProxy);
     }

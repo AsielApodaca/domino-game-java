@@ -19,6 +19,7 @@ public class UsuarioDTO {
 
     public UsuarioDTO() {
     }
+    
 
     //provisional
     public UsuarioDTO(String nombre) {

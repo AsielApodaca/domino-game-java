@@ -79,6 +79,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
     @Override
     public void procesarAbandonarSala(String idCliente) {
         eliminarJugadorPorIdCliente(idCliente);
+        generadorRespuestas.enviarRespuestaRemoverUsuarioSalaEspera(new UsuarioDTO(idCliente));
         if(!controladorJugadores.obtenerJugadores().isEmpty() && !partidaIniciada) {
             generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
         } else {

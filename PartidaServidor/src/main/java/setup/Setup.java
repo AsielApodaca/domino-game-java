@@ -82,6 +82,8 @@ public class Setup implements ISetup {
 
         ManejadorSolicitudFichaSeleccionada manejadorSolicitudFichaSeleccionada
                 = new ManejadorSolicitudFichaSeleccionada(manejadorSolicitudCasillaSeleccionada, partidaServerLogica);
+        
+        
 
         gestorSolicitudServerProxy = new GestorSolicitudServerProxy(manejadorSolicitudFichaSeleccionada);
     }
