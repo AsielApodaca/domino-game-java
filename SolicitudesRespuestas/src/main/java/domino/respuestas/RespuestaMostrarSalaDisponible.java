@@ -22,18 +22,15 @@ public class RespuestaMostrarSalaDisponible extends EventoRespuesta {
         super(null);
         this.configuracionJuego = configuracionJuego ;
     }
+    public RespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego, SalaDTO sala) {
+        super(null);
+        this.configuracionJuego = configuracionJuego ;
+        this.salaDisponible = sala ;
+    }
 
     @Override
     public boolean esParaTodos() {
         return ES_PARA_TODOS ;
-    }
-
-    public SalaDTO getSalasDisponibles() {
-        return salaDisponible;
-    }
-
-    public void setSalasDisponibles(SalaDTO salaDisponible) {
-        this.salaDisponible = salaDisponible;
     }
 
     public SalaDTO getSalaDisponible() {

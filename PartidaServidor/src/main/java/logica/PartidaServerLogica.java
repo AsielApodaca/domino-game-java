@@ -25,10 +25,12 @@ import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
+import dominodto.SalaDTO;
 import dominodto.UsuarioDTO;
 import generadorrespuestas.IGeneradorRespuestas;
 import java.util.ArrayList;
 import java.util.List;
+import mapeodto.MapeadorDTO;
 
 /**
  *
@@ -62,7 +64,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         registrarUsuarioComoJugador(anfitrion);
         this.generadorRespuestas.enviarRespuestaAprobarCreacionSala(anfitrion.getIdCliente());
         if(configuracionJuegoDTO.getLimiteJugadores() != 1) {
-            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
+            procesarMostrarSalaDisponible() ;
         }
     }
 
@@ -70,8 +72,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
     public void procesarUnirseSala(UsuarioDTO usuarioDTO) {
         if(controladorJugadores.obtenerJugadores().size() < configuracionJuegoDTO.getLimiteJugadores()) {
             registrarUsuarioComoJugador(usuarioDTO);
-            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
-            generadorRespuestas.enviarRespuestaMostrarUsuarioSalaEspera(usuarioDTO);
+            procesarMostrarSalaDisponible() ;
         }
     }
 
@@ -80,7 +81,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         eliminarJugadorPorIdCliente(idCliente);
         generadorRespuestas.enviarRespuestaRemoverUsuarioSalaEspera(new UsuarioDTO(idCliente));
         if(!controladorJugadores.obtenerJugadores().isEmpty() && !partidaIniciada) {
-            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
+            procesarMostrarSalaDisponible() ;
         } else {
             generadorRespuestas.enviarRespuestaOcultarSalaDisponible();
         }
@@ -356,5 +357,18 @@ public class PartidaServerLogica implements IPartidaServerLogica {
 
         // Actualiza las fichas del jugador
         generadorRespuestas.enviarRespuestaMostrarFichasActualizadasDeJugador(idCliente, fichasJugadorDTO);
+    }
+
+    @Override
+    public void procesarMostrarSalaDisponible() {
+        if(controladorJugadores.obtenerJugadores().size() < configuracionJuegoDTO.getLimiteJugadores()) {
+            SalaDTO sala = new SalaDTO() ;
+            List<UsuarioDTO> usuariosDTO = new ArrayList() ;
+            controladorJugadores.obtenerJugadores().forEach(jugador -> {
+                usuariosDTO.add(adapterJugadorDomino.adaptToUsuarioDTO(jugador)) ;
+            });
+            sala.setUsuarios(usuariosDTO);
+            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO, sala);
+        }
     }
 }

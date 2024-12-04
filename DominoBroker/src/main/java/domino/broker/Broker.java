@@ -181,9 +181,10 @@ public class Broker {
                     throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
                 } else if(Deserializador.esJsonInstanciaDe(respuesta, RespuestaCerrarSala.class)) {
                     manejadorSalas.cerrarSala(servidor);
-                } else if(Deserializador.esJsonInstanciaDe(respuesta, RespuestaMostrarSalaDisponible.class) || 
-                        Deserializador.esJsonInstanciaDe(respuesta, RespuestaOcultarSalaDisponible.class)) {
-                    manejadorClientes.enviarRespuestaATodosLosClientes(respuestaJSON);
+                } else if(Deserializador.esJsonInstanciaDe(respuesta, RespuestaMostrarSalaDisponible.class)) {
+                    manejadorSalas.enviarRespuestaObtenerSalaDisponible(servidor, respuestaJSON, manejadorClientes);
+                } else if(Deserializador.esJsonInstanciaDe(respuesta, RespuestaOcultarSalaDisponible.class)) {
+                    manejadorSalas.enviarRespuestaOcultarSalaDisponible(servidor, respuestaJSON, manejadorClientes);
                 } else if(eventoRespuesta.esParaTodos()){
                     manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
                 } else {

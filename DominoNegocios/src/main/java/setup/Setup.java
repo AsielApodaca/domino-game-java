@@ -3,6 +3,8 @@ package setup;
 import dominio.UsuarioEntity;
 import domino.fachada.FachadaClienteProxy;
 import domino.fachada.IFachadaClienteProxy;
+import logica.buscarsalalogica.BuscarSalaLogica;
+import logica.buscarsalalogica.IBuscarSalaLogica;
 import logica.contenedorpantallaslogica.ContenedorPantallasLogica;
 import logica.contenedorpantallaslogica.IContenedorPantallasLogica;
 import logica.crearusuariologica.CrearUsuarioLogica;
@@ -42,6 +44,7 @@ public class Setup implements ISetup {
     private ICrearUsuarioLogica crearUsuarioLogica;
     private IMediadorNegocio mediadorNegocio;
     private IGestorUsuario gestorUsuario;
+    private IBuscarSalaLogica buscarSalaLogica ;
 
     /**
      * Constructor de la clase {@code Setup}.
@@ -74,6 +77,7 @@ public class Setup implements ISetup {
         this.salaEsperaLogica = new SalaEsperaLogica(this);
         this.partidaDominoLogica = new PartidaDominoLogica(this);
         this.crearUsuarioLogica = new CrearUsuarioLogica(this);
+        this.buscarSalaLogica = new BuscarSalaLogica(this) ;
     }
 
     /**
@@ -92,8 +96,14 @@ public class Setup implements ISetup {
      */
     private void iniciarManejadorRespuestasClienteProxy() {
         // Instancia los manejadores de respuestas, configurando la cadena de responsabilidad
+        ManejadorRespuestaMostrarSalaDisponible manejadorRespuestaMostrarSalaDisponible
+                = new ManejadorRespuestaMostrarSalaDisponible(buscarSalaLogica) ;
+        
+        ManejadorRespuestaOcultarSalaDisponible manejadorRespuestaOcultarSalaDisponible
+                = new ManejadorRespuestaOcultarSalaDisponible(buscarSalaLogica, manejadorRespuestaMostrarSalaDisponible) ;
+        
         ManejadorRespuestaMostrarPantallaPartida manejadorRespuestaMostrarPantallaPartida
-                = new ManejadorRespuestaMostrarPantallaPartida(mediadorNegocio);
+                = new ManejadorRespuestaMostrarPantallaPartida(mediadorNegocio, manejadorRespuestaOcultarSalaDisponible);
 
         ManejadorRespuestaRemoverJugadorPartida manejadorRespuestaRemoverJugadorPartida
                 = new ManejadorRespuestaRemoverJugadorPartida(partidaDominoLogica, manejadorRespuestaMostrarPantallaPartida);
@@ -242,6 +252,10 @@ public class Setup implements ISetup {
      */
     public IGestorUsuario getGestorUsuario() {
         return gestorUsuario;
+    }
+
+    public IBuscarSalaLogica getBuscarSalaLogica() {
+        return buscarSalaLogica;
     }
 
 }

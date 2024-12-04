@@ -1,4 +1,4 @@
-package manejadorsolicitudserverproxy;
+ package manejadorsolicitudserverproxy;
 
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudUnirseSala;

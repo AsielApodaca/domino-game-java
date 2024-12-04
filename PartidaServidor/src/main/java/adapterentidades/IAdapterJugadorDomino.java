@@ -22,4 +22,5 @@ public interface IAdapterJugadorDomino {
     
     JugadorDominoDTO adaptToDTO(JugadorDominoEntity jugadorEntity) ;
     
+    UsuarioDTO adaptToUsuarioDTO(JugadorDominoEntity jugadorEntity) ;
 }

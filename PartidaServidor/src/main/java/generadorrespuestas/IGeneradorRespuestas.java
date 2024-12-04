@@ -9,6 +9,7 @@ import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
+import dominodto.SalaDTO;
 import dominodto.UsuarioDTO;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public interface IGeneradorRespuestas {
 
     void enviarRespuestaCerrarSaala();
 
-    void enviarRespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego);
+    void enviarRespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego, SalaDTO sala);
 
     void enviarRespuestaOcultarSalaDisponible();
 

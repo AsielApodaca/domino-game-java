@@ -4,6 +4,7 @@ package logica;
 import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
+import dominodto.SalaDTO;
 import dominodto.UsuarioDTO;
 import generadorrespuestas.IGeneradorRespuestas;
 
@@ -23,4 +24,5 @@ public interface IPartidaServerLogica {
     public void procesarCasillaSeleccionada(CasillaDTO casilla, UsuarioDTO usuario);
     public void procesarSacarFichaPozo(String idCliente);
     public void setGeneradorRespuestas(IGeneradorRespuestas generadorRespuestas);
+    public void procesarMostrarSalaDisponible();
 }

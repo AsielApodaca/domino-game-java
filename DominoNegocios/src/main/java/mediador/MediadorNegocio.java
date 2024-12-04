@@ -103,4 +103,10 @@ public class MediadorNegocio implements IMediadorNegocio {
         // Muestra la pantalla sobre el contenedor de pantallas
         contenedorPantallasLogica.abrirPantalla(pantalla);
     }
+
+    @Override
+    public void irABuscarSala() {
+        IContenedorListener pantalla = setup.getBuscarSalaLogica().iniciar() ;
+        contenedorPantallasLogica.abrirPantalla(pantalla);
+    }
 }
