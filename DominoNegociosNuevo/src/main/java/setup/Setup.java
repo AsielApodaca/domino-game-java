@@ -194,7 +194,7 @@ public class Setup implements ISetup {
      * de la partida.
      */
     private void correrJuego() {
-        this.mediadorNegocio.irAMenu();
+        this.mediadorNegocio.irACrearUsuario();
     }
 
     /**
