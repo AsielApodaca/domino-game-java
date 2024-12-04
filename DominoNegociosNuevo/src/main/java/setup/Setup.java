@@ -7,6 +7,8 @@ import logica.contenedorpantallaslogica.ContenedorPantallasLogica;
 import logica.contenedorpantallaslogica.IContenedorPantallasLogica;
 import logica.crearusuariologica.CrearUsuarioLogica;
 import logica.crearusuariologica.ICrearUsuarioLogica;
+import logica.gestorusuario.GestorUsuario;
+import logica.gestorusuario.IGestorUsuario;
 import logica.menudominologica.IMenuDominoLogica;
 import logica.menudominologica.MenuDominoLogica;
 import logica.partidadominologica.IPartidaDominoLogica;
@@ -51,6 +53,7 @@ public class Setup implements ISetup {
     private IPartidaDominoLogica partidaDominoLogica;
     private ICrearUsuarioLogica crearUsuarioLogica;
     private IMediadorNegocio mediadorNegocio;
+    private IGestorUsuario gestorUsuario;
 
     /**
      * Constructor de la clase {@code Setup}.
@@ -67,6 +70,7 @@ public class Setup implements ISetup {
     public void iniciar() {
         iniciarUsuario();
         iniciarConexionProxy();
+        iniciarGestores();
         iniciarLogicaDeNegocio();
         iniciarMediadorDeNegocio();
         iniciarManejadorRespuestasClienteProxy();
@@ -190,7 +194,14 @@ public class Setup implements ISetup {
      * de la partida.
      */
     private void correrJuego() {
-        this.mediadorNegocio.irAMenu();
+        this.mediadorNegocio.irACrearUsuario();
+    }
+
+    /**
+     * Inicializa los gestores del sistema.
+     */
+    private void iniciarGestores() {
+        this.gestorUsuario = new GestorUsuario();
     }
 
     // Getters
@@ -249,6 +260,15 @@ public class Setup implements ISetup {
 
     public ICrearUsuarioLogica getCrearUsuarioLogica() {
         return crearUsuarioLogica;
+    }
+
+    /**
+     * Obtiene el gestor de usuarios del sistema.
+     *
+     * @return el gestor de usuarios como IGestorUsuario
+     */
+    public IGestorUsuario getGestorUsuario() {
+        return gestorUsuario;
     }
 
 }
