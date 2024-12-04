@@ -20,4 +20,8 @@ public interface IMenuDominoLogica {
      * @return Un contenedor de listeners configurado para manejar eventos en la sala.
      */
     public IContenedorListener iniciar();
+    
+    public void cerrar();
+    
+    public boolean estaOperando();
 }

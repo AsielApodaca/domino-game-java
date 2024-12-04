@@ -35,6 +35,7 @@ public class MediadorNegocio implements IMediadorNegocio {
 
     @Override
     public void irAMenu() {
+        cerrarOperaciones();
         // Inicia la lógica del menu y obtiene la clase control
         // que implementa IContenedorListener
         IContenedorListener pantalla = setup.getMenuDominoLogica().iniciar();
@@ -48,7 +49,7 @@ public class MediadorNegocio implements IMediadorNegocio {
      */
     @Override
     public void irASalaEspera() {
-
+        cerrarOperaciones();
         // Inicia la lógica de la sala de espera y obtiene la clase control
         // que implementa IContenedorListener
         IContenedorListener pantalla = setup.getSalaEsperaLogica().iniciar();
@@ -82,7 +83,7 @@ public class MediadorNegocio implements IMediadorNegocio {
      */
     @Override
     public void irAPartidaDomino() {
-
+        cerrarOperaciones();
         // Inicia la lógica de la partida de dominó y obtiene la clase control
         // que implementa IContenedorListener
         IContenedorListener pantalla = setup.getPartidaDominoLogica().iniciar();
@@ -97,6 +98,7 @@ public class MediadorNegocio implements IMediadorNegocio {
      */
     @Override
     public void irACrearUsuario() {
+        cerrarOperaciones();
         // Inicia la logica de crear usuario y obtiene la clase control 
         // que implementa el listener
         IContenedorListener pantalla = setup.getCrearUsuarioLogica().iniciar();
@@ -106,7 +108,16 @@ public class MediadorNegocio implements IMediadorNegocio {
 
     @Override
     public void irABuscarSala() {
+        cerrarOperaciones();
         IContenedorListener pantalla = setup.getBuscarSalaLogica().iniciar() ;
         contenedorPantallasLogica.abrirPantalla(pantalla);
+    }
+    
+    private void cerrarOperaciones() {
+        setup.getCrearUsuarioLogica().cerrar();
+        setup.getMenuDominoLogica().cerrar();
+        setup.getBuscarSalaLogica().cerrar();
+        setup.getSalaEsperaLogica().cerrar();
+        setup.getPartidaDominoLogica().cerrar();
     }
 }
