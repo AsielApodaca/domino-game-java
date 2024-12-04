@@ -179,7 +179,6 @@ public class SalaEsperaView extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(20, 0, 1, 0);
         gbc.fill = GridBagConstraints.NONE;

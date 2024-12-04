@@ -121,4 +121,6 @@ public interface IFachadaPartidaDomino {
      * @param jugadorDominoDTO el jugador que recibe el turno.
      */
     void otorgarTurnoAJugador(JugadorDominoDTO jugadorDominoDTO);
+    
+    void mostrarResultadoPartida();
 }

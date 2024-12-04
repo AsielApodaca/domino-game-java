@@ -15,11 +15,12 @@ import javax.swing.JPanel;
  *
  * @author asielapodaca
  */
-public abstract class JugadorPanel extends JPanel{
+public abstract class JugadorPanel extends JPanel {
+
     protected JugadorDominoDTO jugadorDominoDTO;
     protected int cantidadFichas;
     protected boolean turnoDeColocar;
-    
+
     // Medidas originales
     protected float escala = 1;
     protected int tamanioLetra = 10;
@@ -31,11 +32,11 @@ public abstract class JugadorPanel extends JPanel{
         this.cantidadFichas = 0;
         this.turnoDeColocar = false;
     }
-    
+
     public void actualizarCantidadFichas(int cantidadFichas) {
         this.cantidadFichas = cantidadFichas;
     }
-    
+
     public void actualizarTurno(boolean turnoDeColocar) {
         this.turnoDeColocar = turnoDeColocar;
     }
@@ -44,19 +45,23 @@ public abstract class JugadorPanel extends JPanel{
         return jugadorDominoDTO;
     }
 
+    public int getCantidadFichas() {
+        return cantidadFichas;
+    }
+
     public void reescalar(float escala) {
         this.escala = escala;
         repintar();
     }
-    
+
     protected abstract void repintar();
-    
+
     protected abstract void repintarFichas();
-    
+
     protected abstract void repintarJugador();
-    
+
     protected abstract void reescalarJugadorPanel();
-    
+
     protected BufferedImage cargarImagen(String ruta) throws IOException {
         InputStream inputStream = getClass().getResourceAsStream(ruta);
         if (inputStream == null) {

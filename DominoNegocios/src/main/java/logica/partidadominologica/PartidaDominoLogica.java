@@ -190,4 +190,9 @@ public class PartidaDominoLogica extends Logica implements IPartidaDominoLogica,
         return setup.getUsuarioLocal();
     }
 
+    @Override
+    public void mostrarResultadoPartida() {
+        fachadaPartidaDomino.mostrarResultadoPartida();
+    }
+
 }
