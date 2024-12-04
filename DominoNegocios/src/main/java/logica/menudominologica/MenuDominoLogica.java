@@ -9,6 +9,7 @@ import fachada.FachadaMenuDomino;
 import fachada.IFachadaMenuDomino;
 import listeners.IContenedorListener;
 import listeners.IPresentacionMenuDominoListener;
+import logica.padrelogica.Logica;
 import setup.Setup;
 
 /**
@@ -18,28 +19,40 @@ import setup.Setup;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class MenuDominoLogica implements IMenuDominoLogica, IPresentacionMenuDominoListener {
+public class MenuDominoLogica extends Logica implements IMenuDominoLogica, IPresentacionMenuDominoListener {
 
-    private IContenedorListener contenedorListener;
     private Setup setup;
     private IFachadaClienteProxy fachadaClienteProxy;
     private IFachadaMenuDomino fachadaMenuDomino;
 
     public MenuDominoLogica(Setup setup) {
-        this.setup = setup;
+        super(setup);
         fachadaClienteProxy = setup.getFachadaClienteProxy();
-        fachadaMenuDomino = new FachadaMenuDomino();
+        
     }
 
     @Override
     public IContenedorListener iniciar() {
+        this.operando = true;
+        fachadaMenuDomino = new FachadaMenuDomino();
         mostrarPresentacionMenu();
 
-        return contenedorListener;
+        return mvcController;
+    }
+    
+    @Override
+    public void cerrar() {
+        mvcController = null;
+        this.operando = false;
+        fachadaMenuDomino = null;
+    }
+    
+    public boolean estaOperando() {
+        return this.operando;
     }
 
     private void mostrarPresentacionMenu() {
-        this.contenedorListener = fachadaMenuDomino.iniciarPantalla();
+        this.mvcController = fachadaMenuDomino.iniciarPantalla();
         fachadaMenuDomino.suscribirPresentacionListener(this);
     }
 
