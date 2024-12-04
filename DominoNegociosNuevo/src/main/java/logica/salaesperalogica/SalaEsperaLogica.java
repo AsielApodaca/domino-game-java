@@ -21,7 +21,10 @@ import setup.Setup;
 
 /**
  *
- * @author castr
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsperaListener {
 

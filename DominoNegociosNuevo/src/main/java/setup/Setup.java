@@ -5,6 +5,8 @@ import domino.fachada.FachadaClienteProxy;
 import domino.fachada.IFachadaClienteProxy;
 import logica.contenedorpantallaslogica.ContenedorPantallasLogica;
 import logica.contenedorpantallaslogica.IContenedorPantallasLogica;
+import logica.crearusuariologica.CrearUsuarioLogica;
+import logica.crearusuariologica.ICrearUsuarioLogica;
 import logica.menudominologica.IMenuDominoLogica;
 import logica.menudominologica.MenuDominoLogica;
 import logica.partidadominologica.IPartidaDominoLogica;
@@ -47,6 +49,7 @@ public class Setup implements ISetup {
     private IMenuDominoLogica menuDominoLogica;
     private ISalaEsperaLogica salaEsperaLogica;
     private IPartidaDominoLogica partidaDominoLogica;
+    private ICrearUsuarioLogica crearUsuarioLogica;
     private IMediadorNegocio mediadorNegocio;
 
     /**
@@ -96,6 +99,7 @@ public class Setup implements ISetup {
         this.menuDominoLogica = new MenuDominoLogica(this);
         this.salaEsperaLogica = new SalaEsperaLogica(this);
         this.partidaDominoLogica = new PartidaDominoLogica(this);
+        this.crearUsuarioLogica = new CrearUsuarioLogica(this);
     }
 
     /**
@@ -242,6 +246,9 @@ public class Setup implements ISetup {
     public IMediadorNegocio getMediadorNegocio() {
         return mediadorNegocio;
     }
-    
-    
+
+    public ICrearUsuarioLogica getCrearUsuarioLogica() {
+        return crearUsuarioLogica;
+    }
+
 }

@@ -7,7 +7,7 @@ package listeners;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public interface IViewListener {
+public interface ICrearUsuarioViewListener {
 
     /**
      * Notifica al presionar "Empezar" con un nombre de usuario.

@@ -13,5 +13,5 @@ public interface IPresentacionCrearUsuarioNotificador {
 
     public void suscribirPresentacionListener(IPresentacionCrearUsuarioListener listener);
 
-    public void notificarCrearUsuario();
+    public void notificarCrearUsuario(String nombreUsuario, String rutaIcono);
 }

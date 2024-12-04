@@ -13,9 +13,12 @@ import setup.Setup;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
-public class MenuDominoLogica implements IMenuDominoLogica, IPresentacionMenuDominoListener{
+public class MenuDominoLogica implements IMenuDominoLogica, IPresentacionMenuDominoListener {
 
     private IContenedorListener contenedorListener;
     private Setup setup;
@@ -27,15 +30,14 @@ public class MenuDominoLogica implements IMenuDominoLogica, IPresentacionMenuDom
         fachadaClienteProxy = setup.getFachadaClienteProxy();
         fachadaMenuDomino = new FachadaMenuDomino();
     }
-    
-    
+
     @Override
     public IContenedorListener iniciar() {
         mostrarPresentacionMenu();
-        
+
         return contenedorListener;
     }
-    
+
     private void mostrarPresentacionMenu() {
         this.contenedorListener = fachadaMenuDomino.iniciarPantalla();
         fachadaMenuDomino.suscribirPresentacionListener(this);
@@ -52,5 +54,5 @@ public class MenuDominoLogica implements IMenuDominoLogica, IPresentacionMenuDom
         setup.getMediadorNegocio().irASalaEspera();
         setup.getMediadorNegocio().unirseSala();
     }
-    
+
 }

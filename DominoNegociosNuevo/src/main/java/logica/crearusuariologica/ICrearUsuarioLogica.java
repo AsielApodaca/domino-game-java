@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package logica.menudominologica;
+package logica.crearusuariologica;
 
 import listeners.IContenedorListener;
 
@@ -13,11 +13,8 @@ import listeners.IContenedorListener;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public interface IMenuDominoLogica {
-    /**
-     * Inicia el menú y establece los listeners necesarios.
-     * 
-     * @return Un contenedor de listeners configurado para manejar eventos en la sala.
-     */
+public interface ICrearUsuarioLogica {
+
     public IContenedorListener iniciar();
+
 }

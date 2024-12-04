@@ -19,8 +19,8 @@ public class PresentacionCrearUsuarioNotificador implements IPresentacionCrearUs
     }
 
     @Override
-    public void notificarCrearUsuario() {
-        presentacionCrearUsuarioListener.onCrearUsuario();
+    public void notificarCrearUsuario(String nombreUsuario, String rutaIcono) {
+        presentacionCrearUsuarioListener.onCrearUsuario(nombreUsuario, rutaIcono);
     }
 
 }

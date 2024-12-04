@@ -2,8 +2,8 @@ package mvc;
 
 import javax.swing.JPanel;
 import listeners.IContenedorListener;
-import listeners.IViewListener;
 import notificador.IPresentacionCrearUsuarioNotificador;
+import listeners.ICrearUsuarioViewListener;
 
 /**
  *
@@ -12,7 +12,7 @@ import notificador.IPresentacionCrearUsuarioNotificador;
  * @author Oliver Inzunza Valle
  * @author Asiel Apodaca Monge
  */
-public class CrearUsuarioController implements IViewListener, IContenedorListener {
+public class CrearUsuarioController implements ICrearUsuarioViewListener, IContenedorListener {
 
     private CrearUsuarioModel crearUsuarioModel;
     private CrearUsuarioView crearUsuarioView;
@@ -32,7 +32,8 @@ public class CrearUsuarioController implements IViewListener, IContenedorListene
      */
     @Override
     public void onBtnEmpezarPresionado(String nombreUsuario) {
-        presentacionCrearUsuarioNotificador.notificarCrearUsuario();
+        String rutaIcono = crearUsuarioModel.getIconoActual();
+        presentacionCrearUsuarioNotificador.notificarCrearUsuario(nombreUsuario, rutaIcono);
     }
 
     /**
@@ -54,9 +55,9 @@ public class CrearUsuarioController implements IViewListener, IContenedorListene
 
     }
 
+    //No se necesita
     @Override
     public void onEscalaChange(float escala) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override

@@ -19,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import listeners.IViewListener;
+import listeners.ICrearUsuarioViewListener;
 
 /**
  *
@@ -38,7 +38,7 @@ public class CrearUsuarioView extends JPanel {
     private JLabel tituloJuego;
     private JLabel iconoLabel;
     private JTextField txtNombreUsuario;
-    private IViewListener viewListener;
+    private ICrearUsuarioViewListener viewListener;
     private JPanel panelContenedor;
     private JLabel labelSeleccionarPersonaje;
     private JLabel labelUsuario;
@@ -65,6 +65,7 @@ public class CrearUsuarioView extends JPanel {
         inicializarComponentes();
         cargarImagenes();
         configurarResizing();
+        addListenerToBtnEmpezar();
 
         revalidate();
         repaint();
@@ -189,12 +190,19 @@ public class CrearUsuarioView extends JPanel {
         btnEmpezar.setContentAreaFilled(true);
         btnEmpezar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));  // Borde blanco
         btnEmpezar.setFocusPainted(false);
+        panelContenedor.add(btnEmpezar);
+    }
+
+    /**
+     * Agrega un ActionListener al botón "Empezar" que valida el nombre de
+     * usuario y notifica al viewListener si es válido.
+     */
+    private void addListenerToBtnEmpezar() {
         btnEmpezar.addActionListener(e -> {
             if (viewListener != null && !txtNombreUsuario.getText().trim().isEmpty()) {
                 viewListener.onBtnEmpezarPresionado(txtNombreUsuario.getText());
             }
         });
-        panelContenedor.add(btnEmpezar);
     }
 
     /**
@@ -361,7 +369,7 @@ public class CrearUsuarioView extends JPanel {
      * Método para actualizar la vista de la pantalla de la sala de espera. Este
      * método repinta tanto el fondo como la lista de jugadores.
      */
-    public void suscribirListener(IViewListener viewListener) {
+    public void suscribirListener(ICrearUsuarioViewListener viewListener) {
         this.viewListener = viewListener;
     }
 

@@ -46,6 +46,11 @@
             <artifactId>PresentacionPartidaDomino</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.itson</groupId>
+            <artifactId>PresentacionCrearUsuario</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
