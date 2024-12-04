@@ -103,7 +103,8 @@ public class SalaEsperaLogica implements ISalaEsperaLogica, IPresentacionSalaEsp
     public void removerUsuarioDeSala(UsuarioDTO usuarioDTO) {
         fachadaPresentacionSalaEspera.removerUsuario(usuarioDTO);
     }
-    
+
+   
     
 
 }
