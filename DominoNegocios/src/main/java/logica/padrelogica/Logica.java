@@ -22,7 +22,6 @@ public abstract class Logica {
     public Logica(Setup setup) {
         this.setup = setup ;
         this.fachadaClienteProxy = setup.getFachadaClienteProxy() ;
-        this.operando = false;
     }
     
 }

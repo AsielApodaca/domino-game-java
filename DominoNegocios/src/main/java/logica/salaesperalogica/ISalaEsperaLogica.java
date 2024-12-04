@@ -22,10 +22,6 @@ public interface ISalaEsperaLogica {
      */
     public IContenedorListener iniciar();
     
-    public void cerrar();
-    
-    public boolean estaOperando();
-    
     public void crearSala();
     
     public void unirseSala();

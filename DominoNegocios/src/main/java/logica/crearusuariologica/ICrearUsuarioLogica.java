@@ -16,9 +16,5 @@ import listeners.IContenedorListener;
 public interface ICrearUsuarioLogica {
 
     public IContenedorListener iniciar();
-    
-    public void cerrar();
-    
-    public boolean estaOperando();
 
 }

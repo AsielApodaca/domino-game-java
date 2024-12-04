@@ -26,10 +26,6 @@ public interface IPartidaDominoLogica {
      * la interacción durante la partida.
      */
     public IContenedorListener iniciar();
-    
-    public void cerrar();
-    
-    public boolean estaOperando();
 
     /**
      * Actualiza la cantidad de fichas de un jugador durante la partida.
