@@ -11,7 +11,10 @@ import logica.IPartidaServerLogica;
 
 /**
  *
- * @author asielapodaca
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public abstract class ManejadorSolicitudServerProxy {
     

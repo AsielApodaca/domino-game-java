@@ -25,8 +25,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class ManejadorSalas {
     private final Map<String, Sala> salas ;
