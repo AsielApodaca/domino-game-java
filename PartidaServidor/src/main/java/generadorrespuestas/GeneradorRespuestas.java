@@ -6,6 +6,7 @@ package generadorrespuestas;
 
 import domino.fachada.IFachadaServidorProxy;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
+import domino.respuestas.RespuestaAprobarCreacionSala;
 import domino.respuestas.RespuestaBloquearPozo;
 import domino.respuestas.RespuestaColocarFichaTablero;
 import domino.respuestas.RespuestaDesbloquearPozo;
@@ -99,4 +100,10 @@ public class GeneradorRespuestas implements IGeneradorRespuestas {
         fachadaServidorProxy.enviarRespuestas(respuesta);
     }
 
+    @Override
+    public void enviarRespuestaAprobarCreacionSala(String idCliente) {
+        RespuestaAprobarCreacionSala respuesta = new RespuestaAprobarCreacionSala(idCliente) ;
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+    
 }

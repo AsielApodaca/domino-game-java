@@ -58,6 +58,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         iniciarControladores();
         iniciarAdapters();
         registrarUsuarioComoJugador(anfitrion);
+        this.generadorRespuestas.enviarRespuestaAprobarCreacionSala(anfitrion.getIdCliente()); ;
     }
 
     @Override
