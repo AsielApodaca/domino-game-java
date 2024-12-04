@@ -44,7 +44,8 @@ public class CrearUsuarioLogica implements ICrearUsuarioLogica, IPresentacionCre
 
     @Override
     public void onCrearUsuario(String nombreUsuario, String rutaIcono) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        setup.iniciarGestoresConUsuario(nombreUsuario, rutaIcono);
+        setup.getMediadorNegocio().irAMenu();
     }
 
 }

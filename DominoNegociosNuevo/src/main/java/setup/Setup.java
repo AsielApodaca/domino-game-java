@@ -68,29 +68,11 @@ public class Setup implements ISetup {
      */
     @Override
     public void iniciar() {
-        iniciarUsuario();
         iniciarConexionProxy();
-        iniciarGestores();
         iniciarLogicaDeNegocio();
         iniciarMediadorDeNegocio();
         iniciarManejadorRespuestasClienteProxy();
         correrJuego();
-    }
-
-    /**
-     * Inicializa el usuario local que interactuará con el sistema.
-     */
-    private void iniciarUsuario() {
-        String nombre = "ElMencho";
-
-        // Generar un número al azar entre 0 y 7
-        int numeroAleatorio = (int) (Math.random() * 8);  // 8 es el rango exclusivo superior (0 a 7)
-
-        // Construir la ruta de la fuente de icono con el número aleatorio
-        String fuenteIcono = "/personajes/personaje" + String.format("%02d", numeroAleatorio) + ".png";
-
-        this.usuarioLocal = new UsuarioEntity(nombre);
-        this.usuarioLocal.setFuenteIcono(fuenteIcono);
     }
 
     /**
@@ -197,14 +179,11 @@ public class Setup implements ISetup {
         this.mediadorNegocio.irACrearUsuario();
     }
 
-    /**
-     * Inicializa los gestores del sistema.
-     */
-    private void iniciarGestores() {
+    public void iniciarGestoresConUsuario(String nombre, String rutaIcono) {
         this.gestorUsuario = new GestorUsuario();
+        this.usuarioLocal = this.gestorUsuario.crearUsuario(nombre, rutaIcono);
     }
 
-    // Getters
     /**
      * Obtiene la instancia del usuario local.
      *

@@ -72,7 +72,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     public void onFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
 
         // Mapea el usuario relacionado al DTO correspondiente
-        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(getUsuarioLocal());
 
         // Crea una nueva solicitud de ficha seleccionada
         EventoSolicitud solicitudFichaSeleccionada = new SolicitudFichaSeleccionada(fichaSeleccionada, usuarioDTO);
@@ -93,7 +93,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     public void onCasillaSeleccionada(CasillaDTO casillaSeleccionada) {
 
         // Mapea el usuario relacionado al DTO correspondiente
-        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(getUsuarioLocal());
 
         // Crea una nueva solicitud de casilla seleccionada
         EventoSolicitud solicitudCasillaSeleccionada = new SolicitudCasillaSeleccionada(casillaSeleccionada, usuarioDTO);
@@ -139,7 +139,7 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
 
     @Override
     public void onPozoSeleccionado() {
-        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioLocal);
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(getUsuarioLocal());
 
         // Crear una nueva solicitud de pozo seleccionado
         EventoSolicitud solicitudPozoSeleccionado = new SolicitudSacarFichaPozo(usuarioDTO);
@@ -168,10 +168,14 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
     public void removerJugadorDePartida(JugadorDominoDTO jugadorDominoDTO) {
         fachadaPartidaDomino.removerJugador(jugadorDominoDTO);
     }
-    
+
     @Override
     public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
         fachadaPartidaDomino.actualizarCantidadFichasDeJugador(jugadorDominoDTO, cantidadFichas);
+    }
+
+    private UsuarioEntity getUsuarioLocal() {
+        return setup.getUsuarioLocal();
     }
 
 }
