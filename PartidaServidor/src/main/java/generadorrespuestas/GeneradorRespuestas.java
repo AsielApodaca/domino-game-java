@@ -8,12 +8,14 @@ import domino.fachada.IFachadaServidorProxy;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
 import domino.respuestas.RespuestaAprobarCreacionSala;
 import domino.respuestas.RespuestaBloquearPozo;
+import domino.respuestas.RespuestaCerrarSala;
 import domino.respuestas.RespuestaColocarFichaTablero;
 import domino.respuestas.RespuestaDesbloquearPozo;
 import domino.respuestas.RespuestaMostrarCasillasDisponibles;
 import domino.respuestas.RespuestaMostrarFichasActualizadasDeJugador;
 import domino.respuestas.RespuestaMostrarJugadoresPartida;
 import domino.respuestas.RespuestaMostrarPantallaPartida;
+import domino.respuestas.RespuestaMostrarResultadoPartida;
 import domino.respuestas.RespuestaOcultarCasillasDisponibles;
 import domino.respuestas.RespuestaOtorgarTurno;
 import dominodto.CasillaDTO;
@@ -103,6 +105,18 @@ public class GeneradorRespuestas implements IGeneradorRespuestas {
     @Override
     public void enviarRespuestaAprobarCreacionSala(String idCliente) {
         RespuestaAprobarCreacionSala respuesta = new RespuestaAprobarCreacionSala(idCliente) ;
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+    
+    @Override
+    public void enviarRespuestaMostrarResultadoPartida(JugadorDominoDTO ganador) {
+        RespuestaMostrarResultadoPartida respuesta = new RespuestaMostrarResultadoPartida(ganador) ;
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+    
+    @Override
+    public void enviarRespuestaCerrarSaala() {
+        RespuestaCerrarSala respuesta = new RespuestaCerrarSala() ;
         fachadaServidorProxy.enviarRespuestas(respuesta);
     }
     

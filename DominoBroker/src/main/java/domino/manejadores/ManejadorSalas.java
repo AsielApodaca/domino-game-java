@@ -39,6 +39,11 @@ public class ManejadorSalas {
         return this.salas ;
     }
     
+    public void cerrarSala(ConexionServidor servidor) {
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        salas.remove(salaDelServidor.getId()) ;
+    }
+    
     public void crearSala(ConexionCliente cliente, ConexionServidor servidor, JsonObject solicitudJSON) {
         if (servidor != null) {
 
@@ -51,7 +56,7 @@ public class ManejadorSalas {
             Sala salaNueva = new Sala(id, servidor, solicitudJSON.get("limiteJugadores").getAsInt());
             salaNueva.agregarCliente(cliente.getId(), cliente);
             salaNueva.setAnfitrion(cliente);
-            salaNueva.setStatusPartida(Status.LIBRE);
+            salaNueva.setStatusPartida(Status.OCUPADO);
             
             salas.put(id, salaNueva);
             System.out.println("Sala Creada con el ID: " + id);
@@ -182,7 +187,7 @@ public class ManejadorSalas {
     private void verificarSalaVacia(Sala sala) {
         if(sala.getClientes().isEmpty()) {
             sala.getServidor().setStatus(Status.LIBRE);
-            salas.remove(sala) ;
+            salas.remove(sala.getId()) ;
             System.out.println("Se ha eliminado la Sala con el ID: " + sala.getId());
         }
     }

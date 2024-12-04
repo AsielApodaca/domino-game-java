@@ -48,7 +48,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
     private IAdapterJugadorDomino adapterJugadorDomino;
     private IAdapterCasilla adapterCasilla;
     private ConfiguracionJuegoDTO configuracionJuegoDTO;
-
+   
     public PartidaServerLogica() {
     }
 
@@ -131,6 +131,12 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         generadorRespuestas.enviarRespuestaActualizarCantidadFichas(jugadorDTO, cantidadFichas);
         // Envia a los jugadores la ficha que se mostrará sobre el tablero
         generadorRespuestas.enviarRespuestaColocarFichaTablero(casillaDTO);
+        // Compara si la cantidad de fichas del jugador es 0 para anunciar el ganador
+        if(cantidadFichas == 0) {
+            anunciarGanadorPartida(jugadorDTO);
+            return ;
+        }
+        
         // Otorga el turno al siguiente jugador
         otorgarTurnoASiguienteJugador();
     }
@@ -279,9 +285,30 @@ public class PartidaServerLogica implements IPartidaServerLogica {
     }
     
     private void empatarPartida() {
-        // uwu
+        generadorRespuestas.enviarRespuestaMostrarResultadoPartida(null);
+        generadorRespuestas.enviarRespuestaCerrarSaala();
+        reiniciarServidor() ;
+    }
+    
+    private void anunciarGanadorPartida(JugadorDominoDTO ganador) {
+        generadorRespuestas.enviarRespuestaMostrarResultadoPartida(ganador);
+        generadorRespuestas.enviarRespuestaCerrarSaala();
+        reiniciarServidor() ;
     }
 
+    private void reiniciarServidor() {
+        generadorRespuestas = null ;
+        controladorFichas = null ;
+        controladorJugadores = null ;
+        controladorTablero = null ;
+        controladorTurnos = null ;
+        adapterFichaDomino = null ;
+        adapterJugadorDomino = null ;
+        adapterJugadorDomino = null ;
+        adapterCasilla = null ;
+        configuracionJuegoDTO = null ;
+    }
+    
     @Override
     public void procesarSacarFichaPozo(String idCliente) {
         // Obtiene el jugador actual con turno

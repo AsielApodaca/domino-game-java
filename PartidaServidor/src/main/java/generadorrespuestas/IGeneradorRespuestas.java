@@ -41,5 +41,9 @@ public interface IGeneradorRespuestas {
 
     void enviarRespuestaAprobarCreacionSala(String idCliente);
     
+    void enviarRespuestaMostrarResultadoPartida(JugadorDominoDTO ganador) ;
+    
+    void enviarRespuestaCerrarSaala() ;
+    
     void setFachadaServidorProxy(IFachadaServidorProxy fachadaServidorProxy);
 }

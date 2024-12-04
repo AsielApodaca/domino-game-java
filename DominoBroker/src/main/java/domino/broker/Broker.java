@@ -18,6 +18,7 @@ import domino.manejadores.ManejadorServidores;
 import domino.respuestas.EventoRespuesta;
 import domino.respuestas.RespuestaActualizarCantidadFichas;
 import domino.respuestas.RespuestaAgregarFichaJugador;
+import domino.respuestas.RespuestaCerrarSala;
 import domino.respuestas.RespuestaColocarFichaTablero;
 import domino.respuestas.RespuestaMostrarCasillasDisponibles;
 import domino.respuestas.RespuestaMostrarFichasActualizadasDeJugador;
@@ -175,6 +176,8 @@ public class Broker {
                 EventoRespuesta eventoRespuesta = Deserializador.convertirJSONAEvento(respuesta);
                 if(eventoRespuesta == null) {
                     throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
+                } else if(Deserializador.esJsonInstanciaDe(respuesta, RespuestaCerrarSala.class)) {
+                    manejadorSalas.cerrarSala(servidor);
                 } else if(eventoRespuesta.esParaTodos()){
                     manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
                 } else {
