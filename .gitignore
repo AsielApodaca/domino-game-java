@@ -12,7 +12,7 @@
 /DominoNegociosNuevo/target/
 /PartidaServidor/target/
 /PresentacionPartidaDominoProvisional/target/
-*.xml
+
 /PresentacionSalaEspera/target/
 PartidaServidor/pom.xml
 PartidaServidor/pom.xml
