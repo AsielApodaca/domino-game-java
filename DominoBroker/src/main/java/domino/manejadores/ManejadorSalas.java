@@ -73,8 +73,8 @@ public class ManejadorSalas {
         
         salas.forEach((id, sala) -> {
             if(sala.getStatusPartida() != Status.EN_PARTIDA) {
-                SolicitudObtenerSalasDisponibles solicitud = Deserializador.convertirJSONAEvento(jsonObject.toString()) ;
-                enviarSolicitudAServidor(cliente, jsonObject);
+                ConexionServidor servidorDeLaSala = sala.getServidor() ;
+                servidorDeLaSala.mandarSolicitudServidor(jsonObject);
             }
         });
         
@@ -169,10 +169,10 @@ public class ManejadorSalas {
         if(salaDelServidor != null) {
             RespuestaMostrarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString()) ;
             respuestaSala.getSalaDisponible().setIdSala(salaDelServidor.getId());
-            respuestaSala.getSalaDisponible().setSize(salaDelServidor.getSize());
             respuestaSala.getSalaDisponible().setAnfitrion(new UsuarioDTO(salaDelServidor.getAnfitrion().getId()));
-            String respuestaJSON = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
-            manejadorClientes.enviarRespuestaATodosLosClientes(respuesta);
+            String respuestaString = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
+            JsonObject respuestaJSON = JsonParser.parseString(respuestaString).getAsJsonObject() ;
+            manejadorClientes.enviarRespuestaATodosLosClientes(respuestaJSON);
         } else {
             System.out.println("El Servidor no esta conectado a una sala");
         }
