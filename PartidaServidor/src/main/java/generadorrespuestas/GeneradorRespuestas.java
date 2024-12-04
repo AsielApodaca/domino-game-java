@@ -5,25 +5,12 @@
 package generadorrespuestas;
 
 import domino.fachada.IFachadaServidorProxy;
-import domino.respuestas.RespuestaActualizarCantidadFichas;
-import domino.respuestas.RespuestaAprobarCreacionSala;
-import domino.respuestas.RespuestaBloquearPozo;
-import domino.respuestas.RespuestaCerrarSala;
-import domino.respuestas.RespuestaColocarFichaTablero;
-import domino.respuestas.RespuestaDesbloquearPozo;
-import domino.respuestas.RespuestaMostrarCasillasDisponibles;
-import domino.respuestas.RespuestaMostrarFichasActualizadasDeJugador;
-import domino.respuestas.RespuestaMostrarJugadoresPartida;
-import domino.respuestas.RespuestaMostrarPantallaPartida;
-import domino.respuestas.RespuestaMostrarResultadoPartida;
-import domino.respuestas.RespuestaMostrarSalaDisponible;
-import domino.respuestas.RespuestaOcultarCasillasDisponibles;
-import domino.respuestas.RespuestaOcultarSalaDisponible;
-import domino.respuestas.RespuestaOtorgarTurno;
+import domino.respuestas.*;
 import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
+import dominodto.UsuarioDTO;
 import java.util.List;
 
 /**
@@ -133,6 +120,18 @@ public class GeneradorRespuestas implements IGeneradorRespuestas {
     public void enviarRespuestaOcultarSalaDisponible() {
         RespuestaOcultarSalaDisponible respuesta = new RespuestaOcultarSalaDisponible() ;
         fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+
+    @Override
+    public void enviarRespuestaMostrarUsuarioSalaEspera(UsuarioDTO usuarioDTO) {
+        RespuestaMostrarUsuarioSalaEspera respuesta = new RespuestaMostrarUsuarioSalaEspera(usuarioDTO);
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+
+    @Override
+    public void enviarRespuestaRemoverUsuarioSalaEspera(UsuarioDTO usuarioDTO) {
+        RespuestaRemoverUsuarioSalaEspera respuesta = new RespuestaRemoverUsuarioSalaEspera(usuarioDTO);
+        fachadaServidorProxy.enviarRespuestas(respuesta);        
     }
     
 }

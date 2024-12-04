@@ -9,6 +9,7 @@ import dominodto.CasillaDTO;
 import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
+import dominodto.UsuarioDTO;
 import java.util.List;
 
 /**
@@ -37,18 +38,22 @@ public interface IGeneradorRespuestas {
     void enviarRespuestaDesbloquearPozo(String idCliente);
 
     void enviarRespuestaBloquearPozo(String idCliente);
-    
+
     void enviarRespuestaMostrarJugadoresPartida(List<JugadorDominoDTO> jugadoresEnOrden, String idCliente);
 
+    void enviarRespuestaMostrarUsuarioSalaEspera(UsuarioDTO usuarioDTO);
+    
+    void enviarRespuestaRemoverUsuarioSalaEspera(UsuarioDTO usuarioDTO);
+
     void enviarRespuestaAprobarCreacionSala(String idCliente);
-    
-    void enviarRespuestaMostrarResultadoPartida(JugadorDominoDTO ganador) ;
-    
-    void enviarRespuestaCerrarSaala() ;
-    
-    void enviarRespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego) ;
-    
-    void enviarRespuestaOcultarSalaDisponible() ;
-    
+
+    void enviarRespuestaMostrarResultadoPartida(JugadorDominoDTO ganador);
+
+    void enviarRespuestaCerrarSaala();
+
+    void enviarRespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego);
+
+    void enviarRespuestaOcultarSalaDisponible();
+
     void setFachadaServidorProxy(IFachadaServidorProxy fachadaServidorProxy);
 }
