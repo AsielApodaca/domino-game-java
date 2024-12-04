@@ -368,6 +368,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
                 usuariosDTO.add(adapterJugadorDomino.adaptToUsuarioDTO(jugador)) ;
             });
             sala.setUsuarios(usuariosDTO);
+            sala.setSize(configuracionJuegoDTO.getLimiteJugadores());
             generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO, sala);
         }
     }

@@ -53,12 +53,6 @@ public class SalaPanel extends JPanel {
             public void mouseExited(MouseEvent e) {
                 joinButton.setBackground(new Color(0, 128, 0));
             }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Implementar lógica de unirse a la sala
-                System.out.println("Unirse a la sala: " + sala.getIdSala());
-            }
         });
         add(joinButton, BorderLayout.SOUTH);
     }

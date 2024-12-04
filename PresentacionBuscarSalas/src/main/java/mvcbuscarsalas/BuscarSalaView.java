@@ -17,7 +17,10 @@ import listeners.IBuscarSalaViewListener;
 
 /**
  *
- * @author olive
+ * @author Hisamy Cinco Cota
+ * @author Gael Rafael Castro Molina
+ * @author Oliver Inzunza Valle
+ * @author Asiel Apodaca Monge
  */
 public class BuscarSalaView extends JPanel {
     
@@ -51,7 +54,7 @@ public class BuscarSalaView extends JPanel {
         this.salasPaneles = new ArrayList(paneles);
 
         salasPaneles.forEach(sala -> {
-            sala.addMouseListener(new MouseAdapter() {
+            sala.getJoinButton().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     notificarBtnUnirseSala(sala.getSala()) ;

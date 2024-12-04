@@ -6,6 +6,7 @@ package logica.buscarsalalogica;
 
 import domino.fachada.IFachadaClienteProxy;
 import domino.solicitudes.SolicitudObtenerSalasDisponibles;
+import domino.solicitudes.SolicitudUnirseSala;
 import dominodto.SalaDTO;
 import dominodto.UsuarioDTO;
 import fachada.FachadaBuscarSala;
@@ -67,7 +68,10 @@ public class BuscarSalaLogica extends Logica implements IBuscarSalaLogica, IPres
 
     @Override
     public void onBtnUnirseSalaPresionado(SalaDTO sala) {
-        
+        UsuarioDTO usuario = MapeadorDTO.UsuarioEntityADTO(setup.getGestorUsuario().getUsuario()) ;
+        SolicitudUnirseSala solicitud = new SolicitudUnirseSala(usuario, sala.getIdSala()) ;
+        fachadaClienteProxy.enviarSolicitud(solicitud);
+        setup.getMediadorNegocio().irASalaEspera();
     }
 
     @Override
