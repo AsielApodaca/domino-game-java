@@ -16,9 +16,12 @@ import domino.respuestas.RespuestaMostrarFichasActualizadasDeJugador;
 import domino.respuestas.RespuestaMostrarJugadoresPartida;
 import domino.respuestas.RespuestaMostrarPantallaPartida;
 import domino.respuestas.RespuestaMostrarResultadoPartida;
+import domino.respuestas.RespuestaMostrarSalaDisponible;
 import domino.respuestas.RespuestaOcultarCasillasDisponibles;
+import domino.respuestas.RespuestaOcultarSalaDisponible;
 import domino.respuestas.RespuestaOtorgarTurno;
 import dominodto.CasillaDTO;
+import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
 import java.util.List;
@@ -117,6 +120,18 @@ public class GeneradorRespuestas implements IGeneradorRespuestas {
     @Override
     public void enviarRespuestaCerrarSaala() {
         RespuestaCerrarSala respuesta = new RespuestaCerrarSala() ;
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+    
+    @Override
+    public void enviarRespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego) {
+        RespuestaMostrarSalaDisponible respuesta = new RespuestaMostrarSalaDisponible(configuracionJuego) ;
+        fachadaServidorProxy.enviarRespuestas(respuesta);
+    }
+    
+    @Override
+    public void enviarRespuestaOcultarSalaDisponible() {
+        RespuestaOcultarSalaDisponible respuesta = new RespuestaOcultarSalaDisponible() ;
         fachadaServidorProxy.enviarRespuestas(respuesta);
     }
     

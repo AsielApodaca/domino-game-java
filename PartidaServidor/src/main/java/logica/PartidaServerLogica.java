@@ -48,8 +48,10 @@ public class PartidaServerLogica implements IPartidaServerLogica {
     private IAdapterJugadorDomino adapterJugadorDomino;
     private IAdapterCasilla adapterCasilla;
     private ConfiguracionJuegoDTO configuracionJuegoDTO;
+    private boolean partidaIniciada ;
    
     public PartidaServerLogica() {
+        partidaIniciada = false ;
     }
 
     @Override
@@ -58,17 +60,28 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         iniciarControladores();
         iniciarAdapters();
         registrarUsuarioComoJugador(anfitrion);
-        this.generadorRespuestas.enviarRespuestaAprobarCreacionSala(anfitrion.getIdCliente()); ;
+        this.generadorRespuestas.enviarRespuestaAprobarCreacionSala(anfitrion.getIdCliente());
+        if(configuracionJuegoDTO.getLimiteJugadores() != 1) {
+            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
+        }
     }
 
     @Override
     public void procesarUnirseSala(UsuarioDTO usuarioDTO) {
-        registrarUsuarioComoJugador(usuarioDTO);
+        if(controladorJugadores.obtenerJugadores().size() < configuracionJuegoDTO.getLimiteJugadores()) {
+            registrarUsuarioComoJugador(usuarioDTO);
+            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
+        }
     }
 
     @Override
     public void procesarAbandonarSala(String idCliente) {
         eliminarJugadorPorIdCliente(idCliente);
+        if(!controladorJugadores.obtenerJugadores().isEmpty() && !partidaIniciada) {
+            generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
+        } else {
+            generadorRespuestas.enviarRespuestaOcultarSalaDisponible();
+        }
     }
 
     @Override
@@ -79,7 +92,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         mostrarJugadores();
         mostrarFichasAJugadores();
         iniciarPartida();
-
+        generadorRespuestas.enviarRespuestaOcultarSalaDisponible();
     }
 
     @Override
@@ -307,6 +320,7 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         adapterJugadorDomino = null ;
         adapterCasilla = null ;
         configuracionJuegoDTO = null ;
+        partidaIniciada = false ;
     }
     
     @Override

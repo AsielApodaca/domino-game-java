@@ -4,6 +4,7 @@
  */
 package domino.manejadores;
 
+import com.google.gson.JsonObject;
 import domino.conexiones.ConexionCliente;
 import java.net.Socket;
 import java.util.HashMap;
@@ -37,5 +38,11 @@ public class ManejadorClientes {
     
     public ConexionCliente obtenerClientePorId(String id) {
         return clientes.get(id) ;
+    }
+    
+    public void enviarRespuestaATodosLosClientes(JsonObject respuestaJSON) {
+        clientes.forEach((id, cliente) ->{
+            cliente.mandarRespuestaCliente(respuestaJSON);
+        });
     }
 }

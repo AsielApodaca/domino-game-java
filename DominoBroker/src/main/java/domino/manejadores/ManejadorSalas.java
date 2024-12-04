@@ -70,7 +70,7 @@ public class ManejadorSalas {
     public void enviarSolicitudObtenerSalasDisponibles(ConexionCliente cliente, JsonObject jsonObject) {
         
         salas.forEach((id, sala) -> {
-            if(sala.getClientes().size() < sala.getSize() && sala.getStatusPartida() != Status.EN_PARTIDA) {
+            if(sala.getStatusPartida() != Status.EN_PARTIDA) {
                 SolicitudObtenerSalasDisponibles solicitud = Deserializador.convertirJSONAEvento(jsonObject.toString()) ;
                 solicitud.setSala(new SalaDTO(id, sala.getSize()));
                 enviarSolicitudAServidor(cliente, JsonParser.parseString(Serializador.convertirEventoSolicitudAJSON(solicitud)).getAsJsonObject());

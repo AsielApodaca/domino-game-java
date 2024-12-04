@@ -6,6 +6,7 @@ package generadorrespuestas;
 
 import domino.fachada.IFachadaServidorProxy;
 import dominodto.CasillaDTO;
+import dominodto.ConfiguracionJuegoDTO;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
 import java.util.List;
@@ -44,6 +45,10 @@ public interface IGeneradorRespuestas {
     void enviarRespuestaMostrarResultadoPartida(JugadorDominoDTO ganador) ;
     
     void enviarRespuestaCerrarSaala() ;
+    
+    void enviarRespuestaMostrarSalaDisponible(ConfiguracionJuegoDTO configuracionJuego) ;
+    
+    void enviarRespuestaOcultarSalaDisponible() ;
     
     void setFachadaServidorProxy(IFachadaServidorProxy fachadaServidorProxy);
 }

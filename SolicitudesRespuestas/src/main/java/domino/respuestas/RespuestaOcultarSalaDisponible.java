@@ -4,22 +4,19 @@
  */
 package domino.respuestas;
 
-import dominodto.ConfiguracionJuegoDTO;
 import dominodto.SalaDTO;
-import java.util.List;
 
 /**
  *
  * @author olive
  */
-public class RespuestaDevolverSalasDisponibles extends EventoRespuesta {
+public class RespuestaOcultarSalaDisponible extends EventoRespuesta {
 
-    public static final boolean ES_PARA_TODOS = false;
+    public static final boolean ES_PARA_TODOS = true;
     private SalaDTO salaDisponible ;
-    private ConfiguracionJuegoDTO configuracionJuego;
     
-    public RespuestaDevolverSalasDisponibles(String idCliente) {
-        super(idCliente);
+    public RespuestaOcultarSalaDisponible() {
+        super(null);
     }
 
     @Override
@@ -41,14 +38,6 @@ public class RespuestaDevolverSalasDisponibles extends EventoRespuesta {
 
     public void setSalaDisponible(SalaDTO salaDisponible) {
         this.salaDisponible = salaDisponible;
-    }
-
-    public ConfiguracionJuegoDTO getConfiguracionJuego() {
-        return configuracionJuego;
-    }
-
-    public void setConfiguracionJuego(ConfiguracionJuegoDTO configuracionJuego) {
-        this.configuracionJuego = configuracionJuego;
     }
     
 }

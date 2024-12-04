@@ -23,7 +23,9 @@ import domino.respuestas.RespuestaColocarFichaTablero;
 import domino.respuestas.RespuestaMostrarCasillasDisponibles;
 import domino.respuestas.RespuestaMostrarFichasActualizadasDeJugador;
 import domino.respuestas.RespuestaMostrarPantallaPartida;
+import domino.respuestas.RespuestaMostrarSalaDisponible;
 import domino.respuestas.RespuestaOcultarCasillasDisponibles;
+import domino.respuestas.RespuestaOcultarSalaDisponible;
 import domino.respuestas.RespuestaOtorgarTurno;
 import domino.solicitudes.SolicitudFichaSeleccionada;
 import domino.solicitudes.SolicitudCrearSala;
@@ -145,6 +147,7 @@ public class Broker {
                     manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 } else if(Deserializador.esJsonInstanciaDe(solicitud, SolicitudAbandonarSala.class)) {
                     manejadorSalas.eliminarClienteDeSala(cliente);
+                    manejadorSalas.enviarSolicitudAServidor(cliente, solicitudJSON);
                 } else if(Deserializador.esJsonInstanciaDe(solicitud, SolicitudIniciarPartida.class)) {
                     manejadorSalas.enviarSolicitudIniciarPartida(cliente, solicitudJSON);
                 } else if(Deserializador.esJsonInstanciaDe(solicitud, SolicitudObtenerSalasDisponibles.class)) {
@@ -178,6 +181,9 @@ public class Broker {
                     throw new AssertionError("Tipo de solicitud desconocido: " + tipoRespuesta);
                 } else if(Deserializador.esJsonInstanciaDe(respuesta, RespuestaCerrarSala.class)) {
                     manejadorSalas.cerrarSala(servidor);
+                } else if(Deserializador.esJsonInstanciaDe(respuesta, RespuestaMostrarSalaDisponible.class) || 
+                        Deserializador.esJsonInstanciaDe(respuesta, RespuestaOcultarSalaDisponible.class)) {
+                    manejadorClientes.enviarRespuestaATodosLosClientes(respuestaJSON);
                 } else if(eventoRespuesta.esParaTodos()){
                     manejadorSalas.enviarRespuestaATodosLosClientes(servidor, respuestaJSON);
                 } else {
