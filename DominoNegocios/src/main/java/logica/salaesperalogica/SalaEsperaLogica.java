@@ -29,7 +29,6 @@ import setup.Setup;
  */
 public class SalaEsperaLogica extends Logica implements ISalaEsperaLogica, IPresentacionSalaEsperaListener {
 
-    private Setup setup;
     private IFachadaPresentacionSalaEspera fachadaPresentacionSalaEspera;
     private IFachadaClienteProxy fachadaClienteProxy;
 
@@ -66,7 +65,7 @@ public class SalaEsperaLogica extends Logica implements ISalaEsperaLogica, IPres
     // Inicio de métodos temporales para pruebas
     @Override
     public void crearSala() {
-        UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
+        UsuarioEntity usuarioEntity = setup.getGestorUsuario().getUsuario();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         ConfiguracionJuegoDTO configuracionJuegoDTO = new ConfiguracionJuegoDTO();
         configuracionJuegoDTO.setFichasPorJugador(7);
@@ -78,7 +77,7 @@ public class SalaEsperaLogica extends Logica implements ISalaEsperaLogica, IPres
     
     @Override
     public void unirseSala() {
-        UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
+        UsuarioEntity usuarioEntity = setup.getGestorUsuario().getUsuario();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         String idSala = "SAL1"; // Aqui el id de la sala
         SolicitudUnirseSala solicitud = new SolicitudUnirseSala(usuarioDTO, idSala);
@@ -88,7 +87,7 @@ public class SalaEsperaLogica extends Logica implements ISalaEsperaLogica, IPres
     
     @Override
     public void onBtnIniciarPartidaPresionado() {
-        UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
+        UsuarioEntity usuarioEntity = setup.getGestorUsuario().getUsuario();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         SolicitudIniciarPartida solicitud = new SolicitudIniciarPartida(usuarioDTO);
         fachadaClienteProxy.enviarSolicitud(solicitud);
@@ -96,7 +95,7 @@ public class SalaEsperaLogica extends Logica implements ISalaEsperaLogica, IPres
 
     @Override
     public void onBtnSalirPresionado() {
-        UsuarioEntity usuarioEntity = setup.getUsuarioLocal();
+        UsuarioEntity usuarioEntity = setup.getGestorUsuario().getUsuario();
         UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
         SolicitudAbandonarSala solicitud = new SolicitudAbandonarSala(usuarioDTO);
         fachadaClienteProxy.enviarSolicitud(solicitud);

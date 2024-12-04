@@ -20,9 +20,8 @@ public interface IGestorUsuario {
      *
      * @param nombre Nombre del usuario
      * @param rutaIcono Ruta del ícono del usuario
-     * @return El usuario creado como UsuarioEntity
      */
-    UsuarioEntity crearUsuario(String nombre, String rutaIcono);
+    void crearUsuario(String nombre, String rutaIcono);
 
     /**
      * Obtiene el usuario actual del sistema.

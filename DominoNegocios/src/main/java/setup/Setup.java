@@ -34,7 +34,6 @@ import mediador.MediadorNegocio;
  */
 public class Setup implements ISetup {
 
-    private UsuarioEntity usuarioLocal;
     private IFachadaClienteProxy fachadaClienteProxy;
     private GestorRespuestaClienteProxy gestorRespuestaClienteProxy;
     private IContenedorPantallasLogica contenedorPantallasLogica;
@@ -59,6 +58,7 @@ public class Setup implements ISetup {
      */
     @Override
     public void iniciar() {
+        iniciarGestores();
         iniciarConexionProxy();
         iniciarLogicaDeNegocio();
         iniciarMediadorDeNegocio();
@@ -186,18 +186,8 @@ public class Setup implements ISetup {
         this.mediadorNegocio.irACrearUsuario();
     }
 
-    public void iniciarGestoresConUsuario(String nombre, String rutaIcono) {
+    public void iniciarGestores() {
         this.gestorUsuario = new GestorUsuario();
-        this.usuarioLocal = this.gestorUsuario.crearUsuario(nombre, rutaIcono);
-    }
-
-    /**
-     * Obtiene la instancia del usuario local.
-     *
-     * @return el usuario local como {@link UsuarioEntity}.
-     */
-    public UsuarioEntity getUsuarioLocal() {
-        return this.usuarioLocal;
     }
 
     /**

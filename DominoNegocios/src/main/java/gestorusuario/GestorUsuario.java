@@ -18,10 +18,9 @@ public class GestorUsuario implements IGestorUsuario {
     private UsuarioEntity usuarioActual;
 
     @Override
-    public UsuarioEntity crearUsuario(String nombre, String rutaIcono) {
+    public void crearUsuario(String nombre, String rutaIcono) {
         usuarioActual = new UsuarioEntity(nombre);
         usuarioActual.setFuenteIcono(rutaIcono);
-        return usuarioActual;
     }
 
     @Override

@@ -22,7 +22,6 @@ import setup.Setup;
 public class CrearUsuarioLogica extends Logica implements ICrearUsuarioLogica, IPresentacionCrearUsuarioListener {
 
     private IContenedorListener contenedorListener;
-    private Setup setup;
     private IFachadaClienteProxy fachadaClienteProxy;
     private IFachadaCrearUsuario fachadaCrearUsuario;
 
@@ -58,8 +57,8 @@ public class CrearUsuarioLogica extends Logica implements ICrearUsuarioLogica, I
 
     @Override
     public void onCrearUsuario(String nombreUsuario, String rutaIcono) {
-        setup.iniciarGestoresConUsuario(nombreUsuario, rutaIcono);
-        setup.getMediadorNegocio().irAMenu();
+        this.setup.getGestorUsuario().crearUsuario(nombreUsuario, rutaIcono);
+        this.setup.getMediadorNegocio().irAMenu();
     }
 
 }

@@ -31,14 +31,11 @@ import setup.Setup;
 public class PartidaDominoLogica extends Logica implements IPartidaDominoLogica, IPresentacionPartidaDominoListener {
 
     private static final Logger LOG = Logger.getLogger(PartidaDominoLogica.class.getName());
-    private Setup setup;
     private IFachadaPartidaDomino fachadaPartidaDomino;
     private IFachadaClienteProxy fachadaClienteProxy;
-    private UsuarioEntity usuarioLocal;
 
     public PartidaDominoLogica(Setup setup) {
         super(setup);
-        this.usuarioLocal = setup.getUsuarioLocal(); // Oliva incienzo valle verde
         this.fachadaClienteProxy = setup.getFachadaClienteProxy();
 
     }
@@ -82,9 +79,9 @@ public class PartidaDominoLogica extends Logica implements IPartidaDominoLogica,
      */
     @Override
     public void onFichaSeleccionada(FichaDominoDTO fichaSeleccionada) {
-
+        UsuarioEntity usuarioEntity = setup.getGestorUsuario().getUsuario();
         // Mapea el usuario relacionado al DTO correspondiente
-        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(getUsuarioLocal());
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
 
         // Crea una nueva solicitud de ficha seleccionada
         EventoSolicitud solicitudFichaSeleccionada = new SolicitudFichaSeleccionada(fichaSeleccionada, usuarioDTO);
@@ -103,9 +100,9 @@ public class PartidaDominoLogica extends Logica implements IPartidaDominoLogica,
      */
     @Override
     public void onCasillaSeleccionada(CasillaDTO casillaSeleccionada) {
-
+        UsuarioEntity usuarioEntity = setup.getGestorUsuario().getUsuario();
         // Mapea el usuario relacionado al DTO correspondiente
-        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(getUsuarioLocal());
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
 
         // Crea una nueva solicitud de casilla seleccionada
         EventoSolicitud solicitudCasillaSeleccionada = new SolicitudCasillaSeleccionada(casillaSeleccionada, usuarioDTO);
@@ -151,7 +148,9 @@ public class PartidaDominoLogica extends Logica implements IPartidaDominoLogica,
 
     @Override
     public void onPozoSeleccionado() {
-        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(getUsuarioLocal());
+        UsuarioEntity usuarioEntity = setup.getGestorUsuario().getUsuario();
+        // Mapea el usuario relacionado al DTO correspondiente
+        UsuarioDTO usuarioDTO = MapeadorDTO.UsuarioEntityADTO(usuarioEntity);
 
         // Crear una nueva solicitud de pozo seleccionado
         EventoSolicitud solicitudPozoSeleccionado = new SolicitudSacarFichaPozo(usuarioDTO);
@@ -184,10 +183,6 @@ public class PartidaDominoLogica extends Logica implements IPartidaDominoLogica,
     @Override
     public void actualizarCantidadFichasJugador(JugadorDominoDTO jugadorDominoDTO, int cantidadFichas) {
         fachadaPartidaDomino.actualizarCantidadFichasDeJugador(jugadorDominoDTO, cantidadFichas);
-    }
-
-    private UsuarioEntity getUsuarioLocal() {
-        return setup.getUsuarioLocal();
     }
 
     @Override

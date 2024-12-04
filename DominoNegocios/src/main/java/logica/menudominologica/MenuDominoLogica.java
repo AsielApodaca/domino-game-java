@@ -21,7 +21,6 @@ import setup.Setup;
  */
 public class MenuDominoLogica extends Logica implements IMenuDominoLogica, IPresentacionMenuDominoListener {
 
-    private Setup setup;
     private IFachadaClienteProxy fachadaClienteProxy;
     private IFachadaMenuDomino fachadaMenuDomino;
 
