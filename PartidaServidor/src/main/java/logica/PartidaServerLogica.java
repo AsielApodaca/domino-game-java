@@ -71,12 +71,14 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         if(controladorJugadores.obtenerJugadores().size() < configuracionJuegoDTO.getLimiteJugadores()) {
             registrarUsuarioComoJugador(usuarioDTO);
             generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
+            generadorRespuestas.enviarRespuestaMostrarUsuarioSalaEspera(usuarioDTO);
         }
     }
 
     @Override
     public void procesarAbandonarSala(String idCliente) {
         eliminarJugadorPorIdCliente(idCliente);
+        generadorRespuestas.enviarRespuestaRemoverUsuarioSalaEspera(new UsuarioDTO(idCliente));
         if(!controladorJugadores.obtenerJugadores().isEmpty() && !partidaIniciada) {
             generadorRespuestas.enviarRespuestaMostrarSalaDisponible(configuracionJuegoDTO);
         } else {
