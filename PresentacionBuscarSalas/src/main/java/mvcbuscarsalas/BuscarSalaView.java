@@ -51,7 +51,7 @@ public class BuscarSalaView extends JPanel {
         this.salasPaneles = new ArrayList(paneles);
 
         salasPaneles.forEach(sala -> {
-            sala.addMouseListener(new MouseAdapter() {
+            sala.getJoinButton().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     notificarBtnUnirseSala(sala.getSala()) ;
