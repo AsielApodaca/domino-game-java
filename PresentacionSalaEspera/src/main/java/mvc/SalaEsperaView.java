@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
@@ -36,15 +37,18 @@ public class SalaEsperaView extends JPanel {
     private JButton btnEmpezarPartida;
     private JButton btnAbandonarSala;
     private IViewListener viewListener;
+    private GridBagConstraints gbc;
 
     public SalaEsperaView(SalaEsperaModel salaEsperaModel) {
         this.salaEsperaModel = salaEsperaModel;
-        setLayout(new BorderLayout());
+        setLayout(new GridBagLayout());
         setBackground(new Color(0x0C043A));
+        gbc = new GridBagConstraints();
         initComponents();
     }
 
     private void initComponents() {
+        setBackground(new Color(0x0C043A));
         crearLblSalaEspera();
         crearContenedorUsuariosPanel();
         crearLblJugadores();
@@ -56,7 +60,7 @@ public class SalaEsperaView extends JPanel {
         JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         botonesPanel.setBackground(new Color(0, 0, 0, 0));
 
-        btnEmpezarPartida = crearBotonPersonalizado("Empezar Partida", new Color(255, 255,255), 222, 45);
+        btnEmpezarPartida = crearBotonPersonalizado("Empezar Partida", new Color(255, 255, 255), 222, 45);
         btnAbandonarSala = crearBotonPersonalizado("Salir", new Color(253, 58, 105), 160, 45);
 
         addListenerBtnEmpezarPartida();
@@ -65,7 +69,13 @@ public class SalaEsperaView extends JPanel {
         botonesPanel.add(btnEmpezarPartida);
         botonesPanel.add(btnAbandonarSala);
 
-        add(botonesPanel, BorderLayout.SOUTH);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.insets = new Insets(20, 0, 20, 0);
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        add(botonesPanel, gbc);
     }
 
     private JButton crearBotonPersonalizado(String texto, Color color, int ancho, int alto) {
@@ -82,13 +92,12 @@ public class SalaEsperaView extends JPanel {
         };
         boton.setPreferredSize(new Dimension(ancho, alto));
         boton.setBackground(color);
-        if(texto.equalsIgnoreCase("Empezar Partida")){
+        if (texto.equalsIgnoreCase("Empezar Partida")) {
             boton.setForeground(new Color(79, 1, 73));
-        }
-        else{
+        } else {
             boton.setForeground(Color.WHITE);
         }
-        
+
         boton.setFont(new Font("Cairo", Font.BOLD, 14));
         boton.setBorderPainted(false);
         boton.setContentAreaFilled(false);
@@ -133,11 +142,13 @@ public class SalaEsperaView extends JPanel {
         contenedorUsuarios.setBackground(new Color(0, 0, 0, 0));
         contenedorUsuarios.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        wrapper.setBackground(new Color(0, 0, 0, 0));
-        wrapper.add(contenedorUsuarios);
-
-        add(wrapper, BorderLayout.CENTER);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.insets = new Insets(0, 20, 20, 20);
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0; 
+        gbc.weighty = 1.0;
+        add(contenedorUsuarios, gbc);
     }
 
     /**
@@ -149,8 +160,11 @@ public class SalaEsperaView extends JPanel {
         labelJugadores.setForeground(Color.WHITE);
         labelJugadores.setFont(new Font("Cairo", Font.PLAIN, 18));
         labelJugadores.setHorizontalAlignment(SwingConstants.CENTER);
-        labelJugadores.setBorder(BorderFactory.createEmptyBorder(100, 0, 1, 0));
-        add(labelJugadores, BorderLayout.NORTH);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(0, 0, 5, 0);
+        add(labelJugadores, gbc);
     }
 
     /**
@@ -162,8 +176,14 @@ public class SalaEsperaView extends JPanel {
         labelSalaEspera.setForeground(Color.WHITE);
         labelSalaEspera.setFont(new Font("Cairo", Font.BOLD, 30));
         labelSalaEspera.setHorizontalAlignment(SwingConstants.CENTER);
-        labelSalaEspera.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        add(labelSalaEspera, BorderLayout.NORTH);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(20, 0, 1, 0);
+        gbc.fill = GridBagConstraints.NONE;
+        add(labelSalaEspera, gbc);
     }
 
     /**
