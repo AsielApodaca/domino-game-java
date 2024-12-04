@@ -18,11 +18,13 @@ public class ControladorTurnos implements IControladorTurnos {
 
     private List<JugadorDominoEntity> ordenJugadores;
     private int turnoActual;
+    private int cantidadDeTurnosOmitidos;
 
     /**
      * Constructor que inicializa el controlador
      */
-    public ControladorTurnos() {
+    public ControladorTurnos() { 
+        this.cantidadDeTurnosOmitidos = 0;
     }
 
     /**
@@ -90,5 +92,15 @@ public class ControladorTurnos implements IControladorTurnos {
             }
         }
         return jugadorConMulaMasAlta;
+    }
+    
+    @Override
+    public int turnoOmitido() {
+        cantidadDeTurnosOmitidos++;
+        return cantidadDeTurnosOmitidos;
+    }
+    @Override
+    public void reiniciarContadorTurnosOmitidos() {
+        cantidadDeTurnosOmitidos = 0;
     }
 }

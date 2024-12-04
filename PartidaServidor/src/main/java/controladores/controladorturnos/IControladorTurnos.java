@@ -14,4 +14,6 @@ import java.util.List;
 public interface IControladorTurnos {
     public void asignarTurnosAJugadores(List<JugadorDominoEntity> listaJugadores);
     public JugadorDominoEntity obtenerSiguienteTurno();
+    public int turnoOmitido();
+    public void reiniciarContadorTurnosOmitidos();
 }

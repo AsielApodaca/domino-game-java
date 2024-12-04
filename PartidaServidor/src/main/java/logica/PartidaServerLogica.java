@@ -255,8 +255,19 @@ public class PartidaServerLogica implements IPartidaServerLogica {
                 .anyMatch(FichaDominoDTO::isCompatible);
 
         // Si no tiene fichas compatibles y hay fichas en el pozo, desbloquea el pozo
-        if (!tieneFichasCompatibles && controladorFichas.quedanFichasEnPozo()) {
-            generadorRespuestas.enviarRespuestaDesbloquearPozo(idCliente);
+        if (!tieneFichasCompatibles) {
+            if(controladorFichas.quedanFichasEnPozo()) {
+                generadorRespuestas.enviarRespuestaDesbloquearPozo(idCliente);
+            } else {
+                int turnosOmitidos = controladorTurnos.turnoOmitido();
+                int cantidadJugadores = controladorJugadores.obtenerJugadores().size();
+                if(turnosOmitidos == cantidadJugadores) {
+                    empatarPartida();
+                } else {
+                    otorgarTurnoASiguienteJugador();
+                    return;
+                }
+            }
         }
 
         // Envia a los jugadores de quien es el turno actual
@@ -264,6 +275,10 @@ public class PartidaServerLogica implements IPartidaServerLogica {
         // Envia al jugador con el turno las fichas con compatibilidad del tablero asignada
         generadorRespuestas.enviarRespuestaMostrarFichasActualizadasDeJugador(idCliente, fichasDTO);
 
+    }
+    
+    private void empatarPartida() {
+        // uwu
     }
 
     @Override
