@@ -26,7 +26,8 @@ public class Sala {
     private Status statusPartida ;
     
     public Sala(String id, ConexionServidor servidor, int size) {
-        clientes = new HashMap() ;
+        this.id = id ;
+        this.clientes = new HashMap() ;
         this.servidor = servidor ;
         this.size = size ;
     }

@@ -116,6 +116,8 @@ public class ManejadorSalas {
         
         salaDelCliente.eliminarCliente(cliente.getId());
         
+        verificarSalaVacia(salaDelCliente);
+        
         System.out.println("El Cliente con el ID: " + cliente.getId() + " ha abandonado la Sala con el ID: " + salaDelCliente.getId());
     }
     
@@ -163,6 +165,7 @@ public class ManejadorSalas {
         eventoSolicitudAbandonarSala.setIdCliente(cliente.getId());
         JsonObject solicitudAbandonarSala = JsonParser.parseString(Serializador.convertirEventoSolicitudAJSON(eventoSolicitudAbandonarSala)).getAsJsonObject() ;
         salaDelCliente.getServidor().mandarSolicitudServidor(solicitudAbandonarSala);
+        eliminarClienteDeSala(cliente);
         System.out.println("El Cliente con el ID: " + cliente.getId() + " se ha desconectado de la Sala con el ID: " + salaDelCliente.getId());
     }
     
@@ -174,5 +177,13 @@ public class ManejadorSalas {
     
     private void enviarConfiguracionDePartida(ConexionServidor servidor, JsonObject solicitudJSON) {
         servidor.mandarSolicitudServidor(solicitudJSON);
+    }
+    
+    private void verificarSalaVacia(Sala sala) {
+        if(sala.getClientes().isEmpty()) {
+            sala.getServidor().setStatus(Status.LIBRE);
+            salas.remove(sala) ;
+            System.out.println("Se ha eliminado la Sala con el ID: " + sala.getId());
+        }
     }
 }
