@@ -184,4 +184,9 @@ public class FachadaPartidaDomino implements IFachadaPartidaDomino {
     public void otorgarTurnoAJugador(JugadorDominoDTO jugadorDominoDTO) {
         partidaDominoController.otorgarTurnoAJugador(jugadorDominoDTO);
     }
+
+    @Override
+    public void mostrarResultadoPartida() {
+        partidaDominoController.mostrarResultadoPartida();
+    }
 }

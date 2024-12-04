@@ -3,9 +3,11 @@ package mvcpartidadomino;
 import dominodto.FichaDominoDTO;
 import dominodto.JugadorDominoDTO;
 import dominodto.TableroDominoDTO;
+import dominodto.UsuarioDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import mapeodto.MapeadorDTO;
 import partidadomino.elementostablero.CasillaPanel;
 import partidadomino.elementostablero.FichaDominoTableroPanel;
 import partidadomino.fichadominojugadormvc.FichaDominoView;
@@ -46,7 +48,7 @@ public class PartidaDominoModel {
 
     private int anchoFichaTablero; // ancho de las fichas dentro del tablero
     private int largoFichaTablero; // alto de las fichas dentro del tablero
-    
+
     private int anchoPozo; // ancho del panel del pozo
     private int alturaPozo; // altura del panel del pozo
     private int pozoLocacionX; // locacion del pozo en el eje de las X
@@ -59,7 +61,7 @@ public class PartidaDominoModel {
     private List<FichaDominoView> listaPanelesFichasJugadorLocal; // Lista de panales de fichas del jugador del dispositivo
     private List<FichaDominoTableroPanel> listaPanelesFichasSobreTablero; // Lista de paneles de fichas sobre el tablero
     private List<CasillaPanel> listaPanelesCasillasParaColocarFichas; // Lista de casillas para colocar fichas sobre el tablero;
-    private HashMap<String, JugadorPanel>  mapaJugadoresExternos; // mapa de jugadores de otros dispositivos
+    private HashMap<String, JugadorPanel> mapaJugadoresExternos; // mapa de jugadores de otros dispositivos
     private IPresentacionPartidaDominoNotificador presentacionNotificadorManager;
     private FichaDominoDTO fichaSeleccionada;
 
@@ -92,14 +94,14 @@ public class PartidaDominoModel {
         this.pozoLocacionX = 55;
         this.pozoBloqueado = true;
     }
-    
+
     public void agregarJugadorPanel(JugadorPanel jugadorPanel) {
         JugadorDominoDTO jugadorDominoDTO = jugadorPanel.getJugadorDominoDTO();
         String idCliente = jugadorDominoDTO.getIdCliente();
         System.out.println("Cliente agregado a mapa: " + idCliente);
         mapaJugadoresExternos.put(idCliente, jugadorPanel);
     }
-    
+
     public void removerJugadorPanel(JugadorDominoDTO jugadorDominoDTO) {
         String idCliente = jugadorDominoDTO.getIdCliente();
         mapaJugadoresExternos.remove(idCliente);
@@ -108,7 +110,7 @@ public class PartidaDominoModel {
     public HashMap<String, JugadorPanel> getMapaJugadoresExternos() {
         return mapaJugadoresExternos;
     }
-    
+
     public JugadorPanel obtenerJugadorPanel(JugadorDominoDTO jugadorDominoDTO) {
         String idCliente = jugadorDominoDTO.getIdCliente();
         return mapaJugadoresExternos.get(idCliente);
@@ -140,6 +142,21 @@ public class PartidaDominoModel {
 
     public void agregarPanelFichaSobreTablero(FichaDominoTableroPanel fichaDominoTablero) {
         listaPanelesFichasSobreTablero.add(fichaDominoTablero);
+    }
+
+    public JugadorDominoDTO obtenerGanador() {
+        // Comprueba si el ganador es algun jugador externo
+        for (JugadorPanel jugadorPanel : mapaJugadoresExternos.values()) {
+            if (jugadorPanel.getCantidadFichas() == 0) {
+                return jugadorPanel.getJugadorDominoDTO();
+            }
+        }
+
+//        // Comprueba con el jugador local
+//        if (listaFichasJugadorLocal.isEmpty()) {
+//
+//        }
+        return null;
     }
 
     public List<FichaDominoView> getListaPanelesFichasJugadorLocal() {

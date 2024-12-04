@@ -178,4 +178,9 @@ public class PartidaDominoLogica implements IPartidaDominoLogica, IPresentacionP
         return setup.getUsuarioLocal();
     }
 
+    @Override
+    public void mostrarResultadoPartida() {
+        fachadaPartidaDomino.mostrarResultadoPartida();
+    }
+
 }

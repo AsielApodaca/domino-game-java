@@ -44,7 +44,7 @@ public class Setup implements ISetup {
     private ICrearUsuarioLogica crearUsuarioLogica;
     private IMediadorNegocio mediadorNegocio;
     private IGestorUsuario gestorUsuario;
-    private IBuscarSalaLogica buscarSalaLogica ;
+    private IBuscarSalaLogica buscarSalaLogica;
 
     /**
      * Constructor de la clase {@code Setup}.
@@ -77,7 +77,7 @@ public class Setup implements ISetup {
         this.salaEsperaLogica = new SalaEsperaLogica(this);
         this.partidaDominoLogica = new PartidaDominoLogica(this);
         this.crearUsuarioLogica = new CrearUsuarioLogica(this);
-        this.buscarSalaLogica = new BuscarSalaLogica(this) ;
+        this.buscarSalaLogica = new BuscarSalaLogica(this);
     }
 
     /**
@@ -97,11 +97,14 @@ public class Setup implements ISetup {
     private void iniciarManejadorRespuestasClienteProxy() {
         // Instancia los manejadores de respuestas, configurando la cadena de responsabilidad
         ManejadorRespuestaMostrarSalaDisponible manejadorRespuestaMostrarSalaDisponible
-                = new ManejadorRespuestaMostrarSalaDisponible(buscarSalaLogica) ;
-        
+                = new ManejadorRespuestaMostrarSalaDisponible(buscarSalaLogica);
+
+        ManejadorRespuestaResultadoPartida manejadorRespuestaResultadoPartida
+                = new ManejadorRespuestaResultadoPartida(partidaDominoLogica, manejadorRespuestaMostrarSalaDisponible);
+
         ManejadorRespuestaOcultarSalaDisponible manejadorRespuestaOcultarSalaDisponible
-                = new ManejadorRespuestaOcultarSalaDisponible(buscarSalaLogica, manejadorRespuestaMostrarSalaDisponible) ;
-        
+                = new ManejadorRespuestaOcultarSalaDisponible(buscarSalaLogica, manejadorRespuestaResultadoPartida);
+
         ManejadorRespuestaMostrarPantallaPartida manejadorRespuestaMostrarPantallaPartida
                 = new ManejadorRespuestaMostrarPantallaPartida(mediadorNegocio, manejadorRespuestaOcultarSalaDisponible);
 
@@ -137,13 +140,13 @@ public class Setup implements ISetup {
 
         ManejadorRespuestaMostrarFichasActualizadasDeJugador manejadorRespuestaMostrarFichasActualizadasDeJugador
                 = new ManejadorRespuestaMostrarFichasActualizadasDeJugador(partidaDominoLogica, manejadorRespuestaActualizarCantidadFichas);
-        
+
         ManejadorRespuestaRemoverUsuarioSalaEspera manejadorRespuestaRemoverUsuarioSalaEspera
                 = new ManejadorRespuestaRemoverUsuarioSalaEspera(salaEsperaLogica, manejadorRespuestaMostrarFichasActualizadasDeJugador);
 
         ManejadorRespuestaMostrarUsuarioSalaEspera manejadorRespuestaMostrarUsuarioSalaEspera
                 = new ManejadorRespuestaMostrarUsuarioSalaEspera(salaEsperaLogica, manejadorRespuestaRemoverUsuarioSalaEspera);
-        
+
         // Instancia el gestor de respuestas, quien escucha las respuestas del ClientProxy
         // y las pasa al primer manejador en la cadena.
         gestorRespuestaClienteProxy = new GestorRespuestaClienteProxy(manejadorRespuestaMostrarUsuarioSalaEspera);
