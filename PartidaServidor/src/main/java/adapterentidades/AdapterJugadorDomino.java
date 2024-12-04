@@ -32,5 +32,14 @@ public class AdapterJugadorDomino implements IAdapterJugadorDomino {
         JugadorDominoDTO jugadorDTO = new JugadorDominoDTO(jugadorEntity.getIdCliente(), jugadorEntity.getNombre(), jugadorEntity.getFuenteIcono()) ;
         return jugadorDTO ;
     }
+
+    @Override
+    public UsuarioDTO adaptToUsuarioDTO(JugadorDominoEntity jugadorEntity) {
+        UsuarioDTO usuarioDTO = new UsuarioDTO() ;
+        usuarioDTO.setFuenteIcono(jugadorEntity.getFuenteIcono());
+        usuarioDTO.setIdCliente(jugadorEntity.getIdCliente());
+        usuarioDTO.setNombre(jugadorEntity.getNombre());
+        return usuarioDTO ;
+    }
     
 }

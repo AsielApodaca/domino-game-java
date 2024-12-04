@@ -29,6 +29,10 @@ public class SalaDTO {
         this.usuarios = new ArrayList() ;
     }
 
+    public SalaDTO() {
+        
+    }
+
     public String getIdSala() {
         return idSala;
     }

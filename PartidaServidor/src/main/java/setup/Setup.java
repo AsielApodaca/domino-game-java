@@ -12,6 +12,7 @@ import manejadorsolicitudserverproxy.ManejadorSolicitudCasillaSeleccionada;
 import manejadorsolicitudserverproxy.ManejadorSolicitudCrearSala;
 import manejadorsolicitudserverproxy.ManejadorSolicitudFichaSeleccionada;
 import manejadorsolicitudserverproxy.ManejadorSolicitudIniciarPartida;
+import manejadorsolicitudserverproxy.ManejadorSolicitudObtenerSalasDisponibles;
 import manejadorsolicitudserverproxy.ManejadorSolicitudSacarFichaPozo;
 import manejadorsolicitudserverproxy.ManejadorSolicitudUnirseSala;
 
@@ -73,8 +74,11 @@ public class Setup implements ISetup {
         ManejadorSolicitudCrearSala manejadorSolicitudCrearSala
                 = new ManejadorSolicitudCrearSala(manejadorSolicitudAbandonarSala, partidaServerLogica);
 
+        ManejadorSolicitudObtenerSalasDisponibles manejadorSolicitudObtenerSalasDisponibles
+                = new ManejadorSolicitudObtenerSalasDisponibles(manejadorSolicitudCrearSala, partidaServerLogica) ;
+        
         ManejadorSolicitudCasillaSeleccionada manejadorSolicitudCasillaSeleccionada
-                = new ManejadorSolicitudCasillaSeleccionada(manejadorSolicitudCrearSala, partidaServerLogica);
+                = new ManejadorSolicitudCasillaSeleccionada(manejadorSolicitudObtenerSalasDisponibles, partidaServerLogica);
 
         ManejadorSolicitudFichaSeleccionada manejadorSolicitudFichaSeleccionada
                 = new ManejadorSolicitudFichaSeleccionada(manejadorSolicitudCasillaSeleccionada, partidaServerLogica);

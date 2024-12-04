@@ -11,6 +11,8 @@ import deserializador.Serializador;
 import domino.conexiones.ConexionCliente;
 import domino.conexiones.ConexionServidor;
 import domino.enums.Status;
+import domino.respuestas.RespuestaMostrarSalaDisponible;
+import domino.respuestas.RespuestaOcultarSalaDisponible;
 import domino.sala.Sala;
 import domino.solicitudes.EventoSolicitud;
 import domino.solicitudes.SolicitudAbandonarSala;
@@ -72,8 +74,7 @@ public class ManejadorSalas {
         salas.forEach((id, sala) -> {
             if(sala.getStatusPartida() != Status.EN_PARTIDA) {
                 SolicitudObtenerSalasDisponibles solicitud = Deserializador.convertirJSONAEvento(jsonObject.toString()) ;
-                solicitud.setSala(new SalaDTO(id, sala.getSize()));
-                enviarSolicitudAServidor(cliente, JsonParser.parseString(Serializador.convertirEventoSolicitudAJSON(solicitud)).getAsJsonObject());
+                enviarSolicitudAServidor(cliente, jsonObject);
             }
         });
         
@@ -157,6 +158,37 @@ public class ManejadorSalas {
             salaDelServidor.obtenerClientes().forEach((id, cliente) -> {
                 cliente.mandarRespuestaCliente(respuesta);
             });
+        } else {
+            System.out.println("El Servidor no esta conectado a una sala");
+        }
+    }
+    
+    public void enviarRespuestaObtenerSalaDisponible(ConexionServidor servidor, JsonObject respuesta, ManejadorClientes manejadorClientes) {
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        
+        if(salaDelServidor != null) {
+            RespuestaMostrarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString()) ;
+            SalaDTO salaDisponible = new SalaDTO(salaDelServidor.getId(), salaDelServidor.getSize()) ;
+            salaDisponible.setAnfitrion(new UsuarioDTO(salaDelServidor.getAnfitrion().getId()));
+            respuestaSala.setSalaDisponible(salaDisponible);
+            String respuestaString = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
+            JsonObject respuestaJSON = JsonParser.parseString(respuestaString).getAsJsonObject() ;
+            manejadorClientes.enviarRespuestaATodosLosClientes(respuestaJSON);
+        } else {
+            System.out.println("El Servidor no esta conectado a una sala");
+        }
+    }
+    
+    public void enviarRespuestaOcultarSalaDisponible(ConexionServidor servidor, JsonObject respuesta, ManejadorClientes manejadorClientes) {
+        Sala salaDelServidor = obtenerSalaDeServidor(servidor.getId()) ;
+        
+        if(salaDelServidor != null) {
+            RespuestaOcultarSalaDisponible respuestaSala = Deserializador.convertirJSONAEvento(respuesta.toString()) ;
+            respuestaSala.getSalaDisponible().setIdSala(salaDelServidor.getId());
+            respuestaSala.getSalaDisponible().setSize(salaDelServidor.getSize());
+            respuestaSala.getSalaDisponible().setAnfitrion(new UsuarioDTO(salaDelServidor.getAnfitrion().getId()));
+            String respuestaJSON = Serializador.convertirEventoRespuestaAJSON(respuestaSala) ;
+            manejadorClientes.enviarRespuestaATodosLosClientes(respuesta);
         } else {
             System.out.println("El Servidor no esta conectado a una sala");
         }

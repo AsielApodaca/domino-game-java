@@ -51,8 +51,7 @@ public class MenuDominoLogica implements IMenuDominoLogica, IPresentacionMenuDom
 
     @Override
     public void onUnirseSala() {
-        setup.getMediadorNegocio().irASalaEspera();
-        setup.getMediadorNegocio().unirseSala();
+        setup.getMediadorNegocio().irABuscarSala();
     }
 
 }

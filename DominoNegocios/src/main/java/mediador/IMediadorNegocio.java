@@ -15,4 +15,5 @@ public interface IMediadorNegocio {
     public void unirseSala();
     public void irAPartidaDomino();
     public void irACrearUsuario();
+    public void irABuscarSala();
 }
